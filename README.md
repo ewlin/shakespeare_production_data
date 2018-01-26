@@ -4,4 +4,13 @@
 
 ## TODO:
 
+* Remove old test and practice scripts
+
+#### PRODUCTIONS TO ADD:
+* Shakespeare's Globe
+* RSC
+* Misc. productions spreadsheet
+* Broadway productions
+* Film?
+
 * Normalize cast and production information
