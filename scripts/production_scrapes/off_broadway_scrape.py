@@ -1,6 +1,6 @@
 #Jan 26, 2018-
 # TODOS:
-#   - grab director and production company names
+#   - grab director and production company names (Finished 1/27/18)
 #   - add ability to match regex object rather than exact string match for character/role names
 #   - exclude odd production of The Tempest with multiple Ariels
 #   - exclude matches of role/character but actor is understudy
@@ -26,6 +26,8 @@ def get_production_info(meta):
     url = meta[2]
     opening_date = meta[1]
     theatre = meta[0]
+    director = None
+    producer = None
     html = requests.get(url_base + url).text
     soup = BeautifulSoup(html, 'html5lib')
 
@@ -44,6 +46,22 @@ def get_production_info(meta):
 
         for crew_member in crew:
             crew_columns = crew_member.findAll('td')
+            #print(crew_columns)
+            if len(crew_columns) < 3:
+                continue
+
+            position = crew_columns[2].get_text().strip()
+            print(position)
+
+            if not director:
+                director = crew_columns[1].find('a').get_text() if position == 'Director' else None
+            if not producer:
+                producer = crew_columns[1].find('a').get_text() if position == 'Producer' else None
+
+
+
+        director = director if director else 'director unknown'
+        producer = producer if producer else 'unknown production company'
 
         if actors:
             for actor in actors:
@@ -54,7 +72,7 @@ def get_production_info(meta):
                         role = str(actor_columns[2].get_text())
                         #actor_info = [date, actor, actors[actor], crew['Director'], production_company, theatre]
                         #actor_info = url + '\t' + str(opening_date) + '\t' + str(actor_columns[2].get_text()) + '\t' + str(actor_columns[1].find('a').get_text())
-                        actor_info = [opening_date, role, actor, theatre]
+                        actor_info = [opening_date, role, actor, director, producer, theatre]
                         actor_info = '\t'.join(actor_info)
                         data_file = open('data/test_data/off-performers.tsv', 'a')
                         data_file.write(actor_info + '\n')
