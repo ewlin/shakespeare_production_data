@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 #Jan 26, 2018-
 # TODOS:
 #   - grab director and production company names (Finished 1/27/18)
-#   - add ability to match regex object rather than exact string match for character/role names
-#   - exclude odd production of The Tempest with multiple Ariels
-#   - exclude matches of role/character but actor is understudy
+#   - add ability to match regex object rather than exact string match for character/role names (Finished 1/27/18)
+#   - exclude odd production of The Tempest with multiple Ariels (Finished 1/27)
+#   - exclude matches of role/character but actor is understudy (Finished 1/27)
 
 import requests
 import html5lib
@@ -28,6 +30,8 @@ def get_production_info(meta):
     theatre = meta[0]
     director = None
     producer = None
+    if url_base + url in exclude:
+        return
     html = requests.get(url_base + url).text
     soup = BeautifulSoup(html, 'html5lib')
 
@@ -67,15 +71,18 @@ def get_production_info(meta):
             for actor in actors:
                 actor_columns = actor.findAll('td')
                 if actor_columns:
-                    if actor_columns[2].get_text() in roles and actor_columns[3].get_text() != 'UNDERSTUDY':
-                        actor = str(actor_columns[1].find('a').get_text())
-                        role = str(actor_columns[2].get_text())
+                    role_match = role_patterns.search(actor_columns[2].get_text())
+                    #if actor_columns[2].get_text() in roles and actor_columns[3].get_text() != 'UNDERSTUDY':
+                    print(actor_columns[3].get_text())
+                    if role_match and actor_columns[3].get_text().strip() != 'UNDERSTUDY':
+                        actor = actor_columns[1].find('a').get_text()
+                        role = actor_columns[2].get_text()
                         #actor_info = [date, actor, actors[actor], crew['Director'], production_company, theatre]
                         #actor_info = url + '\t' + str(opening_date) + '\t' + str(actor_columns[2].get_text()) + '\t' + str(actor_columns[1].find('a').get_text())
                         actor_info = [opening_date, role, actor, director, producer, theatre]
                         actor_info = '\t'.join(actor_info)
                         data_file = open('data/test_data/off-performers.tsv', 'a')
-                        data_file.write(actor_info + '\n')
+                        data_file.write(actor_info.encode('utf8') + '\n')
                         data_file.close()
 
 

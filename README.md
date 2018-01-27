@@ -5,6 +5,8 @@
 ## TODO:
 
 * Remove old test and practice scripts
+* Remove duplicate entries of same actor/production
+* Update age calculation script 
 
 #### PRODUCTIONS TO ADD:
 * Shakespeare's Globe
@@ -14,3 +16,5 @@
 * Film?
 
 * Normalize cast and production information
+
+* Add links to TSV files?
