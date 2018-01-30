@@ -20,6 +20,7 @@ roles = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
 
 role_patterns = re.compile(r'Macbeth|Othello|Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|Desdemona|Ophelia|Fool|Prospero|Ariel')
 
+#weird production with lots of Ariels
 exclude = ['http://www.lortel.org/Archives/Production/2128']
 
 url_base = 'http://www.lortel.org'
