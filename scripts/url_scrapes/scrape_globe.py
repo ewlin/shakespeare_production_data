@@ -29,11 +29,7 @@ def get_urls(page):
         play = production.find('h3', {'class': 'productionTitle'}).get_text()
         title_match = plays_patterns.match(play)
         if title_match:
-            print title_match.group(0)
-            print re.search(r'\d{4}', play).group(0)
-            link = production.find('a').get('href')
-            print(link)
-    #return
-
+            meta_data = [title_match.group(0), re.search(r'\d{4}', play).group(0), production.find('a').get('href')]
+            print('\t'.join(meta_data))
 
 get_urls(1)

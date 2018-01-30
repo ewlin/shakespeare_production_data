@@ -5,6 +5,14 @@
 
 ### Included in this repo are several test Python scripts that scrape production data from various online databases and archives
 
+### In scripts folder:
+
+The **url_scrapes** directory contains Python scripts that take web pages with lists of relevant urls of productions. Most of these scripts will only match for the plays we're interested in, including The Tempest, Hamlet, Macbeth, King Lear, Othello, and Romeo and Juliet. Each script is tailored for the particular database or archive of past performances.
+
+The **production_scrapes** contains scripts that scrape for metadata for each production of any given play. We're interested in opening dates, production company, theatre venue, the actors for certain roles (listed below), and the director of the production.
+
+Once scraped, tsv's are generated and written to a .tsv file in the **data** directory
+
 ## TODO:
 
 * Remove old test and practice scripts
