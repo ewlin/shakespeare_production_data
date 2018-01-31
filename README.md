@@ -23,14 +23,13 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
 * Update actor scrape script to grab categories
 * package to do date normalization
 
-
 * Design:
-    Character Icons; hand-drawn?
+    *Character Icons; hand-drawn?*
 
 #### PRODUCTIONS TO ADD:
-* Shakespeare's Globe
-* RSC
 * Stratford (urls scraped; need to get production info)
+* Shakespeare's Globe (urls scraped)
+* RSC
 * Misc. productions spreadsheet [e.g., Chicago Shakespeare Theater]
 * Broadway productions
 * Film?
