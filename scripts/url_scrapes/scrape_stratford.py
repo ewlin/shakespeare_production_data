@@ -14,7 +14,7 @@ soup = BeautifulSoup(html, 'html5lib')
 
 list_of_prods = soup.find('div', {'id': 'content'}).find('ol').findAll('li')
 
-url_file = open('data/stratford_urls.tsv', 'a')
+url_file = open('data/urls/stratford_urls.tsv', 'a')
 
 for each_production in list_of_prods:
     film_or_stage = re.search(r'play_icon', each_production.find('img').get('src'))

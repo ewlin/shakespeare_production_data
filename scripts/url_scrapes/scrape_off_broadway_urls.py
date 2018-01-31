@@ -25,7 +25,7 @@ def get_production_urls(playwright_page):
             #print(title)
 
             if title in plays:
-                url_file = open('data/off_broadway_production_urls.tsv', 'a')
+                url_file = open('data/urls/off_broadway_production_urls.tsv', 'a')
                 theatre = production_info[2].get_text().strip()
                 opening = production_info[3].get_text().strip()
                 link = production_info[1].find('a').get('href')

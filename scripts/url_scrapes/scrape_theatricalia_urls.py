@@ -27,7 +27,7 @@ def get_production_url(page):
     productions = soup.find('ul', {'class': 'production_list'}).findAll('li')
     for each_production in productions:
         link = each_production.find('a').get('href')
-        file = open('data/theatricalia_production_urls.tsv', 'a')
+        file = open('data/urls/theatricalia_production_urls.tsv', 'a')
         file.write(link + '\n')
         file.close()
 

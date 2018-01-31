@@ -82,7 +82,7 @@ def get_production_info(meta):
                         #actor_info = url + '\t' + str(opening_date) + '\t' + str(actor_columns[2].get_text()) + '\t' + str(actor_columns[1].find('a').get_text())
                         actor_info = [opening_date, role, actor, director, producer, theatre]
                         actor_info = '\t'.join(actor_info)
-                        data_file = open('data/test_data/off_performers.tsv', 'a')
+                        data_file = open('data/off_performers.tsv', 'a')
                         data_file.write(actor_info.encode('utf8') + '\n')
                         data_file.close()
 

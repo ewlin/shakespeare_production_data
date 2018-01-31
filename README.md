@@ -11,7 +11,7 @@ The **url_scrapes** directory contains Python scripts that take web pages with l
 
 The **production_scrapes** contains scripts that scrape for metadata for each production of any given play. We're interested in opening dates, production company, theatre venue, the actors for certain roles (listed below), and the director of the production.
 
-Once scraped, tsv's are generated and written to a .tsv file in the **data** directory
+Once scraped, tsv's are generated and written to a .tsv file in the **urls** subdirectory inside **data**
 
 ## TODO:
 
