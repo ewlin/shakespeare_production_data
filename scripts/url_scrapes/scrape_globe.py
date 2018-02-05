@@ -19,11 +19,11 @@ for page_num in pages_range:
 
 #for each paginated page, grab urls of plays we care about
 def get_urls(page):
-    html = requests.get(pages[page]).text
+    html = requests.get(page).text
     soup = BeautifulSoup(html, 'html5lib')
     #print(soup)
     productions = soup.find('article', {'id': 'mainArticle'}).findAll('div', {'class': 'day'})
-    print(productions)
+    #print(productions)
 
     for production in productions:
         play = production.find('h3', {'class': 'productionTitle'}).get_text()
@@ -32,4 +32,7 @@ def get_urls(page):
             meta_data = [title_match.group(0), re.search(r'\d{4}', play).group(0), production.find('a').get('href')]
             print('\t'.join(meta_data))
 
-get_urls(1)
+p = Pool(10)
+records = p.map(get_urls, pages)
+p.terminate()
+p.join()

@@ -17,6 +17,7 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
 
 * Remove old test and practice scripts
 * Remove duplicate entries of same actor/production + look at anomalous role notations
+* Remove amateur productions based on producer/production company name? (Mostly an issue with Theatricalia)
 * Normalize cast and production information
 * Create single actor database [Finished script 1/27/18; need to add all files once production scraping is complete]
 * Update age calculation script
