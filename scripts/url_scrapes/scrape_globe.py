@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-plays_patterns = re.compile(r'Macbeth|Othello|Romeo\sand\sJuliet|Hamlet|King\sLear|The\sTempest')
+plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest')
 
 #scrape the paginated pages of links
 pages = []
@@ -27,10 +27,17 @@ def get_urls(page):
 
     for production in productions:
         play = production.find('h3', {'class': 'productionTitle'}).get_text()
-        title_match = plays_patterns.match(play)
+        #title_match = plays_patterns.match(play)
+        title_match = re.search(plays_patterns, play)
         if title_match:
+            data_file = open('data/urls/globe_urls.tsv', 'a')
             meta_data = [title_match.group(0), re.search(r'\d{4}', play).group(0), production.find('a').get('href')]
-            print('\t'.join(meta_data))
+            row = '\t'.join(meta_data).encode('utf-8')
+            print(row)
+            data_file.write(row + '\n')
+            data_file.close()
+
+
 
 p = Pool(10)
 records = p.map(get_urls, pages)

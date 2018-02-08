@@ -30,6 +30,8 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
 #### PRODUCTIONS TO ADD:
 * Stratford (urls scraped; need to get production info)
 * Shakespeare's Globe (urls scraped; need to write to tsv file still 2/5)
+> Fixed some issues with the url scraping; was not grabbing every production due to a bug in the code (2/8/2018)
+> Still need to finish up individual production scrape
 * RSC
 * Misc. productions spreadsheet [e.g., Chicago Shakespeare Theater]
 * Broadway productions

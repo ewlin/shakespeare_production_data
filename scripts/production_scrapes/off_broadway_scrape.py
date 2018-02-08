@@ -87,11 +87,11 @@ def get_production_info(meta):
                         data_file.close()
 
 
-with open('data/off_broadway_production_urls.tsv') as actors:
-    actors = unicodecsv.reader(actors, delimiter='\t')
+with open('data/urls/off_broadway_production_urls.tsv') as productions:
+    productions = unicodecsv.reader(actors, delimiter='\t')
     #for actor in actors:
         #get_actor_info(actor)
     p = Pool(10)
-    records = p.map(get_production_info, actors)
+    records = p.map(get_production_info, productions)
     p.terminate()
     p.join()
