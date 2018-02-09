@@ -27,11 +27,13 @@ def get_urls(page):
 
     for production in productions:
         play = production.find('h3', {'class': 'productionTitle'}).get_text()
+        credits = production.find('h5', {'class': 'simpler'}).get_text()
         #title_match = plays_patterns.match(play)
         title_match = re.search(plays_patterns, play)
         if title_match:
             data_file = open('data/urls/globe_urls.tsv', 'a')
-            meta_data = [title_match.group(0), re.search(r'\d{4}', play).group(0), production.find('a').get('href')]
+            director = re.search(r'Directed by\:\s([^\n]+)', credits).group(1).strip()
+            meta_data = [title_match.group(0), re.search(r'\d{4}', play).group(0), director, production.find('a').get('href')]
             row = '\t'.join(meta_data).encode('utf-8')
             print(row)
             data_file.write(row + '\n')

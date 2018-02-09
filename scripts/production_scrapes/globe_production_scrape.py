@@ -22,18 +22,17 @@ Performed in Hip Hop by the Q Brothers, Chicago Shakespeare Theatre & Richard Jo
 
 def get_production_info(meta):
     production_roles = []
-    url = meta[2]
+    url = meta[3]
     html = requests.get(base_url + url).text
     soup = BeautifulSoup(html, 'html5lib')
 
     prod_info = soup.find('article', {'id': 'production'}).get_text()
-    director = re.search(r'Directed by\:\s([^\n]+)', prod_info).group(1)
-
-    # >>> re.search(r'by .+(?=,\sfrom)', "by somethin some, from")
+    #director = re.search(r'Directed by\:\s([^\n]+)', prod_info).group(1)
+    #director = re.search(r'Directed by\:\s(.+\s)(?=(\n|Adapted by:|Translated by:))', prod_info).group(0)
 
     special_performances_flag = re.search(r'Performed in ([^(by)]+) by (.+)(?=,\sfrom)', prod_info)
     language_performed_in = special_performances_flag.group(1) if special_performances_flag else None
-    production_company = special_performances_flag.group(2) if special_performances_flag else None
+    production_company = special_performances_flag.group(2) if special_performances_flag else 'Shakespeare\'s Globe'
 
     cast = soup.find('ul', {'class': 'cast'}).findAll('li')#, string=role_patterns)
     # Loop through all actors/roles for a particular production
@@ -41,8 +40,15 @@ def get_production_info(meta):
         if role_patterns.search(each_role.get_text()):
             actor_role_pair = each_role.get_text().strip().split('\n')
             production_roles.append(actor_role_pair)
-    print(production_roles)
+
+    #print(production_roles)
+
+    # Loop through all actor/role pairs in EVERY production
     # TSV columns: Date Role Actor Director Production_Company Theatre Language_Flag
+    for each_actor in production_roles:
+        tsv_row_list = [meta[1], each_actor[0], each_actor[1], meta[2],
+                        production_company, 'Shakespeare\'s Globe', language_performed_in]
+        print(tsv_row_list)
 
 
 # test url for one production
