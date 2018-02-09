@@ -21,21 +21,25 @@ Performed in Hip Hop by the Q Brothers, Chicago Shakespeare Theatre & Richard Jo
 '''
 
 def get_production_info(meta):
-    temp = []
+    production_roles = []
     url = meta[2]
     html = requests.get(base_url + url).text
     soup = BeautifulSoup(html, 'html5lib')
-    prod_info = soup.find('article', {'id': 'production'}).get_text()
 
+    prod_info = soup.find('article', {'id': 'production'}).get_text()
     director = re.search(r'Directed by\:\s([^\n]+)', prod_info).group(1)
+
+    special_performances_flag = re.search(r'Performed in ([^(by)]+)', prod_info)
+    if special_performances_flag:
+        print special_performances_flag.group(1)
 
     cast = soup.find('ul', {'class': 'cast'}).findAll('li')#, string=role_patterns)
     # Loop through all actors/roles for a particular production
     for each_role in cast:
         if role_patterns.search(each_role.get_text()):
             actor_role_pair = each_role.get_text().strip().split('\n')
-            temp.append(actor_role_pair)
-    print(temp)
+            production_roles.append(actor_role_pair)
+    print(production_roles)
     # TSV columns: Date Role Actor Director Production_Company Theatre
 
 
