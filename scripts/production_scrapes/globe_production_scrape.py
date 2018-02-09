@@ -29,9 +29,11 @@ def get_production_info(meta):
     prod_info = soup.find('article', {'id': 'production'}).get_text()
     director = re.search(r'Directed by\:\s([^\n]+)', prod_info).group(1)
 
-    special_performances_flag = re.search(r'Performed in ([^(by)]+)', prod_info)
-    if special_performances_flag:
-        print special_performances_flag.group(1)
+    # >>> re.search(r'by .+(?=,\sfrom)', "by somethin some, from")
+
+    special_performances_flag = re.search(r'Performed in ([^(by)]+) by (.+)(?=,\sfrom)', prod_info)
+    language_performed_in = special_performances_flag.group(1) if special_performances_flag else None
+    production_company = special_performances_flag.group(2) if special_performances_flag else None
 
     cast = soup.find('ul', {'class': 'cast'}).findAll('li')#, string=role_patterns)
     # Loop through all actors/roles for a particular production
@@ -40,16 +42,15 @@ def get_production_info(meta):
             actor_role_pair = each_role.get_text().strip().split('\n')
             production_roles.append(actor_role_pair)
     print(production_roles)
-    # TSV columns: Date Role Actor Director Production_Company Theatre
+    # TSV columns: Date Role Actor Director Production_Company Theatre Language_Flag
 
 
 # test url for one production
-test_meta_info = ['The Tempest', '2012', '/discovery-space/previous-productions/othello-1']
+#test_meta_info = ['The Tempest', '2012', '/discovery-space/previous-productions/othello-1']
 
-get_production_info(test_meta_info)
+#get_production_info(test_meta_info)
 
 
-'''
 with open('data/urls/globe_urls.tsv') as productions:
     productions = unicodecsv.reader(productions, delimiter='\t')
     #for actor in actors:
@@ -58,4 +59,3 @@ with open('data/urls/globe_urls.tsv') as productions:
     records = p.map(get_production_info, productions)
     p.terminate()
     p.join()
-'''
