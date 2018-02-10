@@ -27,11 +27,10 @@ def get_production_info(meta):
     soup = BeautifulSoup(html, 'html5lib')
 
     prod_info = soup.find('article', {'id': 'production'}).get_text()
-    #director = re.search(r'Directed by\:\s([^\n]+)', prod_info).group(1)
-    #director = re.search(r'Directed by\:\s(.+\s)(?=(\n|Adapted by:|Translated by:))', prod_info).group(0)
+    director = meta[2]
 
     special_performances_flag = re.search(r'Performed in ([^(by)]+) by (.+)(?=,\sfrom)', prod_info)
-    language_performed_in = special_performances_flag.group(1) if special_performances_flag else None
+    language_performed_in = special_performances_flag.group(1) if special_performances_flag else 'English'
     production_company = special_performances_flag.group(2) if special_performances_flag else 'Shakespeare\'s Globe'
 
     cast = soup.find('ul', {'class': 'cast'}).findAll('li')#, string=role_patterns)
@@ -46,9 +45,11 @@ def get_production_info(meta):
     # Loop through all actor/role pairs in EVERY production
     # TSV columns: Date Role Actor Director Production_Company Theatre Language_Flag
     for each_actor in production_roles:
-        tsv_row_list = [meta[1], each_actor[0], each_actor[1], meta[2],
+        #tsv_row_list = [meta[1], each_actor[0], each_actor[1], meta[2],
+        #                production_company, 'Shakespeare\'s Globe', language_performed_in]
+        tsv_row_list = [meta[1], each_actor[0], each_actor[1], director,
                         production_company, 'Shakespeare\'s Globe', language_performed_in]
-        print(tsv_row_list)
+        print('\t'.join(tsv_row_list).encode('utf-8'))
 
 
 # test url for one production
