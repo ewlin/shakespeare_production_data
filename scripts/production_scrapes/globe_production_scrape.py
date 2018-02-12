@@ -40,8 +40,6 @@ def get_production_info(meta):
             actor_role_pair = each_role.get_text().strip().split('\n')
             production_roles.append(actor_role_pair)
 
-    #print(production_roles)
-
     # Loop through all actor/role pairs in EVERY production
     # TSV columns: Date Role Actor Director Production_Company Theatre Language_Flag
     for each_actor in production_roles:
@@ -50,12 +48,6 @@ def get_production_info(meta):
         tsv_row_list = [meta[1], each_actor[0], each_actor[1], director,
                         production_company, 'Shakespeare\'s Globe', language_performed_in]
         print('\t'.join(tsv_row_list).encode('utf-8'))
-
-
-# test url for one production
-#test_meta_info = ['The Tempest', '2012', '/discovery-space/previous-productions/othello-1']
-
-#get_production_info(test_meta_info)
 
 
 with open('data/urls/globe_urls.tsv') as productions:
