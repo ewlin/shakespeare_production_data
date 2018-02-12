@@ -21,7 +21,7 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
 * Normalize cast and production information
 * Create single actor database [Finished script 1/27/18; need to add all files once production scraping is complete]
 * Update age calculation script
-* Update actor scrape script to grab categories from Wiki
+* Update actor scrape script to grab categories 
 * package to do date normalization
 
 * Design:

@@ -18,6 +18,8 @@ soup = BeautifulSoup(html, 'html5lib')
 
 credits = soup.find('div', {'class': 'single-details-content'}).find('ul', {'class': 'columns'})
 
+actors = []
+
 if credits:
     print('found')
     columns = credits.findAll('li', recursive=False)
@@ -26,5 +28,8 @@ if credits:
         if col_heading == 'Cast':
             cast = each_col.find('ul').findAll('li')
             for each_role in cast:
-                if re.search(role_patterns, each_role.find('p').get_text()):
-                    print each_role
+                role_name = each_role.find('p').get_text().strip()
+                if re.search(role_patterns, role_name):
+                    #kinda hacky line of code here
+                    actor_name = each_role.findAll('p')[1].get_text().strip().strip(',').split(', ')
+                    print role_name, (actor_name[1] + ' ' + actor_name[0])
