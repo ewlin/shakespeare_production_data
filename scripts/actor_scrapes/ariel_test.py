@@ -17,16 +17,16 @@ def format_date(date):
 
 
 def normalize_date(date):
-    for format in ('%d %B %Y', '%B %d, %Y', '%Y', '%m.%d.%Y'):
+    #16th April 1934
+    d = re.search(r'(\d+)[a-z]+\s([A-Za-z]+)\s(\d{4})', date)
+    if d:
+        date = d.group(1) + ' ' + d.group(2) + ' ' + d.group(3)
+    for format in ('%d %B %Y', '%B %d, %Y', '%d.%m.%Y', '%m/%d/%Y', '%Y'):
         try:
             return datetime.strptime(date, format)
         except ValueError:
             pass
     return 'Not a proper date/wrongly formatted dates'
-
-
-def format_date(date):
-    return
 
 
 for each_file in actors:
@@ -49,7 +49,11 @@ for each_file in actors:
 print(ariels)
 
 for each_ariel in ariels:
+    print(each_ariel[0])
+    print(normalize_date(each_ariel[0]))
+    '''
     ariel_file = open('data/temp/ariels.tsv', 'a')
     ariel_data = '\t'.join(each_ariel).encode('utf-8') + '\n'
     ariel_file.write(ariel_data)
     ariel_file.close()
+    '''
