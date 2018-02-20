@@ -9,21 +9,15 @@ import dateutil.parser
 actors = glob.glob('data/*.tsv')
 print actors
 
-role_patterns = [r'Romeo', r'Juliet']
-characters = {'Romeo': [], 'Juliet': []}
-
-#remove letters from dates with suffixes
-def format_date(date):
-    #'24th March 1989'
-    date = date.split(' ')
-    day = re.search(r'\d+', date[0]).group(0)
-    return day + ' ' + date[1] + ' ' + date[2]
+role_patterns = [r'Romeo', r'Juliet', r'Ariel']
+characters = {}
 
 
 def normalize_date(date):
     #16th April 1934
     '''Attempts to transform date in string into a date obj
     '''
+    # remove 'th, rd' type suffixes from dates
     d = re.search(r'(\d+)[a-z]+\s([A-Za-z]+)\s(\d{4})', date)
     if d:
         date = d.group(1) + ' ' + d.group(2) + ' ' + d.group(3)
@@ -44,6 +38,7 @@ def stringify_date(date_obj):
         return 'pre-1900 date'
 
 for each_pattern in role_patterns:
+    characters[each_pattern] = []
     for each_file in actors:
         with open(each_file) as productions:
             roles = unicodecsv.reader(productions, delimiter='\t')
@@ -73,16 +68,21 @@ for each_pattern in role_patterns:
                         print(form_date)
                         characters[each_pattern].append([form_date] + each_role[1:len(each_role)])
 
-sorted_romeos = sorted(characters["Romeo"], key=lambda rom: rom[0])
-print(sorted_romeos)
-
+#for each_character in characters:
 #for key, value in d.iteritems():
+
+for each_character, performances in characters.iteritems():
+    sorted_by_perf_date = sorted(performances, key=lambda char: char[0])
+    print(sorted_by_perf_date)
+
+
 #sorted_ariels = sorted(ariels, key=lambda arl: arl[0])
 #print(role_archive)
 
-
+'''
 for each_romeo in sorted_romeos:
     romeo_file = open('data/temp/romeos.tsv', 'a')
     romeo_data = '\t'.join(each_romeo).encode('utf-8') + '\n'
     romeo_file.write(romeo_data)
     romeo_file.close()
+'''
