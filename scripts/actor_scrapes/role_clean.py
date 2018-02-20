@@ -1,4 +1,4 @@
-#role cleaning script 
+#role cleaning script
 
 import glob
 import re
@@ -9,7 +9,8 @@ import dateutil.parser
 actors = glob.glob('data/*.tsv')
 print actors
 
-ariels = []
+role_patterns = [r'Romeo', r'Juliet']
+characters = {'Romeo': [], 'Juliet:': []}
 
 #remove letters from dates with suffixes
 def format_date(date):
@@ -52,25 +53,37 @@ for each_file in actors:
             actor = each_role[2]
             director = each_role[3]
             found = False
-            if re.search(r'Ariel', role):
-                for recorded_ariel in ariels:
+            if re.search(r'Romeo', role):
+                for index, recorded_romeo in enumerate(romeos):
                     #test if actor/director pair is already in database
                     # better logic than this. lots of 'director unknown'. filter those out
-                    if (actor == recorded_ariel[2] and
-                        director == recorded_ariel[3] and
-                        (prod_date - dateutil.parser.parse(recorded_ariel[0])).days <= 730):
-                        found = True
-                        break
+                    if (actor == recorded_romeo[2] and
+                        (prod_date - dateutil.parser.parse(recorded_romeo[0])).days <= 730):
+                        if director == recorded_romeo[3]:
+                            found = True
+                            break
+                        elif recorded_romeo[3] == 'director unknown':
+                            found = True
+                            form_date = stringify_date(prod_date)
+                            romeos[index] = [form_date] + each_role[1:len(each_role)]
+                        #another if statement to check if exitent director in 'director unknown' but current IS not 'director unknown'
+                        # then replace row
+
                 if not found:
                     form_date = stringify_date(prod_date)
                     print(form_date)
-                    ariels.append([form_date] + each_role[1:len(each_role)])
+                    romeos.append([form_date] + each_role[1:len(each_role)])
 
-sorted_ariels = sorted(ariels, key=lambda arl: arl[0])
-print(sorted_ariels)
+sorted_romeos = sorted(romeos, key=lambda rom: rom[0])
+print(sorted_romeos)
 
-for each_ariel in sorted_ariels:
-    ariel_file = open('data/temp/ariels.tsv', 'a')
-    ariel_data = '\t'.join(each_ariel).encode('utf-8') + '\n'
-    ariel_file.write(ariel_data)
-    ariel_file.close()
+#for key, value in d.iteritems():
+#sorted_ariels = sorted(ariels, key=lambda arl: arl[0])
+#print(role_archive)
+
+
+for each_romeo in sorted_romeos:
+    romeo_file = open('data/temp/romeos.tsv', 'a')
+    romeo_data = '\t'.join(each_romeo).encode('utf-8') + '\n'
+    romeo_file.write(romeo_data)
+    romeo_file.close()
