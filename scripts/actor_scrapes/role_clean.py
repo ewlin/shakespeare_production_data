@@ -10,7 +10,7 @@ actors = glob.glob('data/*.tsv')
 print actors
 
 role_patterns = [r'Romeo', r'Juliet']
-characters = {'Romeo': [], 'Juliet:': []}
+characters = {'Romeo': [], 'Juliet': []}
 
 #remove letters from dates with suffixes
 def format_date(date):
@@ -43,38 +43,37 @@ def stringify_date(date_obj):
     except ValueError:
         return 'pre-1900 date'
 
+for each_pattern in role_patterns:
+    for each_file in actors:
+        with open(each_file) as productions:
+            roles = unicodecsv.reader(productions, delimiter='\t')
+            for each_role in roles:
+                prod_date = normalize_date(each_role[0])
+                role = each_role[1]
+                actor = each_role[2]
+                director = each_role[3]
+                found = False
+                if re.search(each_pattern, role):
+                    for index, recorded_role in enumerate(characters[each_pattern]):
+                        #test if actor/director pair is already in database
+                        # better logic than this. lots of 'director unknown'. filter those out
+                        if (actor == recorded_role[2] and
+                            (prod_date - dateutil.parser.parse(recorded_role[0])).days <= 730):
+                            if director == recorded_role[3]:
+                                found = True
+                                break
+                            elif recorded_role[3] == 'director unknown':
+                                found = True
+                                form_date = stringify_date(prod_date)
+                                characters[each_pattern][index] = [form_date] + each_role[1:len(each_role)]
+                                #another if statement to check if exitent director in 'director unknown' but current IS not 'director unknown'
+                                # then replace row
+                    if not found:
+                        form_date = stringify_date(prod_date)
+                        print(form_date)
+                        characters[each_pattern].append([form_date] + each_role[1:len(each_role)])
 
-for each_file in actors:
-    with open(each_file) as productions:
-        roles = unicodecsv.reader(productions, delimiter='\t')
-        for each_role in roles:
-            prod_date = normalize_date(each_role[0])
-            role = each_role[1]
-            actor = each_role[2]
-            director = each_role[3]
-            found = False
-            if re.search(r'Romeo', role):
-                for index, recorded_romeo in enumerate(romeos):
-                    #test if actor/director pair is already in database
-                    # better logic than this. lots of 'director unknown'. filter those out
-                    if (actor == recorded_romeo[2] and
-                        (prod_date - dateutil.parser.parse(recorded_romeo[0])).days <= 730):
-                        if director == recorded_romeo[3]:
-                            found = True
-                            break
-                        elif recorded_romeo[3] == 'director unknown':
-                            found = True
-                            form_date = stringify_date(prod_date)
-                            romeos[index] = [form_date] + each_role[1:len(each_role)]
-                        #another if statement to check if exitent director in 'director unknown' but current IS not 'director unknown'
-                        # then replace row
-
-                if not found:
-                    form_date = stringify_date(prod_date)
-                    print(form_date)
-                    romeos.append([form_date] + each_role[1:len(each_role)])
-
-sorted_romeos = sorted(romeos, key=lambda rom: rom[0])
+sorted_romeos = sorted(characters["Romeo"], key=lambda rom: rom[0])
 print(sorted_romeos)
 
 #for key, value in d.iteritems():
