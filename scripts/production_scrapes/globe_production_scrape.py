@@ -43,11 +43,13 @@ def get_production_info(meta):
     # Loop through all actor/role pairs in EVERY production
     # TSV columns: Date Role Actor Director Production_Company Theatre Language_Flag
     for each_actor in production_roles:
-        #tsv_row_list = [meta[1], each_actor[0], each_actor[1], meta[2],
-        #                production_company, 'Shakespeare\'s Globe', language_performed_in]
-        tsv_row_list = [meta[1], each_actor[0], each_actor[1], director,
-                        production_company, 'Shakespeare\'s Globe', language_performed_in]
-        print('\t'.join(tsv_row_list).encode('utf-8'))
+        if language_performed_in == 'English':
+            globe_actors_file = open('data/globe_performers.tsv', 'a')
+            #tsv_row_list = [meta[1], each_actor[0], each_actor[1], director, production_company, 'Shakespeare\'s Globe', language_performed_in]
+            tsv_row_list = [meta[1], each_actor[0], each_actor[1], director,
+                            production_company, 'Shakespeare\'s Globe']
+            globe_actors_file.write('\t'.join(tsv_row_list).encode('utf-8') + '\n')
+            globe_actors_file.close()
 
 
 with open('data/urls/globe_urls.tsv') as productions:

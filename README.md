@@ -1,4 +1,4 @@
-# Shakespeare Productions Dataset (Last update: 2/15/18)
+# Shakespeare Productions Dataset (Last update: 2/20/18)
 
 
 # Rewrite README to discuss purposes of various files
@@ -29,13 +29,13 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
 
 #### PRODUCTIONS TO ADD:
 * Stratford (urls scraped; need to get production info)
-* Shakespeare's Globe (urls scraped; need to write to tsv file still 2/5 (Finished 2/8))
+* Shakespeare's Globe (urls scraped; need to write to tsv file still 2/5 (Finished 2/8)) (FINISHED)
 > Fixed some issues with the url scraping; was not grabbing every production due to a bug in the code (2/8/2018)
 > Still need to finish up individual production scrape
-* RSC
-> Started writing scrips to scrape both URLS and production info on 2/12
-* Misc. productions spreadsheet [e.g., Chicago Shakespeare Theater]
+* National Theatre (hard to find some of)
+* Misc. productions spreadsheet [e.g., Chicago Shakespeare Theater, Royal Exchange]
 * Broadway productions
+* Shakespeare Theatre Company 
 * Film?
 
 * Add links to TSV files?

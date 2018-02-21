@@ -9,7 +9,10 @@ import dateutil.parser
 actors = glob.glob('data/*.tsv')
 print actors
 
-role_patterns = [r'Romeo', r'Juliet', r'Ariel']
+role_patterns = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
+                'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool',
+                'Prospero', 'Ariel', 'Miranda']
+
 characters = {}
 
 
@@ -52,6 +55,7 @@ for each_pattern in role_patterns:
                     for index, recorded_role in enumerate(characters[each_pattern]):
                         #test if actor/director pair is already in database
                         # better logic than this. lots of 'director unknown'. filter those out
+                        # also, keep the earlier production date
                         if (actor == recorded_role[2] and
                             (prod_date - dateutil.parser.parse(recorded_role[0])).days <= 730):
                             if director == recorded_role[3]:
@@ -72,8 +76,14 @@ for each_pattern in role_patterns:
 #for key, value in d.iteritems():
 
 for each_character, performances in characters.iteritems():
+    cleaned_name = '_'.join(each_character.split(' '))
+    role_file = open('data/temp/' + cleaned_name + '.tsv', 'a')
     sorted_by_perf_date = sorted(performances, key=lambda char: char[0])
-    print(sorted_by_perf_date)
+    #print(sorted_by_perf_date)
+    for each_performance in sorted_by_perf_date:
+        role = '\t'.join(each_performance).encode('utf-8') + '\n'
+        role_file.write(role)
+    role_file.close()
 
 
 #sorted_ariels = sorted(ariels, key=lambda arl: arl[0])
