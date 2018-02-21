@@ -36,7 +36,8 @@ for each_production in productions_on_page:
     title = each_production.find('h4').get_text()
     print(title)
     if plays_patterns.search(title):
+        file_to_write_to = open('data/urls/stc_urls.tsv', 'a')
         link = each_production.find('a').get('href')
-        productions_recorded.append([title, link, season, flagged])
-
-print productions_recorded
+        production_meta = [title, link, season, flagged]
+        file_to_write_to.write('\t'.join(production_meta) + '\n')
+        file_to_write_to.close()
