@@ -7,7 +7,7 @@ from multiprocessing import Pool
 import re
 
 url = 'http://internetshakespeare.uvic.ca/Theater/company/113/'
-plays = re.compile(r'Macbeth|Othello|Romeo\sand\sJuliet|Hamlet|King\sLear|The\sTempest')
+plays = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest|Antony\s(and|\&)\sCleopatra')
 
 html = requests.get(url).text
 soup = BeautifulSoup(html, 'html5lib')
