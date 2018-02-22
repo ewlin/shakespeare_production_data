@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest')
+plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest|Antony\s(and|\&)\sCleopatra')
 
 #scrape the paginated pages of links
 pages = []

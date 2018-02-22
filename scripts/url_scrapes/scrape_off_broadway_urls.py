@@ -9,7 +9,8 @@ from bs4 import BeautifulSoup
 main_url = 'http://www.lortel.org/Archives/CreditableEntity/40'
 
 def get_production_urls(playwright_page):
-    plays = ['Hamlet', 'Macbeth', 'King Lear', 'Othello', 'Romeo and Juliet', 'The Tempest']
+    plays = ['Hamlet', 'Macbeth', 'King Lear', 'Othello',
+            'Romeo and Juliet', 'The Tempest', 'Antony and Cleopatra']
 
     #soup = BeautifulSoup(requests.get(main_url).text, 'html5lib')
     html = requests.get(playwright_page).text

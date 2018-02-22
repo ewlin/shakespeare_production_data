@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-roles = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra'
+roles = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
                            r'Desdemona|Ophelia|Fool|Prospero|Ariel')
 
