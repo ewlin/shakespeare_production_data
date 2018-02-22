@@ -88,7 +88,7 @@ def get_production_info(meta):
 
 
 with open('data/urls/off_broadway_production_urls.tsv') as productions:
-    productions = unicodecsv.reader(actors, delimiter='\t')
+    productions = unicodecsv.reader(productions, delimiter='\t')
     #for actor in actors:
         #get_actor_info(actor)
     p = Pool(10)
