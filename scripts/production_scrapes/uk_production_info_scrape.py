@@ -4,10 +4,10 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-#roles = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
-         #'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool']
+roles = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra'
+                           r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
+                           r'Desdemona|Ophelia|Fool|Prospero|Ariel')
 
-roles = re.compile(r'Macbeth|Othello|Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|Desdemona|Ophelia|Fool|Prospero|Ariel')
 #show_urls = open('data/uk_productions/productions.tsv').read().split()
 show_urls = open('data/theatricalia_production_urls.tsv').read().split()
 

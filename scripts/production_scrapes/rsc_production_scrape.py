@@ -5,11 +5,7 @@ from multiprocessing import Pool
 import re
 import unicodecsv
 
-roles = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
-         'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool',
-         'Prospero', 'Ariel', 'Miranda']
-
-role_patterns = re.compile(r'Miranda|Macbeth|Othello|'
+role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
                            r'Desdemona|Ophelia|Fool|Prospero|Ariel')
 

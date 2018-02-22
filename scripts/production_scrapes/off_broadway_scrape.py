@@ -14,11 +14,9 @@ from multiprocessing import Pool
 import re
 import unicodecsv
 
-roles = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
-         'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool',
-         'Prospero', 'Ariel']
-
-role_patterns = re.compile(r'Macbeth|Othello|Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|Desdemona|Ophelia|Fool|Prospero|Ariel')
+role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra'
+                           r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
+                           r'Desdemona|Ophelia|Fool|Prospero|Ariel')
 
 #weird production with lots of Ariels
 exclude = ['http://www.lortel.org/Archives/Production/2128']
