@@ -1,12 +1,13 @@
-# Shakespeare Productions Dataset (Last update: 2/23/18)
+# Shakespeare Productions Dataset (Last update: 2/24/18)
 
 
 # Latest To-dos:
-* Write script to scrape STC productions
+* Write script to scrape STC productions [Finished older productions; need new lines to deal with 'flagged' productions]
 * Re-write actor meta data script; update to get other info like categories to match for ethnicity, gender, etc.
 * Write Broadway performers script
 * Maybe add Richard III and Julius Caesar to data
-* Clean up Misc production data and add whatever needs to be manually
+* Clean up Misc production data and add whatever needs to be manually (mostly random + chicago shows + royal exchange)
+* Some National Theatre productions
 
 * Start creating d3 code for quick prototype
 * Collect metadata on actors' other productions (like 'best known for' data on Wikipedia)
@@ -17,6 +18,13 @@
 > Game of Thrones
 > Marvel (Avengers, X Men)
 > TV shows
+
+#### PARAMETERS TO INCLUDE IN ENCODING:
+* Age of actor
+* Ethnicity/Race of actor
+* Production in language other than English
+* Filter by the big production companies and series (e.g. RSC, Shakespeare in the Park)
+* Theatre capacity
 
 # Rewrite README to discuss purposes of various files
 
@@ -45,21 +53,11 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
     *Character Icons; hand-drawn?*
 
 #### PRODUCTIONS TO ADD:
-* Stratford (urls scraped; need to get production info)
+* Stratford (urls scraped; need to get production info) [finished]
 * Shakespeare's Globe (urls scraped; need to write to tsv file still 2/5 (Finished 2/8)) (FINISHED)
 > Fixed some issues with the url scraping; was not grabbing every production due to a bug in the code (2/8/2018)
 > Still need to finish up individual production scrape
 * National Theatre (hard to find some of)
-* Misc. productions spreadsheet [e.g., Chicago Shakespeare Theater, Royal Exchange]
-* Broadway productions
-* Shakespeare Theatre Company
 * Film?
 
 * Add links to TSV files?
-
-#### PARAMETERS TO INCLUDE IN ENCODING:
-* Age of actor
-* Ethnicity/Race of actor
-* Production in language other than English
-* Filter by the big production companies and series (e.g. RSC, Shakespeare in the Park)
-* Theatre capacity

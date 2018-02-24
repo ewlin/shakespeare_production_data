@@ -25,8 +25,20 @@ def get_production_info(meta):
     html = requests.get(url).text
     soup = BeautifulSoup(html, 'html5lib')
 
+    production_info = soup.find('div', {'class': 'performance-info'})
+
+    dates = production_info.find('h3', {'class': 'show-date'}).get_text()
+    opening_date = re.search(r'[A-Za-z]+\s\d+', dates).group(0)
+    opening_date_month = opening_date.split(' ')[0]
+    year = season[1] if opening_date_month in months_second_half else season[0]
+    full_opening_date = opening_date + ', ' + ('19' + year if int(year) > 50 else '20' + year)
+
+    director = re.search(r'[D|d]irected by (.+)', production_info.get_text()).group(1).strip()
+
+    venue_find = production_info.find('strong', {'class': 'show-venue'})
+    venue = venue_find.get_text() if venue_find else 'Sidney Harman Hall'
+
     if flag == 'normal':
-        production_info = soup.find('div', {'class': 'performance-info'})
         cast_list = soup.find('div', {'id': 'accordion-1-c1'}).findAll('p')
 
         for each_cast_member in cast_list:
@@ -37,22 +49,12 @@ def get_production_info(meta):
                     if role_patterns.search(role_arr[1]):
                         production_roles.append((role_arr[1], role_arr[0].strip('*')))
 
-        dates = production_info.find('h3', {'class': 'show-date'}).get_text()
-        opening_date = re.search(r'[A-Za-z]+\s\d+', dates).group(0)
-        opening_date_month = opening_date.split(' ')[0]
-        year = season[1] if opening_date_month in months_second_half else season[0]
-        director = re.search(r'directed by (.+)', production_info.get_text()).group(1).strip()
-        venue_find = production_info.find('strong', {'class': 'show-venue'})
-        venue = venue_find.get_text() if venue_find else 'Sidney Harman Hall'
-
-        full_opening_date = opening_date + ', ' + ('19' + year if int(year) > 50 else '20' + year)
-        print full_opening_date
         #2010-06-25	Ariel	Julyana Soelistyo	Des McAnuff	Stratford Festival	Festival Theatre (Canada)
 
-        for each_actor in production_roles:
-            actor_meta = [full_opening_date, each_actor[0], each_actor[1],
-                          director, 'Shakespeare Theatre Company', venue]
-            print actor_meta
+    for each_actor in production_roles:
+        actor_meta = [full_opening_date, each_actor[0], each_actor[1],
+                      director, 'Shakespeare Theatre Company', venue]
+        print actor_meta
 
 #get_production_info(test_url)
 
@@ -63,4 +65,3 @@ with open('data/urls/stc_urls.tsv') as productions:
     records = p.map(get_production_info, productions)
     p.terminate()
     p.join()
-    
