@@ -1,4 +1,10 @@
-# Shakespeare Productions Dataset (Last update: 2/20/18)
+# Shakespeare Productions Dataset (Last update: 2/23/18)
+
+
+# Latest To-dos:
+* Write script to scrape STC productions
+* Re-write actor meta data script; update to get other info like categories to match for ethnicity, gender, etc.
+* Write Broadway performers script 
 
 
 # Rewrite README to discuss purposes of various files
@@ -35,7 +41,7 @@ Once scraped, tsv's are generated and written to a .tsv file in the **urls** sub
 * National Theatre (hard to find some of)
 * Misc. productions spreadsheet [e.g., Chicago Shakespeare Theater, Royal Exchange]
 * Broadway productions
-* Shakespeare Theatre Company 
+* Shakespeare Theatre Company
 * Film?
 
 * Add links to TSV files?

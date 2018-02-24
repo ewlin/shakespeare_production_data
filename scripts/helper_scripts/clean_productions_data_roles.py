@@ -3,11 +3,17 @@ roles we're looking for, and those that are potential matches, in case of differ
 production info/data. For example, some databases list King Lear as "King Lear of Britain" or just "Lear".
 Another example is "Ariel" listed as "Ariel, a spirit"'''
 
+import glob
+import re
 import unicodecsv
 
 roles = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet',
          'King Lear of Britain', 'King Lear', 'Lear', 'Juliet', 'Lady Macbeth',
-         'Desdemona', 'Ophelia', 'Fool', 'Prospero', 'Ariel']
+         'Desdemona', 'Ophelia', 'Fool', 'Prospero', 'Ariel', 'Cleopatra',
+         'Mark Antony', 'Antony']
+
+# glob all the files in temp
+# check if the role matches these exactly. If not, throw them into a temp file to clean manually
 
 with open('data/theatricalia_productions.tsv') as actors:
     reader = unicodecsv.reader(actors, delimiter='\t')

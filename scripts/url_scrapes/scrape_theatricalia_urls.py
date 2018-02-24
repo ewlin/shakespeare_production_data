@@ -10,7 +10,8 @@ plays = [('https://theatricalia.com/play/2/hamlet/past?page=', 30),
 ('https://theatricalia.com/play/8/othello/past?page=', 14),
 ('https://theatricalia.com/play/t/macbeth/past?page=', 22),
 ('https://theatricalia.com/play/y/king-lear/past?page=', 13),
-('https://theatricalia.com/play/1p/the-tempest-or-the-enchanted-island/past?page=', 13)]
+('https://theatricalia.com/play/1p/the-tempest-or-the-enchanted-island/past?page=', 13),
+('https://theatricalia.com/play/1z/antony-and-cleopatra/past?page=', 7)]
 
 pages = [] #All the individual paginated listings pages for each play
 

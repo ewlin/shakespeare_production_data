@@ -9,7 +9,7 @@ roles = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra|'
                            r'Desdemona|Ophelia|Fool|Prospero|Ariel')
 
 #show_urls = open('data/uk_productions/productions.tsv').read().split()
-show_urls = open('data/theatricalia_production_urls.tsv').read().split()
+show_urls = open('data/urls/theatricalia_production_urls.tsv').read().split()
 
 def get_production_info(page):
     html = requests.get('https://theatricalia.com/' + page).text
