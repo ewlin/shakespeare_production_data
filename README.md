@@ -4,8 +4,19 @@
 # Latest To-dos:
 * Write script to scrape STC productions
 * Re-write actor meta data script; update to get other info like categories to match for ethnicity, gender, etc.
-* Write Broadway performers script 
+* Write Broadway performers script
+* Maybe add Richard III and Julius Caesar to data
+* Clean up Misc production data and add whatever needs to be manually
 
+* Start creating d3 code for quick prototype
+* Collect metadata on actors' other productions (like 'best known for' data on Wikipedia)
+> Harry Potter
+> Star Wars
+> Star Trek
+> Lord of the Rings
+> Game of Thrones
+> Marvel (Avengers, X Men)
+> TV shows
 
 # Rewrite README to discuss purposes of various files
 

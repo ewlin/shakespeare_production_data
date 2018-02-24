@@ -24,7 +24,7 @@ def normalize_date(date):
     d = re.search(r'(\d+)[a-z]+\s([A-Za-z]+)\s(\d{4})', date)
     if d:
         date = d.group(1) + ' ' + d.group(2) + ' ' + d.group(3)
-    for format in ('%d %B %Y', '%B %d, %Y', '%d.%m.%Y', '%m/%d/%Y', '%Y', '%Y-%m-%d'):
+    for format in ('%d %B %Y', '%B %d, %Y', '%d.%m.%Y', '%m/%d/%Y', '%Y-%m-%d', '%b %d, %Y', '%Y'):
         try:
             return datetime.strptime(date, format)
         except ValueError:
