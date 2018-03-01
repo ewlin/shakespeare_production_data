@@ -8,7 +8,35 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 import unicodecsv
+from datetime import datetime
 
+'''
+February 17, 1925
+5 April 1929
+'''
+def normalize_date(date):
+    #16th April 1934
+    '''Attempts to transform date in string into a date obj
+    '''
+    # remove 'th, rd' type suffixes from dates
+    d = re.search(r'(\d+)[a-z]+\s([A-Za-z]+)\s(\d{4})', date)
+    if d:
+        date = d.group(1) + ' ' + d.group(2) + ' ' + d.group(3)
+    for format in ('%d %B %Y', '%B %d, %Y', '%d.%m.%Y', '%m/%d/%Y', '%Y-%m-%d', '%b %d, %Y', '%Y'):
+        try:
+            return datetime.strptime(date, format)
+        except ValueError:
+            pass
+    return 'Not a proper date/wrongly formatted dates'
+
+
+def stringify_date(date_obj):
+    try:
+        #return datetime.strftime(date_obj, '%Y-%m-%d')
+        #return '{:%m/%d/%Y}'.format(date_obj)
+        return date_obj.isoformat()
+    except ValueError:
+        return 'pre-1900 date'
 
 url_base = 'https://en.wikipedia.org/wiki/'
 
@@ -68,11 +96,13 @@ def get_actor_info(actor_meta):
             birth_date = re.search(r'\(born\s(\d+\s\w+\s\d{4}|\w+\s\d+\,\s\d{4}|\d{4})', soup.find('p').get_text())
             if birth_date:
                 #print(actor_name, birth_date.group(0))
+                formatted_bday = stringify_date(normalize_date(birth_date.group(1)))
                 actor_info = birth_date.group(1) + '\t' + actor_info
             else:
                 birth_date = re.search(r'(\d+\s\w+\s\d{4}|\w+\s\d+\,\s\d{4})', soup.find('p').get_text())
                 if birth_date:
-                    actor_info = birth_date.group(0) + '\t' + actor_info
+                    formatted_bday = stringify_date(normalize_date(birth_date.group(0)))
+                    actor_info = formatted_bday + '\t' + actor_info
                 else:
                     actor_info = 'no birthday on article' + '\t' + actor_info
         else:
