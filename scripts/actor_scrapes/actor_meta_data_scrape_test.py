@@ -10,6 +10,8 @@ import re
 import unicodecsv
 from datetime import datetime
 
+
+
 '''
 February 17, 1925
 5 April 1929
@@ -31,12 +33,14 @@ def normalize_date(date):
 
 
 def stringify_date(date_obj):
+    print('date obj:')
+    print(date_obj)
     try:
         #return datetime.strftime(date_obj, '%Y-%m-%d')
         #return '{:%m/%d/%Y}'.format(date_obj)
         return date_obj.isoformat()
-    except ValueError:
-        return 'pre-1900 date'
+    except AttributeError:
+        return 'not a date'
 
 url_base = 'https://en.wikipedia.org/wiki/'
 
@@ -44,7 +48,10 @@ def get_actor_info(actor_meta):
     # write to a different file instead:
     # e.g., data_file = open('data/actors_meta/master_actors_list.tsv', 'a')
 
-    data_file = open('data/ages/lear_ages.tsv', 'a')
+    if actor_meta[1] not in ['Juliet']:
+        return
+
+    data_file = open('data/ages/juliet_ages.tsv', 'a')
 
     actor_info = '\t'.join(actor_meta)
 
@@ -108,6 +115,7 @@ def get_actor_info(actor_meta):
         else:
             actor_info = 'person not found on wiki' + '\t' + actor_info
 
+        actor_info = actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity)
         data_file.write(actor_info.encode('utf-8') + '\n')
         print(actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity) + '\t' + ','.join(actor_ethnicity_cat))
 
@@ -116,11 +124,12 @@ def get_actor_info(actor_meta):
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
 
-with open('data/temp/Lear.tsv') as actors:
+with open('data/temp/Juliet.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
     #for actor in actors:
         #get_actor_info(actor)
+
     p = Pool(10)
     records = p.map(get_actor_info, actors)
     p.terminate()
