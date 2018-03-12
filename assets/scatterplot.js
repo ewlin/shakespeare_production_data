@@ -1,8 +1,9 @@
 let svg = d3.select('svg');
 
 
-d3.tsv('data/ages/lear_ages.tsv', function(data) {
+d3.tsv('data/ages/othello_ages.tsv', function(data) {
 
+    console.log(data)
     let scaleY = d3.scaleLinear().domain([100, 0]).range([0, 400]);
     console.log(d3.extent(data, role => role['opening_date']).map(date => moment(date).valueOf()));
     let maxMinDates = d3.extent(data, role => role['opening_date']).map(date => moment(date).valueOf())
