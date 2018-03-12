@@ -48,14 +48,17 @@ def get_actor_info(actor_meta):
     # write to a different file instead:
     # e.g., data_file = open('data/actors_meta/master_actors_list.tsv', 'a')
 
+    '''
     if actor_meta[1] not in ['Iago']:
         return
+    '''
 
-    data_file = open('data/ages/iago_ages.tsv', 'a')
+    data_file = open('data/ages/othello_ages.tsv', 'a')
 
     actor_info = '\t'.join(actor_meta)
 
     actor_gender = 'unknown'
+    is_actor = ''
     actor_ethnicity_cat = []
     actor_ethnicity = []
 
@@ -89,7 +92,7 @@ def get_actor_info(actor_meta):
                 if re.search(r'(Hispanic|Latin(a|o))', category):
                     actor_ethnicity.append('Latino')
 
-                if re.search(r'Asian)', category):
+                if re.search(r'Asian', category):
                     actor_ethnicity.append('Asian')
 
                 if re.search(r'of\s(.+)\sdescent', category):
@@ -100,6 +103,8 @@ def get_actor_info(actor_meta):
                 elif re.search(r'(M|m)ale', category):
                     actor_gender = 'male'
 
+                if re.search(r'([A|a]ctor)|([A|a]ctress)', category):
+                    is_actor = 'yes'
 
             #birth_date = re.search(r'(\d+\s\w+\s\d\d\d\d|\w+\s\d+\,\s\d\d\d\d)', soup.get_text())
             #better birthday search: looks for (born 12 October 1987) or (born January 23, 1980) or (born 1970)
@@ -115,23 +120,29 @@ def get_actor_info(actor_meta):
                     actor_info = formatted_bday + '\t' + actor_info
                 else:
                     actor_info = 'no birthday on article' + '\t' + actor_info
+
+            ethnicity = ','.join(actor_ethnicity) if len(actor_ethnicity) else 'none'
+            ethnic_cat = ','.join(actor_ethnicity_cat) if len(actor_ethnicity_cat) else 'none'
+            is_actor = is_actor if is_actor else 'flagged'
+
         else:
             actor_info = 'person not found on wiki' + '\t' + actor_info
+            ethnicity = 'unknown'
+            ethnic_cat = 'unknown'
 
-        actor_info = actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity)
+        actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor
+        print(actor_info)
         data_file.write(actor_info.encode('utf-8') + '\n')
-        print(actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity) + '\t' + ','.join(actor_ethnicity_cat))
+        data_file.close()
+        #print(actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity) + '\t' + ','.join(actor_ethnicity_cat))
 
 
 #write logic so don't rescrape data already found
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
 
-with open('data/temp/Iago.tsv') as actors:
+with open('data/cleaned_roles/Othello.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
-
-    #for actor in actors:
-        #get_actor_info(actor)
 
     p = Pool(10)
     records = p.map(get_actor_info, actors)

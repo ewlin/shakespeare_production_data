@@ -78,9 +78,9 @@ for each_pattern in role_patterns:
 for each_character, performances in characters.iteritems():
     cleaned_name = '_'.join(each_character.split(' '))
     role_file = open('data/temp/' + cleaned_name + '.tsv', 'a')
-    sorted_by_perf_date = sorted(performances, key=lambda char: char[0])
+    #sorted_by_perf_date = sorted(performances, key=lambda char: char[0])
     #print(sorted_by_perf_date)
-    for each_performance in sorted_by_perf_date:
+    for each_performance in performances:
         role = '\t'.join(each_performance).encode('utf-8') + '\n'
         role_file.write(role)
     role_file.close()
