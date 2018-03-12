@@ -48,10 +48,10 @@ def get_actor_info(actor_meta):
     # write to a different file instead:
     # e.g., data_file = open('data/actors_meta/master_actors_list.tsv', 'a')
 
-    if actor_meta[1] not in ['Juliet']:
+    if actor_meta[1] not in ['Iago']:
         return
 
-    data_file = open('data/ages/juliet_ages.tsv', 'a')
+    data_file = open('data/ages/iago_ages.tsv', 'a')
 
     actor_info = '\t'.join(actor_meta)
 
@@ -89,6 +89,9 @@ def get_actor_info(actor_meta):
                 if re.search(r'(Hispanic|Latin(a|o))', category):
                     actor_ethnicity.append('Latino')
 
+                if re.search(r'Asian)', category):
+                    actor_ethnicity.append('Asian')
+
                 if re.search(r'of\s(.+)\sdescent', category):
                     actor_ethnicity_cat.append(re.search(r'of\s(.+)\sdescent', category).group(1))
 
@@ -124,7 +127,7 @@ def get_actor_info(actor_meta):
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
 
-with open('data/temp/Juliet.tsv') as actors:
+with open('data/temp/Iago.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
     #for actor in actors:
