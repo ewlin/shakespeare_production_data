@@ -3,20 +3,24 @@
 
 # Latest To-dos:
 
+## Data collection:
 * Re-write Broadway performers script
 * Chicago, Oregon, and Shakespeare at the Tobacco Factory Theatres records
 * Maybe add Richard III and Julius Caesar to data
 * Some Additional National Theatre productions?
 
-* Normalize data
---Data collection (manual + scripts in production_scrapes)
+## Data Normalization
+--Data collection happens in (manual + scripts in production_scrapes)
+
 * Combine these two into one script?
 --Sort by Role (actor_scrapes/role_clean.py) using regex
 --Filter out accidental matches and occasionally different role notations (helper_scripts/cleaned_roles.py)
+
 * Manually look through temporary_files/temp_to_clean.tsv and copy/paste into proper file in temp/
 
+* actor_meta_data_scrape_test.py requests each actor using wiki (need to send cleaned data) and then writes to data/ages/[role].tsv
 
-
+## Misc. 
 * Start creating d3 code for quick prototype [Started March 9th]
 * Collect metadata on actors' other productions (like 'best known for' data on Wikipedia)
 > Harry Potter
