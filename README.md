@@ -19,8 +19,11 @@
 * Manually look through temporary_files/temp_to_clean.tsv and copy/paste into proper file in temp/
 
 * actor_meta_data_scrape_test.py requests each actor using wiki (need to send cleaned data) and then writes to data/ages/[role].tsv
+[Here, birthdays are all converted to ISO formats; but still need to manually collect bdays]
+* Think about how to include manually-collected age-estimates...
 
-## Misc. 
+
+## Misc.
 * Start creating d3 code for quick prototype [Started March 9th]
 * Collect metadata on actors' other productions (like 'best known for' data on Wikipedia)
 > Harry Potter
