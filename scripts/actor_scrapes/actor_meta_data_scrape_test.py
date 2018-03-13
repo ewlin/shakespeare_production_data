@@ -63,7 +63,7 @@ def get_actor_info(actor_meta):
 
 
     if len(actor_meta) > 1:
-        actor_name = actor_meta[2]
+        actor_name = actor_meta[2].strip('* ').title()
         full_wiki_url = url_base + '_'.join(actor_name.split(' '))
         html = requests.get(full_wiki_url).text
         soup = BeautifulSoup(html, 'html5lib')

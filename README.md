@@ -1,15 +1,23 @@
-# Shakespeare Productions Dataset (Last update: 2/24/18)
+# Shakespeare Productions Dataset (Last update: 3/13/18)
 
 
 # Latest To-dos:
-* Write script to scrape STC productions [Finished older productions; need new lines to deal with 'flagged' productions]
-* Re-write actor meta data script; update to get other info like categories to match for ethnicity, gender, etc.
-* Write Broadway performers script
-* Maybe add Richard III and Julius Caesar to data
-* Clean up Misc production data and add whatever needs to be manually (mostly random + chicago shows + royal exchange)
-* Some National Theatre productions
 
-* Start creating d3 code for quick prototype
+* Re-write Broadway performers script
+* Chicago, Oregon, and Shakespeare at the Tobacco Factory Theatres records
+* Maybe add Richard III and Julius Caesar to data
+* Some Additional National Theatre productions?
+
+* Normalize data
+--Data collection (manual + scripts in production_scrapes)
+* Combine these two into one script?
+--Sort by Role (actor_scrapes/role_clean.py) using regex
+--Filter out accidental matches and occasionally different role notations (helper_scripts/cleaned_roles.py)
+* Manually look through temporary_files/temp_to_clean.tsv and copy/paste into proper file in temp/
+
+
+
+* Start creating d3 code for quick prototype [Started March 9th]
 * Collect metadata on actors' other productions (like 'best known for' data on Wikipedia)
 > Harry Potter
 > Star Wars
@@ -18,6 +26,7 @@
 > Game of Thrones
 > Marvel (Avengers, X Men)
 > TV shows
+
 
 #### PARAMETERS TO INCLUDE IN ENCODING:
 * Age of actor
