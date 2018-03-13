@@ -10,6 +10,7 @@ import re
 import unicodecsv
 from datetime import datetime
 
+temp_arr = []
 
 '''
 February 17, 1925
@@ -52,7 +53,7 @@ def get_actor_info(actor_meta):
         return
     '''
 
-    data_file = open('data/ages/othello_ages.tsv', 'a')
+    #data_file = open('data/ages/othello_ages.tsv', 'a')
 
     actor_info = '\t'.join(actor_meta)
 
@@ -133,20 +134,33 @@ def get_actor_info(actor_meta):
             ethnic_cat = 'unknown'
 
         actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor
-        print(actor_info)
-        data_file.write(actor_info.encode('utf-8') + '\n')
-        data_file.close()
+        #print(actor_info)
+        #print(actor_info.split('\t'))
+        temp_arr.append(actor_info.split('\t'))
+        #data_file.write(actor_info.encode('utf-8') + '\n')
+        #data_file.close()
         #print(actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity) + '\t' + ','.join(actor_ethnicity_cat))
 
 
 #write logic so don't rescrape data already found
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
+'''
+data_file = open('data/ages/othello_ages.tsv', 'a')
+data_file.write(actor_info.encode('utf-8') + '\n')
+data_file.close()
+'''
 
 with open('data/cleaned_roles/Othello.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
-
+    for each_actor in actors:
+        get_actor_info(each_actor)
+    '''
+    # need to share state between processes for this to work
+    # https://docs.python.org/3/library/multiprocessing.html#sharing-state-between-processes
     p = Pool(10)
     records = p.map(get_actor_info, actors)
     p.terminate()
     p.join()
+    '''
+    print(len(temp_arr))
