@@ -11,7 +11,6 @@ import unicodecsv
 from datetime import datetime
 
 
-
 '''
 February 17, 1925
 5 April 1929
@@ -74,6 +73,8 @@ def get_actor_info(actor_meta):
             categories = soup.find('div', {'id': 'mw-normal-catlinks'}).find('ul').findAll('li')
             for each_category in categories:
                 if re.search('disambiguation', each_category.get_text()):
+                    # Fix logic here; if hits disambiguation page, needs to overwrite/rewrite 'categories'
+
                     new_url = url_base + '_'.join(actor_name.split(' ')) + '_(actor)'
                     print(new_url)
                     html = requests.get(new_url).text
@@ -83,6 +84,7 @@ def get_actor_info(actor_meta):
 
         #REDO logic here. Use a tuple of patterns and do a try/except(?) of matching different patterns
         if not person_not_found:
+            categories = soup.find('div', {'id': 'mw-normal-catlinks'}).find('ul').findAll('li')
             # Fun times with categories
             for each_category in categories:
                 category = each_category.get_text()

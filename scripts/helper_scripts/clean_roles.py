@@ -55,7 +55,7 @@ print(temp_to_clean)
 
 sorted_by_role_to_clean = sorted(temp_to_clean, key=lambda char: char[1])
 for each_role in sorted_by_role_to_clean:
-    file_to_clean = open('data/temp_to_clean.tsv', 'a')
+    file_to_clean = open('data/temporary_files/temp_to_clean.tsv', 'a')
     file_to_clean.write('\t'.join(each_role).encode('utf8') + '\n')
 
 

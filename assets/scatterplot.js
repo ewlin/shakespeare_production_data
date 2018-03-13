@@ -4,17 +4,17 @@ let svg = d3.select('svg');
 d3.tsv('data/ages/othello_ages.tsv', function(data) {
 
     console.log(data)
-    let scaleY = d3.scaleLinear().domain([100, 0]).range([0, 400]);
+    let scaleY = d3.scaleLinear().domain([100, 0]).range([0, 500]);
     console.log(d3.extent(data, role => role['opening_date']).map(date => moment(date).valueOf()));
     let maxMinDates = d3.extent(data, role => role['opening_date']).map(date => moment(date).valueOf())
-    let scaleDate = d3.scaleTime().domain(maxMinDates).range([0,595]);
-    //let scaleX = d3.scaleTime().domain([new Date(2000, 0, 1), new Date(2000, 0, 2)])
-                                //.range([0, 960]);
+    let scaleDate = d3.scaleTime().domain(maxMinDates).range([0,830]);
 
     let points = [];
 
     data.forEach(function(role) {
-        if (role['bday'] != 'person not found on wiki' && role['bday'] != 'no birthday on article' && role['bday'] != 'not a date') {
+        if (role['bday'] != 'person not found on wiki'
+            && role['bday'] != 'no birthday on article'
+            && role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
             console.log(role);
             console.log(moment(role['opening_date']).diff(moment(role['bday']), 'years'));
             points.push([scaleDate(moment(role.opening_date).valueOf()), scaleY(moment(role['opening_date']).diff(moment(role['bday']), 'years'))])
@@ -50,7 +50,10 @@ d3.tsv('data/ages/othello_ages.tsv', function(data) {
         .data(data)
         .enter()
         .append('circle')
-        .attr('fill', d => d.race ? 'brown' : 'blue')
+        .attr('stroke', d => d.gender == 'female' ? 'black' : 'none')
+        //.attr('fill', 'blue')
+        .attr('fill', d => d.race == 'none' ? 'blue' : 'brown')
+        //.attr('stroke-width', '2px')
         .attr('r', '3px')
         .attr('cx', d => scaleDate(moment(d.opening_date).valueOf()))
         .attr('cy', d => scaleY(moment(d['opening_date']).diff(moment(d['bday']), 'years')));
