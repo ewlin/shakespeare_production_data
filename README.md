@@ -1,11 +1,11 @@
-# Shakespeare Productions Dataset (Last update: 3/13/18)
+# Shakespeare Productions Dataset (Last update: 3/14/18)
 
 
 # Latest To-dos:
 
 ## Data collection:
 * Re-write Broadway performers script
-* Chicago, Oregon, and Shakespeare at the Tobacco Factory Theatres records
+* Chicago, Oregon, Court Theatre, and Shakespeare at the Tobacco Factory Theatres records
 * Maybe add Richard III and Julius Caesar to data
 * Some Additional National Theatre productions?
 
@@ -21,6 +21,8 @@
 * actor_meta_data_scrape_test.py requests each actor using wiki (need to send cleaned data) and then writes to data/ages/[role].tsv
 [Here, birthdays are all converted to ISO formats; but still need to manually collect bdays]
 * Think about how to include manually-collected age-estimates...
+
+* Sort by Production-companies and look at the odd productions; remove amateur productions
 
 
 ## Misc.

@@ -5,12 +5,15 @@
 import requests
 import html5lib
 from bs4 import BeautifulSoup
-from multiprocessing import Pool
+from multiprocessing import Pool, Manager
 import re
 import unicodecsv
 from datetime import datetime
+from operator import itemgetter
 
-temp_arr = []
+manager = Manager()
+
+temp_arr = manager.list()
 
 '''
 February 17, 1925
@@ -133,7 +136,7 @@ def get_actor_info(actor_meta):
             ethnicity = 'unknown'
             ethnic_cat = 'unknown'
 
-        actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor
+        actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor + '\t' + ','.join(actor_ethnicity_cat)
         #print(actor_info)
         #print(actor_info.split('\t'))
         temp_arr.append(actor_info.split('\t'))
@@ -153,6 +156,7 @@ data_file.close()
 
 with open('data/cleaned_roles/Othello.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
+    '''
     for each_actor in actors:
         get_actor_info(each_actor)
     '''
@@ -162,5 +166,15 @@ with open('data/cleaned_roles/Othello.tsv') as actors:
     records = p.map(get_actor_info, actors)
     p.terminate()
     p.join()
-    '''
+
     print(len(temp_arr))
+
+    role_records_sorted = sorted(temp_arr, key=itemgetter(9,10))
+
+    print(role_records_sorted)
+    for each_actor in role_records_sorted:
+        data_file = open('data/ages/othello_ages_A.tsv', 'a')
+        each_actor[3] = each_actor[3].strip('* ').title()
+        actor_info = '\t'.join(each_actor)
+        data_file.write(actor_info.encode('utf-8') + '\n')
+        data_file.close()
