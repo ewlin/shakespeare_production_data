@@ -1,12 +1,14 @@
-# Shakespeare Productions Dataset (Last update: 3/14/18)
+# Shakespeare Productions Dataset (Last update: 3/15/18)
 
 
 # Latest To-dos:
 
 ## Data collection:
 * Re-write Broadway performers script
-* Chicago, Oregon, Court Theatre, and Shakespeare at the Tobacco Factory Theatres records
+* Chicago, Oregon, and Shakespeare at the Tobacco Factory Theatres records
+* Northern Broadsides [DONE], West Yorkshire
 * Maybe add Richard III and Julius Caesar to data
+* Add Emilia and Caliban?
 * Some Additional National Theatre productions?
 
 ## Data Normalization

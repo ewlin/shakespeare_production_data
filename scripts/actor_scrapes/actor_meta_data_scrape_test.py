@@ -173,7 +173,7 @@ with open('data/cleaned_roles/Othello.tsv') as actors:
 
     print(role_records_sorted)
     for each_actor in role_records_sorted:
-        data_file = open('data/ages/othello_ages_A.tsv', 'a')
+        data_file = open('data/ages/othello_ages.tsv', 'a')
         each_actor[3] = each_actor[3].strip('* ').title()
         actor_info = '\t'.join(each_actor)
         data_file.write(actor_info.encode('utf-8') + '\n')
