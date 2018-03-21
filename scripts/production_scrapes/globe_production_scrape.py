@@ -5,9 +5,10 @@ from multiprocessing import Pool
 import re
 import unicodecsv
 
-role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra|'
+role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
-                           r'Desdemona|Ophelia|Fool|Prospero|Ariel')
+                           r'Desdemona|Ophelia|Fool|Prospero|Ariel|'
+                           r'Cleopatra|Caesar|Richard|Emilia')
 
 base_url = 'http://www.shakespearesglobe.com'
 

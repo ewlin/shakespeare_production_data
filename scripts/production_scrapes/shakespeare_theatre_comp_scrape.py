@@ -8,9 +8,10 @@ from datetime import datetime
 
 months_second_half = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
 
-role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra|'
+role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
-                           r'Desdemona|Ophelia|Fool|Prospero|Ariel')
+                           r'Desdemona|Ophelia|Fool|Prospero|Ariel|'
+                           r'Cleopatra|Caesar|Richard|Emilia')
 
 test_url = ['Antony and Cleopatra', 'http://www.shakespearetheatre.org/performance-id/3603', '07-08', 'normal']
 # play url season flag
