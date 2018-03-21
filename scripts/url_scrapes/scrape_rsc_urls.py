@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest|Antony\s(and|\&)\sCleopatra')
+plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|'
+                            r'The\sTempest|Antony\s(and|\&)\sCleopatra|Richard\sIII|Julius\sCaesar')
 
 urls = ['http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:hamlet/page/6',
         'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:the-tempest/page/4',

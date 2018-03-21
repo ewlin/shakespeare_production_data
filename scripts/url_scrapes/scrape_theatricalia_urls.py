@@ -4,6 +4,7 @@ import requests
 import html5lib
 from bs4 import BeautifulSoup
 from multiprocessing import Pool
+import re
 
 plays = [('https://theatricalia.com/play/2/hamlet/past?page=', 30),
 ('https://theatricalia.com/play/n/romeo-and-juliet/past?page=', 17),

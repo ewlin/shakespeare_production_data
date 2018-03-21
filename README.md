@@ -1,12 +1,17 @@
-# Shakespeare Productions Dataset (Last update: 3/15/18)
+# Shakespeare Productions Dataset (Last update: 3/20/18)
 
 
 # Latest To-dos:
 
+> Note some broadway productions only return and Month + year or just Year in the database and crashes the role_clean.py script;
+> temporarily deleted those lines
+
+
 ## Data collection:
-* Re-write Broadway performers script
-* Chicago, Oregon, and Shakespeare at the Tobacco Factory Theatres records
-* Northern Broadsides [DONE], West Yorkshire
+* Re-write Broadway performers script [MOSTLY DONE 3/20]
+* Chicago [Some], Oregon [Some], and Shakespeare at the Tobacco Factory Theatres records
+* http://www.cheekbyjowl.com/productions.php cheekbyjowl productions
+* Northern Broadsides [DONE], West Yorkshire [A good amount]
 * Maybe add Richard III and Julius Caesar to data
 * Add Emilia and Caliban?
 * Some Additional National Theatre productions?

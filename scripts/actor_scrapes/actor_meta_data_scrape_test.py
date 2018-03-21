@@ -14,6 +14,8 @@ from operator import itemgetter
 manager = Manager()
 
 temp_arr = manager.list()
+url_base = 'https://en.wikipedia.org/wiki/'
+
 
 '''
 February 17, 1925
@@ -45,16 +47,10 @@ def stringify_date(date_obj):
     except AttributeError:
         return 'not a date'
 
-url_base = 'https://en.wikipedia.org/wiki/'
 
 def get_actor_info(actor_meta):
     # write to a different file instead:
     # e.g., data_file = open('data/actors_meta/master_actors_list.tsv', 'a')
-
-    '''
-    if actor_meta[1] not in ['Iago']:
-        return
-    '''
 
     #data_file = open('data/ages/othello_ages.tsv', 'a')
 
@@ -148,18 +144,11 @@ def get_actor_info(actor_meta):
 #write logic so don't rescrape data already found
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
-'''
-data_file = open('data/ages/othello_ages.tsv', 'a')
-data_file.write(actor_info.encode('utf-8') + '\n')
-data_file.close()
-'''
 
-with open('data/cleaned_roles/Othello.tsv') as actors:
+
+with open('data/cleaned_roles/Prospero.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
-    '''
-    for each_actor in actors:
-        get_actor_info(each_actor)
-    '''
+
     # need to share state between processes for this to work
     # https://docs.python.org/3/library/multiprocessing.html#sharing-state-between-processes
     p = Pool(10)
@@ -173,7 +162,7 @@ with open('data/cleaned_roles/Othello.tsv') as actors:
 
     print(role_records_sorted)
     for each_actor in role_records_sorted:
-        data_file = open('data/ages/othello_ages.tsv', 'a')
+        data_file = open('data/ages/prospero_ages.tsv', 'a')
         each_actor[3] = each_actor[3].strip('* ').title()
         actor_info = '\t'.join(each_actor)
         data_file.write(actor_info.encode('utf-8') + '\n')

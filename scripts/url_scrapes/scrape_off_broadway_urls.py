@@ -3,14 +3,15 @@
 import requests
 import html5lib
 from bs4 import BeautifulSoup
+import re
 #from multiprocessing import Pool
 
 #Listings of all Off-Broadway Shakespeare productions
 main_url = 'http://www.lortel.org/Archives/CreditableEntity/40'
 
 def get_production_urls(playwright_page):
-    plays = ['Hamlet', 'Macbeth', 'King Lear', 'Othello',
-            'Romeo and Juliet', 'The Tempest', 'Antony and Cleopatra']
+    plays = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|'
+                       r'The\sTempest|Antony\s(and|\&)\sCleopatra|Richard\sIII|Julius\sCaesar')
 
     #soup = BeautifulSoup(requests.get(main_url).text, 'html5lib')
     html = requests.get(playwright_page).text
@@ -25,7 +26,7 @@ def get_production_urls(playwright_page):
             title = production_info[1].get_text().strip()
             #print(title)
 
-            if title in plays:
+            if re.search(plays, title):
                 url_file = open('data/urls/off_broadway_production_urls.tsv', 'a')
                 theatre = production_info[2].get_text().strip()
                 opening = production_info[3].get_text().strip()
