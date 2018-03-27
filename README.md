@@ -9,10 +9,10 @@
 
 ## Data collection:
 * Chicago [Some], Oregon [Some]
-* Maybe add Richard III and Julius Caesar to data [NEED TO REDO RSC + THEATRICALIA scripts urls]
-* Add Emilia and Caliban? somewhat
+* Add Emilia somewhat [DONE, I think]
 * Some Additional National Theatre productions?
 * Redo Theatricalia production scrape; getting closing date instead of opening for some productions [March 27, 2018]
+* Manually add productions of Richard III and Julius Caesar to Misc spreadsheet
 
 ## Data Normalization
 --Data collection happens in (manual + scripts in production_scrapes)
