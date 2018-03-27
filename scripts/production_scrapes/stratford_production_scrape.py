@@ -8,7 +8,7 @@ import unicodecsv
 role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
                            r'Desdemona|Ophelia|Fool|Prospero|Ariel|'
-                           r'Cleopatra|Caesar|Richard|Emilia')
+                           r'Cleopatra|Caesar|Richard|Emilia|Brutus')
 
 test_url = 'http://internetshakespeare.uvic.ca/Theater/production/stage/3264/' #Macbeth
 

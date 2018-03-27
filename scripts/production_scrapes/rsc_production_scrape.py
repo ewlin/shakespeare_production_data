@@ -9,7 +9,7 @@ import unicodecsv
 role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
                            r'Desdemona|Ophelia|Fool|Prospero|Ariel|'
-                           r'Cleopatra|Caesar|Richard|Emilia')
+                           r'Cleopatra|Caesar|Richard|Emilia|Brutus')
 
 test_url = 'http://collections.shakespeare.org.uk/search/rsc-performances/ham191308-hamlet/view_as/list/search/everywhere:hamlet/page/7'
 

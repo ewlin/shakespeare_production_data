@@ -7,12 +7,14 @@ from multiprocessing import Pool
 import re
 
 plays = [('https://theatricalia.com/play/2/hamlet/past?page=', 30),
-('https://theatricalia.com/play/n/romeo-and-juliet/past?page=', 17),
-('https://theatricalia.com/play/8/othello/past?page=', 14),
-('https://theatricalia.com/play/t/macbeth/past?page=', 22),
-('https://theatricalia.com/play/y/king-lear/past?page=', 13),
-('https://theatricalia.com/play/1p/the-tempest-or-the-enchanted-island/past?page=', 13),
-('https://theatricalia.com/play/1z/antony-and-cleopatra/past?page=', 7)]
+('https://theatricalia.com/play/n/romeo-and-juliet/past?page=', 18),
+('https://theatricalia.com/play/8/othello/past?page=', 15),
+('https://theatricalia.com/play/t/macbeth/past?page=', 23),
+('https://theatricalia.com/play/y/king-lear/past?page=', 14),
+('https://theatricalia.com/play/1p/the-tempest-or-the-enchanted-island/past?page=', 14),
+('https://theatricalia.com/play/1z/antony-and-cleopatra/past?page=', 8),
+('https://theatricalia.com/play/18/richard-iii/past?page=', 14),
+('https://theatricalia.com/play/1g/julius-caesar/past?page=', 14)]
 
 pages = [] #All the individual paginated listings pages for each play
 
