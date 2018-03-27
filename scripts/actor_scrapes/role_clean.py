@@ -47,6 +47,7 @@ for each_pattern in role_patterns:
         with open(each_file) as productions:
             roles = unicodecsv.reader(productions, delimiter='\t')
             for each_role in roles:
+                print(each_role)
                 prod_date = normalize_date(each_role[0])
                 role = each_role[1]
                 actor = each_role[2]

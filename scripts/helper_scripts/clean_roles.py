@@ -27,9 +27,9 @@ roles = {
     'Ariel': ['Ariel'],
     'Miranda': ['Miranda'],
     'Prospero': ['Prospero'],
-    'Richard III': ['Richard III'],
-    'Julius Caesar': ['Julius Caesar']
-    'Marcus Brutus': ['Marcus Brutus']
+    'Richard': ['Richard III'],
+    'Julius Caesar': ['Julius Caesar'],
+    'Brutus': ['Marcus Brutus', 'Brutus']
 }
 # glob all the files in temp
 # check if the role matches these exactly. If not, throw them into a temp file to clean manually
