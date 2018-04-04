@@ -86,22 +86,26 @@ d3.queue()
 		  });
 		}
 
-		//Find max freq of roles at each age
-		console.log(characterAges);
-		let allAgesFreqs = [];
-		for (character in characterAges) {
-			//let ages = Object.keys(characterAges[character]);
-			for (age in characterAges[character]) {
-				let freq = characterAges[character][age].length;
-				allAgesFreqs.push(freq);
-			}
-		}
+        //Find max freq of roles at each age
+        console.log(characterAges);
+        let allAgesFreqs = [];
+        for (character in characterAges) {
+            //let ages = Object.keys(characterAges[character]);
+            for (age in characterAges[character]) {
+                if (age != 'gender') {
+                    let freq = characterAges[character][age].length;
+                    allAgesFreqs.push(freq);
+                }
+
+            }
+        }
+
+        //let maxMinDates = d3.extent(arr, role => role['opening_date']).map(date => moment(date).valueOf());
+        let maxMinAgeFreqs = d3.extent(allAgesFreqs);
+        console.log(maxMinAgeFreqs)
 
 
-		//let maxMinDates = d3.extent(arr, role => role['opening_date']).map(date => moment(date).valueOf());
-		let maxMinAgeFreqs = d3.extent(allAgesFreqs);
-		console.log(maxMinAgeFreqs)
-		let scaleY = d3.scaleLinear().domain([0, maxMinAgeFreqs[1]]).range([330, 0]);
+        let scaleY = d3.scaleLinear().domain([0, maxMinAgeFreqs[1]]).range([330, 0]);
 
 		var area = d3.area()
 			.curve(d3.curveCatmullRom)

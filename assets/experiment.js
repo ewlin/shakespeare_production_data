@@ -100,6 +100,7 @@ d3.queue()
         //Create historgram buckets with ALL Ages
         //input == characterAges
 
+        /**
         function processAllPoints() {
             let actorsAges = {
                 male: {},
@@ -128,7 +129,8 @@ d3.queue()
 
             return actorsAges;
         }
-
+        **/
+        
         function processAllPointsAlt() {
             let actorsAges = [
                 {gender: 'male', roles: []},
@@ -153,17 +155,11 @@ d3.queue()
             }
 
             actorsAges.forEach(g => g.roles.sort((a,b) => a.age - b.age));
-            /**
-            actorsAges.forEach(function(gender) {
-                gender.roles.sort(function(a,b) {
-                    return a.age - b.age;
-                });
-            });
-            **/
+
             return actorsAges;
         }
 
-        console.log(processAllPoints());
+        //console.log(processAllPoints());
         console.log(processAllPointsAlt());
 
 
