@@ -13,6 +13,7 @@ actors = glob.glob('data/temp/*.tsv')
 roles = {
     'Othello': ['Othello'],
     'Iago': ['Iago'],
+    'Emilia': ['Emilia'],
     'Desdemona': ['Desdemona'],
     'Macbeth': ['Macbeth'],
     'Lady Macbeth': ['Lady Macbeth'],
