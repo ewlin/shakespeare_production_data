@@ -130,7 +130,7 @@ d3.queue()
             return actorsAges;
         }
         **/
-        
+
         function processAllPointsAlt() {
             let actorsAges = [
                 {gender: 'male', roles: []},
@@ -159,8 +159,44 @@ d3.queue()
             return actorsAges;
         }
 
+        function processAllPointsAlt2() {
+            let actorsAges = [];
+
+            for (let character in characterAges) {
+                let role = character.substring(0,character.length - 4);
+                let roleAges = characterAges[character];
+                let characterGender = roleAges.gender;
+                //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
+
+                for (let age in roleAges) {
+                    if (age != 'gender') {
+                        roleAges[age].forEach(a => {
+                            actorsAges.push({role: role, gender: characterGender, age: parseInt(age)})
+                        });
+                    }
+                }
+            }
+
+            actorsAges.sort((a,b) => a.age - b.age);
+
+            return actorsAges;
+        }
+
         //console.log(processAllPoints());
         console.log(processAllPointsAlt());
+        console.log(processAllPointsAlt2())
+
+        //Test....
+        let testData = processAllPointsAlt();
+
+        let genderGroups = svg.selectAll('.genders').data(testData).enter()
+                            .append('g');
+
+
+        genderGroups.selectAll('.points').data(d => d.roles).enter().append('circle');
+        //End Test
+
+
 
 
 
@@ -348,3 +384,10 @@ d3.queue()
 
 
 	});
+
+
+function randomBetween(maxMin) {
+    let dif = maxMin[1] - maxMin[0];
+    let randomVal = Math.random();
+    return (randomVal * dif) + maxMin[0];
+}
