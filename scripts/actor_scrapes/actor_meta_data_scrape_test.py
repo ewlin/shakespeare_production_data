@@ -153,7 +153,7 @@ with open('data/cleaned_roles/Romeo.tsv') as actors:
     print(temp_arr)
 
 '''
-with open('data/temp/Orlando.tsv') as actors:
+with open('data/temp/Prospero.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
     # need to share state between processes for this to work
@@ -172,7 +172,7 @@ with open('data/temp/Orlando.tsv') as actors:
 
     print(role_records_sorted)
     for each_actor in role_records_sorted:
-        data_file = open('data/ages/orlando_ages.tsv', 'a')
+        data_file = open('data/ages/prospero_ages.tsv', 'a')
         each_actor[3] = each_actor[3].strip('* ').title()
         actor_info = '\t'.join(each_actor)
         data_file.write(actor_info.encode('utf-8') + '\n')

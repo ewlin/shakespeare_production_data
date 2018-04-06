@@ -1,5 +1,5 @@
 bday	opening_date	role	actor	director	company	venue	gender	race	actor_flag	ethnicities
-no birthday on article	1761-11-26T00:00:00	Hamlet	Lewis Hallam	director unknown	unknown production company	Chapel Street Theatre	male	none	yes	
+no birthday on article	1761-11-26T00:00:00	Hamlet	Lewis Hallam	director unknown	unknown production company	Chapel Street Theatre	male	none	yes
 person not found on wiki	1832-11-23T00:00:00	Hamlet	Mr Rumball	director unknown	unknown production company	Surrey Theatre	unknown	unknown
 1838-05-10T00:00:00	1863-01-01T00:00:00	Hamlet	John Wilkes Booth	director unknown	Grover’s Theater	National Stadium, Washington DC	male	none	yes	English
 1833-11-13T00:00:00	1870-01-05T00:00:00	Hamlet	Edwin Booth	director unknown	unknown production company	Booth's Theatre	male	none	yes	English
@@ -116,7 +116,7 @@ person not found on wiki	1985-11-05T00:00:00	Hamlet	Tim Mcinnerny	Cicely Berry	N
 1957-04-29T00:00:00	1989-01-01T00:00:00	Hamlet	Daniel Day-Lewis	Richard Eyre	National Theatre	Olivier Theatre, National Theatre	male	none	yes	English,Irish,Jewish,Irish,Latvian-Jewish,Polish-Jewish,Polish-Jewish,English
 1960-01-18T00:00:00	1989-11-23T00:00:00	Hamlet	Mark Rylance	Ron Daniels	Royal Shakespeare Company	Barbican Theatre, London	male	none	yes	Irish
 1947-10-24T00:00:00	1990-04-10T00:00:00	Hamlet	Kevin Kline	Kevin Kline	Joseph Papp	Joseph Papp Public Theater/Anspacher Theater	male	none	yes	German-Jewish,Irish
-1972-11-04T00:00:00	1990-09-04T00:00:00	Hamlet	Timothy Walker	Declan Donnellan	Cheek By Jowl	Theatre Royal, Bury St Edmunds	male	none	yes
+1972-11-04T00:00:00	1990-09-04T00:00:00	Hamlet	Timothy Walker	Declan Donnellan	Cheek By Jowl	Theatre Royal, Bury St Edmunds	male	none	flagged
 1961-06-24T00:00:00	1991-01-01T00:00:00	Hamlet	Iain Glen	Paul Unwin	unknown production company	Bristol Old Vic	male	none	yes
 1958-08-22T00:00:00	1991-05-27T00:00:00	Hamlet	Colm Feore	David William	Stratford Festival	Festival Theatre (Canada)	male	none	yes	Irish,Irish
 1946-02-21T00:00:00	1992-01-01T00:00:00	Hamlet	Alan Rickman	Robert Sturua	unknown production company	Riverside Studios, London	male	none	yes	English,Irish,Welsh

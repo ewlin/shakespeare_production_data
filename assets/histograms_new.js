@@ -13,7 +13,7 @@ d3.queue()
 	//.defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
 	//.defer(d3.tsv, 'data/ages/shylock_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/iago_actor_ages.tsv')
-    .defer(d3.tsv, 'data/ages/othello_ages.tsv')
+    .defer(d3.tsv, 'data/ages_updated/othello_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/desdemona_ages.tsv')
 	//.defer(d3.tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
@@ -74,7 +74,7 @@ d3.queue()
 						&& role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
 
 					let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
-					if (age > 0) {
+				    if (age > 0 && moment(role['opening_date']) > moment('1950')) {
 						if (characterAges[character + 'Ages'][age]) {
 							characterAges[character + 'Ages'][age].push(role)
 						} else {
@@ -113,11 +113,11 @@ d3.queue()
     	    .y1(function(d) { return scaleY(d[1]); })
 			.y0(function(d) { return scaleY(0); });
 
-		characterAgeHistogram(characterAges.iagoAges, 'steelblue');
+		//characterAgeHistogram(characterAges.iagoAges, 'steelblue');
         characterAgeHistogram(characterAges.othelloAges, 'orange');
 		//characterAgeHistogram(characterAges.ladyMacbethAges, '#c73683');
 		//characterAgeHistogram(characterAges.rosalindAges, '#fc5863');
-		characterAgeHistogram(characterAges.desdemonaAges, '#fc5863'); //#fa5fb2');
+		characterAgeHistogram(characterAges.cleopatraAges, '#fc5863'); //#fa5fb2');
 		//characterAgeHistogram(characterAges.shylockAges, '#5888b0');
 
 

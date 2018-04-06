@@ -7,7 +7,8 @@
 
 		body {
 			/**background: #bababa;**/
-            background: rgba(49, 38, 45, 0.51);
+            /**background: rgba(49, 38, 45, 0.51);**/
+            background: #1a1b1e;
 		}
 
         svg {
@@ -17,12 +18,18 @@
         text {
             font-size: 12px;
             font-family: Arial;
+            font-weight: 500;
         }
 
         .svg-container {
-            width: 1100px; 
+            width: 1100px;
             margin: auto;
         }
+
+        .axis path, .axis text, .axis .tick line {
+            stroke: #7c8392;
+        }
+
     </style>
 </head>
 <body>
@@ -31,10 +38,10 @@
     <button class="hull-tran">Hull change</button>
     -->
 <div class='svg-container'>
-    <svg width="1100" height="600">
+    <svg width="1100" height="630">
         <defs>
             <filter id="blurMe">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
+                <feGaussianBlur in="SourceGraphic" stdDeviation=".2" />
             </filter>
             <pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">
                 <path d="M-1,1 l2,-2

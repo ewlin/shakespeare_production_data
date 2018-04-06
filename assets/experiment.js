@@ -14,23 +14,25 @@ d3.queue()
 	//.defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
     //.defer(d3.tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
     //.defer(d3.tsv, 'data/ages_updated/orlando_actor_ages.tsv')
-    //.defer(d3.tsv, 'data/ages/othello_ages.tsv')
+    //.defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
     //.defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
     //.defer(d3.tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
     //.defer(d3.tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
     //.defer(d3.tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
-    .defer(d3.tsv, 'data/ages_updated/iago_actor_ages.tsv')
-    .defer(d3.tsv, 'data/ages/othello_ages.tsv')
+    //.defer(d3.tsv, 'data/ages_updated/iago_actor_ages.tsv')
+    .defer(d3.tsv, 'data/ages/prospero_ages.tsv')
+    .defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
     .defer(d3.tsv, 'data/ages/desdemona_ages.tsv')
-    .defer(d3.tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
+    .defer(d3.tsv, 'data/ages_updated/orlando_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/shylock_ages.tsv')
-    .defer(d3.tsv, 'data/ages_updated/antony_actor_ages.tsv')
+    .defer(d3.tsv, 'data/ages/lear_ages.tsv')
+    //.defer(d3.tsv, 'data/ages_updated/antony_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
-	.await(function(error, iago, othello, desdemona, macbeth, ladyMacbeth, cleopatra, shylock, antony, rosalind, hamlet, portia) {
+	.await(function(error, prospero, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, shylock, lear, rosalind, hamlet, portia) {
 		let scaleX = d3.scaleLinear().domain([10, 85]).range([20, 1000]);
 
         svg.append('g')
@@ -39,11 +41,11 @@ d3.queue()
 
         let indicies = {
             hamlet: 0,
-            iago: 1,
-            macbeth: 2,
-            othello: 3,
-            antony: 4,
-            shylock: 5,
+            orlando: 1,
+            bassanio: 2,
+            shylock: 3,
+            prospero: 4,
+            lear: 5,
             desdemona: 0,
             rosalind: 1,
             portia: 2,
@@ -53,10 +55,10 @@ d3.queue()
 
         let characterGenders = {
             hamlet: 'male',
-            iago: 'male',
-            macbeth: 'male',
-            othello: 'male',
-            antony: 'male',
+            prospero: 'male',
+            orlando: 'male',
+            bassanio: 'male',
+            lear: 'male',
             shylock: 'male',
             desdemona: 'female',
             rosalind: 'female',
@@ -72,14 +74,14 @@ d3.queue()
    	        shylockAges: {},
 
             **/
-            iagoAges: {gender: 'male', color: '#c0c400'},
-            othelloAges: {gender: 'male', color: '#F7973A'},
+            prosperoAges: {gender: 'male', color: '#c0c400'},
+            bassanioAges: {gender: 'male', color: '#F7973A'},
             desdemonaAges: {gender: 'female', color: '#FC5863'},
-            macbethAges: {gender: 'male', color: '#F8B535'},
+            orlandoAges: {gender: 'male', color: '#F8B535'},
    	        ladyMacbethAges: {gender: 'female', color: '#78779E'},
             cleopatraAges: {gender: 'female', color: '#577EAD'},
             shylockAges: {gender: 'male', color: '#F57A3E'},
-            antonyAges: {gender: 'male', color: '#F45C42'},
+            learAges: {gender: 'male', color: '#F45C42'},
             rosalindAges: {gender: 'female', color: '#CA6379'},
             hamletAges: {gender: 'male', color: '#FAE12F'},
 			portiaAges: {gender: 'female', color: '#A96B88'}
@@ -92,27 +94,27 @@ d3.queue()
             hamletAges: [],
 			portiaAges : [],
             **/
-            iagoAges: [],
-            othelloAges: [],
+            prosperoAges: [],
+            bassanioAges: [],
             desdemonaAges: [],
-            macbethAges: [],
+            orlandoAges: [],
 			ladyMacbethAges : [],
             cleopatraAges: [],
             shylockAges : [],
-            antonyAges: [],
+            learAges: [],
             rosalindAges : [],
             hamletAges: [],
 			portiaAges: []
 		}
 
-		processPoints(iago, 'iago');
-        processPoints(othello, 'othello');
+		processPoints(prospero, 'prospero');
+        processPoints(bassanio, 'bassanio');
         processPoints(desdemona, 'desdemona');
-        processPoints(macbeth, 'macbeth');
+        processPoints(orlando, 'orlando');
         processPoints(ladyMacbeth, 'ladyMacbeth');
         processPoints(cleopatra, 'cleopatra');
         processPoints(shylock, 'shylock');
-        processPoints(antony, 'antony');
+        processPoints(lear, 'lear');
         processPoints(rosalind, 'rosalind');
         processPoints(hamlet, 'hamlet');
         processPoints(portia, 'portia');
@@ -122,11 +124,12 @@ d3.queue()
 
         for (let char in characterAgesArrays) {
             let role = char.substring(0,char.length - 4);
-            let ages = characterAgesArrays[char].sort((a,b) => a - b);
+            let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
             console.log(ages);
             let twentyFifthPercentile = d3.quantile(ages, .25);
             let seventyFifthPercentile = d3.quantile(ages, .75);
-            interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]]
+            interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
+            console.log(role + ': ' + d3.variance(ages));
         }
 
         console.log(interquartiles);
@@ -134,8 +137,8 @@ d3.queue()
         /**
         console.log(d3.quantile(characterAgesArrays['iagoAges'].sort(), .25))
 		console.log(d3.quantile(characterAgesArrays['iagoAges'].sort(), .75))
-		console.log(d3.quantile(characterAgesArrays['othelloAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['othelloAges'].sort(), .75))
+		console.log(d3.quantile(characterAgesArrays['bassanioAges'].sort(), .25))
+		console.log(d3.quantile(characterAgesArrays['bassanioAges'].sort(), .75))
 		console.log(d3.quantile(characterAgesArrays['desdemonaAges'].sort(), .25))
 		console.log(d3.quantile(characterAgesArrays['desdemonaAges'].sort(), .75))
         console.log(d3.quantile(characterAgesArrays['macbethAges'].sort(), .25))
@@ -155,14 +158,24 @@ d3.queue()
 						&& role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
 
 					let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
-					if (age > 0) {
+					if (age > 0 && moment(role['opening_date']) > moment('1959')
+                                //&& moment(role['opening_date']) < moment('1960')
+                                && role['gender'] == characterGenders[character]) {
 						if (characterAges[character + 'Ages'][age]) {
 							characterAges[character + 'Ages'][age].push(role)
 						} else {
 							characterAges[character + 'Ages'][age] = [role]
 						}
 						characterAgesArrays[character + 'Ages'].push(age);
+
+                        if (character == 'prospero' && age > 65) {
+                            console.log(role['opening_date']);
+                            console.log(role['actor'] + ' ' + age);
+                        }
+
 					}
+
+
 				}
 		  });
 		}
@@ -281,11 +294,11 @@ d3.queue()
         //Height = 500
 
         //scaleX
-        let scaleYMale = d3.scaleLinear().domain([0,1]).range([10, 265]);
-        let scaleYFemale = d3.scaleLinear().domain([0,1]).range([285, 540]);
+        let scaleYMale = d3.scaleLinear().domain([0,1]).range([20, 265]);
+        let scaleYFemale = d3.scaleLinear().domain([0,1]).range([285, 560]);
 
-        let female = scaleGender([10, 265], 6, 50);
-        let male = scaleGender([285, 540], 5, 50);
+        let female = scaleGender([20, 290], 6, 50);
+        let male = scaleGender([310, 560], 5, 50);
 
         function scaleGender(range, numOfBands, bandHeight) {
             return function(index, randomFlag) {
@@ -310,7 +323,8 @@ d3.queue()
             .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '4.6px' : '4px')
             .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
             .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-            .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .70 : .27);
+            .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .20)
+            .attr('filter', 'url(#blurMe)');
 
         /**
         var area = d3.area()
@@ -333,26 +347,30 @@ d3.queue()
 
             charMeta.append('path').datum(interquartiles[eachCharacter].slice(1,3))
                 .attr('d', interquartileLine)
-                .attr('stroke', '#42454c')
-                .attr('stroke-width', '5px')
+                //.attr('stroke', '#42454c')
+                .attr('stroke', '#7c8392')
+                .attr('stroke-width', '6.5px')
                 .attr('opacity', .85);
 
             charMeta.append('path').datum(interquartiles[eachCharacter])
                 .attr('d', interquartileLine)
-                .attr('stroke', '#42454c')
+                .attr('stroke', '#7c8392')
                 .attr('stroke-width', '1.5px')
                 .attr('opacity', .5)
                 .attr('stroke-dasharray', '3,1');
 
-            let radius = 21;
-            let pad = 23;
+            let radius = 21.5;
+            let pad = 30;
 
             charMeta.append('circle').attr('r', radius).attr('cy', yValue).attr('cx', () => {
-                return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80)) + pad;
-            }).attr('stroke', 'black').attr('fill', 'none');
+                //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
+                return scaleX(interquartiles[eachCharacter][3]) + pad;
+            }).attr('stroke', '#7c8392')
+            .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
+            .attr('fill-opacity', .6)
 
-            let arcStartX = (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80)) - (radius + 3) + pad;
-            let arcEndX = (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80)) + (radius + 3) + pad;
+            let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
+            let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
 
             //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
             //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
@@ -361,7 +379,6 @@ d3.queue()
                     .attr('id', eachCharacter + 'label')
                     .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
                     .attr('stroke-width', '3px')
-                    //.attr('stroke', 'black')
                     .attr('fill', 'none');
 
             charMeta.append('text')
@@ -370,7 +387,9 @@ d3.queue()
                     .append('textPath')
                     .attr('xlink:href', d => '#' + d + 'label')
                     //.attr('alignment-baseline', 'hanging')
-                    .attr('text-anchor', 'start')
+                    .attr('text-anchor', 'middle')
+                    .attr('startOffset', '50%')
+                    .attr('stroke', '#7c8392')
                     .text(d => d[0].toUpperCase() + d.substring(1,d.length));
 
 
@@ -407,7 +426,7 @@ d3.queue()
 
         /**
 		characterAgeHistogram(characterAges.iagoAges, 'steelblue');
-        characterAgeHistogram(characterAges.othelloAges, 'orange');
+        characterAgeHistogram(characterAges.bassanioAges, 'orange');
 		//characterAgeHistogram(characterAges.ladyMacbethAges, '#c73683');
 		//characterAgeHistogram(characterAges.rosalindAges, '#fc5863');
 		characterAgeHistogram(characterAges.desdemonaAges, '#fc5863'); //#fa5fb2');
@@ -487,7 +506,7 @@ d3.queue()
 		//}
 //
 		////console.log(newArr(macbethAgesArray))
-		////console.log(newArr(othelloAgesArray))
+		////console.log(newArr(bassanioAgesArray))
 		//let newMacbeth = newArr(macbethAgesArray);
 		//let newLadyMac = newArr(ladyMacbethAgesArray);
 		//console.log(newMacbeth.length, newLadyMac.length)
