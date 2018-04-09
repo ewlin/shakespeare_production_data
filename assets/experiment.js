@@ -33,7 +33,8 @@ d3.queue()
     .defer(d3.tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
 	.await(function(error, prospero, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, shylock, lear, rosalind, hamlet, portia) {
-		let scaleX = d3.scaleLinear().domain([10, 85]).range([20, 1000]);
+        let widthMax = document.querySelector('svg').clientWidth;
+		let scaleX = d3.scaleLinear().domain([10, 85]).range([20, widthMax - 80]);
 
         svg.append('g')
     		.attr('class', 'x axis')
@@ -107,19 +108,31 @@ d3.queue()
 			portiaAges: []
 		}
 
-		processPoints(prospero, 'prospero');
-        processPoints(bassanio, 'bassanio');
-        processPoints(desdemona, 'desdemona');
-        processPoints(orlando, 'orlando');
-        processPoints(ladyMacbeth, 'ladyMacbeth');
-        processPoints(cleopatra, 'cleopatra');
-        processPoints(shylock, 'shylock');
-        processPoints(lear, 'lear');
-        processPoints(rosalind, 'rosalind');
-        processPoints(hamlet, 'hamlet');
-        processPoints(portia, 'portia');
+        /**
+		processPoints(prospero, 'prospero', 1900, 1959);
+        processPoints(bassanio, 'bassanio', 1900, 1959);
+        processPoints(desdemona, 'desdemona', 1900, 1959);
+        processPoints(orlando, 'orlando', 1900, 1959);
+        processPoints(ladyMacbeth, 'ladyMacbeth', 1900, 1959);
+        processPoints(cleopatra, 'cleopatra', 1900, 1959);
+        processPoints(shylock, 'shylock', 1900, 1959);
+        processPoints(lear, 'lear', 1900, 1959);
+        processPoints(rosalind, 'rosalind', 1900, 1959);
+        processPoints(hamlet, 'hamlet', 1900, 1959);
+        processPoints(portia, 'portia', 1900, 1959);
+        **/
 
-
+        processPoints(prospero, 'prospero', 1960);
+        processPoints(bassanio, 'bassanio', 1960);
+        processPoints(desdemona, 'desdemona', 1960);
+        processPoints(orlando, 'orlando', 1960);
+        processPoints(ladyMacbeth, 'ladyMacbeth', 1960);
+        processPoints(cleopatra, 'cleopatra', 1960);
+        processPoints(shylock, 'shylock', 1960);
+        processPoints(lear, 'lear', 1960);
+        processPoints(rosalind, 'rosalind', 1960);
+        processPoints(hamlet, 'hamlet', 1960);
+        processPoints(portia, 'portia', 1960);
         let interquartiles = {};
 
         for (let char in characterAgesArrays) {
@@ -151,15 +164,17 @@ d3.queue()
         console.log(d3.quantile(characterAgesArrays['shylockAges'].sort(), .75))
         **/
 
-		function processPoints(characterData, character) {
+		function processPoints(characterData, character, startYear, endYear) {
+            let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
+            let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
 			characterData.forEach(function(role) {
 				if (role['bday'] != 'person not found on wiki'
 						&& role['bday'] != 'no birthday on article'
 						&& role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
 
 					let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
-					if (age > 0 && moment(role['opening_date']) > moment('1959')
-                                //&& moment(role['opening_date']) < moment('1960')
+					if (age > 0 && moment(role['opening_date']) >= moment(start)
+                                && moment(role['opening_date']) <= moment(end)
                                 && role['gender'] == characterGenders[character]) {
 						if (characterAges[character + 'Ages'][age]) {
 							characterAges[character + 'Ages'][age].push(role)
@@ -320,10 +335,10 @@ d3.queue()
             .attr('cx', d => scaleX(d.age))
             //.attr('cy', d => d.gender == 'male' ? scaleYMale(Math.random()) : scaleYFemale(Math.random()))
             .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
-            .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '4.6px' : '4px')
+            .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
             .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
             .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-            .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .20)
+            .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
             .attr('filter', 'url(#blurMe)');
 
         /**
@@ -343,9 +358,10 @@ d3.queue()
 
             let interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
 
-            let charMeta = svg.append('g').classed('character-meta', true);
+            let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
 
-            charMeta.append('path').datum(interquartiles[eachCharacter].slice(1,3))
+            let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+            charMeta.append('path').datum(middleFiftyPercent)
                 .attr('d', interquartileLine)
                 //.attr('stroke', '#42454c')
                 .attr('stroke', '#7c8392')
@@ -392,10 +408,26 @@ d3.queue()
                     .attr('stroke', '#7c8392')
                     .text(d => d[0].toUpperCase() + d.substring(1,d.length));
 
+            /**
+            charMeta.on('mouseover', function() {
+                console.log(middleFiftyPercent);
+            });
+
+            d3.select('#' + eachCharacter + 'meta').on('mouseover', function() {
+                console.log(middleFiftyPercent);
+            });
+            **/
+        }
+
+        //TODO...
+
+        /**
+        function transitions() {
+            let meta = d3.selectAll('.character-meta');
 
         }
 
-
+        **/
 
 		//Find max freq of roles at each age
 		console.log(characterAges);
@@ -547,22 +579,6 @@ d3.queue()
 		//	//.attr('d', d => line(d))
 		//	.attr('fill', '#fc5863')
 		//	.attr('stroke', '#fc5863')
-
-        /**
-		console.log(d3.quantile(characterAgesArrays['macbethAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['macbethAges'].sort(), .75))
-		console.log(d3.quantile(characterAgesArrays['ladyMacbethAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['ladyMacbethAges'].sort(), .75))
-		console.log(d3.quantile(characterAgesArrays['rosalindAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['rosalindAges'].sort(), .75))
-		console.log(d3.quantile(characterAgesArrays['portiaAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['portiaAges'].sort(), .75))
-		console.log(d3.quantile(characterAgesArrays['shylockAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['shylockAges'].sort(), .75))
-		console.log(d3.quantile(characterAgesArrays['hamletAges'].sort(), .25))
-		console.log(d3.quantile(characterAgesArrays['hamletAges'].sort(), .75))
-
-        **/
 
 
 
