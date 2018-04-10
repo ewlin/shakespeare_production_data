@@ -23,6 +23,7 @@ d3.queue()
     .defer(d3.tsv, 'data/ages/prospero_ages.tsv')
     .defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
     .defer(d3.tsv, 'data/ages/desdemona_ages.tsv')
+    //.defer(d3.tsv, 'data/ages_updated/antony_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/orlando_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
@@ -33,7 +34,7 @@ d3.queue()
     .defer(d3.tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
 	.await(function(error, prospero, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, shylock, lear, rosalind, hamlet, portia) {
-        let widthMax = document.querySelector('svg').clientWidth;
+        let widthMax = document.querySelector('svg').getBoundingClientRect().width;
 		let scaleX = d3.scaleLinear().domain([10, 85]).range([20, widthMax - 80]);
 
         svg.append('g')
@@ -108,20 +109,20 @@ d3.queue()
 			portiaAges: []
 		}
 
-        /**
-		processPoints(prospero, 'prospero', 1900, 1959);
-        processPoints(bassanio, 'bassanio', 1900, 1959);
-        processPoints(desdemona, 'desdemona', 1900, 1959);
-        processPoints(orlando, 'orlando', 1900, 1959);
-        processPoints(ladyMacbeth, 'ladyMacbeth', 1900, 1959);
-        processPoints(cleopatra, 'cleopatra', 1900, 1959);
-        processPoints(shylock, 'shylock', 1900, 1959);
-        processPoints(lear, 'lear', 1900, 1959);
-        processPoints(rosalind, 'rosalind', 1900, 1959);
-        processPoints(hamlet, 'hamlet', 1900, 1959);
-        processPoints(portia, 'portia', 1900, 1959);
-        **/
 
+		processPoints(prospero, 'prospero', '1930', '1979');
+        processPoints(bassanio, 'bassanio', '1930', '1979');
+        processPoints(desdemona, 'desdemona', '1930', '1979');
+        processPoints(orlando, 'orlando', '1930', '1979');
+        processPoints(ladyMacbeth, 'ladyMacbeth', '1930', '1979');
+        processPoints(cleopatra, 'cleopatra', '1930', '1979');
+        processPoints(shylock, 'shylock', '1930', '1979');
+        processPoints(lear, 'lear', '1930', '1979');
+        processPoints(rosalind, 'rosalind', '1930', '1979');
+        processPoints(hamlet, 'hamlet', '1930', '1979');
+        processPoints(portia, 'portia', '1930', '1979');
+
+        /**
         processPoints(prospero, 'prospero', 1960);
         processPoints(bassanio, 'bassanio', 1960);
         processPoints(desdemona, 'desdemona', 1960);
@@ -133,6 +134,7 @@ d3.queue()
         processPoints(rosalind, 'rosalind', 1960);
         processPoints(hamlet, 'hamlet', 1960);
         processPoints(portia, 'portia', 1960);
+        **/
         let interquartiles = {};
 
         for (let char in characterAgesArrays) {
@@ -167,15 +169,25 @@ d3.queue()
 		function processPoints(characterData, character, startYear, endYear) {
             let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
             let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
+            let oppositeGender = characterGenders[character] == 'male' ? 'female' : 'male';
 			characterData.forEach(function(role) {
+
 				if (role['bday'] != 'person not found on wiki'
 						&& role['bday'] != 'no birthday on article'
 						&& role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
 
-					let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
+                    let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
+
 					if (age > 0 && moment(role['opening_date']) >= moment(start)
                                 && moment(role['opening_date']) <= moment(end)
-                                && role['gender'] == characterGenders[character]) {
+                                && role['gender'] != oppositeGender) {
+
+                        if (character == 'desdemona') {
+                            console.log(role);
+                            console.log(role['opening_date']);
+                            console.log(role['actor'] + ' ' + age);
+                        }
+
 						if (characterAges[character + 'Ages'][age]) {
 							characterAges[character + 'Ages'][age].push(role)
 						} else {
@@ -183,13 +195,9 @@ d3.queue()
 						}
 						characterAgesArrays[character + 'Ages'].push(age);
 
-                        if (character == 'prospero' && age > 65) {
-                            console.log(role['opening_date']);
-                            console.log(role['actor'] + ' ' + age);
-                        }
+
 
 					}
-
 
 				}
 		  });
@@ -332,14 +340,14 @@ d3.queue()
         }
 
         svg.selectAll('.roles').data(processAllPointsAlt2()).enter().append('circle')
+            .attr('class', 'role-dots')
             .attr('cx', d => scaleX(d.age))
-            //.attr('cy', d => d.gender == 'male' ? scaleYMale(Math.random()) : scaleYFemale(Math.random()))
             .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
             .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
             .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
             .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
             .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
-            .attr('filter', 'url(#blurMe)');
+            //.attr('filter', 'url(#blurMe)');
 
         /**
         var area = d3.area()
@@ -421,13 +429,165 @@ d3.queue()
 
         //TODO...
 
-        /**
+
         function transitions() {
-            let meta = d3.selectAll('.character-meta');
+            for (let eachChar in characterAges) {
+                let {gender, color} = characterAges[eachChar];
+                characterAges[eachChar] = {gender: gender, color: color};
+            }
+            for (let eachChar in characterAgesArrays) {
+                characterAgesArrays[eachChar] = [];
+            }
+
+            console.log(characterAges);
+            console.log(characterAgesArrays);
+
+
+            processPoints(prospero, 'prospero', 1980);
+            processPoints(bassanio, 'bassanio', 1980);
+            processPoints(desdemona, 'desdemona', 1980);
+            processPoints(orlando, 'orlando', 1980);
+            processPoints(ladyMacbeth, 'ladyMacbeth', 1980);
+            processPoints(cleopatra, 'cleopatra', 1980);
+            processPoints(shylock, 'shylock', 1980);
+            processPoints(lear, 'lear', 1980);
+            processPoints(rosalind, 'rosalind', 1980);
+            processPoints(hamlet, 'hamlet', 1980);
+            processPoints(portia, 'portia', 1980);
+
+            for (let char in characterAgesArrays) {
+                let role = char.substring(0,char.length - 4);
+                let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
+                console.log(ages);
+                let twentyFifthPercentile = d3.quantile(ages, .25);
+                let seventyFifthPercentile = d3.quantile(ages, .75);
+                interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
+                console.log(role + ': ' + d3.variance(ages));
+            }
+
+            console.log(interquartiles);
+            //select group
+            let meta = svg.selectAll('.character-meta');
+            //select circles
+            let data = processAllPointsAlt2();
+            console.log(data);
+
+            let points = svg.selectAll('.role-dots').data(data);
+
+            let transitionA = d3.transition().duration(1000).ease(d3.easeQuadInOut);
+
+            /**
+            circles.exit().remove();
+            //circles2.exit().remove();
+            //circles2.enter().append('circle').classed('outer-circle juliet', true)
+
+            circles.transition().duration(2100)
+                .attr('cx', d => scaleDate(moment(d.opening_date).valueOf()))
+                .attr('cy', d => scaleY(moment(d['opening_date']).diff(moment(d['bday']), 'years')))
+                .attr('fill', 'steelblue')
+                .attr('opacity', .8)
+
+            circles.enter().append('circle').attr('stroke', d => d.gender == 'female' ? 'white' : 'none')
+                .attr('stroke-width', '2px')
+                .attr('fill', 'steelblue')
+                .attr('opacity', 0)
+                .attr('r', '5px')
+                .attr('cx', d => scaleDate(moment(d.opening_date).valueOf()))
+                .attr('cy', d => scaleY(moment(d['opening_date']).diff(moment(d['bday']), 'years')))
+                .transition().duration(2100)
+                .attr('opacity', .8)
+            **/
+
+
+
+            points.exit().remove();
+
+            points.enter().append('circle').attr('class', 'role-dots')
+                .attr('cx', d => scaleX(d.age))
+                .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
+                .attr('r', '0px')
+                .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
+                .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
+                .attr('fill-opacity', 0)
+                //.attr('filter', 'url(#blurMe)')
+                .transition(transitionA)
+                .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
+                .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35);
+
+
+            points.transition(transitionA)
+                //.attr('class', 'role-dots')
+                .attr('cx', d => scaleX(d.age))
+                .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
+                .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
+                .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
+                .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
+                .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+                //.attr('filter', 'url(#blurMe)');
+
+
+						/**
+            for (let eachCharacter in interquartiles) {
+                let gender = characterGenders[eachCharacter];
+                let index = indicies[eachCharacter];
+                let yValue = gender == 'male' ? male(index, true) : female(index, true);
+                let interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
+            ]let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
+                let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+                charMeta.append('path').datum(middleFiftyPercent)
+                    .attr('d', interquartileLine)
+                    //.attr('stroke', '#42454c')
+                    .attr('stroke', '#7c8392')
+                    .attr('stroke-width', '6.5px')
+                    .attr('opacity', .85);
+                charMeta.append('path').datum(interquartiles[eachCharacter])
+                    .attr('d', interquartileLine)
+                    .attr('stroke', '#7c8392')
+                    .attr('stroke-width', '1.5px')
+                    .attr('opacity', .5)
+                    .attr('stroke-dasharray', '3,1');
+                let radius = 21.5;
+                let pad = 30;
+                charMeta.append('circle').attr('r', radius).attr('cy', yValue).attr('cx', () => {
+                    //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
+                    return scaleX(interquartiles[eachCharacter][3]) + pad;
+                }).attr('stroke', '#7c8392')
+                .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
+                .attr('fill-opacity', .6)
+                let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
+                let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
+                //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
+                //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
+                charMeta.append('path')
+                        .attr('id', eachCharacter + 'label')
+                        .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
+                        .attr('stroke-width', '3px')
+                        .attr('fill', 'none');
+                charMeta.append('text')
+                        .datum(eachCharacter)
+                        .attr('class', 'label-text')
+                        .append('textPath')
+                        .attr('xlink:href', d => '#' + d + 'label')
+                        //.attr('alignment-baseline', 'hanging')
+                        .attr('text-anchor', 'middle')
+                        .attr('startOffset', '50%')
+                        .attr('stroke', '#7c8392')
+                        .text(d => d[0].toUpperCase() + d.substring(1,d.length));
+
+                //charMeta.on('mouseover', function() {
+                //    console.log(middleFiftyPercent);
+                //});
+                //d3.select('#' + eachCharacter + 'meta').on('mouseover', function() {
+                //    console.log(middleFiftyPercent);
+                //});
+
+            }
+						**/
 
         }
 
-        **/
+        d3.select('button').on('click', transitions);
+
 
 		//Find max freq of roles at each age
 		console.log(characterAges);
