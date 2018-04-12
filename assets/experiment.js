@@ -1,56 +1,42 @@
 let svg = d3.select('svg');
 
-function range(a,b) {
-    let arr = [];
-    for (let i=a; i<b; i++) {
-        arr.push(i);
-    }
-    return arr;
-}
-
 d3.queue()
-	//.defer(d3.tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
-	//.defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
-	//.defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/orlando_actor_ages.tsv')
-    //.defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
-    //.defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/iago_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/prospero_ages.tsv')
-    .defer(d3.tsv, 'data/ages/bassanio_ages.tsv')
+    .defer(d3.tsv, 'data/ages/romeo_ages.tsv')
     .defer(d3.tsv, 'data/ages/desdemona_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/antony_actor_ages.tsv')
-    .defer(d3.tsv, 'data/ages_updated/orlando_actor_ages.tsv')
+    .defer(d3.tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/shylock_ages.tsv')
     .defer(d3.tsv, 'data/ages/lear_ages.tsv')
-    //.defer(d3.tsv, 'data/ages_updated/antony_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
+    //.defer(d3.tsv, 'data/ages/rosalind_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
-    .defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
-	.await(function(error, prospero, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, shylock, lear, rosalind, hamlet, portia) {
+    .defer(d3.tsv, 'data/ages/juliet_ages.tsv')
+	//.await(function(error, prospero, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, shylock, lear, rosalind, hamlet, portia) {
+    .await(function(error, ...characters) {
+
+        //.clientWidth in Firefox has a bug
         let widthMax = document.querySelector('svg').getBoundingClientRect().width;
-		let scaleX = d3.scaleLinear().domain([10, 85]).range([20, widthMax - 80]);
+
+        //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
+        let scaleX = d3.scaleLinear().domain([10, 85]).range([20, widthMax - 80]);
 
         svg.append('g')
     		.attr('class', 'x axis')
     		.call(d3.axisBottom(scaleX));
 
+
         let indicies = {
-            hamlet: 0,
-            orlando: 1,
-            bassanio: 2,
+            romeo: 0,
+            hamlet: 1,
+            macbeth: 2,
             shylock: 3,
             prospero: 4,
             lear: 5,
             desdemona: 0,
             rosalind: 1,
-            portia: 2,
+            juliet: 2,
             ladyMacbeth: 3,
             cleopatra: 4
         }
@@ -58,13 +44,13 @@ d3.queue()
         let characterGenders = {
             hamlet: 'male',
             prospero: 'male',
-            orlando: 'male',
-            bassanio: 'male',
+            romeo: 'male',
+            macbeth: 'male',
             lear: 'male',
             shylock: 'male',
             desdemona: 'female',
             rosalind: 'female',
-            portia: 'female',
+            juliet: 'female',
             ladyMacbeth: 'female',
             cleopatra: 'female'
         }
@@ -77,16 +63,16 @@ d3.queue()
 
             **/
             prosperoAges: {gender: 'male', color: '#c0c400'},
-            bassanioAges: {gender: 'male', color: '#F7973A'},
+            romeoAges: {gender: 'male', color: '#F7973A'},
             desdemonaAges: {gender: 'female', color: '#FC5863'},
-            orlandoAges: {gender: 'male', color: '#F8B535'},
+            macbethAges: {gender: 'male', color: '#F8B535'},
    	        ladyMacbethAges: {gender: 'female', color: '#78779E'},
             cleopatraAges: {gender: 'female', color: '#577EAD'},
             shylockAges: {gender: 'male', color: '#F57A3E'},
             learAges: {gender: 'male', color: '#F45C42'},
             rosalindAges: {gender: 'female', color: '#CA6379'},
             hamletAges: {gender: 'male', color: '#FAE12F'},
-			portiaAges: {gender: 'female', color: '#A96B88'}
+			julietAges: {gender: 'female', color: '#A96B88'}
 
 		};
 
@@ -97,19 +83,26 @@ d3.queue()
 			portiaAges : [],
             **/
             prosperoAges: [],
-            bassanioAges: [],
+            romeoAges: [],
             desdemonaAges: [],
-            orlandoAges: [],
+            macbethAges: [],
 			ladyMacbethAges : [],
             cleopatraAges: [],
             shylockAges : [],
             learAges: [],
             rosalindAges : [],
             hamletAges: [],
-			portiaAges: []
+			julietAges: []
 		}
 
-
+        characters.forEach(character => {
+            let characterName = character[0]['role'].toLowerCase().split(' ');
+            if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
+            characterName = characterName.join('');
+            console.log(characterName);
+            processPoints(character, characterName, 1900, 1979);
+        });
+        /***
 		processPoints(prospero, 'prospero', '1930', '1979');
         processPoints(bassanio, 'bassanio', '1930', '1979');
         processPoints(desdemona, 'desdemona', '1930', '1979');
@@ -121,7 +114,7 @@ d3.queue()
         processPoints(rosalind, 'rosalind', '1930', '1979');
         processPoints(hamlet, 'hamlet', '1930', '1979');
         processPoints(portia, 'portia', '1930', '1979');
-
+        **/
         /**
         processPoints(prospero, 'prospero', 1960);
         processPoints(bassanio, 'bassanio', 1960);
@@ -139,7 +132,7 @@ d3.queue()
 
         for (let char in characterAgesArrays) {
             let role = char.substring(0,char.length - 4);
-            let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
+            let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 10 && age < 90);
             console.log(ages);
             let twentyFifthPercentile = d3.quantile(ages, .25);
             let seventyFifthPercentile = d3.quantile(ages, .75);
@@ -182,7 +175,7 @@ d3.queue()
                                 && moment(role['opening_date']) <= moment(end)
                                 && role['gender'] != oppositeGender) {
 
-                        if (character == 'desdemona') {
+                        if (character == 'juliet' && age < 20) {
                             console.log(role);
                             console.log(role['opening_date']);
                             console.log(role['actor'] + ' ' + age);
@@ -333,6 +326,7 @@ d3.queue()
                 let bandEnd = bandStart + bandHeight;
                 if (!randomFlag) {
                     return ((bandEnd - bandStart) * Math.random()) + bandStart;
+                //If we want points to sit on the midline...
                 } else {
                     return ((bandEnd - bandStart) * 0.5) + bandStart;
                 }
@@ -366,10 +360,12 @@ d3.queue()
 
             let interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
 
+            let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+
             let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
 
-            let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
             charMeta.append('path').datum(middleFiftyPercent)
+                .attr('class', 'thick-line-quartile')
                 .attr('d', interquartileLine)
                 //.attr('stroke', '#42454c')
                 .attr('stroke', '#7c8392')
@@ -378,11 +374,30 @@ d3.queue()
 
             charMeta.append('path').datum(interquartiles[eachCharacter])
                 .attr('d', interquartileLine)
+                .attr('class', 'thin-line-quartile')
                 .attr('stroke', '#7c8392')
                 .attr('stroke-width', '1.5px')
                 .attr('opacity', .5)
                 .attr('stroke-dasharray', '3,1');
 
+            let text = charMeta.append('g').classed('interquartiles-labels', true)
+                .attr('display', 'none')
+                .selectAll('.text').data(interquartiles[eachCharacter]);
+
+            text.enter().append('text')
+                .attr('x', d => scaleX(d))
+                .attr('y', d => yValue)
+                .attr('text-anchor', 'middle')
+                .attr('stroke', 'white')
+                .attr('opacity', (d,i) => i == 1 || i == 2 ? 1 : .3)
+                .text(d => d);
+            /**
+            text.selectAll('.text')
+                .data(interquartiles[eachCharacter])
+                .enter()
+                .append('text')
+
+            **/
             let radius = 21.5;
             let pad = 30;
 
@@ -420,11 +435,15 @@ d3.queue()
             charMeta.on('mouseover', function() {
                 console.log(middleFiftyPercent);
             });
-
-            d3.select('#' + eachCharacter + 'meta').on('mouseover', function() {
-                console.log(middleFiftyPercent);
-            });
             **/
+
+            d3.select('#' + eachCharacter + 'meta')
+                .on('mouseover', function () {
+                    d3.select(this).select('.interquartiles-labels').attr('display', 'block');
+                }).on('mouseout', function () {
+                    d3.select(this).select('.interquartiles-labels').attr('display', 'none');
+                });
+
         }
 
         //TODO...
@@ -443,17 +462,13 @@ d3.queue()
             console.log(characterAgesArrays);
 
 
-            processPoints(prospero, 'prospero', 1980);
-            processPoints(bassanio, 'bassanio', 1980);
-            processPoints(desdemona, 'desdemona', 1980);
-            processPoints(orlando, 'orlando', 1980);
-            processPoints(ladyMacbeth, 'ladyMacbeth', 1980);
-            processPoints(cleopatra, 'cleopatra', 1980);
-            processPoints(shylock, 'shylock', 1980);
-            processPoints(lear, 'lear', 1980);
-            processPoints(rosalind, 'rosalind', 1980);
-            processPoints(hamlet, 'hamlet', 1980);
-            processPoints(portia, 'portia', 1980);
+            characters.forEach(character => {
+                let characterName = character[0]['role'].toLowerCase().split(' ');
+                if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
+                characterName = characterName.join('');
+                console.log(characterName);
+                processPoints(character, characterName, 1980);
+            });
 
             for (let char in characterAgesArrays) {
                 let role = char.substring(0,char.length - 4);
@@ -526,7 +541,63 @@ d3.queue()
                 //.attr('filter', 'url(#blurMe)');
 
 
-						/**
+            for (let eachCharacter in interquartiles) {
+                //).attr('id', eachCharacter + 'meta');
+                let pad = 30;
+                let radius = 21.5;
+
+                let gender = characterGenders[eachCharacter];
+                let index = indicies[eachCharacter];
+                let yValue = gender == 'male' ? male(index, true) : female(index, true);
+
+                let interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
+
+                let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+
+                let characterMeta = d3.select('#' + eachCharacter + 'meta');
+                characterMeta.select('.thick-line-quartile').datum(middleFiftyPercent).transition(transitionA)
+                    .attr('d', interquartileLine);
+
+                characterMeta.select('.thin-line-quartile').datum(interquartiles[eachCharacter]).transition(transitionA)
+                    .attr('d', interquartileLine);
+
+                characterMeta.select('circle').transition(transitionA).attr('cx', () => {
+                    //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
+                    return scaleX(interquartiles[eachCharacter][3]) + pad;
+                });
+                let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
+                let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
+
+                //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
+                //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
+
+                characterMeta.select('#' + eachCharacter + 'label').transition(transitionA)
+                        .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`);
+
+                let text = characterMeta.select('.interquartiles-labels').selectAll('text').data(interquartiles[eachCharacter]);
+
+                text.enter();
+
+                text.transition(transitionA)
+                    .attr('x', d => scaleX(d))
+                    .attr('y', d => yValue)
+                    .text(d => d);
+
+
+                /**
+                charMeta.select('.label-text')
+                        .datum(eachCharacter)
+                        .attr('class', 'label-text')
+                        .append('textPath')
+                        .attr('xlink:href', d => '#' + d + 'label')
+                        //.attr('alignment-baseline', 'hanging')
+                        .attr('text-anchor', 'middle')
+                        .attr('startOffset', '50%')
+                        .attr('stroke', '#7c8392')
+                        .text(d => d[0].toUpperCase() + d.substring(1,d.length));
+                **/
+            }
+		              /**
             for (let eachCharacter in interquartiles) {
                 let gender = characterGenders[eachCharacter];
                 let index = indicies[eachCharacter];
