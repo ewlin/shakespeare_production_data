@@ -339,8 +339,9 @@ d3.queue()
             .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
             .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
             .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
-            .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-            .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+            .attr('stroke', 'none')
+            //.attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+            .attr('fill-opacity', 0)
             //.attr('filter', 'url(#blurMe)');
 
         /**
@@ -351,6 +352,25 @@ d3.queue()
             .y0(function(d) { return scaleY(0); });
 
         **/
+        function animateDots(maxAge) {
+            return function() {
+                d3.selectAll('.role-dots').transition(1000).delay(d => d.age * 100)
+                    .attr('fill-opacity', d => {
+                        if (d.age < maxAge) {
+                            if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                                return .82;
+                            } else {
+                                return .35;
+                            }
+                        } else {
+                            return 0;
+                        }
+
+                    }).attr('stroke', (d) => {
+                        d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
+                    });
+            }
+        }
 
 
         for (let eachCharacter in interquartiles) {
@@ -656,8 +676,10 @@ d3.queue()
 						**/
 
         }
-
-        d3.select('button').on('click', transitions);
+        console.log(animateDots(30))
+        //let animate30 = animateDots(30);
+        d3.select('.transitions').on('click', transitions);
+        d3.select('.dots').on('click', animateDots(30));
 
 
 		//Find max freq of roles at each age
