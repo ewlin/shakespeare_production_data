@@ -22,10 +22,6 @@ d3.queue()
         //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
         let scaleX = d3.scaleLinear().domain([10, 85]).range([20, widthMax - 80]);
 
-        svg.append('g')
-    		.attr('class', 'x axis')
-    		.call(d3.axisBottom(scaleX));
-
 
         let indicies = {
             romeo: 0,
@@ -354,6 +350,31 @@ d3.queue()
         **/
         function animateDots(minAge = 0, maxAge = 90) {
             return function() {
+                //calculate max Width for partial axis
+                //ration of max width
+                // (widthMax - 100)/75 == the width of each year in age
+                let maxAxisWidth = (widthMax - 100)/75 * (maxAge - 10);
+                //let scaleX = d3.scaleLinear().domain([10, maxAge]).range([20, widthMax - 80]);
+                let scaleXNew = d3.scaleLinear().domain([10, maxAge]).range([20, scaleX(maxAge)]);
+
+                if (!document.querySelector('.axis')) {
+                    svg.append('g')
+                		.attr('class', 'x axis')
+                        .attr('opacity', 0)
+                		.call(d3.axisBottom(scaleXNew).tickValues([18, 20, 22]))
+                        .transition(2000)
+                        .attr('opacity', 1)
+
+                    d3.select('.domain').remove();
+                } else {
+                    svg.select('g.axis').transition(2000)
+                        .call(d3.axisBottom(scaleXNew).tickValues([18, 20, 22, 30, 40, 50]));
+
+                    d3.select('.domain').remove();
+
+                }
+
+
                 d3.selectAll('.role-dots')
                     .filter(d => d.age >= minAge && d.age <= maxAge)
                     .transition(100).delay(d => Math.pow((d.age - minAge), 1.2) * 80)
