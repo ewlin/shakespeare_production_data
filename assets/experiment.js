@@ -100,7 +100,7 @@ d3.queue()
             if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
             characterName = characterName.join('');
             console.log(characterName);
-            processPoints(character, characterName, 1900, 1979);
+            processPoints(character, characterName, 1980);
         });
         /***
 		processPoints(prospero, 'prospero', '1930', '1979');
@@ -340,9 +340,9 @@ d3.queue()
             .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
             .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
             .attr('stroke', 'none')
-            //.attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
             .attr('fill-opacity', 0)
-            //.attr('filter', 'url(#blurMe)');
+            //.attr('stroke', d => d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
+            //.attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35);
 
         /**
         var area = d3.area()
@@ -352,20 +352,25 @@ d3.queue()
             .y0(function(d) { return scaleY(0); });
 
         **/
-        function animateDots(maxAge) {
+        function animateDots(minAge = 0, maxAge = 90) {
             return function() {
-                d3.selectAll('.role-dots').transition(1000).delay(d => d.age * 100)
+                d3.selectAll('.role-dots')
+                    .filter(d => d.age >= minAge && d.age <= maxAge)
+                    .transition(100).delay(d => Math.pow((d.age - minAge), 1.2) * 80)
                     .attr('fill-opacity', d => {
-                        if (d.age < maxAge) {
-                            if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                                return .82;
-                            } else {
-                                return .35;
-                            }
+                        //if (d.age <= maxAge && d.age >= minAge) {
+                        if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                            console.log('good');
+                            return .82;
                         } else {
+                            return .35;
+                        }
+                        /**
+                        } else {
+                            console.log('invisible');
                             return 0;
                         }
-
+                        **/
                     }).attr('stroke', (d) => {
                         d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
                     });
@@ -487,7 +492,7 @@ d3.queue()
                 if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
                 characterName = characterName.join('');
                 console.log(characterName);
-                processPoints(character, characterName, 1980);
+                processPoints(character, characterName, 1900, 1979);
             });
 
             for (let char in characterAgesArrays) {
@@ -679,7 +684,8 @@ d3.queue()
         console.log(animateDots(30))
         //let animate30 = animateDots(30);
         d3.select('.transitions').on('click', transitions);
-        d3.select('.dots').on('click', animateDots(30));
+        d3.select('.dots').on('click', animateDots(17, 22));
+        d3.select('.dots2').on('click', animateDots(23, 29));
 
 
 		//Find max freq of roles at each age
