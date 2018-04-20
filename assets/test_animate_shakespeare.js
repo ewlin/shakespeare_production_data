@@ -31,7 +31,7 @@ d3.csv('../data/shakespeare_outline.csv', function(data) {
         });**/
 
         var t = d3.interval(function(elapsed) {
-            d3.selectAll('circle').transition().duration(300)
+            d3.selectAll('circle').transition().duration(400)
                 .attr('r', () => (Math.random() * 3 + 5) + 'px')
                 .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
                 .attr('fill-opacity', d => Math.random());
