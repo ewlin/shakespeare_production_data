@@ -431,6 +431,18 @@ d3.queue()
                     .attr('stroke-width', '1.5px')
                     .attr('opacity', .5)
                     .attr('stroke-dasharray', '3,1');
+
+                charMeta.append('text').datum(dataRange)
+                    .attr('x', d => scaleX(d[1]))
+                    // +2 because arrow doesn't quite align with the thin-line for some reasons...
+                    .attr('y', d => yValue + 2)
+                    .attr('opacity', 0)
+                    .classed('arrow', true)
+                    .style('font-size', '20px')
+                    .attr('alignment-baseline', 'middle')
+                    .attr('fill', '#7c8392')
+                    .text('\u2192')
+
                 /**
                 charMeta.append('path').datum(middleFiftyPercent)
                     .attr('class', 'thick-line-quartile')
@@ -574,6 +586,12 @@ d3.queue()
                                     .transition().duration(1500)
                                     .attr('d', interquartileLine);
 
+                    let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
+
+                    //if not in range yet, don't show arrow...
+                    arrow.attr('opacity', d => d[0] == d[1] ? 0 : 1);
+
+                    arrow.transition().duration(1500).attr('x', d => scaleX(d[1]));
 
                     /**
                     charMeta.append('path').datum(middleFiftyPercent)
