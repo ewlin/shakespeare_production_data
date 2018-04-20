@@ -583,7 +583,7 @@ d3.queue()
 
                     //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
-                                    .transition().duration(1500)
+                                    .transition().duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500)
                                     .attr('d', interquartileLine);
 
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
@@ -591,7 +591,10 @@ d3.queue()
                     //if not in range yet, don't show arrow...
                     arrow.attr('opacity', d => d[0] == d[1] ? 0 : 1);
 
-                    arrow.transition().duration(1500).attr('x', d => scaleX(d[1]));
+                    arrow.transition().duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500).attr('x', d => scaleX(d[1]))
+                        .on('end', function() {
+                            d3.select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+                        });
 
                     /**
                     charMeta.append('path').datum(middleFiftyPercent)
@@ -974,7 +977,7 @@ d3.queue()
         //let animate30 = animateDots(30);
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 22));
-        d3.select('.dots2').on('click', animateDots(23, 29));
+        d3.select('.dots2').on('click', animateDots(23, 50));
 
 
 		//Find max freq of roles at each age
