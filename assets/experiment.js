@@ -585,7 +585,7 @@ d3.queue()
 
                     //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
-                                    .transition(0).duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500)
+                                    .transition().duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500)
                                     .attr('d', interquartileLine);
 
                     /**
