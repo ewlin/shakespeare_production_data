@@ -414,6 +414,7 @@ d3.queue()
 
                let fullCharacterAgesRange = interquartiles[eachCharacter];
                let dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
+               let dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
 
                 /**
                 if (fullCharacterAgesRange[0] > maxAge) {
@@ -443,15 +444,15 @@ d3.queue()
                     .attr('fill', '#7c8392')
                     .text('\u2192')
 
-                /**
-                charMeta.append('path').datum(middleFiftyPercent)
+
+                charMeta.append('path').datum(dataRangeMiddleFifty)
                     .attr('class', 'thick-line-quartile')
                     .attr('d', interquartileLine)
                     //.attr('stroke', '#42454c')
                     .attr('stroke', '#7c8392')
                     .attr('stroke-width', '6.5px')
                     .attr('opacity', .85);
-                    **/
+
 
                 let text = charMeta.append('g').classed('interquartiles-labels', true)
                     .attr('display', 'none')
@@ -580,7 +581,9 @@ d3.queue()
 
                     let fullCharacterAgesRange = interquartiles[eachCharacter];
                     let dataRange;
+                    let dataRangeMiddleFifty;
 
+                    //Buggy; need to think about minAge...
                     if (fullCharacterAgesRange[0] > maxAge) {
                         dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
                     } else if (fullCharacterAgesRange[3] > maxAge) {
@@ -589,105 +592,46 @@ d3.queue()
                         dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[3]];
                     }
 
+                    if (middleFiftyPercent[0] > maxAge) {
+                        dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
+                    } else if (middleFiftyPercent[1] > maxAge) {
+                        dataRangeMiddleFifty = [middleFiftyPercent[0], maxAge];
+                    } else {
+                        dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[1]]
+                    }
+
+
                     //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
+                        .transition()
+                        //how does min Age play into here
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 80 : (d[1] - minAge) * 80)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 80 : 0)
+                        .ease(d3.easeLinear)
+                        .attr('d', interquartileLine);
+
+                    /**
+                    svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty)
                                     .transition()
                                     .duration(d => (d[1] - d[0]) * 80)
                                     .delay(d => (d[0] - minAge) * 80)
                                     .ease(d3.easeLinear)
                                     .attr('d', interquartileLine);
-
+                    **/
 
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
 
                     //if not in range yet, don't show arrow...
 
                     arrow.transition()
-                        .duration(d => (d[1] - d[0]) * 80)
-                        .delay(d => (d[0] - minAge) * 80)
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 80 : (d[1] - minAge) * 80)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 80 : 0)
                         .ease(d3.easeLinear)
                         .attr('x', d => scaleX(d[1]))
                         .attr('opacity', d => d[0] == d[1] ? 0 : 1)
                         .on('end', function() {
                             d3.select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                         });
-
-                    /**
-                    charMeta.append('path').datum(middleFiftyPercent)
-                        .attr('class', 'thick-line-quartile')
-                        .attr('d', interquartileLine)
-                        //.attr('stroke', '#42454c')
-                        .attr('stroke', '#7c8392')
-                        .attr('stroke-width', '6.5px')
-                        .attr('opacity', .85);
-
-
-
-                    /**
-                    charMeta.append('path').datum(dataRange)
-                        .attr('d', interquartileLine)
-                        .attr('class', 'thin-line-quartile')
-                        .attr('stroke', '#7c8392')
-                        .attr('stroke-width', '1.5px')
-                        .attr('opacity', .5)
-                        .attr('stroke-dasharray', '3,1');
-                    **/
-
-                    /**
-                    let text = charMeta.append('g').classed('interquartiles-labels', true)
-                        .attr('display', 'none')
-                        .selectAll('.text').data(interquartiles[eachCharacter]);
-
-                        text.enter().append('text')
-                            .attr('x', d => scaleX(d))
-                            .attr('y', d => yValue)
-                            .attr('text-anchor', 'middle')
-                            .attr('stroke', 'white')
-                            .attr('opacity', (d,i) => i == 1 || i == 2 ? 1 : .3)
-                            .text(d => d);
-
-                        let radius = 21.5;
-                        let pad = 30;
-
-                        charMeta.append('circle').attr('r', radius).attr('cy', yValue).attr('cx', () => {
-                            //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
-                            return scaleX(interquartiles[eachCharacter][3]) + pad;
-                        }).attr('stroke', '#7c8392')
-                        .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
-                        .attr('fill-opacity', .6)
-
-                        let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
-                        let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
-
-                        //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
-                        //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
-
-                        charMeta.append('path')
-                                .attr('id', eachCharacter + 'label')
-                                .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
-                                .attr('stroke-width', '3px')
-                                .attr('fill', 'none');
-
-                        charMeta.append('text')
-                                .datum(eachCharacter)
-                                .attr('class', 'label-text')
-                                .append('textPath')
-                                .attr('xlink:href', d => '#' + d + 'label')
-                                //.attr('alignment-baseline', 'hanging')
-                                .attr('text-anchor', 'middle')
-                                .attr('startOffset', '50%')
-                                .attr('stroke', 'white')
-                                .text(d => d[0].toUpperCase() + d.substring(1,d.length));
-
-
-
-                        d3.select('#' + eachCharacter + 'meta')
-                            .on('mouseover', function () {
-                                d3.select(this).select('.interquartiles-labels').attr('display', 'block');
-                            }).on('mouseout', function () {
-                                d3.select(this).select('.interquartiles-labels').attr('display', 'none');
-                            });
-                        **/
 
                     }
             }
@@ -992,7 +936,9 @@ d3.queue()
         //let animate30 = animateDots(30);
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 22));
-        d3.select('.dots2').on('click', animateDots(23, 39));
+        d3.select('.dots2').on('click', animateDots(23, 40));
+        d3.select('svg').on('click', animateDots(41, 55));
+
 
 
 		//Find max freq of roles at each age
