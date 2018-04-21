@@ -520,6 +520,12 @@ d3.queue()
                 //let scaleX = d3.scaleLinear().domain([10, maxAge]).range([20, widthMax - 80]);
                 let scaleXNew = d3.scaleLinear().domain([10, maxAge]).range([20, scaleX(maxAge)]);
 
+                let tickValues = [18, 20];
+
+                while (tickValues[tickValues.length - 1] < maxAge) {
+                    tickValues.push(tickValues[tickValues.length - 1] + 10);
+                }
+
                 //Dynamically generate tick values based on minAge and MaxAge;
                 //TODO...
 
@@ -534,7 +540,7 @@ d3.queue()
                     d3.select('.domain').remove();
                 } else {
                     svg.select('g.axis').transition(2000)
-                        .call(d3.axisBottom(scaleXNew).tickValues([18, 20, 30]));
+                        .call(d3.axisBottom(scaleXNew).tickValues(tickValues));
 
                     d3.select('.domain').remove();
 
@@ -585,16 +591,23 @@ d3.queue()
 
                     //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
-                                    .transition().duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500)
+                                    .transition()
+                                    .duration(d => (d[1] - d[0]) * 80)
+                                    .delay(d => (d[0] - minAge) * 80)
+                                    .ease(d3.easeLinear)
                                     .attr('d', interquartileLine);
 
-                    /**
+
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
 
                     //if not in range yet, don't show arrow...
-                    arrow.attr('opacity', d => d[0] == d[1] ? 0 : 1);
 
-                    arrow.transition().duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500).attr('x', d => scaleX(d[1]))
+                    arrow.transition()
+                        .duration(d => (d[1] - d[0]) * 80)
+                        .delay(d => (d[0] - minAge) * 80)
+                        .ease(d3.easeLinear)
+                        .attr('x', d => scaleX(d[1]))
+                        .attr('opacity', d => d[0] == d[1] ? 0 : 1)
                         .on('end', function() {
                             d3.select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                         });
@@ -607,7 +620,6 @@ d3.queue()
                         .attr('stroke', '#7c8392')
                         .attr('stroke-width', '6.5px')
                         .attr('opacity', .85);
-                    **/
 
 
 
@@ -976,11 +988,11 @@ d3.queue()
 						**/
 
         }
-        console.log(animateDots(30))
+        //console.log(animateDots(30))
         //let animate30 = animateDots(30);
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 22));
-        d3.select('.dots2').on('click', animateDots(23, 50));
+        d3.select('.dots2').on('click', animateDots(23, 39));
 
 
 		//Find max freq of roles at each age
