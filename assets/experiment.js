@@ -543,7 +543,9 @@ d3.queue()
 
                 d3.selectAll('.role-dots')
                     .filter(d => d.age >= minAge && d.age <= maxAge)
-                    .transition(500).delay(d => Math.pow((d.age - minAge), 1.2) * 80)
+                    .transition(0)
+                    //.delay(d => Math.pow((d.age - minAge), 1.2) * 80)
+                    .delay(d => (d.age - minAge) * 80)
                     .attr('fill-opacity', d => {
                         //if (d.age <= maxAge && d.age >= minAge) {
                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
@@ -583,9 +585,10 @@ d3.queue()
 
                     //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
-                                    .transition().duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500)
+                                    .transition(0).duration(d => (Math.pow((d[1] - minAge), 1.2) * 80) + 500)
                                     .attr('d', interquartileLine);
 
+                    /**
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
 
                     //if not in range yet, don't show arrow...
