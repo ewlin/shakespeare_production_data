@@ -475,6 +475,7 @@ d3.queue()
                     }).attr('stroke', '#7c8392')
                     .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
                     .attr('fill-opacity', .6)
+                    .attr('filter', 'url(#glowBlur)');
 
                     let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
                     let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
@@ -524,7 +525,8 @@ d3.queue()
                 let tickValues = [18, 20];
 
                 while (tickValues[tickValues.length - 1] < maxAge) {
-                    tickValues.push(tickValues[tickValues.length - 1] + 10);
+                    let nextLabelVal = maxAge - tickValues[tickValues.length - 1] < 10 ? maxAge : tickValues[tickValues.length - 1] + 10;
+                    tickValues.push(nextLabelVal);
                 }
 
                 //Dynamically generate tick values based on minAge and MaxAge;
@@ -610,14 +612,14 @@ d3.queue()
                         .ease(d3.easeLinear)
                         .attr('d', interquartileLine);
 
-                    /**
+
                     svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty)
                                     .transition()
-                                    .duration(d => (d[1] - d[0]) * 80)
-                                    .delay(d => (d[0] - minAge) * 80)
+                                    .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 80 : (d[1] - minAge) * 80)
+                                    .delay(d => d[0] >= minAge ? (d[0] - minAge) * 80 : 0)
                                     .ease(d3.easeLinear)
                                     .attr('d', interquartileLine);
-                    **/
+
 
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
 
@@ -936,8 +938,8 @@ d3.queue()
         //let animate30 = animateDots(30);
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 22));
-        d3.select('.dots2').on('click', animateDots(23, 40));
-        d3.select('svg').on('click', animateDots(41, 55));
+        d3.select('.dots2').on('click', animateDots(23, 30));
+        d3.select('svg').on('click', animateDots(31, 45));
 
 
 
