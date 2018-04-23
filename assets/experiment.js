@@ -1,7 +1,13 @@
+//Notes to self:
+//Code snippet to select for the ticks in the axis to fix certain criteria since the axis isn't bound to data
+//Array.from(document.querySelectorAll('.tick')).filter(group => parseInt(group.childNodes[1].innerHTML) >= 30)
+
+
 let svg = d3.select('svg');
 
 d3.queue()
     .defer(d3.tsv, 'data/ages/prospero_ages.tsv')
+    .defer(d3.tsv, 'data/ages/ophelia_ages.tsv')
     .defer(d3.tsv, 'data/ages/romeo_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/desdemona_ages.tsv')
@@ -23,7 +29,7 @@ d3.queue()
 
 
         //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
-        let scaleX = d3.scaleLinear().domain([10, 85]).range([20, widthMax - 80]);
+        let scaleX = d3.scaleLinear().domain([15, 85]).range([40, widthMax - 80]);
 
 
         let indicies = {
@@ -33,12 +39,13 @@ d3.queue()
             iago: 3,
             prospero: 4,
             lear: 5,
-            desdemona: 0,
-            rosalind: 1,
-            juliet: 2,
-            portia: 3,
-            ladyMacbeth: 4,
-            cleopatra: 5
+            desdemona: 1,
+            ophelia: 2,
+            rosalind: 3,
+            juliet: 0,
+            portia: 4,
+            ladyMacbeth: 5,
+            cleopatra: 6
         }
 
         let characterGenders = {
@@ -49,6 +56,7 @@ d3.queue()
             lear: 'male',
             iago: 'male',
             desdemona: 'female',
+            ophelia: 'female',
             rosalind: 'female',
             juliet: 'female',
             ladyMacbeth: 'female',
@@ -74,7 +82,8 @@ d3.queue()
             rosalindAges: {gender: 'female', color: '#CA6379'},
             portiaAges: {gender: 'female', color: '#AD5468'},
             hamletAges: {gender: 'male', color: '#FAE12F'},
-			julietAges: {gender: 'female', color: '#A96B88'}
+			julietAges: {gender: 'female', color: '#A96B88'},
+            opheliaAges: {gender: 'female', color: '#c44ec6'}
 
 		};
 
@@ -96,6 +105,7 @@ d3.queue()
             hamletAges: [],
 			julietAges: [],
             portiaAges: [],
+            opheliaAges: []
 		}
 
         characters.forEach(character => {
@@ -341,27 +351,22 @@ d3.queue()
 
         **/
 
-        /**
-		characterAgeHistogram(characterAges.iagoAges, 'steelblue');
-		characterAgeHistogram(characterAges.desdemonaAges, '#fc5863');
-        **/
 
         //Width = 1100
         //Height = 500
 
-        //scaleX
-        //let scaleYMale = d3.scaleLinear().domain([0,1]).range([20, 265]);
-        //let scaleYFemale = d3.scaleLinear().domain([0,1]).range([285, 560]);
+        let female = scaleGender([30, heightMax/2 - 15], 7);
+        let male = scaleGender([heightMax/2 + 15, heightMax-60], 6);
 
-        let female = scaleGender([20, heightMax/2 - 10], 6, 50);
-        let male = scaleGender([heightMax/2 + 10, heightMax-60], 6, 50);
 
-        function scaleGender(range, numOfBands, bandHeight) {
+
+        function scaleGender(range, numOfBands) {
             return function(index, randomFlag) {
                 //calculate band start
                 //gender band Height
                 let fullBandStart = range[0];
                 let fullHeight = range[1] - range[0];
+                let bandHeight = fullHeight/numOfBands;
                 let bandStart = index * ((fullHeight - bandHeight)/(numOfBands - 1)) + fullBandStart;
                 let bandEnd = bandStart + bandHeight;
                 if (!randomFlag) {
@@ -448,8 +453,8 @@ d3.queue()
                 charMeta.append('path').datum(dataRangeMiddleFifty)
                     .attr('class', 'thick-line-quartile')
                     .attr('d', interquartileLine)
-                    //.attr('stroke', '#42454c')
-                    .attr('stroke', '#7c8392')
+                    .attr('stroke', '#d4cdda')
+                    //.attr('stroke', '#7c8392')
                     .attr('stroke-width', '6.5px')
                     .attr('opacity', .85);
 
@@ -458,27 +463,30 @@ d3.queue()
                     .attr('display', 'none')
                     .selectAll('.text').data(interquartiles[eachCharacter]);
 
-                    text.enter().append('text')
-                        .attr('x', d => scaleX(d))
-                        .attr('y', d => yValue)
-                        .attr('text-anchor', 'middle')
-                        .attr('stroke', 'white')
-                        .attr('opacity', (d,i) => i == 1 || i == 2 ? 1 : .3)
-                        .text(d => d);
+                text.enter().append('text')
+                    .attr('x', d => scaleX(d))
+                    .attr('y', d => yValue)
+                    .attr('text-anchor', 'middle')
+                    .attr('stroke', 'white')
+                    .attr('opacity', (d,i) => i == 1 || i == 2 ? 1 : .3)
+                    .text(d => d);
 
-                    let radius = 21.5;
-                    let pad = 30;
+                let radius = 21.5;
+                let pad = 30;
 
-                    charMeta.append('circle').attr('r', radius).attr('cy', yValue).attr('cx', () => {
-                        //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
-                        return scaleX(interquartiles[eachCharacter][3]) + pad;
-                    }).attr('stroke', '#7c8392')
-                    .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
-                    .attr('fill-opacity', .6)
-                    .attr('filter', 'url(#glowBlur)');
+                charMeta.append('circle').datum(eachCharacter)
+                .attr('id', eachCharacter + '-label-circle')
+                .attr('r', radius).attr('cy', yValue).attr('cx', () => {
+                    //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
+                    return scaleX(interquartiles[eachCharacter][3]) + pad;
+                }).attr('stroke', '#7c8392')
+                .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
+                .attr('fill-opacity', 0)
+                .attr('stroke-opacity', 0)
+                .attr('filter', 'url(#glowBlur)');
 
-                    let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
-                    let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
+                let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
+                let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
 
                     //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
                     //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
@@ -491,14 +499,19 @@ d3.queue()
 
                     charMeta.append('text')
                             .datum(eachCharacter)
-                            .attr('class', 'label-text')
+                            .attr('class', 'label-text ' + eachCharacter + '-label-text')
+                            .attr('opacity', 0)
                             .append('textPath')
                             .attr('xlink:href', d => '#' + d + 'label')
                             //.attr('alignment-baseline', 'hanging')
                             .attr('text-anchor', 'middle')
                             .attr('startOffset', '50%')
                             .attr('stroke', 'white')
+                            .attr('opacity', 0)
+                            .attr('class', eachCharacter + '-label-text')
                             .text(d => d[0].toUpperCase() + d.substring(1,d.length));
+
+
 
 
 
@@ -519,8 +532,8 @@ d3.queue()
                 //ration of max width
                 // (widthMax - 100)/75 == the width of each year in age
                 let maxAxisWidth = (widthMax - 100)/75 * (maxAge - 10);
-                //let scaleX = d3.scaleLinear().domain([10, maxAge]).range([20, widthMax - 80]);
-                let scaleXNew = d3.scaleLinear().domain([10, maxAge]).range([20, scaleX(maxAge)]);
+                // let scaleX = d3.scaleLinear().domain([15, 85]).range([40, widthMax - 80]);
+                let scaleXNew = d3.scaleLinear().domain([15, maxAge]).range([40, scaleX(maxAge)]);
 
                 let tickValues = [18, 20];
 
@@ -529,8 +542,38 @@ d3.queue()
                     tickValues.push(nextLabelVal);
                 }
 
-                //Dynamically generate tick values based on minAge and MaxAge;
-                //TODO...
+                //Draw brackets
+                //let female = scaleGender([30, heightMax/2 - 15], 7);
+                //let male = scaleGender([heightMax/2 + 15, heightMax-60], 6);
+
+                function createBracket(range, anchor, beamLength, thickness, className, label) {
+                    if (!document.querySelector(`.${className}`)) {
+                        let bracket = svg.append('g').attr('class', className);
+
+                        bracket.append('line').attr('x1', anchor).attr('y1', range[0]).attr('x2', anchor).attr('y2', range[1])
+                            .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
+
+                        bracket.append('line').attr('x1', anchor).attr('y1', range[0] + thickness/2).attr('x2', anchor + beamLength).attr('y2', range[0] + thickness/2)
+                            .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
+
+                        bracket.append('line').attr('x1', anchor).attr('y1', range[1] - thickness/2)
+                                .attr('x2', anchor + beamLength).attr('y2', range[1] - thickness/2)
+                                .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
+
+                        bracket.append('text')
+                            .attr('x', anchor)
+                            .attr('y', ((range[1]-range[0])/2) + range[0])
+                            .attr('stroke', 'white')
+                            .attr('text-anchor', 'middle')
+                            .attr('transform', `rotate(270, ${anchor}, ${(range[1]-range[0])/2 + range[0]}) translate(0,-10)`)
+                            .text(label);
+
+                    }
+                }
+
+                createBracket([30, heightMax/2 - 15], 40, 9, 4, 'female-bracket', 'FEMALE');
+                createBracket([heightMax/2 + 15, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE');
+
 
                 if (!document.querySelector('.axis')) {
                     svg.append('g')
@@ -549,12 +592,24 @@ d3.queue()
 
                 }
 
+                /**
+                if (!document.querySelector('.axis-label')) {
+                    //let xCoord = document.querySelector('.axis').getBoundingClientRect().left
+                    svg.append('text')
+                        .text('AGE OF ACTOR WHEN FIRST PLAYING ROLE')
+                        .classed('axis-label', true)
+                        .attr('x', 40)
+                        .attr('y', 10)
+                        .attr('fill', 'white')
+                        .attr('stroke', 'white')
+                }
+                **/
 
                 d3.selectAll('.role-dots')
                     .filter(d => d.age >= minAge && d.age <= maxAge)
                     .transition(0)
                     //.delay(d => Math.pow((d.age - minAge), 1.2) * 80)
-                    .delay(d => (d.age - minAge) * 80)
+                    .delay(d => (d.age - minAge) * 100)
                     .attr('fill-opacity', d => {
                         //if (d.age <= maxAge && d.age >= minAge) {
                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
@@ -607,18 +662,18 @@ d3.queue()
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
                         .transition()
                         //how does min Age play into here
-                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 80 : (d[1] - minAge) * 80)
-                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 80 : 0)
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
                         .ease(d3.easeLinear)
                         .attr('d', interquartileLine);
 
 
                     svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty)
-                                    .transition()
-                                    .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 80 : (d[1] - minAge) * 80)
-                                    .delay(d => d[0] >= minAge ? (d[0] - minAge) * 80 : 0)
-                                    .ease(d3.easeLinear)
-                                    .attr('d', interquartileLine);
+                        .transition()
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
+                        .ease(d3.easeLinear)
+                        .attr('d', interquartileLine);
 
 
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
@@ -626,13 +681,27 @@ d3.queue()
                     //if not in range yet, don't show arrow...
 
                     arrow.transition()
-                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 80 : (d[1] - minAge) * 80)
-                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 80 : 0)
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
                         .ease(d3.easeLinear)
                         .attr('x', d => scaleX(d[1]))
                         .attr('opacity', d => d[0] == d[1] ? 0 : 1)
                         .on('end', function() {
                             d3.select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+
+                            /*
+                            d3.select(this).transition().duration(1000)
+                                .attr('transform', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 'scale(1,1)' : 'scale(1.05,1)')
+                                .ease(d3.easeBounceIn)
+                                .transition().duration(1200)
+                                .attr('transform', 'scale(1,1)')
+                                .ease(d3.easeBackOut);
+                            */
+
+                            d3.selectAll(`.${eachCharacter}-label-text`).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
+                            d3.select(`#${eachCharacter}-label-circle`)
+                                .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0)
+                                .attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
                         });
 
                     }
@@ -937,11 +1006,14 @@ d3.queue()
         //console.log(animateDots(30))
         //let animate30 = animateDots(30);
         d3.select('.transitions').on('click', transitions);
-        d3.select('.dots').on('click', animateDots(17, 22));
-        d3.select('.dots2').on('click', animateDots(23, 30));
+        d3.select('.dots').on('click', animateDots(17, 23));
+        d3.select('.dots2').on('click', animateDots(24, 30));
         d3.select('svg').on('click', animateDots(31, 45));
 
-
+        //d3.select('svg').on('click', function() {
+            //d3.select('svg').transition().duration(1000).attr("transform", "translate(" + -100 + "," + -100 + ")")
+            //d3.select('svg').transition().duration(2000).attr("transform", "scale(" + 1.3 + ")")
+        //});
 
 		//Find max freq of roles at each age
 		console.log(characterAges);
