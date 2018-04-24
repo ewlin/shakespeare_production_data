@@ -561,6 +561,7 @@ d3.queue()
                                 .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
 
                         bracket.append('text')
+                            .attr('class', 'bracket-text')
                             .attr('x', anchor)
                             .attr('y', ((range[1]-range[0])/2) + range[0])
                             .attr('stroke', 'white')
@@ -571,8 +572,8 @@ d3.queue()
                     }
                 }
 
-                createBracket([30, heightMax/2 - 15], 40, 9, 4, 'female-bracket', 'FEMALE');
-                createBracket([heightMax/2 + 15, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE');
+                createBracket([30, heightMax/2 - 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                createBracket([heightMax/2 + 15, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
 
                 if (!document.querySelector('.axis')) {
@@ -814,7 +815,7 @@ d3.queue()
                 if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
                 characterName = characterName.join('');
                 console.log(characterName);
-                processPoints(character, characterName, 1980);
+                processPoints(character, characterName, 1900, 1979);
             });
 
             for (let char in characterAgesArrays) {
@@ -1008,7 +1009,7 @@ d3.queue()
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 23));
         d3.select('.dots2').on('click', animateDots(24, 30));
-        d3.select('svg').on('click', animateDots(31, 45));
+        d3.select('svg').on('click', animateDots(31, 85));
 
         //d3.select('svg').on('click', function() {
             //d3.select('svg').transition().duration(1000).attr("transform", "translate(" + -100 + "," + -100 + ")")
