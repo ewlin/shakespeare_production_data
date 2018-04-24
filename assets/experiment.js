@@ -6,7 +6,7 @@
 let svg = d3.select('svg');
 
 d3.queue()
-    .defer(d3.tsv, 'data/ages/prospero_ages.tsv')
+    .defer(d3.tsv, 'data/ages_updated/othello_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/ophelia_ages.tsv')
     .defer(d3.tsv, 'data/ages/romeo_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/portia_actor_ages.tsv')
@@ -20,7 +20,7 @@ d3.queue()
     //.defer(d3.tsv, 'data/ages/rosalind_ages.tsv')
     .defer(d3.tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(d3.tsv, 'data/ages/juliet_ages.tsv')
-	//.await(function(error, prospero, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, iago, lear, rosalind, hamlet, portia) {
+	//.await(function(error, othello, bassanio, desdemona, orlando, ladyMacbeth, cleopatra, iago, lear, rosalind, hamlet, portia) {
     .await(function(error, ...characters) {
 
         //.clientWidth in Firefox has a bug
@@ -37,7 +37,7 @@ d3.queue()
             hamlet: 1,
             macbeth: 2,
             iago: 3,
-            prospero: 4,
+            othello: 4,
             lear: 5,
             desdemona: 1,
             ophelia: 2,
@@ -50,7 +50,7 @@ d3.queue()
 
         let characterGenders = {
             hamlet: 'male',
-            prospero: 'male',
+            othello: 'male',
             romeo: 'male',
             macbeth: 'male',
             lear: 'male',
@@ -71,7 +71,7 @@ d3.queue()
    	        iagoAges: {},
 
             **/
-            prosperoAges: {gender: 'male', color: '#c0c400'},
+            othelloAges: {gender: 'male', color: '#c0c400'},
             romeoAges: {gender: 'male', color: '#F7973A'},
             desdemonaAges: {gender: 'female', color: '#FC5863'},
             macbethAges: {gender: 'male', color: '#F8B535'},
@@ -93,7 +93,7 @@ d3.queue()
             hamletAges: [],
 			portiaAges : [],
             **/
-            prosperoAges: [],
+            othelloAges: [],
             romeoAges: [],
             desdemonaAges: [],
             macbethAges: [],
@@ -116,7 +116,7 @@ d3.queue()
             processPoints(character, characterName, 1980);
         });
         /***
-		processPoints(prospero, 'prospero', '1930', '1979');
+		processPoints(othello, 'othello', '1930', '1979');
         processPoints(bassanio, 'bassanio', '1930', '1979');
         processPoints(desdemona, 'desdemona', '1930', '1979');
         processPoints(orlando, 'orlando', '1930', '1979');
@@ -129,7 +129,7 @@ d3.queue()
         processPoints(portia, 'portia', '1930', '1979');
         **/
         /**
-        processPoints(prospero, 'prospero', 1960);
+        processPoints(othello, 'othello', 1960);
         processPoints(bassanio, 'bassanio', 1960);
         processPoints(desdemona, 'desdemona', 1960);
         processPoints(orlando, 'orlando', 1960);
@@ -479,10 +479,10 @@ d3.queue()
                 .attr('r', radius).attr('cy', yValue).attr('cx', () => {
                     //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
                     return scaleX(interquartiles[eachCharacter][3]) + pad;
-                }).attr('stroke', '#7c8392')
+                })//.attr('stroke', '#7c8392')
                 .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
                 .attr('fill-opacity', 0)
-                .attr('stroke-opacity', 0)
+                //.attr('stroke-opacity', 0)
                 .attr('filter', 'url(#glowBlur)');
 
                 let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
@@ -526,7 +526,7 @@ d3.queue()
 
 
 
-        function animateDots(minAge = 0, maxAge = 90) {
+        function animateDots(minAge = 0, maxAge = 90, slideFlag) {
             return function() {
                 //calculate max Width for partial axis
                 //ration of max width
@@ -549,12 +549,21 @@ d3.queue()
                 function createBracket(range, anchor, beamLength, thickness, className, label) {
                     if (!document.querySelector(`.${className}`)) {
                         let bracket = svg.append('g').attr('class', className);
+                        bracket.append('rect').attr('x', 0).attr('y', range[0])
+                            .attr('width', anchor)
+                            .attr('height', range[1] - range[0])
+                            .attr('fill', '#1a1b1e')
+                            .attr('fill-opacity', .73);
 
                         bracket.append('line').attr('x1', anchor).attr('y1', range[0]).attr('x2', anchor).attr('y2', range[1])
                             .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
 
-                        bracket.append('line').attr('x1', anchor).attr('y1', range[0] + thickness/2).attr('x2', anchor + beamLength).attr('y2', range[0] + thickness/2)
-                            .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
+                        bracket.append('line').attr('x1', anchor)
+                            .attr('y1', range[0] + thickness/2)
+                            .attr('x2', anchor + beamLength)
+                            .attr('y2', range[0] + thickness/2)
+                            .attr('stroke-width', `${thickness}px`)
+                            .attr('stroke', 'white');
 
                         bracket.append('line').attr('x1', anchor).attr('y1', range[1] - thickness/2)
                                 .attr('x2', anchor + beamLength).attr('y2', range[1] - thickness/2)
@@ -606,6 +615,15 @@ d3.queue()
                 }
                 **/
 
+                if (slideFlag) {
+                    function translateLeft() {
+                        d3.selectAll('.role-dots-group').transition().duration(2100).attr('transform', 'translate(-200,0)');
+                        d3.selectAll('.character-meta').transition().duration(2100).attr('transform', 'translate(-200,0)');
+                        d3.selectAll('.axis').transition().duration(2100).attr('transform', 'translate(-200,0)');
+                    }
+                    translateLeft();
+                }
+
                 d3.selectAll('.role-dots')
                     .filter(d => d.age >= minAge && d.age <= maxAge)
                     .transition(0)
@@ -630,14 +648,14 @@ d3.queue()
                     });
 
                 for (let eachCharacter in interquartiles) {
-                    let gender = characterGenders[eachCharacter];
-                    let index = indicies[eachCharacter];
-                    let yValue = gender == 'male' ? male(index, true) : female(index, true);
+                    const gender = characterGenders[eachCharacter];
+                    const index = indicies[eachCharacter];
+                    const yValue = gender == 'male' ? male(index, true) : female(index, true);
 
-                    let interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
-                    let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+                    const interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
+                    const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
 
-                    let fullCharacterAgesRange = interquartiles[eachCharacter];
+                    const fullCharacterAgesRange = interquartiles[eachCharacter];
                     let dataRange;
                     let dataRangeMiddleFifty;
 
@@ -690,19 +708,28 @@ d3.queue()
                         .on('end', function() {
                             d3.select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
 
+                            d3.select(this)
+                                .transition().duration(300)
+                                .attr('opacity', 0)
+                                .transition().duration(300)
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1)
+                                .transition().duration(200)
+                                .attr('opacity', 0)
+                                .transition().duration(200)
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1)
+
                             /*
-                            d3.select(this).transition().duration(1000)
+
                                 .attr('transform', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 'scale(1,1)' : 'scale(1.05,1)')
-                                .ease(d3.easeBounceIn)
-                                .transition().duration(1200)
+
                                 .attr('transform', 'scale(1,1)')
                                 .ease(d3.easeBackOut);
                             */
 
                             d3.selectAll(`.${eachCharacter}-label-text`).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
                             d3.select(`#${eachCharacter}-label-circle`)
-                                .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0)
-                                .attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
+                                .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
+                                //.attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
                         });
 
                     }
@@ -1009,6 +1036,7 @@ d3.queue()
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 23));
         d3.select('.dots2').on('click', animateDots(24, 30));
+        //d3.select('svg').on('click', animateDots(31, 45, true));
         d3.select('svg').on('click', animateDots(31, 85));
 
         //d3.select('svg').on('click', function() {
