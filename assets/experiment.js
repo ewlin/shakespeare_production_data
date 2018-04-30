@@ -1,3 +1,11 @@
+/**
+    ES6 imports
+    import moment from 'moment';
+    import * as d3 from 'd3';
+**/
+
+
+
 //Notes to self:
 //Code snippet to select for the ticks in the axis to fix certain criteria since the axis isn't bound to data
 //Array.from(document.querySelectorAll('.tick')).filter(group => parseInt(group.childNodes[1].innerHTML) >= 30)
@@ -403,23 +411,24 @@ d3.queue()
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color) //== 'male' ? 'steelblue' : '#fc5863')
-                    .attr('stroke', 'none')
+                    //.attr('stroke', 'white')
+                    //.attr('stroke-opacity', 0)
                     .attr('fill-opacity', 0)
             });
 
 
            for (let eachCharacter in interquartiles) {
-               let gender = characterGenders[eachCharacter];
-               let index = indicies[eachCharacter];
-               let yValue = gender == 'male' ? male(index, true) : female(index, true);
-               let interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
-               let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
-               let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
+               const gender = characterGenders[eachCharacter];
+               const index = indicies[eachCharacter];
+               const yValue = gender == 'male' ? male(index, true) : female(index, true);
+               const interquartileLine = d3.line().y(d => yValue).x(d => scaleX(d));
+               const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+               const charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
 
 
-               let fullCharacterAgesRange = interquartiles[eachCharacter];
-               let dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
-               let dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
+               const fullCharacterAgesRange = interquartiles[eachCharacter];
+               const dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
+               const dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
 
                 /**
                 if (fullCharacterAgesRange[0] > maxAge) {
@@ -616,10 +625,11 @@ d3.queue()
                 **/
 
                 if (slideFlag) {
+                    const slideDistance = scaleX(minAge) - scaleX(18);
                     function translateLeft() {
-                        d3.selectAll('.role-dots-group').transition().duration(2100).attr('transform', 'translate(-200,0)');
-                        d3.selectAll('.character-meta').transition().duration(2100).attr('transform', 'translate(-200,0)');
-                        d3.selectAll('.axis').transition().duration(2100).attr('transform', 'translate(-200,0)');
+                        d3.selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                        d3.selectAll('.character-meta').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                        d3.selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
                     }
                     translateLeft();
                 }
@@ -643,7 +653,11 @@ d3.queue()
                             return 0;
                         }
                         **/
-                    }).attr('stroke', (d) => {
+                    })
+                    //.attr('stroke-opacity', (d) => {
+                    //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
+                    //});
+                    .attr('stroke', (d) => {
                         d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
                     });
 
@@ -1036,8 +1050,10 @@ d3.queue()
         d3.select('.transitions').on('click', transitions);
         d3.select('.dots').on('click', animateDots(17, 23));
         d3.select('.dots2').on('click', animateDots(24, 30));
-        //d3.select('svg').on('click', animateDots(31, 45, true));
-        d3.select('svg').on('click', animateDots(31, 85));
+        d3.select('.dots3').on('click', animateDots(31, 45, false));
+        d3.select('.dots4').on('click', animateDots(46, 85, false));
+
+        //d3.select('svg').on('click', animateDots(31, 85));
 
         //d3.select('svg').on('click', function() {
             //d3.select('svg').transition().duration(1000).attr("transform", "translate(" + -100 + "," + -100 + ")")
@@ -1047,9 +1063,9 @@ d3.queue()
 		//Find max freq of roles at each age
 		console.log(characterAges);
 		let allAgesFreqs = [];
-		for (character in characterAges) {
+		for (let character in characterAges) {
 			//let ages = Object.keys(characterAges[character]);
-			for (age in characterAges[character]) {
+			for (let age in characterAges[character]) {
                 if (age != 'gender') {
                     let freq = characterAges[character][age].length;
     				allAgesFreqs.push(freq);
