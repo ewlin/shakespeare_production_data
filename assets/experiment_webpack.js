@@ -430,7 +430,7 @@ queue()
                const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
                const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
                const charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
-
+               const charMetaInner = charMeta.append('g').classed('character-meta-inner', true);
 
                const fullCharacterAgesRange = interquartiles[eachCharacter];
                const dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
@@ -462,7 +462,8 @@ queue()
                     .attr('x', d => scaleX(d[0]) - 5)
                     .attr('y', d => yValue)
                     .attr('opacity', 0)
-                    .attr('stroke', '#d4cdda')
+                    //.attr('stroke', '#d4cdda')
+                    .attr('stroke', () => characterAges[eachCharacter + 'Ages'].color)
                     .attr('alignment-baseline', 'middle')
                     .attr('text-anchor', 'end')
                     .attr('class', 'character-label-initial')
@@ -471,7 +472,7 @@ queue()
                         return formatCharacterName(eachCharacter);
                     });
 
-                charMeta.append('path').datum(dataRange)
+                charMetaInner.append('path').datum(dataRange)
                     .attr('d', interquartileLine)
                     .attr('class', 'thin-line-quartile')
                     .attr('stroke', '#7c8392')
@@ -479,10 +480,13 @@ queue()
                     .attr('opacity', .5)
                     .attr('stroke-dasharray', '3,1');
 
-                charMeta.append('text').datum(dataRange)
+                charMetaInner.append('text').datum(dataRange)
                     .attr('x', d => scaleX(d[1]))
-                    // +2 because arrow doesn't quite align with the thin-line for some reasons...
-                    .attr('y', d => yValue + 2)
+                    // +2.5 because arrow doesn't quite align with the thin-line for some reasons...
+                    .attr('y', d => {
+                        const isFirefox = navigator.userAgent.match(/Firefox\/\d*/);
+                        return isFirefox ? yValue + 5 : yValue + 2.5;
+                    })
                     .attr('opacity', 0)
                     .classed('arrow', true)
                     .style('font-size', '20px')
@@ -491,7 +495,7 @@ queue()
                     .text('\u2192')
 
 
-                charMeta.append('path').datum(dataRangeMiddleFifty)
+                charMetaInner.append('path').datum(dataRangeMiddleFifty)
                     .attr('class', 'thick-line-quartile')
                     .attr('d', interquartileLine)
                     .attr('stroke', '#d4cdda')
@@ -500,7 +504,7 @@ queue()
                     .attr('opacity', .85);
 
 
-                let text = charMeta.append('g').classed('interquartiles-labels', true)
+                let text = charMetaInner.append('g').classed('interquartiles-labels', true)
                     .attr('display', 'none')
                     .selectAll('.text').data(interquartiles[eachCharacter]);
 
@@ -515,7 +519,7 @@ queue()
                 let radius = 21.5;
                 let pad = 30;
 
-                charMeta.append('circle').datum(eachCharacter)
+                charMetaInner.append('circle').datum(eachCharacter)
                     .attr('id', eachCharacter + '-label-circle')
                     .attr('r', radius).attr('cy', yValue).attr('cx', () => {
                         //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
@@ -530,13 +534,13 @@ queue()
                 let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
 
 
-                charMeta.append('path')
+                charMetaInner.append('path')
                         .attr('id', eachCharacter + 'label')
                         .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
                         .attr('stroke-width', '3px')
                         .attr('fill', 'none');
 
-                charMeta.append('text')
+                charMetaInner.append('text')
                         .datum(eachCharacter)
                         .attr('class', 'label-text ' + eachCharacter + '-label-text')
                         .attr('opacity', 0)
@@ -653,7 +657,8 @@ queue()
                     const slideDistance = scaleX(minAge) - scaleX(18);
                     function translateLeft() {
                         selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
-                        selectAll('.character-meta').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                        selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                        //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
                         selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
                     }
                     translateLeft();
@@ -1092,14 +1097,32 @@ queue()
 						**/
 
         }
+
+        let state = 0;
+        const eventsQueue = [
+            animateDots(17, 23),
+            animateDots(24, 30),
+            animateDots(31, 45, false),
+            animateDots(46, 85, false)
+        ];
         //console.log(animateDots(30))
         //let animate30 = animateDots(30);
         select('.transitions').on('click', transitions);
-        select('.dots').on('click', animateDots(17, 23));
+        select('.dots').on('click', function nextStep() {
+            eventsQueue[state]();
+            state += 1;
+            if (state < eventsQueue.length) {
+                select(this).on('click', nextStep);
+            } else {
+                select(this).on('click', () => {});
+            }
+        });
+
+        /**
         select('.dots2').on('click', animateDots(24, 30));
         select('.dots3').on('click', animateDots(31, 45, false));
         select('.dots4').on('click', animateDots(46, 85, false));
-
+        **/
         //select('svg').on('click', animateDots(31, 85));
 
         //select('svg').on('click', function() {
