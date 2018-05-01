@@ -2,18 +2,17 @@
     ES6 imports
 
 **/
-    import moment from 'moment';
-    //import * as d3 from 'd3';
-    import { queue } from 'd3-queue';
-    import { tsv, json } from 'd3-request';
-    import { scaleLinear } from 'd3-scale';
-    import { axisBottom } from 'd3-axis';
-    import { variance, quantile } from 'd3-array';
-    import { select, selectAll } from 'd3-selection';
-    import { line } from 'd3-shape';
-    import { easeLinear, easeQuadInOut } from 'd3-ease';
-    import 'd3-transition';
-    import { transition } from 'd3-transition';
+import moment from 'moment';
+import { queue } from 'd3-queue';
+import { tsv, json } from 'd3-request';
+import { scaleLinear } from 'd3-scale';
+import { axisBottom } from 'd3-axis';
+import { variance, quantile } from 'd3-array';
+import { select, selectAll } from 'd3-selection';
+import { line } from 'd3-shape';
+import { easeLinear, easeQuadInOut } from 'd3-ease';
+import 'd3-transition';
+import { transition } from 'd3-transition';
 
 
 //Notes to self:
@@ -45,8 +44,7 @@ queue()
 
 
         //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
-        let scaleX = scaleLinear().domain([15, 85]).range([40, widthMax - 80]);
-
+        let scaleX = scaleLinear().domain([15, 85]).range([60, widthMax - 80]);
 
         let indicies = {
             romeo: 0,
@@ -447,6 +445,32 @@ queue()
                     dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[3]];
                 }
                 **/
+
+                function formatCharacterName(originalText) {
+                    const secondWordIndex = originalText.search(/[A-Z]/);
+                    let text;
+
+                    if (secondWordIndex > -1) {
+                        const storeSecondWordFirstLetter = originalText[secondWordIndex];
+                        text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + originalText.substring(secondWordIndex + 1);
+                    }
+                    return text ? text[0].toUpperCase() + text.substring(1)
+                                : originalText[0].toUpperCase() + originalText.substring(1);
+                }
+
+                charMeta.append('text').datum(dataRange)
+                    .attr('x', d => scaleX(d[0]) - 5)
+                    .attr('y', d => yValue)
+                    .attr('opacity', 0)
+                    .attr('stroke', '#d4cdda')
+                    .attr('alignment-baseline', 'middle')
+                    .attr('text-anchor', 'end')
+                    .attr('class', 'character-label-initial')
+                    .text(() => {
+                        //return eachCharacter.charAt(0).toUpperCase() + eachCharacter.substring(1);
+                        return formatCharacterName(eachCharacter);
+                    });
+
                 charMeta.append('path').datum(dataRange)
                     .attr('d', interquartileLine)
                     .attr('class', 'thin-line-quartile')
@@ -492,52 +516,45 @@ queue()
                 let pad = 30;
 
                 charMeta.append('circle').datum(eachCharacter)
-                .attr('id', eachCharacter + '-label-circle')
-                .attr('r', radius).attr('cy', yValue).attr('cx', () => {
-                    //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
-                    return scaleX(interquartiles[eachCharacter][3]) + pad;
-                })//.attr('stroke', '#7c8392')
-                .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
-                .attr('fill-opacity', 0)
-                //.attr('stroke-opacity', 0)
-                .attr('filter', 'url(#glowBlur)');
+                    .attr('id', eachCharacter + '-label-circle')
+                    .attr('r', radius).attr('cy', yValue).attr('cx', () => {
+                        //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
+                        return scaleX(interquartiles[eachCharacter][3]) + pad;
+                    })//.attr('stroke', '#7c8392')
+                    .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
+                    .attr('fill-opacity', 0)
+                    //.attr('stroke-opacity', 0)
+                    .attr('filter', 'url(#glowBlur)');
 
                 let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
                 let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
 
-                    //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
-                    //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
 
-                    charMeta.append('path')
-                            .attr('id', eachCharacter + 'label')
-                            .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
-                            .attr('stroke-width', '3px')
-                            .attr('fill', 'none');
+                charMeta.append('path')
+                        .attr('id', eachCharacter + 'label')
+                        .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
+                        .attr('stroke-width', '3px')
+                        .attr('fill', 'none');
 
-                    charMeta.append('text')
-                            .datum(eachCharacter)
-                            .attr('class', 'label-text ' + eachCharacter + '-label-text')
-                            .attr('opacity', 0)
-                            .append('textPath')
-                            .attr('xlink:href', d => '#' + d + 'label')
-                            //.attr('alignment-baseline', 'hanging')
-                            .attr('text-anchor', 'middle')
-                            .attr('startOffset', '50%')
-                            .attr('stroke', 'white')
-                            .attr('opacity', 0)
-                            .attr('class', eachCharacter + '-label-text')
-                            .text(d => d[0].toUpperCase() + d.substring(1,d.length));
+                charMeta.append('text')
+                        .datum(eachCharacter)
+                        .attr('class', 'label-text ' + eachCharacter + '-label-text')
+                        .attr('opacity', 0)
+                        .append('textPath')
+                        .attr('xlink:href', d => '#' + d + 'label')
+                        .attr('text-anchor', 'middle')
+                        .attr('startOffset', '50%')
+                        .attr('stroke', 'white')
+                        .attr('opacity', 0)
+                        .attr('class', eachCharacter + '-label-text')
+                        .text(d => formatCharacterName(d));
 
-
-
-
-
-                    select('#' + eachCharacter + 'meta')
-                        .on('mouseover', function () {
-                            select(this).select('.interquartiles-labels').attr('display', 'block');
-                        }).on('mouseout', function () {
-                            select(this).select('.interquartiles-labels').attr('display', 'none');
-                        });
+                select('#' + eachCharacter + 'meta')
+                    .on('mouseover', function () {
+                        select(this).select('.interquartiles-labels').attr('display', 'block');
+                    }).on('mouseout', function () {
+                        select(this).select('.interquartiles-labels').attr('display', 'none');
+                    });
 
                 }
 
@@ -550,7 +567,7 @@ queue()
                 // (widthMax - 100)/75 == the width of each year in age
                 let maxAxisWidth = (widthMax - 100)/75 * (maxAge - 10);
                 // let scaleX = scaleLinear().domain([15, 85]).range([40, widthMax - 80]);
-                let scaleXNew = scaleLinear().domain([15, maxAge]).range([40, scaleX(maxAge)]);
+                let scaleXNew = scaleLinear().domain([15, maxAge]).range([60, scaleX(maxAge)]);
 
                 let tickValues = [18, 20];
 
@@ -717,6 +734,14 @@ queue()
                         .attr('d', interquartileLine);
 
 
+                    let initialLabel = svg.select(`#${eachCharacter}meta`).select('.character-label-initial').datum(dataRange);
+
+                    initialLabel.transition()
+                                .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
+                                .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
+                                .attr('opacity', d => (d[0] == d[1] || maxAge >= fullCharacterAgesRange[3]) ? 0 : 1);
+
+
                     let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
 
                     //if not in range yet, don't show arrow...
@@ -729,16 +754,30 @@ queue()
                         .attr('opacity', d => d[0] == d[1] ? 0 : 1)
                         .on('end', function() {
                             select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+                            svg.select(`#${eachCharacter}meta`)
+                                .select('.character-label-initial')
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
 
                             select(this)
-                                .transition().duration(300)
-                                .attr('opacity', 0)
-                                .transition().duration(300)
+                                .transition().duration(400)
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 0.5)
+                                .attr('x', d => scaleX(d[1]) + 4)
+                                .transition().duration(400)
                                 .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1)
-                                .transition().duration(200)
-                                .attr('opacity', 0)
-                                .transition().duration(200)
+                                .attr('x', d => scaleX(d[1]) - 4)
+                                .transition().duration(400)
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 0.5)
+                                .attr('x', d => scaleX(d[1]) + 4)
+                                .transition().duration(400)
                                 .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1)
+                                .attr('x', d => scaleX(d[1]) - 4)
+                                .transition().duration(400)
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 0.5)
+                                .attr('x', d => scaleX(d[1]) + 4)
+                                .transition().duration(400)
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1)
+                                .attr('x', d => scaleX(d[1]))
+
 
                             /*
 
@@ -1058,8 +1097,8 @@ queue()
         select('.transitions').on('click', transitions);
         select('.dots').on('click', animateDots(17, 23));
         select('.dots2').on('click', animateDots(24, 30));
-        select('.dots3').on('click', animateDots(31, 45, true));
-        select('.dots4').on('click', animateDots(46, 85, true));
+        select('.dots3').on('click', animateDots(31, 45, false));
+        select('.dots4').on('click', animateDots(46, 85, false));
 
         //select('svg').on('click', animateDots(31, 85));
 
