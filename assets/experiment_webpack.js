@@ -930,7 +930,7 @@ queue()
 
             let points = svg.selectAll('.role-dots').data(data);
 
-            let transitionA = transition().duration(1000).ease(easeQuadInOut);
+            let transitionA = transition().duration(1500).ease(easeQuadInOut);
 
             /**
             circles.exit().remove();
@@ -999,7 +999,8 @@ queue()
                 characterMeta.select('.thick-line-quartile').datum(middleFiftyPercent).transition(transitionA)
                     .attr('d', interquartileLine);
 
-                characterMeta.select('.thin-line-quartile').datum(interquartiles[eachCharacter]).transition(transitionA)
+                characterMeta.select('.thin-line-quartile').datum([interquartiles[eachCharacter][0], interquartiles[eachCharacter][3]])
+                    .transition(transitionA)
                     .attr('d', interquartileLine);
 
                 characterMeta.select('circle').transition(transitionA).attr('cx', () => {
