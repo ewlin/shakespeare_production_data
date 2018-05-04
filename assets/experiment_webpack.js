@@ -36,6 +36,8 @@ queue()
     .defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
     .defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(tsv, 'data/ages/juliet_ages.tsv')
+    .defer(tsv, 'data/ages_updated/antony_actor_ages.tsv')
+    .defer(tsv, 'data/ages/prospero_ages.tsv')
     .await(function(error, ...characters) {
 
         //.clientWidth in Firefox has a bug
@@ -44,7 +46,7 @@ queue()
 
 
         //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
-        let scaleX = scaleLinear().domain([15, 85]).range([60, widthMax - 80]);
+        let scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
 
         let indicies = {
             romeo: 0,
@@ -52,11 +54,13 @@ queue()
             macbeth: 2,
             iago: 3,
             othello: 4,
-            lear: 5,
+            antony: 5,
+            prospero: 6,
+            lear: 7,
+            juliet: 0,
             desdemona: 1,
             ophelia: 2,
             rosalind: 3,
-            juliet: 0,
             portia: 4,
             ladyMacbeth: 5,
             cleopatra: 6
@@ -69,6 +73,8 @@ queue()
             macbeth: 'male',
             lear: 'male',
             iago: 'male',
+            antony: 'male',
+            prospero: 'male',
             desdemona: 'female',
             ophelia: 'female',
             rosalind: 'female',
@@ -93,12 +99,13 @@ queue()
             cleopatraAges: {gender: 'female', color: '#577EAD'},
             iagoAges: {gender: 'male', color: '#F57A3E'},
             learAges: {gender: 'male', color: '#F45C42'},
+            antonyAges: {gender: 'male', color: '#F36735'},
+            prosperoAges: {gender: 'male', color: '#FC7136'},
             rosalindAges: {gender: 'female', color: '#CA6379'},
             portiaAges: {gender: 'female', color: '#AD5468'},
             hamletAges: {gender: 'male', color: '#FAE12F'},
 			julietAges: {gender: 'female', color: '#A96B88'},
             opheliaAges: {gender: 'female', color: '#c44ec6'}
-
 		};
 
 
@@ -115,6 +122,8 @@ queue()
             cleopatraAges: [],
             iagoAges : [],
             learAges: [],
+            antonyAges: [],
+            prosperoAges: [],
             rosalindAges : [],
             hamletAges: [],
 			julietAges: [],
@@ -202,7 +211,7 @@ queue()
                                 && moment(role['opening_date']) <= moment(end)
                                 && role['gender'] != oppositeGender) {
 
-                        if (character == 'juliet' && age < 20) {
+                        if (character == 'romeo' && age < 18) {
                             console.log(role);
                             console.log(role['opening_date']);
                             console.log(role['actor'] + ' ' + age);
@@ -346,32 +355,19 @@ queue()
             return rolesArr;
         }
 
-        //console.log(processAllPoints());
-        //console.log(processAllPointsAlt());
-        console.log(processAllPointsAlt2());
         console.log(processAllPointsAlt3());
-
-
-        /**
-        //Test....
-        let testData = processAllPointsAlt();
-
-        let genderGroups = svg.selectAll('.genders').data(testData).enter()
-                            .append('g');
-
-
-        genderGroups.selectAll('.points').data(d => d.roles).enter().append('circle');
-        //End Test
-
-        **/
 
 
         //Width = 1100
         //Height = 500
 
-        let female = scaleGender([30, heightMax/2 - 15], 7);
-        let male = scaleGender([heightMax/2 + 15, heightMax-60], 6);
+        //TODO: Get rid of hard-coded paddings and margins
 
+        // padding-top == 30
+        // padding-bottom == 60 (i.e., heightMax-60)
+        // padding-between == 30 (i.e., -15 and + 15 in opposite directions)
+        let female = scaleGender([30, heightMax/2 - 10], 7);
+        let male = scaleGender([heightMax/2 + 10, heightMax-60], 8);
 
 
         function scaleGender(range, numOfBands) {
@@ -409,7 +405,7 @@ queue()
 
         //New Create role dots (with groups; see function processAllPointsAlt3)
         svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
-            .append('g').attr('class', 'role-dots-group')
+            .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
             .each(function(roleData, i) {
                 select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
                     .attr('class', 'role-dots')
@@ -566,12 +562,14 @@ queue()
 
         function animateDots(minAge = 0, maxAge = 90, slideFlag) {
             return function() {
+
+                const delayFactor = 110;
                 //calculate max Width for partial axis
                 //ration of max width
                 // (widthMax - 100)/75 == the width of each year in age
                 let maxAxisWidth = (widthMax - 100)/75 * (maxAge - 10);
                 // let scaleX = scaleLinear().domain([15, 85]).range([40, widthMax - 80]);
-                let scaleXNew = scaleLinear().domain([15, maxAge]).range([60, scaleX(maxAge)]);
+                let scaleXNew = scaleLinear().domain([10, maxAge]).range([60, scaleX(maxAge)]);
 
                 let tickValues = [18, 20];
 
@@ -619,8 +617,8 @@ queue()
                     }
                 }
 
-                createBracket([30, heightMax/2 - 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                createBracket([heightMax/2 + 15, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+                createBracket([30, heightMax/2 - 10], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                createBracket([heightMax/2 + 10, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
 
                 if (!document.querySelector('.axis')) {
@@ -664,11 +662,12 @@ queue()
                     translateLeft();
                 }
 
+
                 selectAll('.role-dots')
                     .filter(d => d.age >= minAge && d.age <= maxAge)
                     .transition(0)
                     //.delay(d => Math.pow((d.age - minAge), 1.2) * 80)
-                    .delay(d => (d.age - minAge) * 100)
+                    .delay(d => (d.age - minAge) * delayFactor)
                     .attr('fill-opacity', d => {
                         //if (d.age <= maxAge && d.age >= minAge) {
                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
@@ -725,16 +724,16 @@ queue()
                     svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
                         .transition()
                         //how does min Age play into here
-                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
-                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
                         .ease(easeLinear)
                         .attr('d', interquartileLine);
 
 
                     svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty)
                         .transition()
-                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
-                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
                         .ease(easeLinear)
                         .attr('d', interquartileLine);
 
@@ -742,18 +741,20 @@ queue()
                     let initialLabel = svg.select(`#${eachCharacter}meta`).select('.character-label-initial').datum(dataRange);
 
                     initialLabel.transition()
-                                .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
-                                .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
+                                .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
+                                .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
                                 .attr('opacity', d => (d[0] == d[1] || maxAge >= fullCharacterAgesRange[3]) ? 0 : 1);
 
 
-                    let arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
+                    const arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
+                    const charMeta = svg.select(`#${eachCharacter}meta`).select('.character-meta-inner').datum(dataRange);
+                    const ageDots = svg.select(`.${eachCharacter}-dots-group`);
 
                     //if not in range yet, don't show arrow...
 
                     arrow.transition()
-                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * 100 : (d[1] - minAge) * 100)
-                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * 100 : 0)
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
                         .ease(easeLinear)
                         .attr('x', d => scaleX(d[1]))
                         .attr('opacity', d => d[0] == d[1] ? 0 : 1)
@@ -762,6 +763,28 @@ queue()
                             svg.select(`#${eachCharacter}meta`)
                                 .select('.character-label-initial')
                                 .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+
+                            charMeta
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? .24 : 1);
+
+                            ageDots
+                                .selectAll('circle')
+                                .filter(d => d.age <= maxAge)
+                                .transition(500)
+                                .attr('fill-opacity', d => {
+                                    //console.log(this);
+                                    if (maxAge >= fullCharacterAgesRange[3]) {
+                                        return .1;
+                                    } else {
+                                        if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                                            console.log('good');
+                                            return .82;
+                                        } else {
+                                            return .35;
+                                        }
+                                    }
+                                });
+
 
                             select(this)
                                 .transition().duration(400)
