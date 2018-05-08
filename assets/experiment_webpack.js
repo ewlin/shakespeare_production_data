@@ -23,7 +23,7 @@ import { transition } from 'd3-transition';
 const svg = select('svg');
 
 queue()
-    .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
+    .defer(tsv, 'data/ages/shylock_ages.tsv')
     .defer(tsv, 'data/ages/ophelia_ages.tsv')
     .defer(tsv, 'data/ages/romeo_ages.tsv')
     .defer(tsv, 'data/ages_updated/portia_actor_ages.tsv')
@@ -53,8 +53,8 @@ queue()
             hamlet: 1,
             macbeth: 2,
             iago: 3,
-            othello: 4,
-            antony: 5,
+            antony: 4,
+            shylock: 5,
             prospero: 6,
             lear: 7,
             juliet: 0,
@@ -68,7 +68,7 @@ queue()
 
         let characterGenders = {
             hamlet: 'male',
-            othello: 'male',
+            shylock: 'male',
             romeo: 'male',
             macbeth: 'male',
             lear: 'male',
@@ -86,12 +86,31 @@ queue()
 
         let characterAges = {
             /**
-            hamletAges: {},
-			portiaAges: {},
-   	        iagoAges: {},
-
+            //Female: '#fc5863','#ec606c','#dc6776','#cb6d7f','#ba7187','#a77590','#90799b','#757ca4','#fc5863'
+            //Male: '#f7973a','#f89040','#f98946','#fa824c','#fa7b51','#fb7356','#fb6b5a','#fc625f','#fc5863'
+            //another: '#c44ec6','#be6ac6','#b782c6','#af97c6','#a4abc5','#96bdc5','#84d0c4','#6be3c3','#42f4c2'
+            //option: '#4682b4','#407dab','#3978a4','#33739b','#2b6f92','#246a8a','#1c6582','#13607a'
+            //female2: '#c44ec6','#af55bb','#9c5ab0','#855ea4','#6f609a','#58618f','#3d6184','#13607a'
             **/
-            othelloAges: {gender: 'male', color: '#c0c400'},
+
+            shylockAges: {gender: 'male', color: '#fc625f'},
+            romeoAges: {gender: 'male', color: '#f7973a'},
+            desdemonaAges: {gender: 'female', color: '#c44ec6'},
+            macbethAges: {gender: 'male', color: '#f98946'},
+   	        ladyMacbethAges: {gender: 'female', color: '#58618f'},
+            cleopatraAges: {gender: 'female', color: '#3d6184'},
+            iagoAges: {gender: 'male', color: '#fa824c'},
+            learAges: {gender: 'male', color: '#fb6b5a'},
+            antonyAges: {gender: 'male', color: '#fa7b51'},
+            prosperoAges: {gender: 'male', color: '#fb7356'},
+            rosalindAges: {gender: 'female', color: '#855ea4'},
+            portiaAges: {gender: 'female', color: '#6f609a'},
+            hamletAges: {gender: 'male', color: '#f89040'},
+			julietAges: {gender: 'female', color: '#c44ec6'},
+            opheliaAges: {gender: 'female', color: '#af55bb'}
+
+            /**
+            shylockAges: {gender: 'male', color: '#c0c400'},
             romeoAges: {gender: 'male', color: '#F7973A'},
             desdemonaAges: {gender: 'female', color: '#FC5863'},
             macbethAges: {gender: 'male', color: '#F8B535'},
@@ -106,6 +125,7 @@ queue()
             hamletAges: {gender: 'male', color: '#FAE12F'},
 			julietAges: {gender: 'female', color: '#A96B88'},
             opheliaAges: {gender: 'female', color: '#c44ec6'}
+            **/
 		};
 
 
@@ -114,7 +134,7 @@ queue()
             hamletAges: [],
 			portiaAges : [],
             **/
-            othelloAges: [],
+            shylockAges: [],
             romeoAges: [],
             desdemonaAges: [],
             macbethAges: [],
@@ -139,7 +159,7 @@ queue()
             processPoints(character, characterName, 1980);
         });
         /***
-		processPoints(othello, 'othello', '1930', '1979');
+		processPoints(shylock, 'shylock', '1930', '1979');
         processPoints(bassanio, 'bassanio', '1930', '1979');
         processPoints(desdemona, 'desdemona', '1930', '1979');
         processPoints(orlando, 'orlando', '1930', '1979');
@@ -152,7 +172,7 @@ queue()
         processPoints(portia, 'portia', '1930', '1979');
         **/
         /**
-        processPoints(othello, 'othello', 1960);
+        processPoints(shylock, 'shylock', 1960);
         processPoints(bassanio, 'bassanio', 1960);
         processPoints(desdemona, 'desdemona', 1960);
         processPoints(orlando, 'orlando', 1960);
@@ -211,7 +231,7 @@ queue()
                                 && moment(role['opening_date']) <= moment(end)
                                 && role['gender'] != oppositeGender) {
 
-                        if (character == 'romeo' && age < 18) {
+                        if (character == 'ladyMacbeth' && age > 55) {
                             console.log(role);
                             console.log(role['opening_date']);
                             console.log(role['actor'] + ' ' + age);
@@ -481,7 +501,7 @@ queue()
                     // +2.5 because arrow doesn't quite align with the thin-line for some reasons...
                     .attr('y', d => {
                         const isFirefox = navigator.userAgent.match(/Firefox\/\d*/);
-                        return isFirefox ? yValue + 5 : yValue + 2.5;
+                        return isFirefox ? yValue + 5 : yValue + 3;
                     })
                     .attr('opacity', 0)
                     .classed('arrow', true)
@@ -512,8 +532,8 @@ queue()
                     .attr('opacity', (d,i) => i == 1 || i == 2 ? 1 : .3)
                     .text(d => d);
 
-                let radius = 21.5;
-                let pad = 30;
+                let radius = 18.5;
+                let pad = radius + 9;
 
                 charMetaInner.append('circle').datum(eachCharacter)
                     .attr('id', eachCharacter + '-label-circle')
@@ -672,9 +692,9 @@ queue()
                         //if (d.age <= maxAge && d.age >= minAge) {
                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
                             console.log('good');
-                            return .82;
+                            return .95;
                         } else {
-                            return .35;
+                            return .4;
                         }
                         /**
                         } else {
@@ -1123,23 +1143,40 @@ queue()
         }
 
         let state = 0;
+        /*
         const eventsQueue = [
             animateDots(17, 23),
             animateDots(24, 30),
             animateDots(31, 45, false),
             animateDots(46, 85, false)
         ];
+        */
+        const eventsQueue = [
+            [animateDots(17, 23), 'Up through 30...'],
+            [animateDots(24, 30), 'From 31 to 45'],
+            [animateDots(31, 45, false), 'From 46 to retirement...'],
+            [animateDots(46, 66, false), 'After 66.'],
+            [animateDots(67, 85, false)]
+        ];
         //console.log(animateDots(30))
         //let animate30 = animateDots(30);
         select('.transitions').on('click', transitions);
         select('.dots').on('click', function nextStep() {
-            eventsQueue[state]();
-            state += 1;
-            if (state < eventsQueue.length) {
+            //console.log(this);
+            select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
+
+            if (eventsQueue[state]) {
+                eventsQueue[state][0]();
+            }
+
+            if (state < eventsQueue.length - 1) {
+                state += 1;
                 select(this).on('click', nextStep);
             } else {
                 select(this).on('click', () => {});
+                select(this).attr('disabled', true);
             }
+            console.log(state);
         });
 
         /**
