@@ -87,25 +87,27 @@ queue()
         let characterAges = {
             /**
             //Female: '#fc5863','#ec606c','#dc6776','#cb6d7f','#ba7187','#a77590','#90799b','#757ca4','#fc5863'
-            //Male: '#f7973a','#f89040','#f98946','#fa824c','#fa7b51','#fb7356','#fb6b5a','#fc625f','#fc5863'
-            //another: '#c44ec6','#be6ac6','#b782c6','#af97c6','#a4abc5','#96bdc5','#84d0c4','#6be3c3','#42f4c2'
+            //another Female: '#c44ec6','#be6ac6','#b782c6','#af97c6','#a4abc5','#96bdc5','#84d0c4','#6be3c3','#42f4c2'
             //option: '#4682b4','#407dab','#3978a4','#33739b','#2b6f92','#246a8a','#1c6582','#13607a'
+
+
+            //Male: '#f7973a','#f89040','#f98946','#fa824c','#fa7b51','#fb7356','#fb6b5a','#fc625f','#fc5863'
             //female2: '#c44ec6','#af55bb','#9c5ab0','#855ea4','#6f609a','#58618f','#3d6184','#13607a'
             **/
 
-            shylockAges: {gender: 'male', color: '#fc625f'},
+            shylockAges: {gender: 'male', color: '#fb6b5a'},
             romeoAges: {gender: 'male', color: '#f7973a'},
-            desdemonaAges: {gender: 'female', color: '#c44ec6'},
-            macbethAges: {gender: 'male', color: '#f98946'},
-   	        ladyMacbethAges: {gender: 'female', color: '#58618f'},
-            cleopatraAges: {gender: 'female', color: '#3d6184'},
-            iagoAges: {gender: 'male', color: '#fa824c'},
-            learAges: {gender: 'male', color: '#fb6b5a'},
-            antonyAges: {gender: 'male', color: '#fa7b51'},
-            prosperoAges: {gender: 'male', color: '#fb7356'},
-            rosalindAges: {gender: 'female', color: '#855ea4'},
-            portiaAges: {gender: 'female', color: '#6f609a'},
-            hamletAges: {gender: 'male', color: '#f89040'},
+            desdemonaAges: {gender: 'female', color: '#6f609a'},
+            macbethAges: {gender: 'male', color: '#f89040'},
+   	        ladyMacbethAges: {gender: 'female', color: '#3d6184'},
+            cleopatraAges: {gender: 'female', color: '#855ea4'},
+            iagoAges: {gender: 'male', color: '#fc625f'},
+            learAges: {gender: 'male', color: '#fb7356'},
+            antonyAges: {gender: 'male', color: '#f98946'},
+            prosperoAges: {gender: 'male', color: '#fa824c'},
+            rosalindAges: {gender: 'female', color: '#58618f'},
+            portiaAges: {gender: 'female', color: '#9c5ab0'},
+            hamletAges: {gender: 'male', color: '#fc5863'},
 			julietAges: {gender: 'female', color: '#c44ec6'},
             opheliaAges: {gender: 'female', color: '#af55bb'}
 
@@ -543,6 +545,7 @@ queue()
                     })//.attr('stroke', '#7c8392')
                     .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
                     .attr('fill-opacity', 0)
+                    //.attr('mask', 'url(#mask)')
                     //.attr('stroke-opacity', 0)
                     .attr('filter', 'url(#glowBlur)');
 
@@ -844,7 +847,11 @@ queue()
                     }
             }
         }
-
+        /* Mini experiment to see if animations with masks work...
+        select('svg').on('click', function() {
+            selectAll('.character-meta').select('circle').transition().duration(1000).attr('r', '25px').attr('mask', 'url(#mask)')
+        })
+        */
         /**
         for (let eachCharacter in interquartiles) {
             let gender = characterGenders[eachCharacter];
