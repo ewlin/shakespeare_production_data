@@ -94,7 +94,7 @@ queue()
             //Male: '#f7973a','#f89040','#f98946','#fa824c','#fa7b51','#fb7356','#fb6b5a','#fc625f','#fc5863'
             //female2: '#c44ec6','#af55bb','#9c5ab0','#855ea4','#6f609a','#58618f','#3d6184','#13607a'
             **/
-
+            /**
             shylockAges: {gender: 'male', color: '#fb6b5a'},
             romeoAges: {gender: 'male', color: '#f7973a'},
             desdemonaAges: {gender: 'female', color: '#6f609a'},
@@ -110,8 +110,9 @@ queue()
             hamletAges: {gender: 'male', color: '#fc5863'},
 			julietAges: {gender: 'female', color: '#c44ec6'},
             opheliaAges: {gender: 'female', color: '#af55bb'}
+            **/
 
-            /**
+
             shylockAges: {gender: 'male', color: '#c0c400'},
             romeoAges: {gender: 'male', color: '#F7973A'},
             desdemonaAges: {gender: 'female', color: '#FC5863'},
@@ -127,7 +128,7 @@ queue()
             hamletAges: {gender: 'male', color: '#FAE12F'},
 			julietAges: {gender: 'female', color: '#A96B88'},
             opheliaAges: {gender: 'female', color: '#c44ec6'}
-            **/
+
 		};
 
 
@@ -430,7 +431,11 @@ queue()
             .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
             .each(function(roleData, i) {
                 select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
-                    .attr('class', 'role-dots')
+                    .attr('class', d => {
+                        return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
+                            ? 'role-dots center-50-dot'
+                            : 'role-dots tail-dot';
+                    })
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
@@ -545,7 +550,7 @@ queue()
                     })//.attr('stroke', '#7c8392')
                     .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
                     .attr('fill-opacity', 0)
-                    //.attr('mask', 'url(#mask)')
+                    .attr('mask', 'url(#mask)')
                     //.attr('stroke-opacity', 0)
                     .attr('filter', 'url(#glowBlur)');
 
@@ -653,6 +658,33 @@ queue()
                         .attr('opacity', 1)
 
                     select('.domain').remove();
+
+                    const ageAxis = document.querySelector('.axis');
+
+                    const axisLabel = svg.append('text').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('svg').getBoundingClientRect().top)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('svg').getBoundingClientRect().left)/2 + 13)
+                        .attr('text-anchor', 'middle')
+                        .attr('stroke', '#a6abb5')
+                        .attr('font-size', '9px');
+
+                    axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('svg').getBoundingClientRect().top)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('svg').getBoundingClientRect().left)/2 + 13)
+                        .text('Age of actor at')
+                        .attr('dy', '8px');
+                    axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('svg').getBoundingClientRect().top)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('svg').getBoundingClientRect().left)/2 + 13)
+                        .text('start of production')
+                        .attr('dy', '18px').append('tspan').attr('class', 'note-indicator').text('*');
+
+
+                        /*
+                        .append('tspan')
+                        .attr('class', 'note-indicator')
+                        .text('*')
+                        .attr('font-size', '12px');
+                        //.attr('baseline-shift', 'super');
+                        */
+
                 } else {
                     svg.select('g.axis').transition(2000)
                         .call(axisBottom(scaleXNew).tickValues(tickValues));
@@ -660,6 +692,11 @@ queue()
                     select('.domain').remove();
 
                 }
+
+                const ageAxis = document.querySelector('.axis');
+                console.log('left side of axis:' + ageAxis.getBoundingClientRect().left);
+
+
 
                 /**
                 if (!document.querySelector('.axis-label')) {
@@ -836,22 +873,28 @@ queue()
 
                                 .attr('transform', 'scale(1,1)')
                                 .ease(d3.easeBackOut);
-                            */
 
+                            */
                             selectAll(`.${eachCharacter}-label-text`).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
                             select(`#${eachCharacter}-label-circle`)
                                 .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
                                 //.attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
+
                         });
 
                     }
             }
         }
-        /* Mini experiment to see if animations with masks work...
+
+        /*
+        // Mini experiment to see if animations with masks work...
         select('svg').on('click', function() {
-            selectAll('.character-meta').select('circle').transition().duration(1000).attr('r', '25px').attr('mask', 'url(#mask)')
+            const dots = selectAll('.role-dots').filter(d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]);
+            dots.attr('mask', 'url(#mask)');
+            dots.transition().duration(500).attr('r', '5px');
         })
         */
+
         /**
         for (let eachCharacter in interquartiles) {
             let gender = characterGenders[eachCharacter];
@@ -1018,7 +1061,8 @@ queue()
                 //.attr('filter', 'url(#blurMe)')
                 .transition(transitionA)
                 .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
-                .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35);
+                .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+
 
 
             points.transition(transitionA)
@@ -1163,7 +1207,25 @@ queue()
             [animateDots(24, 30), 'From 31 to 45'],
             [animateDots(31, 45, false), 'From 46 to retirement...'],
             [animateDots(46, 66, false), 'After 66.'],
-            [animateDots(67, 85, false)]
+            [animateDots(67, 85, false), 'End'],
+            [function() {
+                selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
+                selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
+                    //if (d.age <= maxAge && d.age >= minAge) {
+                    if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                        console.log('good');
+                        return .95;
+                    } else {
+                        return .4;
+                    }
+                    /**
+                    } else {
+                        console.log('invisible');
+                        return 0;
+                    }
+                    **/
+                });
+            }]
         ];
         //console.log(animateDots(30))
         //let animate30 = animateDots(30);

@@ -25,6 +25,10 @@
             font-weight: 200;
         }
 
+        tspan.note-indicator {
+            font-family: 'Work Sans';
+        }
+
         text.character-label-initial {
             font-size: 11.5px;
         }
@@ -49,7 +53,7 @@
         }
 
         .axis path, .axis text, .axis .tick line {
-            stroke: #7c8392;
+            stroke: #a6abb5;
         }
 
         .button-container {
@@ -193,37 +197,35 @@
 
 </head>
 <body>
-    <!--
-    <button class="transition">Show More</button>
-    <button class="hull-tran">Hull change</button>
-    <div class='button-container'><button class='dots2'>Animate Dots Next</button></div>
-    <div class='button-container'><button class='dots3'>Animate Dots Slide1</button></div>
-    <div class='button-container'><button class='dots4'>Animate Dots Slide More</button></div>
-    -->
-    <div class='button-container'><button class='transitions'>Transition</button></div>
-    <div class='button-container'><button class='dots'>From ages 17 to 23..</button></div>
+	<!--
+<button class="transition">Show More</button>
+<button class="hull-tran">Hull change</button>
+<div class='button-container'><button class='dots2'>Animate Dots Next</button></div>
+<div class='button-container'><button class='dots3'>Animate Dots Slide1</button></div>
+<div class='button-container'><button class='dots4'>Animate Dots Slide More</button></div>
+-->
+	<div class='button-container'><button class='transitions'>Transition</button></div>
+	<div class='button-container'><button class='dots'>From ages 17 to 23..</button></div>
 
 
+		<div class='svg-container'>
+			<svg width="1100" height="650">
+				<defs>
+					<filter id="glowBlur">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+					</filter>
+					<pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">
+						<path d="M-1,1 l2,-2
+										 M0,4 l4,-4
+										 M3,5 l2,-2"/>
+					</pattern>
+					<mask id="mask">
+						<rect height="100%" width="100%" style="fill: url(#stripe)" />
+					</mask>
+				</defs>
+			</svg>
 
-
-<div class='svg-container'>
-    <svg width="1100" height="650">
-        <defs>
-            <filter id="glowBlur">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
-            </filter>
-            <pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">
-                <path d="M-1,1 l2,-2
-                M0,4 l4,-4
-                M3,5 l2,-2"/>
-            </pattern>
-            <mask id="mask">
-                <rect height="100%" width="100%" style="fill: url(#stripe)" />
-            </mask>
-        </defs>
-    </svg>
-
-</div>
+		</div>
 <!--
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
