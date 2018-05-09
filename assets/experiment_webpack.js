@@ -1021,59 +1021,73 @@ queue()
             let data = processAllPointsAlt2();
             console.log(data);
 
-            let points = svg.selectAll('.role-dots').data(data);
+            /*
+            svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
+                .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
+                .each(function(roleData, i) {
+                    select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
+                        .attr('class', d => {
+                            return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
+                                ? 'role-dots center-50-dot'
+                                : 'role-dots tail-dot';
+                        })
+                        .attr('cx', d => scaleX(d.age))
+                        .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+                        .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+                        .attr('fill', d => roleData.color) //== 'male' ? 'steelblue' : '#fc5863')
+                        //.attr('stroke', 'white')
+                        //.attr('stroke-opacity', 0)
+                        .attr('fill-opacity', 0)
+                });
+            */
 
+
+            //let points = svg.selectAll('.role-dots').data(data);
+            let dotGroups = svg.selectAll('.role-dots-group').data(processAllPointsAlt3());
+
+            dotGroups.enter();
+
+            console.log(dotGroups)
             let transitionA = transition().duration(1500).ease(easeQuadInOut);
 
-            /**
-            circles.exit().remove();
-            //circles2.exit().remove();
-            //circles2.enter().append('circle').classed('outer-circle juliet', true)
+            dotGroups.each(function(roleData, i) {
+                console.log(roleData.role + ': ' + i)
+                let points = select(this).selectAll('.role-dots').data(roleData.ages);
+                console.log(points);
 
-            circles.transition().duration(2100)
-                .attr('cx', d => scaleDate(moment(d.opening_date).valueOf()))
-                .attr('cy', d => scaleY(moment(d['opening_date']).diff(moment(d['bday']), 'years')))
-                .attr('fill', 'steelblue')
-                .attr('opacity', .8)
+                points.exit().remove();
 
-            circles.enter().append('circle').attr('stroke', d => d.gender == 'female' ? 'white' : 'none')
-                .attr('stroke-width', '2px')
-                .attr('fill', 'steelblue')
-                .attr('opacity', 0)
-                .attr('r', '5px')
-                .attr('cx', d => scaleDate(moment(d.opening_date).valueOf()))
-                .attr('cy', d => scaleY(moment(d['opening_date']).diff(moment(d['bday']), 'years')))
-                .transition().duration(2100)
-                .attr('opacity', .8)
-            **/
-
-
-
-            points.exit().remove();
-
-            points.enter().append('circle').attr('class', 'role-dots')
-                .attr('cx', d => scaleX(d.age))
-                .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
-                .attr('r', '0px')
-                .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
-                .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-                .attr('fill-opacity', 0)
-                //.attr('filter', 'url(#blurMe)')
-                .transition(transitionA)
-                .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
-                .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+                points.enter().append('circle').attr('class', 'role-dots')
+                    .attr('class', d => {
+                        return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
+                            ? 'role-dots center-50-dot'
+                            : 'role-dots tail-dot';
+                    })
+                    .attr('cx', d => scaleX(d.age))
+                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+                    .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+                    .attr('fill', d => roleData.color)
+                    //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
+                    .attr('fill-opacity', 0)
+                    //.attr('filter', 'url(#blurMe)')
+                    .transition(transitionA)
+                    .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
+                    .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
 
 
 
-            points.transition(transitionA)
-                //.attr('class', 'role-dots')
-                .attr('cx', d => scaleX(d.age))
-                .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
-                .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
-                .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
-                .attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-                .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
-                //.attr('filter', 'url(#blurMe)');
+                points.transition(transitionA)
+                    //.attr('class', 'role-dots')
+                    .attr('cx', d => scaleX(d.age))
+                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+                    .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+                    .attr('fill', d => roleData.color)
+                    //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
+                    .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+                    //.attr('filter', 'url(#blurMe)');
+
+            });
+
 
 
             for (let eachCharacter in interquartiles) {
