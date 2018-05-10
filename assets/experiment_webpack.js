@@ -36,7 +36,7 @@ queue()
     .defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
     .defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(tsv, 'data/ages/juliet_ages.tsv')
-    .defer(tsv, 'data/ages_updated/antony_actor_ages.tsv')
+    .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
     .defer(tsv, 'data/ages/prospero_ages.tsv')
     .await(function(error, ...characters) {
 
@@ -53,7 +53,7 @@ queue()
             hamlet: 1,
             macbeth: 2,
             iago: 3,
-            antony: 4,
+            othello: 4,
             shylock: 5,
             prospero: 6,
             lear: 7,
@@ -73,7 +73,7 @@ queue()
             macbeth: 'male',
             lear: 'male',
             iago: 'male',
-            antony: 'male',
+            othello: 'male',
             prospero: 'male',
             desdemona: 'female',
             ophelia: 'female',
@@ -103,7 +103,7 @@ queue()
             cleopatraAges: {gender: 'female', color: '#855ea4'},
             iagoAges: {gender: 'male', color: '#fc625f'},
             learAges: {gender: 'male', color: '#fb7356'},
-            antonyAges: {gender: 'male', color: '#f98946'},
+            othelloAges: {gender: 'male', color: '#f98946'},
             prosperoAges: {gender: 'male', color: '#fa824c'},
             rosalindAges: {gender: 'female', color: '#58618f'},
             portiaAges: {gender: 'female', color: '#9c5ab0'},
@@ -121,7 +121,7 @@ queue()
             cleopatraAges: {gender: 'female', color: '#577EAD'},
             iagoAges: {gender: 'male', color: '#F57A3E'},
             learAges: {gender: 'male', color: '#F45C42'},
-            antonyAges: {gender: 'male', color: '#F36735'},
+            othelloAges: {gender: 'male', color: '#F36735'},
             prosperoAges: {gender: 'male', color: '#FC7136'},
             rosalindAges: {gender: 'female', color: '#CA6379'},
             portiaAges: {gender: 'female', color: '#AD5468'},
@@ -145,7 +145,7 @@ queue()
             cleopatraAges: [],
             iagoAges : [],
             learAges: [],
-            antonyAges: [],
+            othelloAges: [],
             prosperoAges: [],
             rosalindAges : [],
             hamletAges: [],
@@ -159,7 +159,8 @@ queue()
             if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
             characterName = characterName.join('');
             console.log(characterName);
-            processPoints(character, characterName, 1980);
+            //processPoints(character, characterName, 1980);
+            processPoints(character, characterName, 1900, 2018);
         });
         /***
 		processPoints(shylock, 'shylock', '1930', '1979');
@@ -219,43 +220,45 @@ queue()
         **/
 
 		function processPoints(characterData, character, startYear, endYear) {
-            let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
-            let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
-            let oppositeGender = characterGenders[character] == 'male' ? 'female' : 'male';
+			let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
+			let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
+			let oppositeGender = characterGenders[character] == 'male' ? 'female' : 'male';
 			characterData.forEach(function(role) {
 
 				if (role['bday'] != 'person not found on wiki'
 						&& role['bday'] != 'no birthday on article'
 						&& role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
+					
+					let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
 
-                    let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
+					//Old version
+					//if (age > 0 && moment(role['opening_date']) >= moment(start)
+          //	&& moment(role['opening_date']) <= moment(end)
+          //	&& role['gender'] != oppositeGender) {
+						
+					if (age > 0 && moment(role['opening_date']) >= moment(start) 
+							&& moment(role['opening_date']) <= moment(end)) {
 
-					if (age > 0 && moment(role['opening_date']) >= moment(start)
-                                && moment(role['opening_date']) <= moment(end)
-                                && role['gender'] != oppositeGender) {
+            	if (character == 'desdemona' && age > 35) {
+            	    console.log(role);
+            	    console.log(role['opening_date']);
+            	    console.log(role['actor'] + ' ' + age);
+            	}
 
-                        if (character == 'desdemona' && age > 35) {
-                            console.log(role);
-                            console.log(role['opening_date']);
-                            console.log(role['actor'] + ' ' + age);
-                        }
-
-						if (characterAges[character + 'Ages'][age]) {
-							characterAges[character + 'Ages'][age].push(role)
-						} else {
-							characterAges[character + 'Ages'][age] = [role]
-						}
-						characterAgesArrays[character + 'Ages'].push(age);
-
-
-
+							if (characterAges[character + 'Ages'][age]) {
+								characterAges[character + 'Ages'][age].push(role)
+							} else {
+								characterAges[character + 'Ages'][age] = [role]
+							}
+							characterAgesArrays[character + 'Ages'].push(age);
+					
 					}
 
 				}
 		  });
 		}
 
-        console.log(characterAges)
+	console.log(characterAges)
 
         //Create historgram buckets with ALL Ages
         //input == characterAges
@@ -345,37 +348,31 @@ queue()
 
         //Array of characters in groups; with ages when actors playing role in sorted form
         function processAllPointsAlt3() {
+					
+					const rolesArr = [];
+          for (let character in characterAges) {
+						const role = character.substring(0,character.length - 4);
+						const roleAges = characterAges[character];
+						const characterGender = roleAges.gender;
+						const characterColor = roleAges.color;
+						const roleAgesArray = [];
+              //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
+           	for (let age in roleAges) {
 
-            const rolesArr = [];
+							if (age != 'gender' && age != 'color') {
+								roleAges[age].forEach(a => {
+									roleAgesArray.push({age: parseInt(age), role: role, race: a['race'], opening: a['opening_date']}); //pushing an integer; will be an object once refactored
+									//actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
+								});
 
-            for (let character in characterAges) {
-                const role = character.substring(0,character.length - 4);
-                const roleAges = characterAges[character];
-                const characterGender = roleAges.gender;
-                const characterColor = roleAges.color;
-
-                const roleAgesArray = [];
-                //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
-
-                for (let age in roleAges) {
-                    if (age != 'gender' && age != 'color') {
-                        roleAges[age].forEach(a => {
-                            roleAgesArray.push({age: parseInt(age), role: role}); //pushing an integer; will be an object once refactored
-                            //actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
-                        });
-                    }
-                }
-
-                roleAgesArray.sort((a,b) => a.age - b.age);
-
-                rolesArr.push({role: role, gender: characterGender, index: indicies[role], color: characterColor, ages: roleAgesArray});
-
-            }
-
-            //actorsAges.sort((a,b) => a.age - b.age);
-
-            //return actorsAges;
-            return rolesArr;
+							}
+						}
+						roleAgesArray.sort((a,b) => a.age - b.age);
+						rolesArr.push({role: role, gender: characterGender, index: indicies[role], color: characterColor, ages: roleAgesArray});
+          }
+          //actorsAges.sort((a,b) => a.age - b.age);
+          //return actorsAges;
+          return rolesArr;
         }
 
         console.log(processAllPointsAlt3());
@@ -1261,6 +1258,35 @@ queue()
             }
             console.log(state);
         });
+	
+				//Rough draft 
+				function filterPoints(dateRange) {
+					return function() {
+						
+						
+						let filteredDots = selectAll('.role-dots').filter(d => {
+							return moment(d.opening) >= moment(dateRange[0]) && moment(d.opening) <= moment(dateRange[1]) && d.role == 'othello';
+						})
+						
+						console.log(filteredDots)
+						
+						selectAll('.role-dots')
+							.attr('fill-opacity', d => {
+								return (moment(d.opening) >= moment(dateRange[0])) && (moment(d.opening) <= moment(dateRange[1])) && d.role == 'othello'
+									? (d.race != 'unknown' && d.race != 'none' ? 1 : .6)
+									: .05; 
+						});
+						filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
+							.transition().duration(1200)
+							.attr('r', '7px')
+            	.attr('mask', 'url(#mask)');
+					}
+					
+				}
+	
+				select('.First-date-group').on('click', filterPoints(['1900', '1949']));
+				select('.Second-date-group').on('click', filterPoints(['1950', '1979']));
+				select('.Third-date-group').on('click', filterPoints(['1980', '2018']));
 
         /**
         select('.dots2').on('click', animateDots(24, 30));
