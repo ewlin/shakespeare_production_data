@@ -234,7 +234,7 @@ queue()
                                 && moment(role['opening_date']) <= moment(end)
                                 && role['gender'] != oppositeGender) {
 
-                        if (character == 'ladyMacbeth' && age > 55) {
+                        if (character == 'desdemona' && age > 35) {
                             console.log(role);
                             console.log(role['opening_date']);
                             console.log(role['actor'] + ' ' + age);
@@ -1219,8 +1219,8 @@ queue()
         const eventsQueue = [
             [animateDots(17, 23), 'Up through 30...'],
             [animateDots(24, 30), 'From 31 to 45'],
-            [animateDots(31, 45, false), 'From 46 to retirement...'],
-            [animateDots(46, 66, false), 'After 66.'],
+            [animateDots(31, 45), 'From 46 to retirement...'],
+            [animateDots(46, 66), 'After 66.'],
             [animateDots(67, 85, false), 'End'],
             [function() {
                 selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
