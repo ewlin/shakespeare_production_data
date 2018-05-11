@@ -20,7 +20,8 @@ import { transition } from 'd3-transition';
 //Array.from(document.querySelectorAll('.tick')).filter(group => parseInt(group.childNodes[1].innerHTML) >= 30)
 
 
-const svg = select('svg');
+const svg = select('.svg-main');
+const brushControls = select('.svg-controls'); 
 
 queue()
     .defer(tsv, 'data/ages/shylock_ages.tsv')
@@ -41,8 +42,8 @@ queue()
     .await(function(error, ...characters) {
 
         //.clientWidth in Firefox has a bug
-        let widthMax = document.querySelector('svg').getBoundingClientRect().width;
-        let heightMax = document.querySelector('svg').getBoundingClientRect().height;
+        let widthMax = document.querySelector('.svg-main').getBoundingClientRect().width;
+        let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
 
 
         //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
@@ -239,7 +240,7 @@ queue()
 					if (age > 0 && moment(role['opening_date']) >= moment(start) 
 							&& moment(role['opening_date']) <= moment(end)) {
 
-            	if (character == 'desdemona' && age > 35) {
+            	if (character == 'cleopatra' && role['gender'] == 'male') {
             	    console.log(role);
             	    console.log(role['opening_date']);
             	    console.log(role['actor'] + ' ' + age);
@@ -361,7 +362,13 @@ queue()
 
 							if (age != 'gender' && age != 'color') {
 								roleAges[age].forEach(a => {
-									roleAgesArray.push({age: parseInt(age), role: role, race: a['race'], opening: a['opening_date']}); //pushing an integer; will be an object once refactored
+									roleAgesArray.push({
+										age: parseInt(age), 
+										role: role, 
+										race: a['race'], 
+										opening: a['opening_date'],
+										actorGender: a['gender']
+									}); //pushing an integer; will be an object once refactored
 									//actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
 								});
 
@@ -658,18 +665,18 @@ queue()
 
                     const ageAxis = document.querySelector('.axis');
 
-                    const axisLabel = svg.append('text').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('svg').getBoundingClientRect().top)
-                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('svg').getBoundingClientRect().left)/2 + 13)
+                    const axisLabel = svg.append('text').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
                         .attr('text-anchor', 'middle')
                         .attr('stroke', '#a6abb5')
                         .attr('font-size', '9px');
 
-                    axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('svg').getBoundingClientRect().top)
-                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('svg').getBoundingClientRect().left)/2 + 13)
+                    axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
                         .text('Age of actor at')
                         .attr('dy', '8px');
-                    axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('svg').getBoundingClientRect().top)
-                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('svg').getBoundingClientRect().left)/2 + 13)
+                    axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
                         .text('start of production')
                         .attr('dy', '18px').append('tspan').attr('class', 'note-indicator').text('*');
 
@@ -822,7 +829,7 @@ queue()
                                 .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
 
                             charMeta
-                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? .24 : 1);
+                                .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? .14 : 1);
 
                             ageDots
                                 .selectAll('circle')
@@ -1265,28 +1272,49 @@ queue()
 						
 						
 						let filteredDots = selectAll('.role-dots').filter(d => {
-							return moment(d.opening) >= moment(dateRange[0]) && moment(d.opening) <= moment(dateRange[1]) && d.role == 'othello';
+							return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1));
 						})
 						
 						console.log(filteredDots)
 						
 						selectAll('.role-dots')
 							.attr('fill-opacity', d => {
-								return (moment(d.opening) >= moment(dateRange[0])) && (moment(d.opening) <= moment(dateRange[1])) && d.role == 'othello'
+								return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
 									? (d.race != 'unknown' && d.race != 'none' ? 1 : .6)
 									: .05; 
-						});
+							})
+							.attr('stroke', d => {
+								if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
+							});
+						
 						filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
-							.transition().duration(1200)
 							.attr('r', '7px')
             	.attr('mask', 'url(#mask)');
+						
+						filteredDots.filter(dot => {
+							let actor_gender = dot.actorGender; 
+							if (characterGenders[dot.role] == 'male' && actor_gender == 'female') {
+								return true; 
+							} else if (characterGenders[dot.role] == 'female' && actor_gender == 'male') {
+								return true; 
+							} else {
+								return false; 
+							}
+						})
+						.attr('r', '7px')
+						.attr('stroke', 'white')
+						.attr('stroke-width', '2px');
 					}
 					
 				}
 	
-				select('.First-date-group').on('click', filterPoints(['1900', '1949']));
-				select('.Second-date-group').on('click', filterPoints(['1950', '1979']));
-				select('.Third-date-group').on('click', filterPoints(['1980', '2018']));
+				select('.date-group1').on('click', filterPoints([1900, 1949]));
+				select('.date-group2').on('click', filterPoints([1950, 1989]));
+				select('.date-group3').on('click', filterPoints([1990, 2018]));
+				//select('.date-group4').on('click', filterPoints([1960, 1979]));
+				//select('.date-group5').on('click', filterPoints([1980, 1999]));
+				//select('.date-group6').on('click', filterPoints([2000, 2018]));
+
 
         /**
         select('.dots2').on('click', animateDots(24, 30));
