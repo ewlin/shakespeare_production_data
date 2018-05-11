@@ -15,6 +15,8 @@ import 'd3-transition';
 import { transition } from 'd3-transition';
 import { brushX, brushSelection } from 'd3-brush';
 
+const throttle = require('lodash.throttle'); 
+
 
 //Notes to self:
 //Code snippet to select for the ticks in the axis to fix certain criteria since the axis isn't bound to data
@@ -56,14 +58,11 @@ queue()
 				const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]); 
 				
 				const brush = brushX().extent([[100,5], [widthMax - 100, controlsHeight]])
-					.on('brush', brushed)
+					//.on('brush', throttle(brushed, 800));
 					.on('end', brushEnded);
 	
 				function brushed() {
-					console.log('brushed');
-					//console.log(brushSelection(this)); 
-					//console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
-					//filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))(); 
+					filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))();
 				}
 	
 				function brushEnded() {
@@ -73,7 +72,7 @@ queue()
 					}
 				}
 
-				const brushGroup = select('.svg-controls').append('g');
+				const brushGroup = select('.svg-controls').append('g').classed('brush', true);
 	
 				brushGroup.call(brush);
 	
