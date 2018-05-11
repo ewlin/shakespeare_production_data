@@ -6,6 +6,7 @@
   "dependencies": {
     "d3-array": "^1.2.1",
     "d3-axis": "^1.0.8",
+    "d3-brush": "^1.0.4",
     "d3-dsv": "^1.0.5",
     "d3-ease": "^1.0.3",
     "d3-queue": "^3.0.7",
@@ -23,7 +24,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "build" : "webpack"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",

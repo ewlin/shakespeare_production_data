@@ -13,6 +13,7 @@ import { line } from 'd3-shape';
 import { easeLinear, easeQuadInOut } from 'd3-ease';
 import 'd3-transition';
 import { transition } from 'd3-transition';
+import { brushX, brushSelection } from 'd3-brush';
 
 
 //Notes to self:
@@ -47,7 +48,39 @@ queue()
 
 
         //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
-        let scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
+        const scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
+	
+				//Setup for brushing year filter
+				const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
+				
+				const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]); 
+				
+				const brush = brushX().extent([[100,5], [widthMax - 100, controlsHeight]])
+					.on('brush', brushed)
+					.on('end', brushEnded);
+	
+				function brushed() {
+					console.log('brushed');
+					//console.log(brushSelection(this)); 
+					//console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
+					//filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))(); 
+				}
+	
+				function brushEnded() {
+					if (brushSelection(this)) {
+						console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
+						filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))(); 
+					}
+				}
+
+				const brushGroup = select('.svg-controls').append('g');
+	
+				brushGroup.call(brush);
+	
+	
+	
+	
+	
 
         let indicies = {
             romeo: 0,
