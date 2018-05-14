@@ -1,7 +1,7 @@
 bday	opening_date	role	actor	director	company	venue	gender	race	actor_flag	ethnicities
 person not found on wiki	1890-04-21T00:00:00	Othello	Osmond Tearle	Osmond Tearle	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
-1971-01-01T00:00:00	2016-09-14T00:00:00	Othello	Aldo Billingslea	Eric Ting	California Shakespeare Theater	Bruns Amphitheater	unknown	unknown		
-1954-01-01T00:00:00	2006-08-30T00:00:00	Othello (in selected performances)	David Emerson Toney	Michael Kahn	Shakespeare Theatre Company	Lansburgh Theatre	unknown	unknown		
+1966-01-01T00:00:00	2016-09-14T00:00:00	Othello	Aldo Billingslea	Eric Ting	California Shakespeare Theater	Bruns Amphitheater	male	Black		
+1954-01-01T00:00:00	2006-08-30T00:00:00	Othello (in selected performances)	David Emerson Toney	Michael Kahn	Shakespeare Theatre Company	Lansburgh Theatre	male	Black		
 1991-01-01T00:00:00	2017-02-16T00:00:00	Othello	Abraham Popoola	Richard Twyman	Shakespeare at the Tobacco Factory	Tobacco Factory Theatres	male	Black		
 1984-07-01T00:00:00	2017-01-01T00:00:00	Othello	Kurt Egyiawan	Ellen McDougall	Shakespeare's Globe	Shakespeare's Globe	unknown	Black		
 person not found on wiki	2007-02-08T00:00:00	Othello	Leo Wringer	Andrew Hilton	Shakespeare at the Tobacco Factory	Tobacco Factory Theatres	unknown	unknown		
@@ -12,14 +12,14 @@ person not found on wiki	1939-04-11T00:00:00	Othello	John Paton Laurie	Robert At
 person not found on wiki	2018-02-16T00:00:00	Othello	Chris Butler	Bill Rauch	Oregon Shakespeare Festival	Angus Bowmer Theatre	unknown	unknown		
 person not found on wiki	1930-07-07T00:00:00	Othello	Wilfrid Walter	William Bridges-Adams	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
 person not found on wiki	1924-04-22T00:00:00	Othello	Baliol Holloway	William Bridges-Adams	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
-1962-07-01T00:00:00	2009-01-30T00:00:00	Othello	Patrice Naiambana	Kathryn Hunter	Royal Shakespeare Company	Tour	unknown	unknown		
+1962-07-01T00:00:00	2009-01-30T00:00:00	Othello	Patrice Naiambana	Kathryn Hunter	Royal Shakespeare Company	Tour	male	Black		
 1916-02-14T00:00:00	1956-01-01T00:00:00	Othello	Joseph O Conor	John Moody	unknown production company	Bristol Old Vic	unknown	unknown		
 person not found on wiki	1995-01-01T00:00:00	Othello	Leo Wringer	Edward Hall	unknown production company	Watermill Theatre, Bagnor	unknown	unknown		
 person not found on wiki	2014-02-22T00:00:00	Othello	David Carr	Caroline Devlin	Guildford Shakespeare Co.	Holy Trinity Church, Guildford	unknown	unknown		
 1883-02-28T00:00:00	1924-07-21T00:00:00	Othello	Baliol Holloway	W Bridges-Adams	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
 person not found on wiki	1995-01-01T00:00:00	Othello	Damian Myerscough	Andrew Manley	unknown production company	Harrogate Theatre	unknown	unknown		
 person not found on wiki	1912-08-07T00:00:00	Othello	F R Benson	F R Benson	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
-person not found on wiki	1930-07-07T00:00:00	Othello	Wilfrid Walter	W Bridges-Adams	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
+1882-03-02T00:00:00	1930-07-07T00:00:00	Othello	Wilfrid Walter	W Bridges-Adams	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	unknown	unknown		
 person not found on wiki	2009-05-30T00:00:00	Othello	Victor Power	Charlotte Conquest	Creation Theatre Company	New Road Baptist Church, Oxford	unknown	unknown		
 1975-10-12T00:00:00	2013-08-14T00:00:00	Othello	Dion Johnstone	Christopher Abraham	Stratford Festival	Avon Theatre (Canada)	unknown	Black		
 person not found on wiki	2003-02-22T00:00:00	Othello	Ricky Fearon	Christopher Fettes	Haymarket Theatre Co./Concentric Circles	Haymarket Theatre, Basingstoke	unknown	unknown		
@@ -100,7 +100,7 @@ no birthday on article	2010-11-13T00:00:00	Othello	Richard Davy	Chris Scott	Derb
 1968-08-14T00:00:00	2013-04-23T00:00:00	Othello	Adrian Lester	Nicholas Hytner	National Theatre	Olivier Theatre	male	Black	yes	Jamaican
 1950-04-18T00:00:00	2007-06-02T00:00:00	Othello	Philip Akin	DAVID LATHAM	Stratford Festival	Tom Patterson Theatre (Canada)	male	Black	yes	Jamaican
 1958-08-29T00:00:00	2009-04-21T00:00:00	Othello	Lenny Henry	Barry Rutter	Northern Broadsides and West Yorkshire Playhouse	Rose Theatre Kingston, Kingston upon Thames	male	Black,Black,Black,Black,Black	yes	Jamaican
-1964-01-01T00:00:00	2009-02-22T00:00:00	Othello	John Douglas Thompson	Arin Arbus	Theatre for a New Audience	The Duke on 42nd Street	male	none	yes	Jamaican
+1964-01-01T00:00:00	2009-02-22T00:00:00	Othello	John Douglas Thompson	Arin Arbus	Theatre for a New Audience	The Duke on 42nd Street	male	Black	yes	Jamaican
 1904-04-14T00:00:00	1961-10-10T00:00:00	Othello	John Gielgud	Franco Zeffirelli	Royal Shakespeare Company	Royal Shakespeare Theatre, Stratford-upon-Avon	male	none	yes	Lithuanian,Polish
 1913-09-07T00:00:00	1954-03-16T00:00:00	Othello	Anthony Quayle	Anthony Quayle	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	male	none	yes	Manx
 1979-05-28T00:00:00	2004-03-13T00:00:00	Othello	Nonso Anozie	Declan Donnellan	Cheek By Jowl	Théâtre l'Idéal, Théâtre du Nord Lille	male	Black	yes	Nigerian

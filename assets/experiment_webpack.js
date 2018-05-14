@@ -57,12 +57,23 @@ queue()
 				
 				const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]); 
 				
-				const brush = brushX().extent([[100,5], [widthMax - 100, controlsHeight]])
-					//.on('brush', throttle(brushed, 800));
+				const brush = brushX().extent([[100,5], [widthMax - 100, controlsHeight - 20]])
+					.on('brush', brushed)
 					.on('end', brushEnded);
-	
+		
 				function brushed() {
-					filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))();
+					const selection = brushSelection(this); 
+					if (brushSelection(this)) {
+						const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
+						if (selection[1] - selection[0] >= 100) {
+							select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0]);  
+							select('.end-year-label').attr('x', selection[1] - 5).attr('opacity', 1).text(years[1]);  
+						} else {
+							select('.start-year-label').attr('opacity', 0);
+							select('.end-year-label').attr('opacity', 0);
+						}
+						
+					}
 				}
 	
 				function brushEnded() {
@@ -76,10 +87,16 @@ queue()
 	
 				brushGroup.call(brush);
 	
-	
-	
-	
-	
+				const startYear = select('.svg-controls').append('text').classed('start-year-label', true)
+					.attr('y', 10)
+					.attr('stroke', 'white')
+					.attr('alignment-baseline', 'hanging');
+				const endYear = select('.svg-controls').append('text').classed('end-year-label', true)
+					.attr('y', 10)
+					.attr('stroke', 'white')
+					.attr('text-anchor', 'end')
+					.attr('alignment-baseline', 'hanging');
+
 
         let indicies = {
             romeo: 0,
@@ -692,6 +709,7 @@ queue()
                 		.call(axisBottom(scaleXNew).tickValues([18, 20, 22]))
                         .transition(2000)
                         .attr('opacity', 1)
+												//.attr('transform', `translate(0,${heightMax/2})`);
 
                     select('.domain').remove();
 
@@ -1305,7 +1323,7 @@ queue()
 						
 						let filteredDots = selectAll('.role-dots').filter(d => {
 							return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1));
-						})
+						});
 						
 						console.log(filteredDots)
 						
@@ -1318,6 +1336,12 @@ queue()
 							.attr('stroke', d => {
 								if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
 							});
+						
+						const othelloPOCDots = filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none' && dot.role == 'othello')._groups[0].length;
+						const othelloDots = filteredDots.filter(dot => dot.role == 'othello')._groups[0].length;
+						
+						console.log(othelloPOCDots + ', ' + othelloDots);
+						
 						
 						filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
 							.attr('r', '7px')
