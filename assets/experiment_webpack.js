@@ -25,6 +25,10 @@ const throttle = require('lodash.throttle');
 
 const svg = select('.svg-main');
 const brushControls = select('.svg-controls'); 
+let windowHeight = window.innerHeight;
+console.log(windowHeight);
+//50 is height of brush control rect
+select('.svg-main').attr('height', windowHeight - 50);
 
 queue()
     .defer(tsv, 'data/ages/shylock_ages.tsv')
@@ -442,8 +446,9 @@ queue()
         // padding-top == 30
         // padding-bottom == 60 (i.e., heightMax-60)
         // padding-between == 30 (i.e., -15 and + 15 in opposite directions)
-        let female = scaleGender([30, heightMax/2 - 10], 7);
-        let male = scaleGender([heightMax/2 + 10, heightMax-60], 8);
+	
+        let female = scaleGender([10, heightMax/2 - 25], 7);
+        let male = scaleGender([heightMax/2 + 25, heightMax - 10], 8);
 
 
         function scaleGender(range, numOfBands) {
@@ -698,18 +703,29 @@ queue()
                     }
                 }
 
-                createBracket([30, heightMax/2 - 10], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                createBracket([heightMax/2 + 10, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+                //createBracket([30, heightMax/2 - 10], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                //createBracket([heightMax/2 + 10, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+								
+							  createBracket([10, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
 
                 if (!document.querySelector('.axis')) {
                     svg.append('g')
-                		.attr('class', 'x axis')
-                        .attr('opacity', 0)
-                		.call(axisBottom(scaleXNew).tickValues([18, 20, 22]))
-                        .transition(2000)
-                        .attr('opacity', 1)
-												//.attr('transform', `translate(0,${heightMax/2})`);
+                			.attr('class', 'x axis')
+                    	.attr('opacity', 0)
+											//.attr('transform', `translate(0,${heightMax/2 - 10})`)
+                			.call(axisBottom(scaleXNew).tickValues([18, 20, 22]).tickSize(heightMax - 20))
+                      .transition(2000)
+                      .attr('opacity', 1)
+									
+										selectAll('.axis .tick text')
+											.attr('transform', `translate(0,-${heightMax/2 - 10})`);
+									
+										selectAll('.axis .tick line')
+											.attr('stroke-dasharray', '2,2')
+											.attr('stroke-opacity', .2)
+											.attr('transform', `translate(0,10)`);
 
                     select('.domain').remove();
 
@@ -719,7 +735,9 @@ queue()
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
                         .attr('text-anchor', 'middle')
                         .attr('stroke', '#a6abb5')
-                        .attr('font-size', '9px');
+                        .attr('font-size', '9px')
+												.attr('transform', `translate(0,${heightMax/2 - 20})`)
+												
 
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
@@ -741,9 +759,19 @@ queue()
 
                 } else {
                     svg.select('g.axis').transition(2000)
-                        .call(axisBottom(scaleXNew).tickValues(tickValues));
+                        .call(axisBottom(scaleXNew)
+															.tickValues(tickValues)
+															.tickSize(heightMax - 20));
 
                     select('.domain').remove();
+									
+										selectAll('.axis .tick text')
+											.attr('transform', `translate(0,-${heightMax/2 - 10})`);
+									
+										selectAll('.axis .tick line')
+											.attr('stroke-dasharray', '2,2')
+											.attr('stroke-opacity', .2)
+											.attr('transform', `translate(0,10)`);
 
                 }
 
