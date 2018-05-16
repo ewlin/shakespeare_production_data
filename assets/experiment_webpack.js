@@ -14,6 +14,7 @@ import { easeLinear, easeQuadInOut } from 'd3-ease';
 import 'd3-transition';
 import { transition } from 'd3-transition';
 import { brushX, brushSelection } from 'd3-brush';
+import * as annotation from 'd3-svg-annotation';
 
 const throttle = require('lodash.throttle'); 
 
@@ -28,7 +29,8 @@ const brushControls = select('.svg-controls');
 let windowHeight = window.innerHeight;
 console.log(windowHeight);
 //50 is height of brush control rect
-select('.svg-main').attr('height', windowHeight - 50);
+select('.svg-main').attr('height', windowHeight - (windowHeight * .075));
+select('.svg-controls').attr('height', windowHeight * .075);
 
 queue()
     .defer(tsv, 'data/ages/shylock_ages.tsv')
@@ -42,12 +44,32 @@ queue()
     .defer(tsv, 'data/ages/iago_ages.tsv')
     .defer(tsv, 'data/ages/lear_ages.tsv')
     .defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
+    .defer(tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
     .defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
     .defer(tsv, 'data/ages/juliet_ages.tsv')
     .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
     .defer(tsv, 'data/ages/prospero_ages.tsv')
     .await(function(error, ...characters) {
-
+	
+				//5/15 test (est. count number of productions)
+				let productions = []; 
+				
+				for (let eachRole in characters) {
+					for (let eachActor in characters[eachRole]) {
+						const production = characters[eachRole][eachActor]['director'] + ' ' + characters[eachRole][eachActor]['opening_date']; 
+						if (!productions.includes(production)) productions.push(production);
+					}
+				}
+				
+				console.log(productions.length + ' productions');
+	
+				//Save special points for annotations
+	
+				let annotationCoordinates = {
+					stewartOthello: {text: '', coordinates: []}, 
+					canadaIago: {text: '', coordinates:[]},
+				};
+	
         //.clientWidth in Firefox has a bug
         let widthMax = document.querySelector('.svg-main').getBoundingClientRect().width;
         let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
@@ -108,9 +130,10 @@ queue()
             macbeth: 2,
             iago: 3,
             othello: 4,
-            shylock: 5,
-            prospero: 6,
-            lear: 7,
+            richardIii: 5,
+						shylock: 6,
+            prospero: 7,
+            lear: 8,
             juliet: 0,
             desdemona: 1,
             ophelia: 2,
@@ -129,6 +152,7 @@ queue()
             iago: 'male',
             othello: 'male',
             prospero: 'male',
+						richardIii: 'male',
             desdemona: 'female',
             ophelia: 'female',
             rosalind: 'female',
@@ -166,21 +190,21 @@ queue()
             opheliaAges: {gender: 'female', color: '#af55bb'}
             **/
 
-
+						richardIiiAges: {gender: 'male', color: '#fb6b5a'},
             shylockAges: {gender: 'male', color: '#c0c400'},
             romeoAges: {gender: 'male', color: '#F7973A'},
             desdemonaAges: {gender: 'female', color: '#FC5863'},
-            macbethAges: {gender: 'male', color: '#F8B535'},
+            macbethAges: {gender: 'male', color: '#F36735'},
    	        ladyMacbethAges: {gender: 'female', color: '#78779E'},
             cleopatraAges: {gender: 'female', color: '#577EAD'},
-            iagoAges: {gender: 'male', color: '#F57A3E'},
-            learAges: {gender: 'male', color: '#F45C42'},
-            othelloAges: {gender: 'male', color: '#F36735'},
+            iagoAges: {gender: 'male', color: '#F45C42'},
+            learAges: {gender: 'male', color: '#F57A3E'},
+            othelloAges: {gender: 'male', color: '#F8B535'},
             prosperoAges: {gender: 'male', color: '#FC7136'},
             rosalindAges: {gender: 'female', color: '#CA6379'},
             portiaAges: {gender: 'female', color: '#AD5468'},
             hamletAges: {gender: 'male', color: '#FAE12F'},
-			julietAges: {gender: 'female', color: '#A96B88'},
+						julietAges: {gender: 'female', color: '#A96B88'},
             opheliaAges: {gender: 'female', color: '#c44ec6'}
 
 		};
@@ -205,7 +229,8 @@ queue()
             hamletAges: [],
 			julietAges: [],
             portiaAges: [],
-            opheliaAges: []
+            opheliaAges: [],
+						richardIiiAges: []
 		}
 
         characters.forEach(character => {
@@ -420,7 +445,8 @@ queue()
 										role: role, 
 										race: a['race'], 
 										opening: a['opening_date'],
-										actorGender: a['gender']
+										actorGender: a['gender'], 
+										actor: a['actor']
 									}); //pushing an integer; will be an object once refactored
 									//actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
 								});
@@ -447,8 +473,8 @@ queue()
         // padding-bottom == 60 (i.e., heightMax-60)
         // padding-between == 30 (i.e., -15 and + 15 in opposite directions)
 	
-        let female = scaleGender([10, heightMax/2 - 25], 7);
-        let male = scaleGender([heightMax/2 + 25, heightMax - 10], 8);
+        let female = scaleGender([15, heightMax/2 - 25], 7);
+        let male = scaleGender([heightMax/2 + 25, heightMax - 10], 9);
 
 
         function scaleGender(range, numOfBands) {
@@ -488,6 +514,7 @@ queue()
         svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
             .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
             .each(function(roleData, i) {
+								
                 select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
                     .attr('class', d => {
                         return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
@@ -498,12 +525,24 @@ queue()
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color) //== 'male' ? 'steelblue' : '#fc5863')
-                    //.attr('stroke', 'white')
+                   	//.attr('stroke', d => roleData.color)
                     //.attr('stroke-opacity', 0)
                     .attr('fill-opacity', 0)
+                    .attr('stroke-opacity', 0)
+										.each(function(actor) {
+											if (actor.actor === 'Patrick Stewart' && actor.role === 'othello') {
+												annotationCoordinates['stewartOthello'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
+											}
+											if (actor.actor === 'Ron Canada' && actor.role === 'iago') {
+												annotationCoordinates['canadaIago'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
+											}
+											
+										});
             });
 
-
+						console.log(annotationCoordinates);
+						
+	
            for (let eachCharacter in interquartiles) {
                const gender = characterGenders[eachCharacter];
                const index = indicies[eachCharacter];
@@ -532,9 +571,11 @@ queue()
                     let text;
 
                     if (secondWordIndex > -1) {
+												
                         const storeSecondWordFirstLetter = originalText[secondWordIndex];
-                        text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + originalText.substring(secondWordIndex + 1);
+                        text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + (originalText === 'richardIii' ? originalText.substring(secondWordIndex + 1).toUpperCase() : originalText.substring(secondWordIndex + 1));
                     }
+										console.log(text);
                     return text ? text[0].toUpperCase() + text.substring(1)
                                 : originalText[0].toUpperCase() + originalText.substring(1);
                 }
@@ -706,7 +747,7 @@ queue()
                 //createBracket([30, heightMax/2 - 10], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
                 //createBracket([heightMax/2 + 10, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 								
-							  createBracket([10, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+							  createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
                 createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
 
@@ -732,7 +773,7 @@ queue()
                     const ageAxis = document.querySelector('.axis');
 
                     const axisLabel = svg.append('text').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
-                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                         .attr('text-anchor', 'middle')
                         .attr('stroke', '#a6abb5')
                         .attr('font-size', '9px')
@@ -740,12 +781,12 @@ queue()
 												
 
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
-                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
-                        .text('Age of actor at')
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
+                        .text('AGE OF ACTOR')
                         .attr('dy', '8px');
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
-                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2 + 13)
-                        .text('start of production')
+                        .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
+                        .text('DURING PRODUCTION')
                         .attr('dy', '18px').append('tspan').attr('class', 'note-indicator').text('*');
 
 
@@ -825,12 +866,12 @@ queue()
                         }
                         **/
                     })
-                    //.attr('stroke-opacity', (d) => {
-                    //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
-                    //});
-                    .attr('stroke', (d) => {
-                        d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
+                    .attr('stroke-opacity', (d) => {
+                        d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
                     });
+                    //.attr('stroke', (d) => {
+                    //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
+                    //});
 
                 for (let eachCharacter in interquartiles) {
                     const gender = characterGenders[eachCharacter];
@@ -1149,8 +1190,9 @@ queue()
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color)
-                    //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
+                    //.attr('stroke', d => roleData.color)
                     .attr('fill-opacity', 0)
+							      .attr('stroke-opacity', 0)
                     //.attr('filter', 'url(#blurMe)')
                     .transition(transitionA)
                     .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
@@ -1166,7 +1208,7 @@ queue()
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
                     .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
-                    //.attr('filter', 'url(#blurMe)');
+                    //.attr('stroke-opacity', 1)
 
             });
 
@@ -1288,6 +1330,94 @@ queue()
 						**/
 
         }
+	
+				//Highlights 
+	
+				function highlight1 () {
+					selectAll('.role-dots')
+						.filter(d => {
+							return moment(d.opening) >= moment("1980") && moment(d.opening) < moment("2019");
+						})
+						.attr('fill-opacity', d => {
+							if (d.role === 'othello' || d.role === 'iago') {
+								if (d.actor === 'Ron Canada' || d.actor === 'Patrick Stewart') {
+									return 1; 
+								} else {
+									return .8;
+								}
+							} else {
+								return .02;
+							}
+								
+						})
+						.attr('stroke-opacity', d => {
+							if ((d.role === 'othello' || d.role === 'iago') && (d.actor === 'Ron Canada' || d.actor === 'Patrick Stewart')) {
+								return 1; 
+							} else {
+								return .05;
+							}
+						})
+						.attr('stroke', d => {
+							if ((d.role === 'othello' || d.role === 'iago') && (d.actor === 'Ron Canada' || d.actor === 'Patrick Stewart')) {
+								return 'white';
+							} else {
+								return 'none';
+							}
+						})
+						.attr('stroke-width', '2px')
+					
+					selectAll('.role-dots')
+						.filter(d => (d.role === 'othello' || d.role === 'iago') && (d.actor === 'Ron Canada' || d.actor === 'Patrick Stewart'))
+						.transition().duration(1000)
+						.attr('r', '10px');
+
+					
+					const annotations = [
+						//note color: #b4b8c0
+						{
+							note: {
+								//label: 'Test text for this annotation. Somethings about Othello and Iago and race and ethnicity. This surprisingly does not look ugly thank you haha. I was worried. We can definitely work with this. Images might work better outside of SVG', 
+								label: 'Patrick Stewart\'s staring turn in Jude Kelly\'s 1997 production of Othello with the Shakespeare Theatre Company was a rare exception to the modern \'no White Othello\' rule. Kelly shrewdly cast a White Othello amidst an all-Black cast, turning the traditional racial tensions in the play on its head.',
+								wrap: 200,
+								align: 'left'
+							}, 
+							connector: {
+								end: 'arrow',
+								type: 'curve', 
+								points: [[33, -18]]
+								//points: [[25, 25], [45, 22]]
+							},
+							x: +annotationCoordinates.stewartOthello.coordinates[0],
+							y: +annotationCoordinates.stewartOthello.coordinates[1],
+							dx: 65,
+							dy: -20
+						}
+					];
+					
+					const makeAnnotations = annotation.annotation()
+          	.type(annotation.annotationLabel)
+          	.annotations(annotations);
+					
+					select('.svg-main')
+						.append("g")
+          	.attr("class", "annotation-group")
+          	.call(makeAnnotations);
+					
+					select('.annotation-note-label').attr('fill', '#b4b8c0');
+					
+					//const note = select('.annotation-note');
+					//note.attr('transform', 'translate(0,30)');
+					
+					const rect = select('.annotation-note-bg');
+					rect.attr('fill-opacity', 1)
+						.attr('fill', '#1a1b1e')
+					//	.attr('height', () => +rect.node().getAttribute('height') + 18)
+					//	.attr('width', () => +rect.node().getAttribute('width') + 20)
+
+
+				}
+	
+				select('.highlight-1').on('click', highlight1);
 
         let state = 0;
         /*
@@ -1387,7 +1517,8 @@ queue()
 						})
 						.attr('r', '7px')
 						.attr('stroke', 'white')
-						.attr('stroke-width', '2px');
+						.attr('stroke-width', '2px')
+						.attr('stroke-opacity', 1);
 					}
 					
 				}
