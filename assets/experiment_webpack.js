@@ -32,598 +32,465 @@ console.log(windowHeight);
 select('.svg-main').attr('height', windowHeight - (windowHeight * .075));
 select('.svg-controls').attr('height', windowHeight * .075);
 
+
 queue()
-    .defer(tsv, 'data/ages/shylock_ages.tsv')
-    .defer(tsv, 'data/ages/ophelia_ages.tsv')
-    .defer(tsv, 'data/ages/romeo_ages.tsv')
-    .defer(tsv, 'data/ages_updated/portia_actor_ages.tsv')
-    .defer(tsv, 'data/ages/desdemona_ages.tsv')
-    .defer(tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
-    .defer(tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
-    .defer(tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
-    .defer(tsv, 'data/ages/iago_ages.tsv')
-    .defer(tsv, 'data/ages/lear_ages.tsv')
-    .defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
-    .defer(tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
-    .defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
-    .defer(tsv, 'data/ages/juliet_ages.tsv')
-    .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
-    .defer(tsv, 'data/ages/prospero_ages.tsv')
-    .await(function(error, ...characters) {
-	
-				//5/15 test (est. count number of productions)
-				let productions = []; 
-				
-				for (let eachRole in characters) {
-					for (let eachActor in characters[eachRole]) {
-						const production = characters[eachRole][eachActor]['director'] + ' ' + characters[eachRole][eachActor]['opening_date']; 
-						if (!productions.includes(production)) productions.push(production);
-					}
-				}
-				
-				console.log(productions.length + ' productions');
-	
-				//Save special points for annotations
-	
-				let annotationCoordinates = {
-					stewartOthello: {text: '', coordinates: []}, 
-					canadaIago: {text: '', coordinates:[]},
-				};
-	
-        //.clientWidth in Firefox has a bug
-        let widthMax = document.querySelector('.svg-main').getBoundingClientRect().width;
-        let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
+  .defer(tsv, 'data/ages/shylock_ages.tsv')
+  .defer(tsv, 'data/ages/ophelia_ages.tsv')
+  .defer(tsv, 'data/ages/romeo_ages.tsv')
+  .defer(tsv, 'data/ages_updated/portia_actor_ages.tsv')
+  .defer(tsv, 'data/ages/desdemona_ages.tsv')
+  .defer(tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
+  .defer(tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
+  .defer(tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
+  .defer(tsv, 'data/ages/iago_ages.tsv')
+  .defer(tsv, 'data/ages/lear_ages.tsv')
+  .defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
+  .defer(tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
+  .defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
+  .defer(tsv, 'data/ages/juliet_ages.tsv')
+  .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
+  .defer(tsv, 'data/ages/prospero_ages.tsv')
+  .await(function(error, ...characters) {
 
 
-        //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
-        const scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
-	
-				//Setup for brushing year filter
-				const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
-				
-				const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]); 
-				
-				const brush = brushX().extent([[100,5], [widthMax - 100, controlsHeight - 20]])
-					.on('brush', brushed)
-					.on('end', brushEnded);
+    //5/15 test (est. count number of productions)
+    let productions = []; 
+      
+    for (let eachRole in characters) {
+      for (let eachActor in characters[eachRole]) {
+        const production = characters[eachRole][eachActor]['director'] + ' ' + characters[eachRole][eachActor]['opening_date']; 
+        if (!productions.includes(production)) productions.push(production);
+      }
+    }
 		
-				function brushed() {
-					const selection = brushSelection(this); 
-					if (brushSelection(this)) {
-						const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
-						if (selection[1] - selection[0] >= 100) {
-							select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0]);  
-							select('.end-year-label').attr('x', selection[1] - 5).attr('opacity', 1).text(years[1]);  
-						} else {
-							select('.start-year-label').attr('opacity', 0);
-							select('.end-year-label').attr('opacity', 0);
-						}
-						
-					}
-				}
+    console.log(productions.length + ' productions');
+    //Save special points for annotations
+    let annotationCoordinates = {
+      stewartOthello: {text: '', coordinates: []}, 
+      canadaIago: {text: '', coordinates:[]},
+    };
+    //.clientWidth in Firefox has a bug
+    let widthMax = document.querySelector('.svg-main').getBoundingClientRect().width;
+    let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
+    
+    //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)  
+    const scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
 	
-				function brushEnded() {
-					if (brushSelection(this)) {
-						console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
-						filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))(); 
-					}
-				}
-
-				const brushGroup = select('.svg-controls').append('g').classed('brush', true);
-	
-				brushGroup.call(brush);
-	
-				const startYear = select('.svg-controls').append('text').classed('start-year-label', true)
-					.attr('y', 10)
-					.attr('stroke', 'white')
-					.attr('alignment-baseline', 'hanging');
-				const endYear = select('.svg-controls').append('text').classed('end-year-label', true)
-					.attr('y', 10)
-					.attr('stroke', 'white')
-					.attr('text-anchor', 'end')
-					.attr('alignment-baseline', 'hanging');
-
-
-        let indicies = {
-            romeo: 0,
-            hamlet: 1,
-            macbeth: 2,
-            iago: 3,
-            othello: 4,
-            richardIii: 5,
-						shylock: 6,
-            prospero: 7,
-            lear: 8,
-            juliet: 0,
-            desdemona: 1,
-            ophelia: 2,
-            rosalind: 3,
-            portia: 4,
-            ladyMacbeth: 5,
-            cleopatra: 6
+    //Setup for brushing year filter
+    const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
+				
+		const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]); 
+				
+		const brush = brushX().extent([[100,5], [widthMax - 100, controlsHeight - 20]])
+      .on('brush', brushed)
+      .on('end', brushEnded);
+		
+    function brushed() {
+      const selection = brushSelection(this); 
+      if (brushSelection(this)) {
+        const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
+        if (selection[1] - selection[0] >= 100) {
+          select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0]);  
+          select('.end-year-label').attr('x', selection[1] - 5).attr('opacity', 1).text(years[1]);  
+        } else {
+          select('.start-year-label').attr('opacity', 0);
+          select('.end-year-label').attr('opacity', 0);
         }
+        
+      }
+    }
+	
+    function brushEnded() {
+      if (brushSelection(this)) {
+        console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
+        filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))(); 
+      }
+    }
 
-        let characterGenders = {
-            hamlet: 'male',
-            shylock: 'male',
-            romeo: 'male',
-            macbeth: 'male',
-            lear: 'male',
-            iago: 'male',
-            othello: 'male',
-            prospero: 'male',
-						richardIii: 'male',
-            desdemona: 'female',
-            ophelia: 'female',
-            rosalind: 'female',
-            juliet: 'female',
-            ladyMacbeth: 'female',
-            cleopatra: 'female',
-            portia: 'female'
-        }
-
-        let characterAges = {
-            /**
-            //Female: '#fc5863','#ec606c','#dc6776','#cb6d7f','#ba7187','#a77590','#90799b','#757ca4','#fc5863'
-            //another Female: '#c44ec6','#be6ac6','#b782c6','#af97c6','#a4abc5','#96bdc5','#84d0c4','#6be3c3','#42f4c2'
-            //option: '#4682b4','#407dab','#3978a4','#33739b','#2b6f92','#246a8a','#1c6582','#13607a'
-
-
-            //Male: '#f7973a','#f89040','#f98946','#fa824c','#fa7b51','#fb7356','#fb6b5a','#fc625f','#fc5863'
-            //female2: '#c44ec6','#af55bb','#9c5ab0','#855ea4','#6f609a','#58618f','#3d6184','#13607a'
-            **/
-            /**
-            shylockAges: {gender: 'male', color: '#fb6b5a'},
-            romeoAges: {gender: 'male', color: '#f7973a'},
-            desdemonaAges: {gender: 'female', color: '#6f609a'},
-            macbethAges: {gender: 'male', color: '#f89040'},
-   	        ladyMacbethAges: {gender: 'female', color: '#3d6184'},
-            cleopatraAges: {gender: 'female', color: '#855ea4'},
-            iagoAges: {gender: 'male', color: '#fc625f'},
-            learAges: {gender: 'male', color: '#fb7356'},
-            othelloAges: {gender: 'male', color: '#f98946'},
-            prosperoAges: {gender: 'male', color: '#fa824c'},
-            rosalindAges: {gender: 'female', color: '#58618f'},
-            portiaAges: {gender: 'female', color: '#9c5ab0'},
-            hamletAges: {gender: 'male', color: '#fc5863'},
-			julietAges: {gender: 'female', color: '#c44ec6'},
-            opheliaAges: {gender: 'female', color: '#af55bb'}
-            **/
-
-						richardIiiAges: {gender: 'male', color: '#fb6b5a'},
-            shylockAges: {gender: 'male', color: '#c0c400'},
-            romeoAges: {gender: 'male', color: '#F7973A'},
-            desdemonaAges: {gender: 'female', color: '#FC5863'},
-            macbethAges: {gender: 'male', color: '#F36735'},
-   	        ladyMacbethAges: {gender: 'female', color: '#78779E'},
-            cleopatraAges: {gender: 'female', color: '#577EAD'},
-            iagoAges: {gender: 'male', color: '#F45C42'},
-            learAges: {gender: 'male', color: '#F57A3E'},
-            othelloAges: {gender: 'male', color: '#F8B535'},
-            prosperoAges: {gender: 'male', color: '#FC7136'},
-            rosalindAges: {gender: 'female', color: '#CA6379'},
-            portiaAges: {gender: 'female', color: '#AD5468'},
-            hamletAges: {gender: 'male', color: '#FAE12F'},
-						julietAges: {gender: 'female', color: '#A96B88'},
-            opheliaAges: {gender: 'female', color: '#c44ec6'}
-
-		};
+		const brushGroup = select('.svg-controls').append('g').classed('brush', true);
+	
+		brushGroup.call(brush);
+	
+		const startYear = select('.svg-controls').append('text').classed('start-year-label', true)
+		  .attr('y', 10)
+		  .attr('stroke', 'white')
+		  .attr('alignment-baseline', 'hanging');
+		const endYear = select('.svg-controls').append('text').classed('end-year-label', true)
+      .attr('y', 10)
+      .attr('stroke', 'white')
+      .attr('text-anchor', 'end')
+      .attr('alignment-baseline', 'hanging');
 
 
-		let characterAgesArrays = {
-            /**
-            hamletAges: [],
+    let indicies = {
+      romeo: 0,
+      hamlet: 1,
+      macbeth: 2,
+      iago: 3,
+      othello: 4,
+      richardIii: 5,
+      shylock: 6,
+      prospero: 7,
+      lear: 8,
+      juliet: 0,
+      desdemona: 1,
+      ophelia: 2,
+      rosalind: 3,
+      portia: 4,
+      ladyMacbeth: 5,
+      cleopatra: 6
+    }
+
+    let characterGenders = {
+      hamlet: 'male',
+      shylock: 'male',
+      romeo: 'male',
+      macbeth: 'male',
+      lear: 'male',
+      iago: 'male',
+      othello: 'male',
+      prospero: 'male',
+      richardIii: 'male',
+      desdemona: 'female',
+      ophelia: 'female',
+      rosalind: 'female',
+      juliet: 'female',
+      ladyMacbeth: 'female',
+      cleopatra: 'female',
+      portia: 'female'
+    }
+    let characterAges = {
+      /**
+      //Female: '#fc5863','#ec606c','#dc6776','#cb6d7f','#ba7187','#a77590','#90799b','#757ca4','#fc5863'
+      //another Female: '#c44ec6','#be6ac6','#b782c6','#af97c6','#a4abc5','#96bdc5','#84d0c4','#6be3c3','#42f4c2'
+      //option: '#4682b4','#407dab','#3978a4','#33739b','#2b6f92','#246a8a','#1c6582','#13607a'
+      //Male: '#f7973a','#f89040','#f98946','#fa824c','#fa7b51','#fb7356','#fb6b5a','#fc625f','#fc5863'
+      //female2: '#c44ec6','#af55bb','#9c5ab0','#855ea4','#6f609a','#58618f','#3d6184','#13607a'
+      **/
+      /**
+      shylockAges: {gender: 'male', color: '#fb6b5a'},
+      romeoAges: {gender: 'male', color: '#f7973a'},
+      desdemonaAges: {gender: 'female', color: '#6f609a'},
+      macbethAges: {gender: 'male', color: '#f89040'},
+      ladyMacbethAges: {gender: 'female', color: '#3d6184'},
+      cleopatraAges: {gender: 'female', color: '#855ea4'},
+      iagoAges: {gender: 'male', color: '#fc625f'},
+      learAges: {gender: 'male', color: '#fb7356'},
+      othelloAges: {gender: 'male', color: '#f98946'},
+      prosperoAges: {gender: 'male', color: '#fa824c'},
+      rosalindAges: {gender: 'female', color: '#58618f'},
+      portiaAges: {gender: 'female', color: '#9c5ab0'},
+      hamletAges: {gender: 'male', color: '#fc5863'},
+      julietAges: {gender: 'female', color: '#c44ec6'},
+      opheliaAges: {gender: 'female', color: '#af55bb'}
+      **/
+      richardIiiAges: {gender: 'male', color: '#fb6b5a'},
+      shylockAges: {gender: 'male', color: '#c0c400'},
+      romeoAges: {gender: 'male', color: '#F7973A'},
+      desdemonaAges: {gender: 'female', color: '#FC5863'},
+      macbethAges: {gender: 'male', color: '#F36735'},
+      ladyMacbethAges: {gender: 'female', color: '#78779E'},
+      cleopatraAges: {gender: 'female', color: '#577EAD'},
+      iagoAges: {gender: 'male', color: '#F45C42'},
+      learAges: {gender: 'male', color: '#F57A3E'},
+      othelloAges: {gender: 'male', color: '#F8B535'},
+      prosperoAges: {gender: 'male', color: '#FC7136'},
+      rosalindAges: {gender: 'female', color: '#CA6379'},
+      portiaAges: {gender: 'female', color: '#AD5468'},
+      hamletAges: {gender: 'male', color: '#FAE12F'},
+      julietAges: {gender: 'female', color: '#A96B88'},
+      opheliaAges: {gender: 'female', color: '#c44ec6'}   
+    };
+  
+    let characterAgesArrays = {
+      /**
+      hamletAges: [],
 			portiaAges : [],
-            **/
-            shylockAges: [],
-            romeoAges: [],
-            desdemonaAges: [],
-            macbethAges: [],
-			ladyMacbethAges : [],
-            cleopatraAges: [],
-            iagoAges : [],
-            learAges: [],
-            othelloAges: [],
-            prosperoAges: [],
-            rosalindAges : [],
-            hamletAges: [],
-			julietAges: [],
-            portiaAges: [],
-            opheliaAges: [],
-						richardIiiAges: []
+      **/
+      shylockAges: [],
+      romeoAges: [],
+      desdemonaAges: [],
+      macbethAges: [],
+      ladyMacbethAges : [],
+      cleopatraAges: [],
+      iagoAges : [],
+      learAges: [],
+      othelloAges: [],
+      prosperoAges: [],
+      rosalindAges : [],
+      hamletAges: [],
+      julietAges: [],
+      portiaAges: [],
+      opheliaAges: [],
+      richardIiiAges: []
 		}
+    characters.forEach(character => {
+      let characterName = character[0]['role'].toLowerCase().split(' ');
+      if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
+      characterName = characterName.join('');
+      //processPoints(character, characterName, 1980);
+      processPoints(character, characterName, 1900, 2018);
+    });
+  
+    let interquartiles = {};
+    for (let char in characterAgesArrays) {
+      let role = char.substring(0,char.length - 4);
+      let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 10 && age < 90);
+      let twentyFifthPercentile = quantile(ages, .25);
+      let seventyFifthPercentile = quantile(ages, .75);
+      interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
+      console.log(role + ': ' + variance(ages));
+    }
+    console.log(interquartiles);
 
-        characters.forEach(character => {
-            let characterName = character[0]['role'].toLowerCase().split(' ');
-            if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
-            characterName = characterName.join('');
-            console.log(characterName);
-            //processPoints(character, characterName, 1980);
-            processPoints(character, characterName, 1900, 2018);
-        });
-        /***
-		processPoints(shylock, 'shylock', '1930', '1979');
-        processPoints(bassanio, 'bassanio', '1930', '1979');
-        processPoints(desdemona, 'desdemona', '1930', '1979');
-        processPoints(orlando, 'orlando', '1930', '1979');
-        processPoints(ladyMacbeth, 'ladyMacbeth', '1930', '1979');
-        processPoints(cleopatra, 'cleopatra', '1930', '1979');
-        processPoints(iago, 'iago', '1930', '1979');
-        processPoints(lear, 'lear', '1930', '1979');
-        processPoints(rosalind, 'rosalind', '1930', '1979');
-        processPoints(hamlet, 'hamlet', '1930', '1979');
-        processPoints(portia, 'portia', '1930', '1979');
-        **/
-        /**
-        processPoints(shylock, 'shylock', 1960);
-        processPoints(bassanio, 'bassanio', 1960);
-        processPoints(desdemona, 'desdemona', 1960);
-        processPoints(orlando, 'orlando', 1960);
-        processPoints(ladyMacbeth, 'ladyMacbeth', 1960);
-        processPoints(cleopatra, 'cleopatra', 1960);
-        processPoints(iago, 'iago', 1960);
-        processPoints(lear, 'lear', 1960);
-        processPoints(rosalind, 'rosalind', 1960);
-        processPoints(hamlet, 'hamlet', 1960);
-        processPoints(portia, 'portia', 1960);
-        **/
-        let interquartiles = {};
-
-        for (let char in characterAgesArrays) {
-            let role = char.substring(0,char.length - 4);
-            let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 10 && age < 90);
-            console.log(ages);
-            let twentyFifthPercentile = quantile(ages, .25);
-            let seventyFifthPercentile = quantile(ages, .75);
-            interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
-            console.log(role + ': ' + variance(ages));
-        }
-
-        console.log(interquartiles);
-
-        /**
-        console.log(quantile(characterAgesArrays['iagoAges'].sort(), .25))
-		console.log(quantile(characterAgesArrays['iagoAges'].sort(), .75))
-		console.log(quantile(characterAgesArrays['bassanioAges'].sort(), .25))
-		console.log(quantile(characterAgesArrays['bassanioAges'].sort(), .75))
-		console.log(quantile(characterAgesArrays['desdemonaAges'].sort(), .25))
-		console.log(quantile(characterAgesArrays['desdemonaAges'].sort(), .75))
-        console.log(quantile(characterAgesArrays['macbethAges'].sort(), .25))
-        console.log(quantile(characterAgesArrays['macbethAges'].sort(), .75))
-        console.log(quantile(characterAgesArrays['ladyMacbethAges'].sort(), .25))
-        console.log(quantile(characterAgesArrays['ladyMacbethAges'].sort(), .75))
-        console.log(quantile(characterAgesArrays['cleopatraAges'].sort(), .25))
-        console.log(quantile(characterAgesArrays['cleopatraAges'].sort(), .75))
-        console.log(quantile(characterAgesArrays['iagoAges'].sort(), .25))
-        console.log(quantile(characterAgesArrays['iagoAges'].sort(), .75))
-        **/
-
-		function processPoints(characterData, character, startYear, endYear) {
-			let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
-			let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
-			let oppositeGender = characterGenders[character] == 'male' ? 'female' : 'male';
-			characterData.forEach(function(role) {
-
-				if (role['bday'] != 'person not found on wiki'
-						&& role['bday'] != 'no birthday on article'
-						&& role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
-					
-					let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
-
-					//Old version
-					//if (age > 0 && moment(role['opening_date']) >= moment(start)
+    function processPoints(characterData, character, startYear, endYear) {
+      let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
+      let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
+      let oppositeGender = characterGenders[character] == 'male' ? 'female' : 'male';
+      characterData.forEach(function(role) {
+        if (role['bday'] != 'person not found on wiki'
+            && role['bday'] != 'no birthday on article'
+            && role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
+          
+          let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
+          
+          //Old version
+          //if (age > 0 && moment(role['opening_date']) >= moment(start)
           //	&& moment(role['opening_date']) <= moment(end)
           //	&& role['gender'] != oppositeGender) {
-						
-					if (age > 0 && moment(role['opening_date']) >= moment(start) 
-							&& moment(role['opening_date']) <= moment(end)) {
+          
+          if (age > 0 && moment(role['opening_date']) >= moment(start) 
+              && moment(role['opening_date']) <= moment(end)) {
+            
+            if (character == 'cleopatra' && role['gender'] == 'male') {
+              console.log(role);
+              console.log(role['opening_date']);
+              console.log(role['actor'] + ' ' + age);
+            }
 
-            	if (character == 'cleopatra' && role['gender'] == 'male') {
-            	    console.log(role);
-            	    console.log(role['opening_date']);
-            	    console.log(role['actor'] + ' ' + age);
-            	}
-
-							if (characterAges[character + 'Ages'][age]) {
-								characterAges[character + 'Ages'][age].push(role)
-							} else {
-								characterAges[character + 'Ages'][age] = [role]
-							}
-							characterAgesArrays[character + 'Ages'].push(age);
+            if (characterAges[character + 'Ages'][age]) {
+              characterAges[character + 'Ages'][age].push(role)
+            } else {
+              characterAges[character + 'Ages'][age] = [role]
+            }
+            characterAgesArrays[character + 'Ages'].push(age);
 					
-					}
-
+          }
 				}
 		  });
 		}
-
-	console.log(characterAges)
-
-        //Create historgram buckets with ALL Ages
-        //input == characterAges
-
-        /**
-        function processAllPoints() {
-            let actorsAges = {
-                male: {},
-                female: {}
-            };
-
-            for (let character in characterAges) {
-                let role = character;
-                let roleAges = characterAges[character];
-                let characterGender = roleAges.gender;
-
-                for (let age in roleAges) {
-                    if (age != 'gender') {
-                        roleAges[age].forEach(a => {
-                            if (actorsAges[characterGender][age]) {
-                                actorsAges[characterGender][age].push(role);
-                            } else {
-                                actorsAges[characterGender][age] = [role];
-                            }
-                        });
-                    }
-
-
-                }
-            }
-
-            return actorsAges;
-        }
-        **/
-
-        function processAllPointsAlt() {
-            let actorsAges = [
-                {gender: 'male', roles: []},
-                {gender: 'female', roles: []}
-            ];
-
-            for (let character in characterAges) {
-                let role = character.substring(0,character.length - 4);
-                let roleAges = characterAges[character];
-                let characterGender = roleAges.gender;
-                let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
-
-                for (let age in roleAges) {
-                    if (age != 'gender' && age != 'color') {
-                        roleAges[age].forEach(a => {
-                            actorsAges[genderIndex].roles.push({role: role, age: parseInt(age)})
-                        });
-                    }
-
-
-                }
-            }
-
-            actorsAges.forEach(g => g.roles.sort((a,b) => a.age - b.age));
-
-            return actorsAges;
-        }
-
-        function processAllPointsAlt2() {
-            let actorsAges = [];
-
-            for (let character in characterAges) {
-                const role = character.substring(0,character.length - 4);
-                const roleAges = characterAges[character];
-                const characterGender = roleAges.gender;
-                const characterColor = roleAges.color;
-                //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
-
-                for (let age in roleAges) {
-                    if (age != 'gender' && age != 'color') {
-                        roleAges[age].forEach(a => {
-                            actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
-                        });
-                    }
-                }
-            }
-
-            actorsAges.sort((a,b) => a.age - b.age);
-
-            return actorsAges;
-        }
-
-        //Array of characters in groups; with ages when actors playing role in sorted form
-        function processAllPointsAlt3() {
-					
-					const rolesArr = [];
-          for (let character in characterAges) {
-						const role = character.substring(0,character.length - 4);
-						const roleAges = characterAges[character];
-						const characterGender = roleAges.gender;
-						const characterColor = roleAges.color;
-						const roleAgesArray = [];
-              //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
-           	for (let age in roleAges) {
-
-							if (age != 'gender' && age != 'color') {
-								roleAges[age].forEach(a => {
-									roleAgesArray.push({
-										age: parseInt(age), 
-										role: role, 
-										race: a['race'], 
-										opening: a['opening_date'],
-										actorGender: a['gender'], 
-										actor: a['actor']
-									}); //pushing an integer; will be an object once refactored
-									//actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
-								});
-
-							}
-						}
-						roleAgesArray.sort((a,b) => a.age - b.age);
-						rolesArr.push({role: role, gender: characterGender, index: indicies[role], color: characterColor, ages: roleAgesArray});
-          }
-          //actorsAges.sort((a,b) => a.age - b.age);
-          //return actorsAges;
-          return rolesArr;
-        }
-
-        console.log(processAllPointsAlt3());
-
-
-        //Width = 1100
-        //Height = 500
-
-        //TODO: Get rid of hard-coded paddings and margins
-
-        // padding-top == 30
-        // padding-bottom == 60 (i.e., heightMax-60)
-        // padding-between == 30 (i.e., -15 and + 15 in opposite directions)
-	
-        let female = scaleGender([15, heightMax/2 - 25], 7);
-        let male = scaleGender([heightMax/2 + 25, heightMax - 10], 9);
-
-
-        function scaleGender(range, numOfBands) {
-            return function(index, randomFlag) {
-                //calculate band start
-                //gender band Height
-                let fullBandStart = range[0];
-                let fullHeight = range[1] - range[0];
-                let bandHeight = fullHeight/numOfBands;
-                let bandStart = index * ((fullHeight - bandHeight)/(numOfBands - 1)) + fullBandStart;
-                let bandEnd = bandStart + bandHeight;
-                if (!randomFlag) {
-                    return ((bandEnd - bandStart) * Math.random()) + bandStart;
-                //If we want points to sit on the midline...
-                } else {
-                    return ((bandEnd - bandStart) * 0.5) + bandStart;
-                }
-            }
-        }
-
-
-        //Create role dots
-        /**
-        svg.selectAll('.roles').data(processAllPointsAlt2()).enter().append('circle')
-            .attr('class', 'role-dots')
-            .attr('cx', d => scaleX(d.age))
-            .attr('cy', d => d.gender == 'male' ? male(d.index) : female(d.index))
-            .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
-            .attr('fill', d => d.color) //== 'male' ? 'steelblue' : '#fc5863')
-            .attr('stroke', 'none')
-            .attr('fill-opacity', 0)
-            //.attr('stroke', d => d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-            //.attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35);
-        **/
-
-        //New Create role dots (with groups; see function processAllPointsAlt3)
-        svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
-            .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
-            .each(function(roleData, i) {
-								
-                select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
-                    .attr('class', d => {
-                        return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
-                            ? 'role-dots center-50-dot'
-                            : 'role-dots tail-dot';
-                    })
-                    .attr('cx', d => scaleX(d.age))
-                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
-                    .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
-                    .attr('fill', d => roleData.color) //== 'male' ? 'steelblue' : '#fc5863')
-                   	//.attr('stroke', d => roleData.color)
-                    //.attr('stroke-opacity', 0)
-                    .attr('fill-opacity', 0)
-                    .attr('stroke-opacity', 0)
-										.each(function(actor) {
-											if (actor.actor === 'Patrick Stewart' && actor.role === 'othello') {
-												annotationCoordinates['stewartOthello'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
-											}
-											if (actor.actor === 'Ron Canada' && actor.role === 'iago') {
-												annotationCoordinates['canadaIago'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
-											}
-											
-										});
+  
+    console.log(characterAges);
+    
+    function processAllPointsAlt() {
+      let actorsAges = [
+        {gender: 'male', roles: []},
+        {gender: 'female', roles: []}
+      ];
+      for (let character in characterAges) {
+        let role = character.substring(0,character.length - 4);
+        let roleAges = characterAges[character];
+        let characterGender = roleAges.gender;
+        let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
+        for (let age in roleAges) {
+          if (age != 'gender' && age != 'color') {
+            roleAges[age].forEach(a => {
+              actorsAges[genderIndex].roles.push({role: role, age: parseInt(age)})
             });
+          }
+        }
+      }
+      actorsAges.forEach(g => g.roles.sort((a,b) => a.age - b.age));
+      return actorsAges;
+    }
 
-						console.log(annotationCoordinates);
+    function processAllPointsAlt2() {
+      let actorsAges = [];
+      for (let character in characterAges) {
+        const role = character.substring(0,character.length - 4);
+        const roleAges = characterAges[character];
+        const characterGender = roleAges.gender;
+        const characterColor = roleAges.color;
+        //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
+        for (let age in roleAges) {
+          if (age != 'gender' && age != 'color') {
+            roleAges[age].forEach(a => {
+              actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
+            });
+          }
+        }
+      }
+      actorsAges.sort((a,b) => a.age - b.age);
+      return actorsAges;
+    }
+
+    //Array of characters in groups; with ages when actors playing role in sorted form
+    function processAllPointsAlt3() {
+      const rolesArr = [];
+      for (let character in characterAges) {
+        const role = character.substring(0,character.length - 4);
+        const roleAges = characterAges[character];
+        const characterGender = roleAges.gender;
+        const characterColor = roleAges.color;
+        const roleAgesArray = [];
+        //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
+        for (let age in roleAges) {
+          if (age != 'gender' && age != 'color') {
+            roleAges[age].forEach(a => {
+              roleAgesArray.push({
+                age: parseInt(age), 
+                role: role, 
+                race: a['race'], 
+                opening: a['opening_date'],
+                actorGender: a['gender'], 
+                actor: a['actor']
+              }); //pushing an integer; will be an object once refactored
+              //actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
+            });
+          }
+        }
+        roleAgesArray.sort((a,b) => a.age - b.age);
+        rolesArr.push({role: role, gender: characterGender, index: indicies[role], color: characterColor, ages: roleAgesArray});
+      }
+      return rolesArr;
+    }
+    console.log(processAllPointsAlt3());
+
+
+    //Width = 1100
+    //Height = 500
+    //TODO: Get rid of hard-coded paddings and margins
+    // padding-top == 30
+    // padding-bottom == 60 (i.e., heightMax-60)
+    // padding-between == 30 (i.e., -15 and + 15 in opposite directions)
+    let band = (heightMax - 75)/16;
+    //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+    //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+
+    //let female = scaleGender([15, band*7 + 15], 7);
+    //let male = scaleGender([band*7 + 15 + 50, heightMax - 10], 9);
+    let female = scaleGender([15, heightMax/2 - 25], 7);
+    let male = scaleGender([heightMax/2 + 25, heightMax - 10], 9);
+
+
+    function scaleGender(range, numOfBands) {
+      return function(index, randomFlag) {
+        //calculate band start
+        //gender band Height
+        let fullBandStart = range[0];
+        let fullHeight = range[1] - range[0];
+        let bandHeight = fullHeight/numOfBands;
+        let bandStart = index * ((fullHeight - bandHeight)/(numOfBands - 1)) + fullBandStart;
+        let bandEnd = bandStart + bandHeight;
+        if (!randomFlag) {
+          return ((bandEnd - bandStart) * Math.random()) + bandStart;
+          //If we want points to sit on the midline...
+        } else {
+          return ((bandEnd - bandStart) * 0.5) + bandStart;
+        }
+      }
+    }
+
+    
+    //New Create role dots (with groups; see function processAllPointsAlt3)   
+    svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
+      .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
+      .each(function(roleData, i) {
+        select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
+          .attr('class', d => {
+            return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
+              ? 'role-dots center-50-dot'
+              : 'role-dots tail-dot';
+          })
+          .attr('cx', d => scaleX(d.age))
+          .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+          .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+          .attr('fill', d => roleData.color) //== 'male' ? 'steelblue' : '#fc5863')
+          //.attr('stroke', d => roleData.color)
+          //.attr('stroke-opacity', 0)
+          .attr('fill-opacity', 0)
+          .attr('stroke-opacity', 0)
+          .each(function(actor) {
+            if (actor.actor === 'Patrick Stewart' && actor.role === 'othello') {
+              annotationCoordinates['stewartOthello'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
+            }
+            if (actor.actor === 'Ron Canada' && actor.role === 'iago') {
+              annotationCoordinates['canadaIago'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
+            } 
+          });
+      });
+  
+    console.log(annotationCoordinates);
 						
 	
-           for (let eachCharacter in interquartiles) {
-               const gender = characterGenders[eachCharacter];
-               const index = indicies[eachCharacter];
-               const yValue = gender == 'male' ? male(index, true) : female(index, true);
-               const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
-               const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
-               const charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
-               const charMetaInner = charMeta.append('g').classed('character-meta-inner', true);
+    for (let eachCharacter in interquartiles) {
+      const gender = characterGenders[eachCharacter];
+      const index = indicies[eachCharacter];
+      const yValue = gender == 'male' ? male(index, true) : female(index, true);
+      const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
+      const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
+      const charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
+      const charMetaInner = charMeta.append('g').classed('character-meta-inner', true);
+      const fullCharacterAgesRange = interquartiles[eachCharacter];
+      const dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
+      const dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
 
-               const fullCharacterAgesRange = interquartiles[eachCharacter];
-               const dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
-               const dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
+      function formatCharacterName(originalText) {
+        const secondWordIndex = originalText.search(/[A-Z]/);
+        let text;
+        if (secondWordIndex > -1) {
+          const storeSecondWordFirstLetter = originalText[secondWordIndex];
+          text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + (originalText === 'richardIii' ? originalText.substring(secondWordIndex + 1).toUpperCase() : originalText.substring(secondWordIndex + 1));
+        }
+        console.log(text);
+        return text ? text[0].toUpperCase() + text.substring(1)
+                    : originalText[0].toUpperCase() + originalText.substring(1);
+      }
 
-                /**
-                if (fullCharacterAgesRange[0] > maxAge) {
-                    dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
-                } else if (fullCharacterAgesRange[3] > maxAge) {
-                    dataRange = [fullCharacterAgesRange[0], maxAge];
-                } else {
-                    dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[3]];
-                }
-                **/
+      charMeta.append('text').datum(dataRange)
+        .attr('x', d => scaleX(d[0]) - 5)
+        .attr('y', d => yValue)
+        .attr('opacity', 0)
+        //.attr('stroke', '#d4cdda')
+        .attr('stroke', () => characterAges[eachCharacter + 'Ages'].color)
+        .attr('alignment-baseline', 'middle')
+        .attr('text-anchor', 'end')
+        .attr('class', 'character-label-initial')
+        .text(() => {
+        //return eachCharacter.charAt(0).toUpperCase() + eachCharacter.substring(1);
+          return formatCharacterName(eachCharacter);
+        });
 
-                function formatCharacterName(originalText) {
-                    const secondWordIndex = originalText.search(/[A-Z]/);
-                    let text;
+      charMetaInner.append('path').datum(dataRange)
+        .attr('d', interquartileLine)
+        .attr('class', 'thin-line-quartile')
+        .attr('stroke', '#7c8392')
+        .attr('stroke-width', '1.5px')
+        .attr('opacity', .5)
+        .attr('stroke-dasharray', '3,1');
 
-                    if (secondWordIndex > -1) {
-												
-                        const storeSecondWordFirstLetter = originalText[secondWordIndex];
-                        text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + (originalText === 'richardIii' ? originalText.substring(secondWordIndex + 1).toUpperCase() : originalText.substring(secondWordIndex + 1));
-                    }
-										console.log(text);
-                    return text ? text[0].toUpperCase() + text.substring(1)
-                                : originalText[0].toUpperCase() + originalText.substring(1);
-                }
-
-                charMeta.append('text').datum(dataRange)
-                    .attr('x', d => scaleX(d[0]) - 5)
-                    .attr('y', d => yValue)
-                    .attr('opacity', 0)
-                    //.attr('stroke', '#d4cdda')
-                    .attr('stroke', () => characterAges[eachCharacter + 'Ages'].color)
-                    .attr('alignment-baseline', 'middle')
-                    .attr('text-anchor', 'end')
-                    .attr('class', 'character-label-initial')
-                    .text(() => {
-                        //return eachCharacter.charAt(0).toUpperCase() + eachCharacter.substring(1);
-                        return formatCharacterName(eachCharacter);
-                    });
-
-                charMetaInner.append('path').datum(dataRange)
-                    .attr('d', interquartileLine)
-                    .attr('class', 'thin-line-quartile')
-                    .attr('stroke', '#7c8392')
-                    .attr('stroke-width', '1.5px')
-                    .attr('opacity', .5)
-                    .attr('stroke-dasharray', '3,1');
-
-                charMetaInner.append('text').datum(dataRange)
-                    .attr('x', d => scaleX(d[1]))
-                    // +2.5 because arrow doesn't quite align with the thin-line for some reasons...
-                    .attr('y', d => {
-                        const isFirefox = navigator.userAgent.match(/Firefox\/\d*/);
-                        return isFirefox ? yValue + 5 : yValue + 3;
-                    })
-                    .attr('opacity', 0)
-                    .classed('arrow', true)
-                    .style('font-size', '20px')
-                    .attr('alignment-baseline', 'middle')
-                    .attr('fill', '#7c8392')
-                    .text('\u2192')
+      charMetaInner.append('text').datum(dataRange)
+        .attr('x', d => scaleX(d[1]))
+        // +2.5 because arrow doesn't quite align with the thin-line for some reasons...
+        .attr('y', d => {
+          const isFirefox = navigator.userAgent.match(/Firefox\/\d*/);
+          return isFirefox ? yValue + 5 : yValue + 3;
+        })
+        .attr('opacity', 0)
+        .classed('arrow', true)
+        .style('font-size', '20px')
+        .attr('alignment-baseline', 'middle')
+        .attr('fill', '#7c8392')
+        .text('\u2192')
 
 
-                charMetaInner.append('path').datum(dataRangeMiddleFifty)
-                    .attr('class', 'thick-line-quartile')
-                    .attr('d', interquartileLine)
-                    .attr('stroke', '#d4cdda')
-                    //.attr('stroke', '#7c8392')
-                    .attr('stroke-width', '6.5px')
-                    .attr('opacity', .85);
+      charMetaInner.append('path').datum(dataRangeMiddleFifty)
+        .attr('class', 'thick-line-quartile')
+        .attr('d', interquartileLine)
+        .attr('stroke', '#d4cdda')
+        //.attr('stroke', '#7c8392')
+        .attr('stroke-width', '6.5px')
+        .attr('opacity', .85);
 
 
                 let text = charMetaInner.append('g').classed('interquartiles-labels', true)
@@ -744,11 +611,11 @@ queue()
                     }
                 }
 
-                //createBracket([30, heightMax/2 - 10], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                //createBracket([heightMax/2 + 10, heightMax-60], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 								
 							  createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
                 createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+                //createBracket([15, band*7 + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                //createBracket([band*7 + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');  
 
 
                 if (!document.querySelector('.axis')) {
@@ -1404,7 +1271,19 @@ queue()
           	.call(makeAnnotations);
 					
 					select('.annotation-note-label').attr('fill', '#b4b8c0');
+          select('.annotation-connector path')
+            .attr('stroke', '#b4b8c0')
+            .attr('stroke-width', '2px');
+          select('.annotation-connector path.connector-end')
+            .attr('fill', '#b4b8c0')
+            .attr('stroke', 'grey')
+            .attr('stroke-width', '3px');
+
+
+          //select('div.main-content')
+          //  .style('')
 					
+          
 					//const note = select('.annotation-note');
 					//note.attr('transform', 'translate(0,30)');
 					
@@ -1419,6 +1298,9 @@ queue()
 	
 				select('.highlight-1').on('click', highlight1);
 
+  
+  
+  
         let state = 0;
         /*
         const eventsQueue = [
