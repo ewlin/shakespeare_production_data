@@ -51,7 +51,7 @@ queue()
   .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
   .defer(tsv, 'data/ages/prospero_ages.tsv')
   .await(function(error, ...characters) {
-
+    
 
     //5/15 test (est. count number of productions)
     let productions = []; 
@@ -72,7 +72,8 @@ queue()
     //.clientWidth in Firefox has a bug
     let widthMax = document.querySelector('.svg-main').getBoundingClientRect().width;
     let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
-    
+    let band = (heightMax - 75)/characters.length;
+
     //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)  
     const scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
 	
@@ -228,8 +229,8 @@ queue()
       let characterName = character[0]['role'].toLowerCase().split(' ');
       if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
       characterName = characterName.join('');
-      //processPoints(character, characterName, 1980);
-      processPoints(character, characterName, 1900, 2018);
+      processPoints(character, characterName, 1980);
+      //processPoints(character, characterName, 1900, 2018);
     });
   
     let interquartiles = {};
@@ -240,6 +241,7 @@ queue()
       let seventyFifthPercentile = quantile(ages, .75);
       interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
       console.log(role + ': ' + variance(ages));
+      console.log(role + ': ' + quantile(ages, 0.5));
     }
     console.log(interquartiles);
 
@@ -363,14 +365,11 @@ queue()
     // padding-top == 30
     // padding-bottom == 60 (i.e., heightMax-60)
     // padding-between == 30 (i.e., -15 and + 15 in opposite directions)
-    let band = (heightMax - 75)/16;
-    //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-    //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
-    //let female = scaleGender([15, band*7 + 15], 7);
-    //let male = scaleGender([band*7 + 15 + 50, heightMax - 10], 9);
-    let female = scaleGender([15, heightMax/2 - 25], 7);
-    let male = scaleGender([heightMax/2 + 25, heightMax - 10], 9);
+    let female = scaleGender([15, band*7 + 15], 7);
+    let male = scaleGender([band*7 + 15 + 50, heightMax - 10], 9);
+    //let female = scaleGender([15, heightMax/2 - 25], 7);
+    //let male = scaleGender([heightMax/2 + 25, heightMax - 10], 9);
 
 
     function scaleGender(range, numOfBands) {
@@ -612,10 +611,10 @@ queue()
                 }
 
 								
-							  createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
-                //createBracket([15, band*7 + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                //createBracket([band*7 + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');  
+							  //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+                createBracket([15, (band * 7) + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                createBracket([(band * 7) + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');  
 
 
                 if (!document.querySelector('.axis')) {
@@ -623,17 +622,18 @@ queue()
                 			.attr('class', 'x axis')
                     	.attr('opacity', 0)
 											//.attr('transform', `translate(0,${heightMax/2 - 10})`)
-                			.call(axisBottom(scaleXNew).tickValues([18, 20, 22]).tickSize(heightMax - 20))
+                			.call(axisBottom(scaleXNew).tickValues([18, 20, 22]).tickSize(heightMax - 25))
                       .transition(2000)
                       .attr('opacity', 1)
 									
 										selectAll('.axis .tick text')
-											.attr('transform', `translate(0,-${heightMax/2 - 10})`);
-									
+											//.attr('transform', `translate(0,-${heightMax/2 - 15})`);
+                      .attr('transform', `translate(0,-${(band * 9) + 18})`);
+
 										selectAll('.axis .tick line')
 											.attr('stroke-dasharray', '2,2')
 											.attr('stroke-opacity', .2)
-											.attr('transform', `translate(0,10)`);
+											.attr('transform', `translate(0,15)`);
 
                     select('.domain').remove();
 
@@ -644,7 +644,7 @@ queue()
                         .attr('text-anchor', 'middle')
                         .attr('stroke', '#a6abb5')
                         .attr('font-size', '9px')
-												.attr('transform', `translate(0,${heightMax/2 - 20})`)
+												.attr('transform', `translate(0,${band * 7 + 13})`)
 												
 
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
@@ -654,7 +654,7 @@ queue()
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                         .text('DURING PRODUCTION')
-                        .attr('dy', '18px').append('tspan').attr('class', 'note-indicator').text('*');
+                        .attr('dy', '23px').append('tspan').attr('class', 'note-indicator').text('*');
 
 
                         /*
@@ -669,17 +669,17 @@ queue()
                     svg.select('g.axis').transition(2000)
                         .call(axisBottom(scaleXNew)
 															.tickValues(tickValues)
-															.tickSize(heightMax - 20));
+															.tickSize(heightMax - 25));
 
                     select('.domain').remove();
 									
 										selectAll('.axis .tick text')
-											.attr('transform', `translate(0,-${heightMax/2 - 10})`);
+											.attr('transform', `translate(0,-${(band * 9) + 18})`);
 									
 										selectAll('.axis .tick line')
 											.attr('stroke-dasharray', '2,2')
 											.attr('stroke-opacity', .2)
-											.attr('transform', `translate(0,10)`);
+											.attr('transform', `translate(0,15)`);
 
                 }
 
@@ -1311,29 +1311,30 @@ queue()
         ];
         */
         const eventsQueue = [
-            [animateDots(17, 23), 'Up through 30...'],
-            [animateDots(24, 30), 'From 31 to 45'],
-            [animateDots(31, 45), 'From 46 to retirement...'],
-            [animateDots(46, 66), 'After 66.'],
-            [animateDots(67, 85, false), 'End'],
-            [function() {
-                selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
-                selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
-                    //if (d.age <= maxAge && d.age >= minAge) {
-                    if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                        console.log('good');
-                        return .95;
-                    } else {
-                        return .4;
-                    }
-                    /**
-                    } else {
-                        console.log('invisible');
-                        return 0;
-                    }
-                    **/
-                });
-            }]
+          [animateDots(17, 23), 'Up through 30...'],
+          [animateDots(24, 30), 'From 31 to 45'],
+          [animateDots(31, 45), 'From 46 to retirement...'],
+          [animateDots(46, 66), 'After 66.'],
+          [animateDots(67, 70), 'Seven Decades+'],
+          [animateDots(71, 85), 'End'],
+          [function() {
+              selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
+              selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
+                  //if (d.age <= maxAge && d.age >= minAge) {
+                  if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                      console.log('good');
+                      return .95;
+                  } else {
+                      return .4;
+                  }
+                  /**
+                  } else {
+                      console.log('invisible');
+                      return 0;
+                  }
+                  **/
+              });
+          }]
         ];
         //console.log(animateDots(30))
         //let animate30 = animateDots(30);
