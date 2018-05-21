@@ -1316,7 +1316,7 @@ queue()
         */
         const eventsQueue = [
           [function() {
-            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left);
+            const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             let mainContent = select('#main-content');
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
@@ -1362,7 +1362,34 @@ queue()
             
             const sampleMeta = embedSVG.append('g').classed('legend-meta', true);
             const interquartileLine = line().y(125).x(d => scaleX(d));
+            
+            sampleMeta.append('text').datum([sampleInterquartiles[0], sampleInterquartiles[3]])
+              .attr('x', d => scaleX(d[0]) - 5)
+              .attr('y', 125)
+              .attr('stroke', '#1c6582')
+              .attr('alignment-baseline', 'middle')
+              .attr('text-anchor', 'end')
+              .attr('class', 'legend-character-label-initial')
+              .text('Character Name');
+        
+            const braceFullCoords = makeCurlyBrace(scaleX(sampleInterquartiles[3]), 85, scaleX(sampleInterquartiles[0]), 85, 30, 0.54); 
+            console.log(braceFullCoords)
+            sampleMeta.append('path')
+              .classed('curly-brace-full', true)
+              .attr('d', braceFullCoords)
+              .attr('stroke', '#d4cdda')
+              .attr('stroke-width', '2px')
+              .attr('fill', 'none');
 
+            const braceInterquartileCoords = makeCurlyBrace(scaleX(sampleInterquartiles[1]), 150, scaleX(sampleInterquartiles[2]), 150, 30, 0.54); 
+            console.log(braceFullCoords)
+            sampleMeta.append('path')
+              .classed('curly-brace-interquartile', true)
+              .attr('d', braceInterquartileCoords)
+              .attr('stroke', '#d4cdda')
+              .attr('stroke-width', '2px')
+              .attr('fill', 'none');
+            
             sampleMeta.append('path').datum([sampleInterquartiles[0], sampleInterquartiles[3]])
               .attr('d', interquartileLine)
               .attr('class', 'thin-line-quartile')
