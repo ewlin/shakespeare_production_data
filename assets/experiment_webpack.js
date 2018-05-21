@@ -15,6 +15,10 @@ import 'd3-transition';
 import { transition } from 'd3-transition';
 import { brushX, brushSelection } from 'd3-brush';
 import * as annotation from 'd3-svg-annotation';
+import { timer } from 'd3-timer';
+import makeCurlyBrace from './curlyBraces';
+
+console.log(makeCurlyBrace);
 
 const throttle = require('lodash.throttle'); 
 
@@ -1312,6 +1316,71 @@ queue()
         */
         const eventsQueue = [
           [function() {
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left);
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            let mainContent = select('#main-content');
+            mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+            mainContent.html(`There are few Shakespearean lead roles available to the school-age actor in professional productions, with the obvious exceptions of <span>Romeo</span> and <span>Juliet</span>. Juliet is described as a girl of 13 in Shakespeare’s original text and Romeo is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span>Hamlets</span> and Rosalinds, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).<svg class="embedded-svg" width=${right-left} height=250></svg>`);
+            const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
+            let test = window.innerHeight/2 - height;
+            console.log(test);
+            mainContent.style('top', window.innerHeight/2 - height/2);
+            const embedSVG = select('.embedded-svg');
+            //generate random ages; 40 data points
+            function generateAges() {
+              let arrOfAges = []; 
+              for (let i=0; i<40; i++) {
+                arrOfAges.push(Math.ceil(Math.random() * 45) + 20);
+              }
+              return arrOfAges; 
+            }
+            let sortedSampleAges = generateAges().sort((a,b) => a - b); 
+            let sampleInterquartiles = [sortedSampleAges[0], quantile(sortedSampleAges, 0.25), quantile(sortedSampleAges, 0.75), sortedSampleAges[sortedSampleAges.length - 1]]; 
+            console.log(sampleInterquartiles);
+            embedSVG.append('g')
+              .classed('sampleRole', true)
+              .selectAll('.roles')
+              .data(sortedSampleAges)
+              .enter()
+              .append('circle')
+              .attr('cx', d => scaleX(d))
+              .attr('cy', d => {
+                const min = 125 - band/2; 
+                const max = 123 + band/2; 
+                return Math.random() * (max - min) + min; 
+              })
+              .attr('r', d => d >= sampleInterquartiles[1] && d.age <= sampleInterquartiles[2] ? '3.6px' : '3px')
+              .attr('fill', d => '#1c6582')
+              .attr('fill-opacity', d => {
+                //if (d.age <= maxAge && d.age >= minAge) {
+                if (d >= sampleInterquartiles[1] && d <= sampleInterquartiles[2]) {
+                    return .95;
+                } else {
+                    return .4;
+                }
+              });
+            
+            const sampleMeta = embedSVG.append('g').classed('legend-meta', true);
+            const interquartileLine = line().y(125).x(d => scaleX(d));
+
+            sampleMeta.append('path').datum([sampleInterquartiles[0], sampleInterquartiles[3]])
+              .attr('d', interquartileLine)
+              .attr('class', 'thin-line-quartile')
+              .attr('stroke', '#7c8392')
+              .attr('stroke-width', '1.5px')
+              .attr('opacity', .5)
+              .attr('stroke-dasharray', '3,1');
+            
+            sampleMeta.append('path').datum([sampleInterquartiles[1], sampleInterquartiles[2]])
+                .attr('class', 'thick-line-quartile')
+                .attr('d', interquartileLine)
+                .attr('stroke', '#d4cdda')
+                .attr('stroke-width', '6.5px')
+                .attr('opacity', .85);
+            
+            
+          }, 'From ages 17 to 23..'],
+          [function() {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 112;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             animateDots(17, 23)(); 
@@ -1398,9 +1467,50 @@ queue()
             }
             console.log(state);
         });
+        document.addEventListener('keydown', function (e) {
+          //e.preventDefault();
+          console.log('keypressed: ' + e.code);
+        });
+        //select(document).on('keypress', function nextStep() {
+        //    //console.log(this);
+        //    select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
+//
+        //    if (eventsQueue[state]) {
+        //        eventsQueue[state][0]();
+        //    }
+//
+        //    if (state < eventsQueue.length - 1) {
+        //        state += 1;
+        //        select(this).on('click', nextStep);
+        //    } else {
+        //        select(this).on('click', () => {});
+        //        select(this).attr('disabled', true);
+        //    }
+        //    console.log(state);
+        //});
   
 
-    
+        //let t = timer(function nextStep(elapsed) {
+        //    console.log(elapsed);
+        //    if (elapsed > state * 20000) {
+        //      //select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
+        //      if (eventsQueue[state]) {
+        //          eventsQueue[state][0]();
+        //      }
+        //      if (state < eventsQueue.length - 1) {
+        //          state += 1;
+        //          //select(this).on('click', nextStep);
+        //      } else {
+        //          //select(this).on('click', () => {});
+        //          //select(this).attr('disabled', true);
+        //          t.stop(); 
+        //      }
+        //      console.log(state);
+        //    
+        //    }
+        //    
+        //}, 20000);
+  
 				//Rough draft 
 				function filterPoints(dateRange) {
 					return function() {
