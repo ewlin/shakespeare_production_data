@@ -1311,10 +1311,52 @@ queue()
         ];
         */
         const eventsQueue = [
-          [animateDots(17, 23), 'Up through 30...'],
-          [animateDots(24, 30), 'From 31 to 45'],
-          [animateDots(31, 45), 'From 46 to retirement...'],
-          [animateDots(46, 66), 'After 66.'],
+          [function() {
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 112;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            animateDots(17, 23)(); 
+            let mainContent = select('#main-content');
+            //`position: fixed; top: 0; left: 400`
+            mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+            mainContent.html('There are few Shakespearean lead roles available to the school-age actor in professional productions, with the obvious exceptions of <span>Romeo</span> and <span>Juliet</span>. Juliet is described as a girl of 13 in Shakespeare’s original text and Romeo is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span>Hamlets</span> and Rosalinds, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).');
+            mainContent.style('opacity', 0);
+            const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
+            let test = window.innerHeight/2 - height;
+            console.log(test);
+            mainContent.style('top', window.innerHeight/2 - height/2);
+            mainContent.transition().delay(110 * (23-17)).style('opacity', 1);
+            
+          }, 'Up through 30...'],
+          [function() {
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 112;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            animateDots(24, 30)(); 
+            let mainContent = select('#main-content');
+            mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+            mainContent.html('As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of Romeo or Juliet. By the time you’re 30, you’d be close to aging out of our favorite tragic young lovers. At 30, you’d be older than 75+% of the actors who\'ve played these roles in our dataset.');
+            const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
+            let test = window.innerHeight/2 - height;
+            console.log(test);
+            mainContent.style('top', window.innerHeight/2 - height/2);
+
+          }, 'From 31 to 45'],
+          [function() {
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 149;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            animateDots(31, 45)(); 
+            let mainContent = select('#main-content');
+            mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+            mainContent.html('<p>Between 31 and 45 is where we start to see signs of divergence between the fates of actors and actresses. As a 45-year-old actress you’d be at least 3 years older than any recorded Juliet, Desdemona, Ophelia, Rosalind, or Portia in our sample.</p><p>While male actors would age out of Romeo and Hamlet by 45, actresses would already be at least 3 years older than any recorded Juliet, Desdemona, Ophelia, Rosalind, or Portia in our sample. Given that Rosalind and Portia are among the female Shakespearean characters with the most lines (both in the top 5), it’s a pretty small window of opportunity.</p><p>Even Lady Macbeth seems out of reach for most actresses at 45; we’re well out of our interquartile range ‘window of opportunity’, and if you’re cast as Lady Macbeth from this age onwards, you’d be older than 75+% of Lady Macbeths.</p><p>Male actors on the other hand, seem to be just getting into their strides. As a 45-year-old actor, you’re at or just a little over the median age of a Macbeth, Othello, or Richard III, and you’re just barely getting started with</p>');
+            const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
+            let test = window.innerHeight/2 - height;
+            console.log(test);
+            mainContent.style('top', window.innerHeight/2 - height/2);
+          }, 'From 46 to retirement...'],
+          [function() {
+            animateDots(46, 66)();
+            let mainContent = select('#main-content');
+            mainContent.html(null);
+          }, 'After 66.'],
           [animateDots(67, 70), 'Seven Decades+'],
           [animateDots(71, 85), 'End'],
           [function() {
@@ -1356,7 +1398,9 @@ queue()
             }
             console.log(state);
         });
-	
+  
+
+    
 				//Rough draft 
 				function filterPoints(dateRange) {
 					return function() {
