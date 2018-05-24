@@ -5,18 +5,28 @@
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,700" rel="stylesheet">
 
     <style>
-        #stripe path {
-            stroke-width: 2px;
-            stroke: white;
-        }
+      #stripe path {
+        stroke-width: 2px;
+        stroke: white;
+      }
 
-		body {
-			/**background: #bababa;**/
-            /**background: rgba(49, 38, 45, 0.51);**/
-            background: #1a1b1e;
-		}
+		  body {
+        background: #1a1b1e;
+        height: 100%; 
+        width: 100%;
+        position: fixed;
+		  }
+      .svg-container {
+        position: relative;
+        max-width: 1100px;
+        margin: auto;
+        /*padding-top: 25px;*/
+      }
 
-			
+      div {
+        padding: 0; 
+        margin: 0;
+      }
         svg {
             /**border: 1px solid white;**/
         }
@@ -49,10 +59,9 @@
             font-size: 13px;
         }
 
-        .svg-container {
-            width: 1100px;
-            margin: auto;
-            padding-top: 25px;
+        
+        .sample-axis path, .sample-axis text, .sample-axis .tick line {
+            stroke: #a6abb5;
         }
 
         .axis path, .axis text, .axis .tick line {
@@ -203,11 +212,36 @@
         font-family: 'Crimson Text';
         color: #f2cbcb;
         line-height: 1.8; 
-        font-size: 17px;
+        font-size: 18px;
+        letter-spacing: .2;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
       }
       
       #main-content span {
         font-family: 'Tajawal';
+      }
+      
+      .legend-prompt {
+        font-family: 'Tajawal';
+        text-align: center;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        padding-top: 25px;
+        font-weight: 600;
+        font-size: 19px;
+      }
+      
+      span.key-indicator {
+        display: inline-block;
+        line-height: 1;
+        padding-top: 5px;
+        padding-left: 3px;
+        padding-right: 3px;
+        color: white;
+        background: grey; 
+        border-radius: 4px;
       }
       
       span.hamlet-color {
@@ -222,7 +256,17 @@
         color: #AD5468;
       }
       
+      svg.svg-main.mouse-disabled {
+        pointer-events: none;
+      }
 
+      svg text {
+        pointer-events: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
 
     </style>
 
@@ -234,11 +278,11 @@
 <div class='button-container'><button class='dots2'>Animate Dots Next</button></div>
 <div class='button-container'><button class='dots3'>Animate Dots Slide1</button></div>
 <div class='button-container'><button class='dots4'>Animate Dots Slide More</button></div>
--->
+
 	<div class='button-container'><button class='transitions'>Transition</button></div>
 	<div class='button-container'><button class='dots'>Let's get started</button></div>
 	<div class='button-container'><button class='highlight-1'>Highlight Othello</button></div>
-
+-->
 
 		<div class='svg-container'>
 			<svg class='svg-controls' width="1100"></svg>

@@ -7,7 +7,7 @@ import { queue } from 'd3-queue';
 import { tsv, json } from 'd3-request';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
-import { variance, quantile } from 'd3-array';
+import { variance, quantile, median } from 'd3-array';
 import { select, selectAll } from 'd3-selection';
 import { line } from 'd3-shape';
 import { easeLinear, easeQuadInOut } from 'd3-ease';
@@ -29,11 +29,14 @@ const throttle = require('lodash.throttle');
 
 
 const svg = select('.svg-main');
+svg.classed('mouse-disabled', true);
 const brushControls = select('.svg-controls'); 
-let windowHeight = window.innerHeight;
+//let windowHeight = window.innerHeight;
+let windowHeight = document.querySelector('body').clientHeight; 
 console.log(windowHeight);
 //50 is height of brush control rect
-select('.svg-main').attr('height', windowHeight - (windowHeight * .075));
+//10 is padding on bottom
+select('.svg-main').attr('height', windowHeight - (windowHeight * .075) - 10);
 select('.svg-controls').attr('height', windowHeight * .075);
 
 
@@ -136,7 +139,7 @@ queue()
       richardIii: 5,
       shylock: 6,
       prospero: 7,
-      lear: 8,
+      kingLear: 8,
       juliet: 0,
       desdemona: 1,
       ophelia: 2,
@@ -151,7 +154,7 @@ queue()
       shylock: 'male',
       romeo: 'male',
       macbeth: 'male',
-      lear: 'male',
+      kingLear: 'male',
       iago: 'male',
       othello: 'male',
       prospero: 'male',
@@ -197,7 +200,7 @@ queue()
       ladyMacbethAges: {gender: 'female', color: '#78779E'},
       cleopatraAges: {gender: 'female', color: '#577EAD'},
       iagoAges: {gender: 'male', color: '#F45C42'},
-      learAges: {gender: 'male', color: '#F57A3E'},
+      kingLearAges: {gender: 'male', color: '#F57A3E'},
       othelloAges: {gender: 'male', color: '#F8B535'},
       prosperoAges: {gender: 'male', color: '#FC7136'},
       rosalindAges: {gender: 'female', color: '#CA6379'},
@@ -219,7 +222,7 @@ queue()
       ladyMacbethAges : [],
       cleopatraAges: [],
       iagoAges : [],
-      learAges: [],
+      kingLearAges: [],
       othelloAges: [],
       prosperoAges: [],
       rosalindAges : [],
@@ -360,6 +363,7 @@ queue()
       }
       return rolesArr;
     }
+    console.log('rolesArr:')
     console.log(processAllPointsAlt3());
 
 
@@ -558,7 +562,7 @@ queue()
 
 
         function animateDots(minAge = 0, maxAge = 90, slideFlag) {
-            return function() {
+            return function(direction) {
 
                 const delayFactor = 110;
                 //calculate max Width for partial axis
@@ -631,7 +635,6 @@ queue()
                       .attr('opacity', 1)
 									
 										selectAll('.axis .tick text')
-											//.attr('transform', `translate(0,-${heightMax/2 - 15})`);
                       .attr('transform', `translate(0,-${(band * 9) + 18})`);
 
 										selectAll('.axis .tick line')
@@ -1300,9 +1303,9 @@ queue()
 
 				}
 	
-				select('.highlight-1').on('click', highlight1);
+        //Highlight Patrick Stewart Othello
+				//select('.highlight-1').on('click', highlight1);
 
-  
   
   
         let state = 0;
@@ -1320,17 +1323,27 @@ queue()
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             let mainContent = select('#main-content');
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`There are few Shakespearean lead roles available to the school-age actor in professional productions, with the obvious exceptions of <span>Romeo</span> and <span>Juliet</span>. Juliet is described as a girl of 13 in Shakespeare’s original text and Romeo is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span>Hamlets</span> and Rosalinds, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).<svg class="embedded-svg" width=${right-left} height=250></svg>`);
+            //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static 
+            mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+            //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+            console.log(band);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
             let test = window.innerHeight/2 - height;
             console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             const embedSVG = select('.embedded-svg');
             //generate random ages; 40 data points
+            
             function generateAges() {
               let arrOfAges = []; 
               for (let i=0; i<40; i++) {
-                arrOfAges.push(Math.ceil(Math.random() * 45) + 20);
+                if (i < 10) {
+                  arrOfAges.push(Math.ceil(Math.random() * 10) + 20);
+                } else if (i >= 10 && i <= 31) {
+                  arrOfAges.push(Math.ceil(Math.random() * 28) + 20);
+                } else {
+                  arrOfAges.push(Math.ceil(Math.random() * 45) + 20);
+                }
               }
               return arrOfAges; 
             }
@@ -1349,7 +1362,7 @@ queue()
                 const max = 123 + band/2; 
                 return Math.random() * (max - min) + min; 
               })
-              .attr('r', d => d >= sampleInterquartiles[1] && d.age <= sampleInterquartiles[2] ? '3.6px' : '3px')
+              .attr('r', d => d >= sampleInterquartiles[1] && d <= sampleInterquartiles[2] ? '3.6px' : '3px')
               .attr('fill', d => '#1c6582')
               .attr('fill-opacity', d => {
                 //if (d.age <= maxAge && d.age >= minAge) {
@@ -1362,6 +1375,26 @@ queue()
             
             const sampleMeta = embedSVG.append('g').classed('legend-meta', true);
             const interquartileLine = line().y(125).x(d => scaleX(d));
+                        
+            //svg.append('g')
+            //    			.attr('class', 'x axis')
+            //        	.attr('opacity', 0)
+						//					//.attr('transform', `translate(0,${heightMax/2 - 10})`)
+            //    			.call(axisBottom(scaleXNew).tickValues([18, 20, 22]).tickSize(heightMax - 25))
+            //          .transition(2000)
+            //          .attr('opacity', 1)
+						//			
+						//				selectAll('.axis .tick text')
+            //          .attr('transform', `translate(0,-${(band * 9) + 18})`);
+
+						//				selectAll('.axis .tick line')
+						//					.attr('stroke-dasharray', '2,2')
+						//					.attr('stroke-opacity', .2)
+						//					.attr('transform', `translate(0,15)`);
+
+            //        select('.domain').remove();
+
+            
             
             sampleMeta.append('text').datum([sampleInterquartiles[0], sampleInterquartiles[3]])
               .attr('x', d => scaleX(d[0]) - 5)
@@ -1370,7 +1403,7 @@ queue()
               .attr('alignment-baseline', 'middle')
               .attr('text-anchor', 'end')
               .attr('class', 'legend-character-label-initial')
-              .text('Character Name');
+              .text('Example Character');
         
             const braceFullCoords = makeCurlyBrace(scaleX(sampleInterquartiles[3]), 85, scaleX(sampleInterquartiles[0]), 85, 30, 0.54); 
             console.log(braceFullCoords)
@@ -1380,8 +1413,15 @@ queue()
               .attr('stroke', '#d4cdda')
               .attr('stroke-width', '2px')
               .attr('fill', 'none');
+            
+            sampleMeta.append('text')
+              .attr('x', (scaleX(sampleInterquartiles[3]) - scaleX(sampleInterquartiles[0]))/2 + scaleX(sampleInterquartiles[0]))
+              .attr('y',  38)
+              .attr('stroke', '#d4cdda')
+              .attr('text-anchor', 'middle')
+              .text('Full range of ages of actors playing this role');
 
-            const braceInterquartileCoords = makeCurlyBrace(scaleX(sampleInterquartiles[1]), 150, scaleX(sampleInterquartiles[2]), 150, 30, 0.54); 
+            const braceInterquartileCoords = makeCurlyBrace(scaleX(sampleInterquartiles[1]), 140, scaleX(sampleInterquartiles[2]), 140, 30, 0.54); 
             console.log(braceFullCoords)
             sampleMeta.append('path')
               .classed('curly-brace-interquartile', true)
@@ -1389,6 +1429,15 @@ queue()
               .attr('stroke', '#d4cdda')
               .attr('stroke-width', '2px')
               .attr('fill', 'none');
+            
+            sampleMeta.append('text')
+              .attr('x', (scaleX(sampleInterquartiles[2]) - scaleX(sampleInterquartiles[1]))/2 + scaleX(sampleInterquartiles[1]))
+              .attr('y', 185)
+              .attr('stroke', '#d4cdda')
+              .attr('text-anchor', 'middle')
+              .text('Interquartile range (i.e., middle 50%) of actor ages');
+
+            
             
             sampleMeta.append('path').datum([sampleInterquartiles[0], sampleInterquartiles[3]])
               .attr('d', interquartileLine)
@@ -1406,6 +1455,82 @@ queue()
                 .attr('opacity', .85);
             
             
+            const sampleAxis = embedSVG.append('g').attr('class', 'x sample-axis');
+            
+            const heightToShift = document.querySelector('.curly-brace-full').getBoundingClientRect().bottom - document.querySelector('.embedded-svg').getBoundingClientRect().top;
+            
+            console.log('to shift: ' + heightToShift);
+            sampleAxis.attr('transform', `translate(0,${heightToShift})`);
+
+            sampleAxis
+              .call(axisBottom(scaleX)
+                    .tickValues([18, sampleInterquartiles[0], median(sortedSampleAges), sampleInterquartiles[2], sampleInterquartiles[3]])
+                    .tickSize(band + 90));
+            
+            selectAll('.sample-axis .tick line')
+	           .attr('stroke-dasharray', '2,2')
+	           .attr('stroke-opacity', .2);
+            
+            select('.domain').remove();
+
+            
+            const legendAnnotations = [
+					   	//note color: #b4b8c0
+              {
+                note: {
+                  label: 'Oldest actor playing role in sample',
+                  wrap: 200,
+                  align: 'left'
+                }, 
+                connector: {
+                  end: 'arrow',
+                  type: 'curve', 
+                  points: [[38, -9]]
+                },
+                x: scaleX(sampleInterquartiles[3]) + 4,
+                y: document.querySelector('.sampleRole').querySelectorAll('circle')[39].getAttribute('cy'),
+                dx: 65,
+                dy: -30
+              }, 
+              {
+                note: {
+                  title: '75th %tile of ages',
+                  label: 'By this age, you\'d be older than 75% of all actors who\'ve played this character in our sample',
+                  wrap: 180,
+                  align: 'left'
+                }, 
+                connector: {
+                  end: 'arrow',
+                  type: 'curve', 
+                  points: [[55, 25]]
+                },
+                x: scaleX(sampleInterquartiles[2]),
+                y: 125,
+                dx: 125,
+                dy: 20
+              }
+            ];
+					
+            const makeLegendAnnotations = annotation.annotation()
+              .type(annotation.annotationLabel)
+              .annotations(legendAnnotations);
+   
+            embedSVG
+              .append("g")
+              .attr("class", "annotation-group")
+              .call(makeLegendAnnotations);
+            
+            selectAll('.annotation-note-title').attr('stroke', '#d4cdda').style('font-weight', 400);
+            selectAll('.annotation-note-label').attr('stroke', '#908e8e');
+            selectAll('.annotation-connector path.connector')
+              .attr('stroke', '#b4b8c0')
+              .attr('stroke-width', '1px')
+              .attr('stroke-dasharray', '2,4');
+            selectAll('.annotation-connector path.connector-end')
+              .attr('fill', '#b4b8c0')
+              .attr('stroke', '#b4b8c0')
+              .attr('stroke-width', '1px');
+              
           }, 'From ages 17 to 23..'],
           [function() {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 112;
@@ -1414,7 +1539,7 @@ queue()
             let mainContent = select('#main-content');
             //`position: fixed; top: 0; left: 400`
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('There are few Shakespearean lead roles available to the school-age actor in professional productions, with the obvious exceptions of <span>Romeo</span> and <span>Juliet</span>. Juliet is described as a girl of 13 in Shakespeare’s original text and Romeo is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span>Hamlets</span> and Rosalinds, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).');
+            mainContent.html('<p>There are few Shakespearean lead roles available to the school-age actor in professional productions, with the obvious exceptions of <span>Romeo</span> and <span>Juliet</span>. Juliet is described as a girl of 13 in Shakespeare’s original text and Romeo is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span>Hamlets</span> and Rosalinds, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).</p>');
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
             let test = window.innerHeight/2 - height;
@@ -1474,29 +1599,43 @@ queue()
               });
           }]
         ];
+        //select('body').on('dblclick', eventsQueue[2][0]);
         //console.log(animateDots(30))
         //let animate30 = animateDots(30);
-        select('.transitions').on('click', transitions);
-        select('.dots').on('click', function nextStep() {
-            //console.log(this);
-            select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
-
-            if (eventsQueue[state]) {
-                eventsQueue[state][0]();
-            }
-
-            if (state < eventsQueue.length - 1) {
-                state += 1;
-                select(this).on('click', nextStep);
-            } else {
-                select(this).on('click', () => {});
-                select(this).attr('disabled', true);
-            }
-            console.log(state);
-        });
-        document.addEventListener('keydown', function (e) {
+        //select('.transitions').on('click', transitions);
+        //select('.dots').on('click', function nextStep() {
+        //    //console.log(this);
+        //    select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
+        //    if (eventsQueue[state]) {
+        //        eventsQueue[state][0]();
+        //    }
+        //    if (state < eventsQueue.length - 1) {
+        //        state += 1;
+        //        select(this).on('click', nextStep);
+        //    } else {
+        //        select(this).on('click', () => {});
+        //        select(this).attr('disabled', true);
+        //    }
+        //    console.log(state);
+        //});
+        document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
           console.log('keypressed: ' + e.code);
+          if (e.code === 'ArrowRight' || e.code === 'Space') {
+            if (eventsQueue[state]) {
+              eventsQueue[state][0]();
+            }
+            
+            if (state < eventsQueue.length - 1) {
+              state += 1;
+              //select(this).on('click', nextStep);
+              document.addEventListener('keydown', nextStep); 
+            } else {
+              document.addEventListener('keydown', () => {});
+            }
+            console.log(state);
+            
+          }
         });
         //select(document).on('keypress', function nextStep() {
         //    //console.log(this);
@@ -1587,12 +1726,6 @@ queue()
 					
 				}
 	
-				select('.date-group1').on('click', filterPoints([1900, 1949]));
-				select('.date-group2').on('click', filterPoints([1950, 1989]));
-				select('.date-group3').on('click', filterPoints([1990, 2018]));
-				//select('.date-group4').on('click', filterPoints([1960, 1979]));
-				//select('.date-group5').on('click', filterPoints([1980, 1999]));
-				//select('.date-group6').on('click', filterPoints([2000, 2018]));
 
 
         /**

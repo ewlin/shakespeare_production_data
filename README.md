@@ -1,7 +1,23 @@
-# Shakespeare Productions Dataset (Last update: 3/27/18)
+# Shakespeare Productions Dataset (Todos updated on: 5/24/18)
+
+# Latest UI/Article To-dos: 
+
+* Franchise/Actor Career/Shakespeare chart
+* Prose for Introduction + Directions for Navigating Piece
+* Backwards in article code 
+* Use male/female unicode symbols for cross-gender casting
+* Brush/Slider update/redesign
+
+* Refactor code to make more modular and reusable
 
 
-# Latest To-dos:
+
+
+
+------------------------
+
+
+# Latest Data To-dos: (last updated in March 2018)
 
 > Note some broadway productions only return and Month + year or just Year in the database and crashes the role_clean.py script;
 > temporarily deleted those lines
