@@ -236,7 +236,7 @@ queue()
       let characterName = character[0]['role'].toLowerCase().split(' ');
       if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
       characterName = characterName.join('');
-      processPoints(character, characterName, 1980);
+      processPoints(character, characterName, true, 1980);
       //processPoints(character, characterName, 1900, 2018);
     });
   
@@ -252,10 +252,10 @@ queue()
     }
     console.log(interquartiles);
 
-    function processPoints(characterData, character, startYear, endYear) {
+    function processPoints(characterData, character, filterOppoGender, startYear, endYear) {
       let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
       let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
-      let oppositeGender = characterGenders[character] == 'male' ? 'female' : 'male';
+      let oppositeGender = filterOppoGender ? (characterGenders[character] == 'male' ? 'female' : 'male') : null;
       characterData.forEach(function(role) {
         if (role['bday'] != 'person not found on wiki'
             && role['bday'] != 'no birthday on article'
@@ -264,12 +264,12 @@ queue()
           let age = moment(role['opening_date']).diff(moment(role['bday']), 'years');
           
           //Old version
-          //if (age > 0 && moment(role['opening_date']) >= moment(start)
-          //	&& moment(role['opening_date']) <= moment(end)
-          //	&& role['gender'] != oppositeGender) {
+          if (age > 0 && moment(role['opening_date']) >= moment(start)
+          	&& moment(role['opening_date']) <= moment(end)
+          	&& role['gender'] !== oppositeGender) {
           
-          if (age > 0 && moment(role['opening_date']) >= moment(start) 
-              && moment(role['opening_date']) <= moment(end)) {
+          //if (age > 0 && moment(role['opening_date']) >= moment(start) 
+          //    && moment(role['opening_date']) <= moment(end)) {
             
             if (character == 'cleopatra' && role['gender'] == 'male') {
               console.log(role);
@@ -403,7 +403,12 @@ queue()
     svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
       .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
       .each(function(roleData, i) {
-        select(this).selectAll('.roles').data(roleData.ages).enter().append('circle')
+        const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
+        const matchGender = roleData.ages.filter(d => d.actorGender !== roleOppoGender); 
+        const oppoGender = roleData.ages.filter(d => d.actorGender === roleOppoGender); 
+    
+      
+        select(this).selectAll('.roles').data(matchGender).enter().append('circle')
           .attr('class', d => {
             return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2]
               ? 'role-dots center-50-dot'
@@ -425,6 +430,21 @@ queue()
               annotationCoordinates['canadaIago'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
             } 
           });
+        
+        
+        select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
+          .attr('class', 'role-text-dots')
+          .attr('x', d => scaleX(d.age))
+          .attr('y', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+          .attr('fill', d => roleData.color)
+          .attr('stroke', d => roleData.color)
+          .attr('stroke-opacity', 0)
+          .attr('fill-opacity', 0)
+          .attr('text-anchor', 'middle')
+          .attr('alignment-baseline', 'middle')
+          //.style('font-size', '14px')
+          .text(d => d.actorGender === 'male' ? '\u2642' : '\u2640');
+      
       });
   
     console.log(annotationCoordinates);
@@ -719,30 +739,48 @@ queue()
                     translateLeft();
                 }
 
-
+                selectAll('.role-text-dots')
+                  .filter(d => d.age >= minAge && d.age <= maxAge)
+                  .transition(0)
+                  //.delay(d => Math.pow((d.age - minAge), 1.2) * 80)
+                  .delay(d => (d.age - minAge) * delayFactor)
+                  .attr('stroke-opacity', (d) => {
+                    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
+                  })
+                  .attr('fill-opacity', d => {
+                    return 1;
+                      ////if (d.age <= maxAge && d.age >= minAge) {
+                      //if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                      //    console.log('good');
+                      //    return .95;
+                      //} else {
+                      //    return .4;
+                      //}
+                  })
+                  
                 selectAll('.role-dots')
-                    .filter(d => d.age >= minAge && d.age <= maxAge)
-                    .transition(0)
-                    //.delay(d => Math.pow((d.age - minAge), 1.2) * 80)
-                    .delay(d => (d.age - minAge) * delayFactor)
-                    .attr('fill-opacity', d => {
-                        //if (d.age <= maxAge && d.age >= minAge) {
-                        if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                            console.log('good');
-                            return .95;
-                        } else {
-                            return .4;
-                        }
-                        /**
-                        } else {
-                            console.log('invisible');
-                            return 0;
-                        }
-                        **/
-                    })
-                    .attr('stroke-opacity', (d) => {
-                        d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
-                    });
+                  .filter(d => d.age >= minAge && d.age <= maxAge)
+                  .transition(0)
+                  //.delay(d => Math.pow((d.age - minAge), 1.2) * 80)
+                  .delay(d => (d.age - minAge) * delayFactor)
+                  .attr('fill-opacity', d => {
+                      //if (d.age <= maxAge && d.age >= minAge) {
+                      if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                          console.log('good');
+                          return .95;
+                      } else {
+                          return .4;
+                      }
+                      /**
+                      } else {
+                          console.log('invisible');
+                          return 0;
+                      }
+                      **/
+                  })
+                  .attr('stroke-opacity', (d) => {
+                      d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
+                  });
                     //.attr('stroke', (d) => {
                     //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
                     //});
@@ -998,7 +1036,7 @@ queue()
                 if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
                 characterName = characterName.join('');
                 console.log(characterName);
-                processPoints(character, characterName, 1900, 1979);
+                processPoints(character, characterName, true, 1900, 1979);
             });
 
             for (let char in characterAgesArrays) {

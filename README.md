@@ -5,7 +5,7 @@
 * Franchise/Actor Career/Shakespeare chart
 * Prose for Introduction + Directions for Navigating Piece
 * Backwards in article code 
-* Use male/female unicode symbols for cross-gender casting
+* *Use male/female unicode symbols for cross-gender casting (added 5/24/18 1:42pm)*
 * Brush/Slider update/redesign
 
 * Refactor code to make more modular and reusable
