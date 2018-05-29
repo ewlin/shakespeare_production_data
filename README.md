@@ -2,15 +2,21 @@
 
 # Latest UI/Article To-dos: 
 
+* *Use male/female unicode symbols for cross-gender casting (added 5/24/18 1:42pm)*
+
+
 * Franchise/Actor Career/Shakespeare chart
 * Prose for Introduction + Directions for Navigating Piece
+* Design + Add Headings to each panel indicate the focus (e.g., Age range in question, and Sample Time Range)
 * Backwards in article code 
-* *Use male/female unicode symbols for cross-gender casting (added 5/24/18 1:42pm)*
 * Brush/Slider update/redesign
+* Second legend including minority and cross-gender actor indicators 
+* Legends should be able to be opened and closed as a modal on all panels with the chart showing
 
-* Refactor code to make more modular and reusable
+* Refactor code to make more modular and reusable (print out to better read/see/annotate)
 
 
+# Latest Data to-dos (May Data updates)
 
 
 
