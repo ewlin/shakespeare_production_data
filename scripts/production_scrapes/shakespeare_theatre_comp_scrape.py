@@ -68,7 +68,7 @@ def get_production_info(meta):
         actor_meta = [full_opening_date, each_actor[0], each_actor[1],
                       director, 'Shakespeare Theatre Company', venue]
         print actor_meta
-        data_file = open('data/stc_performers.tsv', 'a')
+        data_file = open('data/stc_performers_new.tsv', 'a')
         data_file.write('\t'.join(actor_meta).encode('utf8') + '\n')
         data_file.close()
 
