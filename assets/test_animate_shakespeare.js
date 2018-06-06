@@ -1,6 +1,31 @@
-let animateStop = false;
+import { csv } from 'd3-request';
 
-d3.csv('../data/shakespeare_outline.csv', function(data) {
+const colors = [
+  '#fb6b5a',
+  '#c0c400',
+  '#F7973A',
+  '#FC5863',
+  '#F36735',
+  '#78779E',
+  '#577EAD',
+  '#F45C42',
+  '#F57A3E',
+  '#F8B535',
+  '#FC7136',
+  '#CA6379',
+  '#AD5468',
+  '#FAE12F',
+  '#A96B88',
+  '#c44ec6'
+];
+
+const colorsLength = colors.length;
+
+
+export default function animateShakespeare() {
+  let animateStop = false;
+
+  d3.csv('../data/shakespeare_outline.csv', function(data) {
     console.log(data);
     console.log(d3.extent(data, d => parseInt(d.x)))
     console.log(d3.extent(data, d => parseInt(d.y)))
@@ -39,10 +64,11 @@ d3.csv('../data/shakespeare_outline.csv', function(data) {
             console.log(elapsed);
         }, 500);
 
+  });
+
+}
 
 
-});
 
 
-let colors = ['#c0c400', '#F7973A', '#FC5863', '#F8B535', '#78779E', '#577EAD', '#F57A3E', '#F45C42', '#CA6379', '#FAE12F', '#A96B88'];
-let colorsLength = colors.length;
+

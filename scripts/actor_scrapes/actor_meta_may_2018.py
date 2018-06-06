@@ -24,7 +24,7 @@ February 17, 1925
 '''
 
 def in_franchise(actor, text): 
-  franchise_titles = ['Game of Thrones', 'The Lord of the Rings', 'The Hobbit', 'James Bond', 'Star Wars', 'Star Trek', 'Marvel', 'X-Men', 'Spider-Man', 'Harry Potter']
+  franchise_titles = ['Game of Thrones', 'The Lord of the Rings', 'The Hobbit', 'James Bond', 'Star Wars', 'Star Trek', 'Marvel', 'X-Men', 'X2', 'Spider-Man', 'Harry Potter']
   
   matched = []
   

@@ -4,7 +4,7 @@
 **/
 import moment from 'moment';
 import { queue } from 'd3-queue';
-import { tsv, json } from 'd3-request';
+import { csv, tsv, json } from 'd3-request';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
 import { variance, quantile, median } from 'd3-array';
@@ -15,13 +15,13 @@ import 'd3-transition';
 import { transition } from 'd3-transition';
 import { brushX, brushSelection } from 'd3-brush';
 import * as annotation from 'd3-svg-annotation';
-import { timer } from 'd3-timer';
+import { interval } from 'd3-timer';
 import makeCurlyBrace from './curlyBraces';
+//import animateShakespeare from './animate_shakespeare';
 
 console.log(makeCurlyBrace);
 
 const throttle = require('lodash.throttle'); 
-
 
 //Notes to self:
 //Code snippet to select for the ticks in the axis to fix certain criteria since the axis isn't bound to data
@@ -39,8 +39,10 @@ console.log(windowHeight);
 select('.svg-main').attr('height', windowHeight - (windowHeight * .075) - 10);
 select('.svg-controls').attr('height', windowHeight * .075);
 
+let animateStop = false; 
 
 queue()
+  .defer(csv, 'data/shakespeare_outline.csv')
   .defer(tsv, 'data/ages/shylock_ages.tsv')
   .defer(tsv, 'data/ages/ophelia_ages.tsv')
   .defer(tsv, 'data/ages/romeo_ages.tsv')
@@ -57,7 +59,7 @@ queue()
   .defer(tsv, 'data/ages/juliet_ages.tsv')
   .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
   .defer(tsv, 'data/ages/prospero_ages.tsv')
-  .await(function(error, ...characters) {
+  .await(function(error, shakespeareOutline, ...characters) {
     
 
     //5/15 test (est. count number of productions)
@@ -1357,6 +1359,8 @@ queue()
         */
         const eventsQueue = [
           [function() {
+            //stop shakespeare interval animation timer
+            animateStop = true; 
             const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             let mainContent = select('#main-content');
@@ -1655,6 +1659,46 @@ queue()
         //    }
         //    console.log(state);
         //});
+        function loadTitlesSlide () {
+            const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            let windowHeight = window.innerHeight; 
+            let mainContent = select('#main-content');
+            mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg>`);
+            const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
+            let test = window.innerHeight/2 - height;
+            console.log(test);
+            mainContent.style('top', window.innerHeight/2 - height/2);
+            animateShakespeare(shakespeareOutline);
+            
+            function animateShakespeare(data) {
+
+              let svg = select('.shakespeare-dots');
+              const colors = Object.keys(characterAges).map(char => characterAges[char].color); 
+              const colorsLength = colors.length; 
+              
+              svg.selectAll('dots').data(data).enter()
+                .append('circle')
+                .attr('r', '4px')
+                .attr('cx', d => parseInt(d.x))
+                .attr('cy', d => parseInt(d.y))
+                .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
+                .attr('fill-opacity', .4);
+  
+  
+              var t = interval(function(elapsed) {
+                svg.selectAll('circle').transition().duration(400)
+                  .attr('r', () => (Math.random() * 3 + 5) + 'px')
+                  .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
+                  .attr('fill-opacity', d => Math.random());
+                if (animateStop == true) t.stop();
+                console.log(elapsed);
+              }, 500);
+            }
+        }
+  
+        loadTitlesSlide(); 
         document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
           console.log('keypressed: ' + e.code);

@@ -22,7 +22,7 @@ export default function makeCurlyBrace(x1,y1,x2,y2,w,q) {
        		" M " +  x2 + " " +  y2 +
        		" Q " + qx3 + " " + qy3 + " " + qx4 + " " + qy4 + 
        		" T " + tx1 + " " + ty1 );
-  }
+}
 
 		//function update()
     //		{
