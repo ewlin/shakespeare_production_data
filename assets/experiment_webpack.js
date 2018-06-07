@@ -132,43 +132,43 @@ queue()
       .attr('alignment-baseline', 'hanging');
 
 
-    let indicies = {
-      romeo: 0,
-      hamlet: 1,
-      macbeth: 2,
-      iago: 3,
-      othello: 4,
-      richardIii: 5,
-      shylock: 6,
-      prospero: 7,
-      kingLear: 8,
-      juliet: 0,
-      desdemona: 1,
-      ophelia: 2,
-      rosalind: 3,
-      portia: 4,
-      ladyMacbeth: 5,
-      cleopatra: 6
-    }
-
-    let characterGenders = {
-      hamlet: 'male',
-      shylock: 'male',
-      romeo: 'male',
-      macbeth: 'male',
-      kingLear: 'male',
-      iago: 'male',
-      othello: 'male',
-      prospero: 'male',
-      richardIii: 'male',
-      desdemona: 'female',
-      ophelia: 'female',
-      rosalind: 'female',
-      juliet: 'female',
-      ladyMacbeth: 'female',
-      cleopatra: 'female',
-      portia: 'female'
-    }
+    //let indicies = {
+    //  romeo: 0,
+    //  hamlet: 1,
+    //  macbeth: 2,
+    //  iago: 3,
+    //  othello: 4,
+    //  richardIii: 5,
+    //  shylock: 6,
+    //  prospero: 7,
+    //  kingLear: 8,
+    //  juliet: 0,
+    //  desdemona: 1,
+    //  ophelia: 2,
+    //  rosalind: 3,
+    //  portia: 4,
+    //  ladyMacbeth: 5,
+    //  cleopatra: 6
+    //}
+//
+    //let characterGenders = {
+    //  hamlet: 'male',
+    //  shylock: 'male',
+    //  romeo: 'male',
+    //  macbeth: 'male',
+    //  kingLear: 'male',
+    //  iago: 'male',
+    //  othello: 'male',
+    //  prospero: 'male',
+    //  richardIii: 'male',
+    //  desdemona: 'female',
+    //  ophelia: 'female',
+    //  rosalind: 'female',
+    //  juliet: 'female',
+    //  ladyMacbeth: 'female',
+    //  cleopatra: 'female',
+    //  portia: 'female'
+    //}
     let characterAges = {
       /**
       //Female: '#fc5863','#ec606c','#dc6776','#cb6d7f','#ba7187','#a77590','#90799b','#757ca4','#fc5863'
@@ -194,22 +194,22 @@ queue()
       julietAges: {gender: 'female', color: '#c44ec6'},
       opheliaAges: {gender: 'female', color: '#af55bb'}
       **/
-      richardIiiAges: {gender: 'male', color: '#fb6b5a'},
-      shylockAges: {gender: 'male', color: '#c0c400'},
-      romeoAges: {gender: 'male', color: '#F7973A'},
-      desdemonaAges: {gender: 'female', color: '#FC5863'},
-      macbethAges: {gender: 'male', color: '#F36735'},
-      ladyMacbethAges: {gender: 'female', color: '#78779E'},
-      cleopatraAges: {gender: 'female', color: '#577EAD'},
-      iagoAges: {gender: 'male', color: '#F45C42'},
-      kingLearAges: {gender: 'male', color: '#F57A3E'},
-      othelloAges: {gender: 'male', color: '#F8B535'},
-      prosperoAges: {gender: 'male', color: '#FC7136'},
-      rosalindAges: {gender: 'female', color: '#CA6379'},
-      portiaAges: {gender: 'female', color: '#AD5468'},
-      hamletAges: {gender: 'male', color: '#FAE12F'},
-      julietAges: {gender: 'female', color: '#A96B88'},
-      opheliaAges: {gender: 'female', color: '#c44ec6'}   
+      richardIiiAges: {gender: 'male', color: '#fb6b5a', idx: 5},
+      shylockAges: {gender: 'male', color: '#c0c400', idx: 6},
+      romeoAges: {gender: 'male', color: '#F7973A', idx: 0},
+      desdemonaAges: {gender: 'female', color: '#FC5863', idx: 1},
+      macbethAges: {gender: 'male', color: '#F36735', idx: 2},
+      ladyMacbethAges: {gender: 'female', color: '#78779E', idx: 5},
+      cleopatraAges: {gender: 'female', color: '#577EAD', idx: 6},
+      iagoAges: {gender: 'male', color: '#F45C42', idx: 3},
+      kingLearAges: {gender: 'male', color: '#F57A3E', idx: 8},
+      othelloAges: {gender: 'male', color: '#F8B535', idx: 4},
+      prosperoAges: {gender: 'male', color: '#FC7136', idx: 7},
+      rosalindAges: {gender: 'female', color: '#CA6379', idx: 3},
+      portiaAges: {gender: 'female', color: '#AD5468', idx: 4},
+      hamletAges: {gender: 'male', color: '#FAE12F', idx: 1},
+      julietAges: {gender: 'female', color: '#A96B88', idx: 0},
+      opheliaAges: {gender: 'female', color: '#c44ec6', idx: 2}   
     };
   
     let characterAgesArrays = {
@@ -257,7 +257,7 @@ queue()
     function processPoints(characterData, character, filterOppoGender, startYear, endYear) {
       let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
       let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
-      let oppositeGender = filterOppoGender ? (characterGenders[character] == 'male' ? 'female' : 'male') : null;
+      let oppositeGender = filterOppoGender ? (characterAges[character + 'Ages'].gender == 'male' ? 'female' : 'male') : null;
       characterData.forEach(function(role) {
         if (role['bday'] != 'person not found on wiki'
             && role['bday'] != 'no birthday on article'
@@ -326,7 +326,7 @@ queue()
         for (let age in roleAges) {
           if (age != 'gender' && age != 'color') {
             roleAges[age].forEach(a => {
-              actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
+              actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: characterAges[role + 'Ages'].idx, color: characterColor})
             });
           }
         }
@@ -346,7 +346,7 @@ queue()
         const roleAgesArray = [];
         //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
         for (let age in roleAges) {
-          if (age != 'gender' && age != 'color') {
+          if (age != 'gender' && age != 'color' && age !== 'idx') {
             roleAges[age].forEach(a => {
               roleAgesArray.push({
                 age: parseInt(age), 
@@ -361,7 +361,7 @@ queue()
           }
         }
         roleAgesArray.sort((a,b) => a.age - b.age);
-        rolesArr.push({role: role, gender: characterGender, index: indicies[role], color: characterColor, ages: roleAgesArray});
+        rolesArr.push({role: role, gender: characterGender, index: characterAges[role + 'Ages']['idx'], color: characterColor, ages: roleAgesArray});
       }
       return rolesArr;
     }
@@ -453,8 +453,8 @@ queue()
 						
 	
     for (let eachCharacter in interquartiles) {
-      const gender = characterGenders[eachCharacter];
-      const index = indicies[eachCharacter];
+      const gender = characterAges[eachCharacter + 'Ages'].gender;
+      const index = characterAges[eachCharacter + 'Ages'].idx;
       const yValue = gender == 'male' ? male(index, true) : female(index, true);
       const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
       const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
@@ -788,8 +788,8 @@ queue()
                     //});
 
                 for (let eachCharacter in interquartiles) {
-                    const gender = characterGenders[eachCharacter];
-                    const index = indicies[eachCharacter];
+                    const gender = characterAges[eachCharacter + 'Ages'].gender;
+                    const index = characterAges[eachCharacter + 'Ages'].idx;
                     const yValue = gender == 'male' ? male(index, true) : female(index, true);
 
                     const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
@@ -935,7 +935,7 @@ queue()
         /**
         for (let eachCharacter in interquartiles) {
             let gender = characterGenders[eachCharacter];
-            let index = indicies[eachCharacter];
+            let index = characterAges[eachCharacter + 'Ages'].idx;
             let yValue = gender == 'male' ? male(index, true) : female(index, true);
 
             let interquartileLine = line().y(d => yValue).x(d => scaleX(d));
@@ -1022,8 +1022,8 @@ queue()
 
         function transitions() {
             for (let eachChar in characterAges) {
-                let {gender, color} = characterAges[eachChar];
-                characterAges[eachChar] = {gender: gender, color: color};
+                let {gender, color, idx} = characterAges[eachChar];
+                characterAges[eachChar] = {gender: gender, color: color, idx: idx};
             }
             for (let eachChar in characterAgesArrays) {
                 characterAgesArrays[eachChar] = [];
@@ -1055,8 +1055,8 @@ queue()
             //select group
             let meta = svg.selectAll('.character-meta');
             //select circles
-            let data = processAllPointsAlt2();
-            console.log(data);
+            //let data = processAllPointsAlt2();
+            //console.log(data);
 
             /*
             svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
@@ -1133,8 +1133,8 @@ queue()
                 let pad = 30;
                 let radius = 21.5;
 
-                let gender = characterGenders[eachCharacter];
-                let index = indicies[eachCharacter];
+                let gender = characterAges[eachCharacter + 'Ages'].gender;
+                let index = characterAges[eachCharacter + 'Ages'].idx;
                 let yValue = gender == 'male' ? male(index, true) : female(index, true);
 
                 let interquartileLine = line().y(d => yValue).x(d => scaleX(d));
@@ -1188,7 +1188,7 @@ queue()
 		              /**
             for (let eachCharacter in interquartiles) {
                 let gender = characterGenders[eachCharacter];
-                let index = indicies[eachCharacter];
+                let index = characterAges[eachCharacter + 'Ages'].idx;
                 let yValue = gender == 'male' ? male(index, true) : female(index, true);
                 let interquartileLine = line().y(d => yValue).x(d => scaleX(d));
             ]let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
@@ -1791,9 +1791,9 @@ queue()
 						
 						filteredDots.filter(dot => {
 							let actor_gender = dot.actorGender; 
-							if (characterGenders[dot.role] == 'male' && actor_gender == 'female') {
+							if (characterAges[dot.role + 'Ages'].gender == 'male' && actor_gender == 'female') {
 								return true; 
-							} else if (characterGenders[dot.role] == 'female' && actor_gender == 'male') {
+							} else if (characterAges[dot.role + 'Ages'].gender == 'female' && actor_gender == 'male') {
 								return true; 
 							} else {
 								return false; 

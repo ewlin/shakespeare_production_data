@@ -24,7 +24,7 @@ February 17, 1925
 '''
 
 def in_franchise(actor, text): 
-  franchise_titles = ['Game of Thrones', 'The Lord of the Rings', 'The Hobbit', 'James Bond', 'Star Wars', 'Star Trek', 'Marvel', 'X-Men', 'X2', 'Spider-Man', 'Harry Potter']
+  franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
   
   matched = []
   
@@ -102,7 +102,7 @@ def get_actor_info(actor_meta):
                     break
 
         #REDO logic here. Use a tuple of patterns and do a try/except(?) of matching different patterns
-        if not person_not_found and re.match(r'[S|s]hylock', actor_meta[1]):
+        if not person_not_found: # and re.match(r'Lear', actor_meta[1]):
             actor_data = in_franchise(actor_name, soup.get_text())
             if (actor_data):
               actor_data = character_name + '\t' + actor_data
@@ -176,7 +176,7 @@ def get_actor_info(actor_meta):
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
 
-with open('data/additional_characters/additional_characters.tsv') as actors:
+with open('data/temp/Lear.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
     # need to share state between processes for this to work
