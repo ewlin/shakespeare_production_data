@@ -1,9 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './assets/experiment_webpack.js',
+  entry: {
+    app: './assets/experiment_webpack.js',
+    franchise: './assets/franchise_graph_webpack.js'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name]_bundle.js',
     path: path.resolve(__dirname, 'dist')
   }
 };

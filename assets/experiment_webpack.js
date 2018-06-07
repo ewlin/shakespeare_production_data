@@ -27,7 +27,6 @@ const throttle = require('lodash.throttle');
 //Code snippet to select for the ticks in the axis to fix certain criteria since the axis isn't bound to data
 //Array.from(document.querySelectorAll('.tick')).filter(group => parseInt(group.childNodes[1].innerHTML) >= 30)
 
-
 const svg = select('.svg-main');
 svg.classed('mouse-disabled', true);
 const brushControls = select('.svg-controls'); 
