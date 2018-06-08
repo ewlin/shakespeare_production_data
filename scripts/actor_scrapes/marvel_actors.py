@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+#TODO:
+
+# 1) Need to fix films in filmography where not 4 columns (year or character is shared...)
+# 2) Filmography on a different page
+
 
 # rewrite to test for categories (if no birthday found, try Name then _(actor) )
 
@@ -23,8 +28,20 @@ February 17, 1925
 5 April 1929
 '''
 
+#franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
+
+franchise_titles = []
+
+marvel_movies_meta = open('data/franchise_list.tsv')
+marvel_movies = unicodecsv.reader(marvel_movies_meta, delimiter='\t')
+
+for marvel_film in marvel_movies:
+  franchise_titles.append(marvel_film[2])
+
+
+print(franchise_titles)
+
 def in_franchise(actor, text): 
-  franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
   
   matched = []
   
@@ -78,6 +95,8 @@ def get_actor_info(actor_meta):
     actor_ethnicity_cat = []
     actor_ethnicity = []
 
+    def not_equal_line_break (to_compare):
+      return to_compare != u'\n'
 
     if len(actor_meta) > 1:
         actor_name = actor_meta[1].strip('* ').title()
@@ -113,20 +132,22 @@ def get_actor_info(actor_meta):
         '''     
         
         if not person_not_found:
-          franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
+          #franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
 
           filmography_span = soup.find('span', id='Film')
           if filmography_span:
+            print(actor_name, filmography_span.get_text())
+
             #something weird here with the code; grabbing other random tables? More specific in selections (id/class?)
             films_table = filmography_span.parent.find_next_sibling('table')
             if films_table:
               films = films_table.find('tbody').findAll('tr')
               for film in films: 
-                columns = film.findAll('td')
+                columns = filter(not_equal_line_break, list(film.children))
                 film_title = columns[1].get_text() if len(columns) == 4 else None
                 if film_title:
                   for franchise in franchise_titles:
-                    if re.search(franchise, film_title):
+                    if film_title == franchise:
                       print(actor_name, film_title, columns[0].get_text())
               #film_title = columns[1].get_text()
               #print(film_title)
