@@ -20,7 +20,7 @@ from operator import itemgetter
 manager = Manager()
 
 temp_arr = manager.list()
-url_base = 'https://en.wikipedia.org/wiki/'
+url_base = 'https://en.wikipedia.org'
 
 
 '''
@@ -102,7 +102,7 @@ def get_actor_info(actor_meta):
         actor_name = actor_meta[1].strip('* ').title()
         #print(actor_name)
         character_name = actor_meta[0]
-        full_wiki_url = url_base + '_'.join(actor_name.split(' '))
+        full_wiki_url = url_base + '/wiki/' + '_'.join(actor_name.split(' '))
         html = requests.get(full_wiki_url).text
         soup = BeautifulSoup(html, 'html5lib')
         person_not_found = soup.find('table', {'id': 'noarticletext'})
@@ -113,7 +113,7 @@ def get_actor_info(actor_meta):
                 if re.search('disambiguation', each_category.get_text()):
                     # Fix logic here; if hits disambiguation page, needs to overwrite/rewrite 'categories'
 
-                    new_url = url_base + '_'.join(actor_name.split(' ')) + '_(actor)'
+                    new_url = url_base + '/wiki/' + '_'.join(actor_name.split(' ')) + '_(actor)'
                     #print(new_url)
                     html = requests.get(new_url).text
                     soup = BeautifulSoup(html, 'html5lib')
@@ -134,29 +134,70 @@ def get_actor_info(actor_meta):
         if not person_not_found:
           #franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
 
-          filmography_span = soup.find('span', id='Film')
-          if filmography_span:
+          filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films')
+          if filmography_span and filmography_span.parent.find_next_sibling().name == 'table':
             print(actor_name, filmography_span.get_text())
 
             #something weird here with the code; grabbing other random tables? More specific in selections (id/class?)
             films_table = filmography_span.parent.find_next_sibling('table')
+            #if next simbling NOT table, follow link? 
+            print(filmography_span.parent.find_next_sibling().name)
             if films_table:
               films = films_table.find('tbody').findAll('tr')
+              #if actor_name == 'Andrew Garfield' or actor_name == 'Elizabeth Olsen':
+              #    print(films)
+              
+              max_cols_len = len(filter(not_equal_line_break, films[0]))
+              print(max_cols_len)
+              current_year = None
+              
+              #reduce redudant code; add marvel tv shows (Netflix + other)
               for film in films: 
+                
                 columns = filter(not_equal_line_break, list(film.children))
-                film_title = columns[1].get_text() if len(columns) == 4 else None
+                
+                current_year = re.search(r'[0-9]{4}', columns[0].get_text()) if re.search(r'[0-9]{4}', columns[0].get_text()) else current_year
+                
+                # Write some logic to deal with some columns that are shared across rows (same character or year for example)
+                if len(columns) > 1 and len(columns) == max_cols_len:
+                  if columns[1].find('a'):
+                    film_title = columns[1].find('a').get_text()
+                  else:
+                    film_title = columns[1].get_text()
+                elif len(columns) > 1 and len(columns) < max_cols_len:
+                  #print('wrong number of cols')
+                  #print(columns)
+                  if not re.search(r'[0-9]{4}', columns[0].get_text()):
+                    film_title = columns[0].get_text()
+                  else: 
+                    if columns[1].find('a'):
+                      film_title = columns[1].find('a').get_text()
+                    else:
+                      film_title = columns[1].get_text()
+                else: 
+                  film_title = None
+                
+                
                 if film_title:
                   for franchise in franchise_titles:
                     if film_title == franchise:
-                      print(actor_name, film_title, columns[0].get_text())
+                      print(actor_name, film_title, current_year.group(0))
+              
               #film_title = columns[1].get_text()
               #print(film_title)
                 
+          elif soup.find('span', id='Filmography'):
+            filmography_span = soup.find('span', id='Filmography')
+            print(actor_name, filmography_span.get_text())
+            if filmography_span.parent.find_next_sibling().name == 'div' and filmography_span.parent.find_next_sibling().find('a'):
+              print(filmography_span.parent.find_next_sibling().find('a').get_text())
+              print(filmography_span.parent.find_next_sibling().find('a').get('href'))
+              
+
             
-            
-            
-            
-            
+          else: 
+            #match the entire page? 
+            print(actor_name, 'Need to Manually Search For Films/Odd Wiki Format')
             
             
             
