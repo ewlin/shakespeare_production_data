@@ -881,6 +881,25 @@ queue()
                                     }
                                 });
 
+                            ageDots.selectAll('text')
+                                .filter(d => d.age <= maxAge)
+                                .transition(500)
+                                .attr('stroke-opacity', d => {
+                                    //console.log(this);
+                                    if (maxAge >= fullCharacterAgesRange[3]) {
+                                        return .1;
+                                    } else {
+                                        return 1;
+                                    }
+                                })
+                                .attr('fill-opacity', d => {
+                                    //console.log(this);
+                                    if (maxAge >= fullCharacterAgesRange[3]) {
+                                        return .1;
+                                    } else {
+                                        return 1;
+                                    }
+                                });
 
                             select(this)
                                 .transition().duration(400)

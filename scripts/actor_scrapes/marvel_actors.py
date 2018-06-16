@@ -32,7 +32,8 @@ February 17, 1925
 
 franchise_titles = []
 
-marvel_movies_meta = open('data/franchise_list.tsv')
+# Need to add alternative names and aliases; since not catching all instances 
+marvel_movies_meta = open('data/franchise_list.tsv') 
 marvel_movies = unicodecsv.reader(marvel_movies_meta, delimiter='\t')
 
 for marvel_film in marvel_movies:
@@ -94,31 +95,37 @@ def get_actor_info(actor_meta):
     is_actor = ''
     actor_ethnicity_cat = []
     actor_ethnicity = []
+    
+    #franchise_info = ''
 
     def not_equal_line_break (to_compare):
       return to_compare != u'\n'
 
     if len(actor_meta) > 1:
-        actor_name = actor_meta[1].strip('* ').title()
+        actor_name = actor_meta[0].strip('* ')#.title()
         #print(actor_name)
-        character_name = actor_meta[0]
+        #character_name = actor_meta[0]
         full_wiki_url = url_base + '/wiki/' + '_'.join(actor_name.split(' '))
+        #print(full_wiki_url)
         html = requests.get(full_wiki_url).text
         soup = BeautifulSoup(html, 'html5lib')
         person_not_found = soup.find('table', {'id': 'noarticletext'})
 
         if not person_not_found:
-            categories = soup.find('div', {'id': 'mw-normal-catlinks'}).find('ul').findAll('li')
-            for each_category in categories:
+            # https://en.wikipedia.org/wiki/Nikkole_Salter breaks script since no categories for some reason
+            category_links = soup.find('div', {'id': 'mw-normal-catlinks'})
+            if category_links:
+              categories = category_links.find('ul').findAll('li')
+              for each_category in categories:
                 if re.search('disambiguation', each_category.get_text()):
-                    # Fix logic here; if hits disambiguation page, needs to overwrite/rewrite 'categories'
-
-                    new_url = url_base + '/wiki/' + '_'.join(actor_name.split(' ')) + '_(actor)'
-                    #print(new_url)
-                    html = requests.get(new_url).text
-                    soup = BeautifulSoup(html, 'html5lib')
-                    person_not_found = soup.find('table', {'id': 'noarticletext'})
-                    break
+                  # Fix logic here; if hits disambiguation page, needs to overwrite/rewrite 'categories'
+                  new_url = url_base + '/wiki/' + '_'.join(actor_name.split(' ')) + '_(actor)'
+                  #print(new_url)
+                  html = requests.get(new_url).text
+                  soup = BeautifulSoup(html, 'html5lib')
+                  person_not_found = soup.find('table', {'id': 'noarticletext'})
+                  break
+            
 
         #REDO logic here. Use a tuple of patterns and do a try/except(?) of matching different patterns
         '''
@@ -136,19 +143,19 @@ def get_actor_info(actor_meta):
 
           filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films')
           if filmography_span and filmography_span.parent.find_next_sibling().name == 'table':
-            print(actor_name, filmography_span.get_text())
+            #print(actor_name, filmography_span.get_text())
 
             #something weird here with the code; grabbing other random tables? More specific in selections (id/class?)
             films_table = filmography_span.parent.find_next_sibling('table')
             #if next simbling NOT table, follow link? 
-            print(filmography_span.parent.find_next_sibling().name)
+            #print(filmography_span.parent.find_next_sibling().name)
             if films_table:
               films = films_table.find('tbody').findAll('tr')
               #if actor_name == 'Andrew Garfield' or actor_name == 'Elizabeth Olsen':
               #    print(films)
               
               max_cols_len = len(filter(not_equal_line_break, films[0]))
-              print(max_cols_len)
+              #print(max_cols_len)
               current_year = None
               
               #reduce redudant code; add marvel tv shows (Netflix + other)
@@ -179,31 +186,118 @@ def get_actor_info(actor_meta):
                 
                 
                 if film_title:
-                  for franchise in franchise_titles:
-                    if film_title == franchise:
-                      print(actor_name, film_title, current_year.group(0))
+                      for franchise in franchise_titles:
+                        if film_title == franchise:
+                          if len(columns) > 2:
+                            franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
+                          else: 
+                            franchise_character = ''
+                        
+                          franchise_info = [actor_name, film_title, current_year.group(0) if current_year else 'none', franchise_character]
+                          marvel_data = open('data/marvel_data.tsv', 'a')
+                          marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                          marvel_data.close()
+
+                          print(actor_name, film_title, current_year.group(0) if current_year else None, franchise_character)
               
               #film_title = columns[1].get_text()
               #print(film_title)
                 
           elif soup.find('span', id='Filmography'):
             filmography_span = soup.find('span', id='Filmography')
-            print(actor_name, filmography_span.get_text())
+            #print(actor_name, filmography_span.get_text())
             if filmography_span.parent.find_next_sibling().name == 'div' and filmography_span.parent.find_next_sibling().find('a'):
-              print(filmography_span.parent.find_next_sibling().find('a').get_text())
-              print(filmography_span.parent.find_next_sibling().find('a').get('href'))
+              filmography_url = filmography_span.parent.find_next_sibling().find('a').get('href')
+              if actor_name == 'Rosemary Harris':
+                print('Rosemary Harris')
+                print(filmography_url)
+              #print(filmography_span.parent.find_next_sibling().find('a').get_text())
+              #print(filmography_span.parent.find_next_sibling().find('a').get('href'))
+              full_filmography_url = url_base + filmography_url
+              html = requests.get(full_filmography_url).text
+              soup = BeautifulSoup(html, 'html5lib')
               
-
+              filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films')
+              if filmography_span and filmography_span.parent.find_next_sibling().name == 'table':
+                #print(actor_name, filmography_span.get_text())
+    
+                #something weird here with the code; grabbing other random tables? More specific in selections (id/class?)
+                films_table = filmography_span.parent.find_next_sibling('table')
+                #if next simbling NOT table, follow link? 
+                #print(filmography_span.parent.find_next_sibling().name)
+                if films_table:
+                  films = films_table.find('tbody').findAll('tr')
+                  #if actor_name == 'Andrew Garfield' or actor_name == 'Elizabeth Olsen':
+                  #    print(films)
+                  
+                  max_cols_len = len(filter(not_equal_line_break, films[0]))
+                  #print(max_cols_len)
+                  current_year = None
+                  
+                  #reduce redudant code; add marvel tv shows (Netflix + other)
+                  for film in films: 
+                    
+                    columns = filter(not_equal_line_break, list(film.children))
+                    
+                    current_year = re.search(r'[0-9]{4}', columns[0].get_text()) if re.search(r'[0-9]{4}', columns[0].get_text()) else current_year
+                    
+                    # Write some logic to deal with some columns that are shared across rows (same character or year for example)
+                    if len(columns) > 1 and len(columns) == max_cols_len:
+                      if columns[1].find('a'):
+                        film_title = columns[1].find('a').get_text()
+                      else:
+                        film_title = columns[1].get_text()
+                    elif len(columns) > 1 and len(columns) < max_cols_len:
+                      #print('wrong number of cols')
+                      #print(columns)
+                      if not re.search(r'[0-9]{4}', columns[0].get_text()):
+                        film_title = columns[0].get_text()
+                      else: 
+                        if columns[1].find('a'):
+                          film_title = columns[1].find('a').get_text()
+                        else:
+                          film_title = columns[1].get_text()
+                    else: 
+                      film_title = None
+                    
+                    
+                    if film_title:
+                      for franchise in franchise_titles:
+                        if film_title == franchise:
+                          if len(columns) > 2:
+                            franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
+                          else: 
+                            franchise_character = ''
+                          franchise_info = [actor_name, film_title, current_year.group(0) if current_year else 'none', franchise_character]
+                          marvel_data = open('data/marvel_data.tsv', 'a')
+                          marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                          marvel_data.close()
+                          print(actor_name, film_title, current_year.group(0) if current_year else None, franchise_character)
+              
+              
             
           else: 
             #match the entire page? 
+            #go through the whole page and match for film title 
             print(actor_name, 'Need to Manually Search For Films/Odd Wiki Format')
+            for franchise in franchise_titles:
+              franchise_re = re.compile(r'\s%s\s' % franchise)
+              if re.search(franchise_re, soup.get_text()):
+                franchise_info = [actor_name, re.search(franchise_re, soup.get_text()).group(0)]
+                marvel_data = open('data/marvel_data.tsv', 'a')
+                marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                marvel_data.close()
+                print(actor_name, re.search(franchise_re, soup.get_text()).group(0))
             
+          
+          
             
-            
-            
-            '''
-            categories = soup.find('div', {'id': 'mw-normal-catlinks'}).find('ul').findAll('li')
+        '''
+        if not person_not_found:
+
+          category_links = soup.find('div', {'id': 'mw-normal-catlinks'})
+          if category_links:
+            categories = category_links.find('ul').findAll('li')
             # Fun times with categories
             for each_category in categories:
                 category = each_category.get_text()
@@ -227,34 +321,35 @@ def get_actor_info(actor_meta):
                 if re.search(r'([A|a]ctor)|([A|a]ctress)', category):
                     is_actor = 'yes'
 
-            #birth_date = re.search(r'(\d+\s\w+\s\d\d\d\d|\w+\s\d+\,\s\d\d\d\d)', soup.get_text())
-            #better birthday search: looks for (born 12 October 1987) or (born January 23, 1980) or (born 1970)
-            birth_date = re.search(r'\(born\s(\d+\s\w+\s\d{4}|\w+\s\d+\,\s\d{4}|\d{4})', soup.find('p').get_text())
-            if birth_date:
-                #print(actor_name, birth_date.group(0))
-                formatted_bday = stringify_date(normalize_date(birth_date.group(1)))
-                actor_info = formatted_bday + '\t' + actor_info
-            else:
-                birth_date = re.search(r'(\d+\s\w+\s\d{4}|\w+\s\d+\,\s\d{4})', soup.find('p').get_text())
-                if birth_date:
-                    formatted_bday = stringify_date(normalize_date(birth_date.group(0)))
-                    actor_info = formatted_bday + '\t' + actor_info
-                else:
-                    actor_info = 'no birthday on article' + '\t' + actor_info
-
-            ethnicity = ','.join(actor_ethnicity) if len(actor_ethnicity) else 'none'
-            ethnic_cat = ','.join(actor_ethnicity_cat) if len(actor_ethnicity_cat) else 'none'
-            is_actor = is_actor if is_actor else 'flagged'
+          #birth_date = re.search(r'(\d+\s\w+\s\d\d\d\d|\w+\s\d+\,\s\d\d\d\d)', soup.get_text())
+          #better birthday search: looks for (born 12 October 1987) or (born January 23, 1980) or (born 1970)
+          birth_date = re.search(r'\(born\s(\d+\s\w+\s\d{4}|\w+\s\d+\,\s\d{4}|\d{4})', soup.find('p').get_text())
+          if birth_date:
+              #print(actor_name, birth_date.group(0))
+              formatted_bday = stringify_date(normalize_date(birth_date.group(1)))
+              actor_info = formatted_bday + '\t' + actor_info
+          else:
+              birth_date = re.search(r'(\d+\s\w+\s\d{4}|\w+\s\d+\,\s\d{4})', soup.find('p').get_text())
+              if birth_date:
+                  formatted_bday = stringify_date(normalize_date(birth_date.group(0)))
+                  actor_info = formatted_bday + '\t' + actor_info
+              else:
+                  actor_info = 'no birthday on article' + '\t' + actor_info
+          ethnicity = ','.join(actor_ethnicity) if len(actor_ethnicity) else 'none'
+          ethnic_cat = ','.join(actor_ethnicity_cat) if len(actor_ethnicity_cat) else 'none'
+          is_actor = is_actor if is_actor else 'flagged'
 
         else:
             actor_info = 'person not found on wiki' + '\t' + actor_info
             ethnicity = 'unknown'
             ethnic_cat = 'unknown'
-        '''
+        
+        actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor + '\t' + ','.join(actor_ethnicity_cat)
+        print(actor_info)
+        #print(actor_info.split('\t'))
+        '''  
+        
             
-        #actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor + '\t' + ','.join(actor_ethnicity_cat)
-        ##print(actor_info)
-        ##print(actor_info.split('\t'))
         #temp_arr.append(actor_info.split('\t'))
         #data_file.write(actor_info.encode('utf-8') + '\n')
         #data_file.close()
@@ -267,7 +362,13 @@ def get_actor_info(actor_meta):
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
 
-with open('data/franchise_data/actors_plus_franchises.tsv') as actors:
+#with open('data/master_actors_list.tsv') as actors:
+#  actors = unicodecsv.reader(actors, delimiter='\t')
+#  for each_actor in actors:
+#    #print(each_actor[0])
+#    get_actor_info(each_actor)
+    
+with open('data/master_actors_list.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
     # need to share state between processes for this to work
