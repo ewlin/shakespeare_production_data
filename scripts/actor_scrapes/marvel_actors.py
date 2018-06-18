@@ -82,7 +82,128 @@ def stringify_date(date_obj):
     except AttributeError:
         return 'not a date'
 
+      
+def not_equal_line_break (to_compare):
+  return to_compare != u'\n'
+     
+  
+def filter_empty_children(dom_node_children):
+  return filter(not_equal_line_break, dom_node_children)
 
+
+def search_table(actor, table):#, titles_to_search):
+  #table is a BeautifulSoup reference to a searchable DOM node? 
+  # e.g. : films_table = filmography_span.parent.find_next_sibling('table')
+  #titles_to_search is a reference to a list of strings of titles 
+  films = table.findAll('tr')
+  column_headers = filter_empty_children(list(films[0].children))
+  max_column_len = len(column_headers)
+  
+  if max_column_len < 2:
+    print(actor + ': has weird filmography table')
+    return
+    
+  current_year = None
+  
+  if column_headers[1].get_text() == 'Title':
+    
+    for film in films: 
+                
+      columns = filter(not_equal_line_break, list(film.children))
+      
+      current_year = re.search(r'[0-9]{4}', columns[0].get_text()) if re.search(r'[0-9]{4}', columns[0].get_text()) else current_year
+      
+      # Write some logic to deal with some columns that are shared across rows (same character or year for example)
+      if len(columns) > 1 and len(columns) == max_column_len:
+        if columns[1].find('a'):
+          film_title = columns[1].find('a').get_text()
+        else:
+          film_title = columns[1].get_text()
+      elif len(columns) > 1 and len(columns) < max_column_len:
+        #print('wrong number of cols')
+        #print(columns)
+        if not re.search(r'[0-9]{4}', columns[0].get_text()):
+          film_title = columns[0].get_text()
+        else: 
+          if columns[1].find('a'):
+            film_title = columns[1].find('a').get_text()
+          else:
+            film_title = columns[1].get_text()
+      else: 
+        film_title = None
+      
+      
+      if film_title:
+            for franchise in franchise_titles:
+              if film_title == franchise:
+                if len(columns) > 2:
+                  if re.search(r'[0-9]{4}', columns[0].get_text()):
+                    franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
+                  else: 
+                    franchise_character = columns[1].find('a').get_text() if columns[1].find('a') else columns[1].get_text()
+                else: 
+                  franchise_character = ''
+              
+                franchise_info = [actor, film_title, current_year.group(0) if current_year else 'none', franchise_character]
+                marvel_data = open('data/marvel_data.tsv', 'a')
+                marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                marvel_data.close()
+                print(actor, film_title, current_year.group(0) if current_year else None, franchise_character)
+              
+  elif column_headers[0].get_text() == 'Title':
+    for film in films: 
+                
+      columns = filter(not_equal_line_break, list(film.children))
+      
+      current_year = re.search(r'[0-9]{4}', columns[1].get_text()) if re.search(r'[0-9]{4}', columns[1].get_text()) else current_year
+      
+      # Write some logic to deal with some columns that are shared across rows (same character or year for example)
+      if len(columns) > 1:
+        if columns[0].find('a'):
+          film_title = columns[0].find('a').get_text()
+        else:
+          film_title = columns[0].get_text()
+      #if len(columns) > 1 and len(columns) == max_column_len:
+      #  if columns[0].find('a'):
+      #    film_title = columns[0].find('a').get_text()
+      #  else:
+      #    film_title = columns[0].get_text()
+      #elif len(columns) > 1 and len(columns) < max_column_len:
+      #  #print('wrong number of cols')
+      #  #print(columns)
+      #  if not re.search(r'[0-9]{4}', columns[0].get_text()):
+      #    film_title = columns[0].get_text()
+      #  else: 
+      #    if columns[1].find('a'):
+      #      film_title = columns[1].find('a').get_text()
+      #    else:
+      #      film_title = columns[1].get_text()
+      else: 
+        film_title = None
+      
+      
+      if film_title:
+            for franchise in franchise_titles:
+              if film_title == franchise:
+                if len(columns) > 2:
+                  if re.search(r'[0-9]{4}', columns[1].get_text()):
+                    franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
+                  else: 
+                    franchise_character = columns[1].find('a').get_text() if columns[1].find('a') else columns[1].get_text()
+                else: 
+                  franchise_character = ''
+              
+                franchise_info = [actor, film_title, current_year.group(0) if current_year else 'none', franchise_character]
+                marvel_data = open('data/marvel_data.tsv', 'a')
+                marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                marvel_data.close()
+                print(actor, film_title, current_year.group(0) if current_year else None, franchise_character)
+  #if (filter_empty_children(list(table_rows[0].children))[1] == 'Title'):
+  #  print('something')
+  #if table_rows and table_rows[0][1].get_text() == 'Title':
+  #  print('search_table: found a filmography table')
+    
+    
 def get_actor_info(actor_meta):
     # write to a different file instead:
     # e.g., data_file = open('data/actors_meta/master_actors_list.tsv', 'a')
@@ -142,82 +263,33 @@ def get_actor_info(actor_meta):
           #franchise_titles = [r'Game of Thrones', r'The Lord of the Rings', r'The Hobbit', r'James Bond', r'Star Wars', r'Star Trek', r'Marvel', r'X-Men', r'X2', r'Spider-Man', r'Harry Potter']
 
           filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films')
-          if filmography_span and filmography_span.parent.find_next_sibling().name == 'table':
-            #print(actor_name, filmography_span.get_text())
-
-            #something weird here with the code; grabbing other random tables? More specific in selections (id/class?)
-            films_table = filmography_span.parent.find_next_sibling('table')
-            #if next simbling NOT table, follow link? 
-            #print(filmography_span.parent.find_next_sibling().name)
-            if films_table:
-              films = films_table.find('tbody').findAll('tr')
-              #if actor_name == 'Andrew Garfield' or actor_name == 'Elizabeth Olsen':
-              #    print(films)
-              
-              max_cols_len = len(filter(not_equal_line_break, films[0]))
-              #print(max_cols_len)
-              current_year = None
-              
-              #reduce redudant code; add marvel tv shows (Netflix + other)
-              for film in films: 
-                
-                columns = filter(not_equal_line_break, list(film.children))
-                
-                current_year = re.search(r'[0-9]{4}', columns[0].get_text()) if re.search(r'[0-9]{4}', columns[0].get_text()) else current_year
-                
-                # Write some logic to deal with some columns that are shared across rows (same character or year for example)
-                if len(columns) > 1 and len(columns) == max_cols_len:
-                  if columns[1].find('a'):
-                    film_title = columns[1].find('a').get_text()
-                  else:
-                    film_title = columns[1].get_text()
-                elif len(columns) > 1 and len(columns) < max_cols_len:
-                  #print('wrong number of cols')
-                  #print(columns)
-                  if not re.search(r'[0-9]{4}', columns[0].get_text()):
-                    film_title = columns[0].get_text()
-                  else: 
-                    if columns[1].find('a'):
-                      film_title = columns[1].find('a').get_text()
-                    else:
-                      film_title = columns[1].get_text()
-                else: 
-                  film_title = None
-                
-                
-                if film_title:
-                      for franchise in franchise_titles:
-                        if film_title == franchise:
-                          if len(columns) > 2:
-                            franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
-                          else: 
-                            franchise_character = ''
-                        
-                          franchise_info = [actor_name, film_title, current_year.group(0) if current_year else 'none', franchise_character]
-                          marvel_data = open('data/marvel_data.tsv', 'a')
-                          marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
-                          marvel_data.close()
-
-                          print(actor_name, film_title, current_year.group(0) if current_year else None, franchise_character)
-              
-              #film_title = columns[1].get_text()
-              #print(film_title)
-                
+          if filmography_span:
+            
+            if filmography_span.parent.find_next_sibling().name == 'table':
+              films_table = filmography_span.parent.find_next_sibling('table')
+              search_table(actor_name, films_table)#, [])
+            
+            
+            elif filmography_span and filmography_span.parent.find_next_sibling().name != 'table': #if it's a div or ul
+              films_list = filmography_span.parent.find_next_sibling()
+              print(films_list)
+        
           elif soup.find('span', id='Filmography'):
             filmography_span = soup.find('span', id='Filmography')
             #print(actor_name, filmography_span.get_text())
-            if filmography_span.parent.find_next_sibling().name == 'div' and filmography_span.parent.find_next_sibling().find('a'):
+            if (filmography_span.parent.find_next_sibling().name == 'div' and filmography_span.parent.find_next_sibling().has_attr('role')
+               and filmography_span.parent.find_next_sibling().find('a')):
               filmography_url = filmography_span.parent.find_next_sibling().find('a').get('href')
-              if actor_name == 'Rosemary Harris':
-                print('Rosemary Harris')
-                print(filmography_url)
+              #if actor_name == 'Rosemary Harris':
+              #  print('Rosemary Harris')
+              #  print(filmography_url)
               #print(filmography_span.parent.find_next_sibling().find('a').get_text())
               #print(filmography_span.parent.find_next_sibling().find('a').get('href'))
               full_filmography_url = url_base + filmography_url
               html = requests.get(full_filmography_url).text
               soup = BeautifulSoup(html, 'html5lib')
               
-              filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films')
+              filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films') or soup.find('span', id='Filmography')
               if filmography_span and filmography_span.parent.find_next_sibling().name == 'table':
                 #print(actor_name, filmography_span.get_text())
     
@@ -226,68 +298,55 @@ def get_actor_info(actor_meta):
                 #if next simbling NOT table, follow link? 
                 #print(filmography_span.parent.find_next_sibling().name)
                 if films_table:
-                  films = films_table.find('tbody').findAll('tr')
-                  #if actor_name == 'Andrew Garfield' or actor_name == 'Elizabeth Olsen':
-                  #    print(films)
-                  
-                  max_cols_len = len(filter(not_equal_line_break, films[0]))
-                  #print(max_cols_len)
-                  current_year = None
-                  
-                  #reduce redudant code; add marvel tv shows (Netflix + other)
-                  for film in films: 
-                    
-                    columns = filter(not_equal_line_break, list(film.children))
-                    
-                    current_year = re.search(r'[0-9]{4}', columns[0].get_text()) if re.search(r'[0-9]{4}', columns[0].get_text()) else current_year
-                    
-                    # Write some logic to deal with some columns that are shared across rows (same character or year for example)
-                    if len(columns) > 1 and len(columns) == max_cols_len:
-                      if columns[1].find('a'):
-                        film_title = columns[1].find('a').get_text()
-                      else:
-                        film_title = columns[1].get_text()
-                    elif len(columns) > 1 and len(columns) < max_cols_len:
-                      #print('wrong number of cols')
-                      #print(columns)
-                      if not re.search(r'[0-9]{4}', columns[0].get_text()):
-                        film_title = columns[0].get_text()
-                      else: 
-                        if columns[1].find('a'):
-                          film_title = columns[1].find('a').get_text()
-                        else:
-                          film_title = columns[1].get_text()
-                    else: 
-                      film_title = None
-                    
-                    
-                    if film_title:
-                      for franchise in franchise_titles:
-                        if film_title == franchise:
-                          if len(columns) > 2:
-                            franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
-                          else: 
-                            franchise_character = ''
-                          franchise_info = [actor_name, film_title, current_year.group(0) if current_year else 'none', franchise_character]
-                          marvel_data = open('data/marvel_data.tsv', 'a')
-                          marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
-                          marvel_data.close()
-                          print(actor_name, film_title, current_year.group(0) if current_year else None, franchise_character)
+                  search_table(actor_name, films_table)
+            
+            elif filmography_span.parent.find_next_sibling().name == 'div' or filmography_span.parent.find_next_sibling().name == 'ul':
+              films_list = filmography_span.parent.find_next_sibling()
+              all_films = films_list.findAll('li')
+              for each_film_listing in all_films:
+                print(each_film_listing.get_text())
+                pattern = re.compile(r'([^\(\)]+)\s+\(([0-9]{4})\)\s+as\s(.*)')
+                if re.search(pattern, each_film_listing.get_text()): 
+                  print(re.search(pattern, each_film_listing.get_text()).group(0))
+                  print(re.search(pattern, each_film_listing.get_text()).group(1))
+                  print(re.search(pattern, each_film_listing.get_text()).group(2))
+                  print(re.search(pattern, each_film_listing.get_text()).group(3))
+
+
               
-              
+          #look for tables
             
           else: 
-            #match the entire page? 
-            #go through the whole page and match for film title 
-            print(actor_name, 'Need to Manually Search For Films/Odd Wiki Format')
-            for franchise in franchise_titles:
-              franchise_re = re.compile(r'\s%s\s' % franchise)
-              if re.search(franchise_re, soup.get_text()):
-                franchise_info = [actor_name, re.search(franchise_re, soup.get_text()).group(0)]
-                marvel_data = open('data/marvel_data.tsv', 'a')
-                marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
-                marvel_data.close()
-                print(actor_name, re.search(franchise_re, soup.get_text()).group(0))
+            filmography_links = soup.findAll('div', {'role': 'note'})
+            for each_link in filmography_links:
+              search_terms = r'filmography|film|stage|screen|performances|credits|roles'
+              if each_link.find('a') and re.search(search_terms, each_link.get_text(), re.IGNORECASE):
+                link_url = each_link.find('a').get('href')
+                print(actor_name + ': ' + link_url)
+                full_filmography_url = url_base + link_url
+                print(full_filmography_url)
+                html = requests.get(full_filmography_url).text
+                soup = BeautifulSoup(html, 'html5lib')
+                filmography_span = soup.find('span', id='Film') or soup.find('span', id='Films') or soup.find('span', id='Filmography')
+                if filmography_span and filmography_span.parent.find_next_sibling().name == 'table':
+                  #print(actor_name, filmography_span.get_text())
+      
+                  #something weird here with the code; grabbing other random tables? More specific in selections (id/class?)
+                  films_table = filmography_span.parent.find_next_sibling('table')
+                  #if next simbling NOT table, follow link? 
+                  #print(filmography_span.parent.find_next_sibling().name)
+                  if films_table:
+                    search_table(actor_name, films_table)
+                else: #search .wikitables
+                  all_tables = soup.findAll('table', {'class': 'wikitable'})
+                  if all_tables:
+                    for each_table in all_tables:
+                      search_table(actor_name, each_table)
+            
+            all_tables = soup.findAll('table', {'class': 'wikitable'})
+            if all_tables:
+              for each_table in all_tables:
+                search_table(actor_name, each_table)
             
           
           
@@ -362,12 +421,18 @@ def get_actor_info(actor_meta):
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
 
+with open('data/master_actors_list.tsv') as actors:
+  actors = unicodecsv.reader(actors, delimiter='\t')
+  for each_actor in actors:
+    if each_actor[0] == 'Rosemary Harris':
+      print(each_actor[0])
+      get_actor_info(each_actor)
 #with open('data/master_actors_list.tsv') as actors:
 #  actors = unicodecsv.reader(actors, delimiter='\t')
 #  for each_actor in actors:
 #    #print(each_actor[0])
 #    get_actor_info(each_actor)
-    
+'''
 with open('data/master_actors_list.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
@@ -377,3 +442,4 @@ with open('data/master_actors_list.tsv') as actors:
     records = p.map(get_actor_info, actors)
     p.terminate()
     p.join()
+'''
