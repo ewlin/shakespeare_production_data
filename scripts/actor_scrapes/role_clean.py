@@ -10,9 +10,8 @@ actors = glob.glob('data/*.tsv')
 print actors
 
 role_patterns = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
-                'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool',
-                'Prospero', 'Ariel', 'Miranda', 'Cleopatra', 'Antony',
-                'Richard', 'Julius Caesar', 'Brutus', 'Emilia']
+                'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Shylock',
+                'Prospero', 'Cleopatra', 'Richard', 'Rosalind', 'Portia']
 
 characters = {}
 

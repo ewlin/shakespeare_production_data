@@ -33,11 +33,11 @@ February 17, 1925
 franchise_titles = []
 
 # Need to add alternative names and aliases; since not catching all instances 
-marvel_movies_meta = open('data/franchise_list.tsv') 
-marvel_movies = unicodecsv.reader(marvel_movies_meta, delimiter='\t')
+star_wars_movies_meta = open('data/star_wars_franchise_list.tsv') 
+star_wars_movies = unicodecsv.reader(star_wars_movies_meta, delimiter='\t')
 
-for marvel_film in marvel_movies:
-  franchise_titles.append(marvel_film[2])
+for star_wars_film in star_wars_movies:
+  franchise_titles.append(star_wars_film[2])
 
 
 print(franchise_titles)
@@ -99,6 +99,7 @@ def search_table(actor, table):#, titles_to_search):
   column_headers = filter_empty_children(list(films[0].children))
   max_column_len = len(column_headers)
   
+  
   if max_column_len < 2:
     #print(actor + ': has weird filmography table')
     return
@@ -135,7 +136,7 @@ def search_table(actor, table):#, titles_to_search):
       
       if film_title:
             for franchise in franchise_titles:
-              if film_title == franchise:
+              if re.search(franchise, film_title):
                 if len(columns) > 2:
                   if re.search(r'[0-9]{4}', columns[0].get_text()):
                     franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
@@ -145,9 +146,9 @@ def search_table(actor, table):#, titles_to_search):
                   franchise_character = ''
               
                 franchise_info = [actor, film_title, current_year.group(0) if current_year else 'none', franchise_character]
-                marvel_data = open('data/marvel_data.tsv', 'a')
-                marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
-                marvel_data.close()
+                star_wars_data = open('data/star_wars_data.tsv', 'a')
+                star_wars_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                star_wars_data.close()
                 print(actor, film_title, current_year.group(0) if current_year else None, franchise_character)
               
   elif column_headers[0].get_text() == 'Title' or column_headers[0].get_text() == 'Film':
@@ -184,7 +185,7 @@ def search_table(actor, table):#, titles_to_search):
       
       if film_title:
             for franchise in franchise_titles:
-              if film_title == franchise:
+              if re.search(franchise, film_title):
                 if len(columns) > 2:
                   if re.search(r'[0-9]{4}', columns[1].get_text()):
                     franchise_character = columns[2].find('a').get_text() if columns[2].find('a') else columns[2].get_text()
@@ -194,9 +195,9 @@ def search_table(actor, table):#, titles_to_search):
                   franchise_character = ''
               
                 franchise_info = [actor, film_title, current_year.group(0) if current_year else 'none', franchise_character]
-                marvel_data = open('data/marvel_data.tsv', 'a')
-                marvel_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
-                marvel_data.close()
+                star_wars_data = open('data/star_wars_data.tsv', 'a')
+                star_wars_data.write('\t'.join(franchise_info).encode('utf-8') + '\n')
+                star_wars_data.close()
                 print(actor, film_title, current_year.group(0) if current_year else None, franchise_character)
   #if (filter_empty_children(list(table_rows[0].children))[1] == 'Title'):
   #  print('something')
@@ -315,13 +316,12 @@ def get_actor_info(actor_meta):
                   for each_franchise in franchise_titles:
                     if re.search(pattern, each_film_listing.get_text()).group(1) == each_franchise:
                       print(each_film_listing.get_text())
-            
+
             else:
               films_table = filmography_span.parent.find_next_sibling('table')
               print(films_table)
               if films_table:
                 search_table(actor_name, films_table)#, [])
-              
           #look for tables
             
           else: 
@@ -432,7 +432,7 @@ def get_actor_info(actor_meta):
 #with open('data/master_actors_list.tsv') as actors:
 #  actors = unicodecsv.reader(actors, delimiter='\t')
 #  for each_actor in actors:
-#    if each_actor[0] == 'Rosemary Harris':
+#    if each_actor[0] == 'Ian Mcdiarmid':
 #      print(each_actor[0])
 #      get_actor_info(each_actor)
 #with open('data/master_actors_list.tsv') as actors:
