@@ -6,7 +6,7 @@ import unicodecsv
 from datetime import datetime
 import dateutil.parser
 
-actors = glob.glob('data/*.tsv')
+actors = glob.glob('data/production_data/*.tsv')
 print actors
 
 role_patterns = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
