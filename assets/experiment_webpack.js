@@ -7,7 +7,7 @@ import { queue } from 'd3-queue';
 import { csv, tsv, json } from 'd3-request';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
-import { variance, quantile, median } from 'd3-array';
+import { variance, quantile, median, max, min } from 'd3-array';
 import { select, selectAll } from 'd3-selection';
 import { line } from 'd3-shape';
 import { easeLinear, easeQuadInOut } from 'd3-ease';
@@ -782,9 +782,7 @@ queue()
                   .attr('stroke-opacity', (d) => {
                       d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
                   });
-                    //.attr('stroke', (d) => {
-                    //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none';
-                    //});
+                    
 
                 for (let eachCharacter in interquartiles) {
                     const gender = characterAges[eachCharacter + 'Ages'].gender;
@@ -1377,8 +1375,10 @@ queue()
         */
         const eventsQueue = [
           [function() {
+
             //stop shakespeare interval animation timer
             animateStop = true; 
+
             const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             let mainContent = select('#main-content');
@@ -1592,8 +1592,12 @@ queue()
               .attr('stroke', '#b4b8c0')
               .attr('stroke-width', '1px');
               
+            select('.svg-main').style('display', 'none');
+
           }, 'From ages 17 to 22..'],
           [function() {
+            select('.svg-main').style('display', 'block');
+            
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 112;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             animateDots(17, 23)(); 
@@ -1684,24 +1688,38 @@ queue()
             let windowHeight = window.innerHeight; 
             let mainContent = select('#main-content');
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'>What 1000+ productions of 10 Shakespearean plays between 1900 and 2018 tell us about age, gender, and race in the casting of actors</p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">July 2018</p></div></header>`);
+            select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
             let test = window.innerHeight/2 - height;
             console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             animateShakespeare(shakespeareOutline);
             
+            console.log('max and min')
+            console.log(max(shakespeareOutline, d => parseInt(d.y)), min(shakespeareOutline, d => parseInt(d.y)))
             function animateShakespeare(data) {
 
               let svg = select('.shakespeare-dots');
               const colors = Object.keys(characterAges).map(char => characterAges[char].color); 
               const colorsLength = colors.length; 
+              const maxY = max(shakespeareOutline, d => parseInt(d.y));
+              const minY = min(shakespeareOutline, d => parseInt(d.y));
+              const maxX = max(shakespeareOutline, d => parseInt(d.x));
+              const minX = min(shakespeareOutline, d => parseInt(d.x));
+
+              const shakespeareFigureHeight = maxY - minY; 
+              const shakespeareFigureWidth = maxX - minX; 
+
+              const top = (windowHeight - shakespeareFigureHeight)/2;
+              const shiftRight = (right - left - shakespeareFigureWidth)/2;
+              
               
               svg.selectAll('dots').data(data).enter()
                 .append('circle')
                 .attr('r', '4px')
-                .attr('cx', d => parseInt(d.x))
-                .attr('cy', d => parseInt(d.y))
+                .attr('cx', d => parseInt(d.x) + shiftRight - minX)
+                .attr('cy', d => parseInt(d.y) + top)
                 .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
                 .attr('fill-opacity', .4);
   
@@ -1735,6 +1753,11 @@ queue()
             }
             console.log(state);
             
+          } else if (e.code === 'ArrowLeft') {
+            if (state > 0) {
+              eventsQueue[state - 2][0](); 
+              state -= 1;
+            }
           }
         });
         //select(document).on('keypress', function nextStep() {
