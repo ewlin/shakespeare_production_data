@@ -840,9 +840,9 @@ queue()
                         dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[1]]
                     }
 
-
-                    //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
-                    svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
+                    
+                    if (directionForward) {
+                      svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange)
                         .transition()
                         //how does min Age play into here
                         .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
@@ -851,20 +851,33 @@ queue()
                         .attr('d', interquartileLine);
 
 
-                    svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty)
+                      svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty)
                         .transition()
                         .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
                         .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
                         .ease(easeLinear)
                         .attr('d', interquartileLine);
+                    } else {
+                      svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange).attr('d', interquartileLine);
+                      svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty).attr('d', interquartileLine);
+
+                    }
+                    
+                    //let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
+                    
 
 
                     let initialLabel = svg.select(`#${eachCharacter}meta`).select('.character-label-initial').datum(dataRange);
 
-                    initialLabel.transition()
-                                .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
-                                .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
-                                .attr('opacity', d => (d[0] == d[1] || maxAge >= fullCharacterAgesRange[3]) ? 0 : 1);
+                    if (directionForward) {
+                      initialLabel.transition()
+                        .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
+                        .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
+                        .attr('opacity', d => (d[0] == d[1] || maxAge >= fullCharacterAgesRange[3]) ? 0 : 1);
+                    } else {
+                      initialLabel.attr('opacity', d => (d[0] == d[1] || maxAge >= fullCharacterAgesRange[3]) ? 0 : 1);
+                    }
+                    
 
 
                     const arrow = svg.select(`#${eachCharacter}meta`).select('.arrow').datum(dataRange);
@@ -873,7 +886,8 @@ queue()
 
                     //if not in range yet, don't show arrow...
 
-                    arrow.transition()
+                    if (directionForward) {
+                      arrow.transition()
                         .duration(d => d[0] >= minAge ? (d[1] - d[0]) * delayFactor : (d[1] - minAge) * delayFactor)
                         .delay(d => d[0] >= minAge ? (d[0] - minAge) * delayFactor : 0)
                         .ease(easeLinear)
@@ -944,7 +958,7 @@ queue()
                                 .attr('x', d => scaleX(d[1]) + 4)
                                 .transition().duration(400)
                                 .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1)
-                                .attr('x', d => scaleX(d[1]))
+                                .attr('x', d => scaleX(d[1]));
 
 
                             /*
@@ -961,8 +975,26 @@ queue()
                                 //.attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
 
                         });
+                    } else {
+                      arrow.transition(0)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+                      .attr('x', d => scaleX(d[1]))
+                      .attr('opacity', d => d[0] == d[1] ? 0 : 1)
+                      //svg.select(`#${eachCharacter}meta`)
+                      //          .select('.character-label-initial')
+                      //          .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
 
+                      charMeta
+                          .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? .14 : 1);
+                      
+                      selectAll(`.${eachCharacter}-label-text`).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
+                      select(`#${eachCharacter}-label-circle`)
+                        .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
+
+                      
                     }
+                    
+
+                  }
             }
         }
 
@@ -1786,6 +1818,8 @@ queue()
             if (state > 0) {
               eventsQueue[state - 2][0](false); 
               state -= 1;
+            } else {
+              loadTitlesSlide();
             }
           }
         });
