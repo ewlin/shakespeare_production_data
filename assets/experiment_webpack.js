@@ -976,7 +976,7 @@ queue()
 
                         });
                     } else {
-                      arrow.transition(0)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+                      arrow.interrupt().transition(100)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                       .attr('x', d => scaleX(d[1]))
                       .attr('opacity', d => d[0] == d[1] ? 0 : 1)
                       //svg.select(`#${eachCharacter}meta`)

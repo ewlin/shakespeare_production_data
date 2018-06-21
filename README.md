@@ -1,14 +1,16 @@
-# Shakespeare Productions Dataset (Todos updated on: 5/24/18)
+# Shakespeare Productions Dataset (Todos updated on: 6/21/18)
 
 # Latest UI/Article To-dos: 
 
 * *Use male/female unicode symbols for cross-gender casting (added 5/24/18 1:42pm)*
 
 
-* Franchise/Actor Career/Shakespeare chart
+* Franchise/Actor Career/Shakespeare chart (Have data for Marvel + Star Wars prelim; need to add Marvel TV shows)
 * Prose for Introduction + Directions for Navigating Piece
 * Design + Add Headings to each panel indicate the focus (e.g., Age range in question, and Sample Time Range)
-* Backwards in article code 
+* Backwards in article code (started; mostly done 6/21)
+* Need to add initial labels dta rebind with transitions() function
+
 * Brush/Slider update/redesign
 * Second legend including minority and cross-gender actor indicators 
 * Legends should be able to be opened and closed as a modal on all panels with the chart showing
@@ -16,7 +18,7 @@
 * Refactor code to make more modular and reusable (print out to better read/see/annotate)
 
 
-# Latest Data to-dos (May Data updates)
+# Latest Data to-dos (June Data updates)
 
 
 
