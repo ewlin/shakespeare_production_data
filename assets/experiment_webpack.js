@@ -353,7 +353,8 @@ queue()
                 race: a['race'], 
                 opening: a['opening_date'],
                 actorGender: a['gender'], 
-                actor: a['actor']
+                actor: a['actor'], 
+                yCoord: Math.random()
               }); //pushing an integer; will be an object once refactored
               //actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
             });
@@ -382,7 +383,7 @@ queue()
 
 
     function scaleGender(range, numOfBands) {
-      return function(index, randomFlag) {
+      return function(index, yCoord, randomFlag) {
         //calculate band start
         //gender band Height
         let fullBandStart = range[0];
@@ -390,15 +391,17 @@ queue()
         let bandHeight = fullHeight/numOfBands;
         let bandStart = index * ((fullHeight - bandHeight)/(numOfBands - 1)) + fullBandStart;
         let bandEnd = bandStart + bandHeight;
+        console.log(bandEnd, bandStart, yCoord)
         if (!randomFlag) {
-          return ((bandEnd - bandStart) * Math.random()) + bandStart;
+          //return ((bandEnd - bandStart) * Math.random()) + bandStart;
+          return ((bandEnd - bandStart) * yCoord) + bandStart;
           //If we want points to sit on the midline...
         } else {
           return ((bandEnd - bandStart) * 0.5) + bandStart;
         }
       }
     }
-
+    console.log('test: ' + male(3, .056))
     
     //New Create role dots (with groups; see function processAllPointsAlt3)   
     svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
@@ -416,7 +419,7 @@ queue()
               : 'role-dots tail-dot';
           })
           .attr('cx', d => scaleX(d.age))
-          .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+          .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
           .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
           .attr('fill', d => roleData.color) //== 'male' ? 'steelblue' : '#fc5863')
           //.attr('stroke', d => roleData.color)
@@ -788,7 +791,7 @@ queue()
                     .attr('fill-opacity', d => {
                         if (maxAge >= interquartiles[d.role][3]) {
                           return .1;
-                        } else if (d.age <= maxAge && d.age >= minAge) {
+                        } else if (d.age <= maxAge) { //} && d.age >= minAge) {
                           if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
                               console.log('good');
                               return .95;
