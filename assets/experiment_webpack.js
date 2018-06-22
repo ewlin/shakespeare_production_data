@@ -784,7 +784,7 @@ queue()
                         d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
                     });
                 } else {
-                  selectAll('.role-dots')
+                  selectAll('.role-dots').interrupt().transition(0)
                     .attr('fill-opacity', d => {
                         if (maxAge >= interquartiles[d.role][3]) {
                           return .1;
@@ -858,8 +858,8 @@ queue()
                         .ease(easeLinear)
                         .attr('d', interquartileLine);
                     } else {
-                      svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').datum(dataRange).attr('d', interquartileLine);
-                      svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').datum(dataRangeMiddleFifty).attr('d', interquartileLine);
+                      svg.select(`#${eachCharacter}meta`).select('.thin-line-quartile').interrupt().datum(dataRange).attr('d', interquartileLine);
+                      svg.select(`#${eachCharacter}meta`).select('.thick-line-quartile').interrupt().datum(dataRangeMiddleFifty).attr('d', interquartileLine);
 
                     }
                     
@@ -978,7 +978,7 @@ queue()
                     } else {
                       arrow.interrupt().transition(100)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                       .attr('x', d => scaleX(d[1]))
-                      .attr('opacity', d => d[0] == d[1] ? 0 : 1)
+                      .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                       //svg.select(`#${eachCharacter}meta`)
                       //          .select('.character-label-initial')
                       //          .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
@@ -1651,11 +1651,11 @@ queue()
               .attr('stroke', '#b4b8c0')
               .attr('stroke-width', '1px');
               
-            select('.svg-main').style('display', 'none');
+            select('.svg-main').style('opacity', 0);
 
           }, 'From ages 17 to 22..'],
           [function(directionForward) {
-            select('.svg-main').style('display', 'block');
+            select('.svg-main').style('opacity', 1);
             
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 112;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
@@ -1669,20 +1669,22 @@ queue()
             let test = window.innerHeight/2 - height;
             console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
-            mainContent.transition().delay(110 * (23-17)).style('opacity', 1); 
+            mainContent.transition().delay(500).style('opacity', 1); 
           }, 'Up through 30...'],
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 112;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
             animateDots(24, 30, directionForward)(); 
             let mainContent = select('#main-content');
+            mainContent.style('opacity', 0); 
+
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             mainContent.html('<h2>From age 23 to 30 <span>(performances since 1980)</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of Romeo or Juliet. By the time you’re 30, you’d be close to aging out of our favorite tragic young lovers. At 30, you’d be older than 75+% of the actors who\'ve played these roles in our dataset.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
             let test = window.innerHeight/2 - height;
             console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
-
+            mainContent.transition(0).delay(300).style('opacity', 1); 
           }, 'From 31 to 45'],
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 149;
@@ -1749,7 +1751,7 @@ queue()
             let windowHeight = window.innerHeight; 
             let mainContent = select('#main-content');
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'>What 1000+ productions of 10 Shakespearean plays between 1900 and 2018 tell us about age, gender, and race in the casting of actors</p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">July 2018</p></div></header>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'>What we can learn about how age, gender, and race affect casting from 1000+ productions of 10 Shakespearean plays between 1900 and 2018</p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">July 2018</p></div></header>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
             let test = window.innerHeight/2 - height;
@@ -1815,12 +1817,15 @@ queue()
             console.log(state);
             
           } else if (e.code === 'ArrowLeft') {
-            if (state > 0) {
+            if (state > 1) {
               eventsQueue[state - 2][0](false); 
-              state -= 1;
             } else {
               loadTitlesSlide();
             }
+            if (state > 0) {
+              state -= 1;
+            }
+
           }
         });
         //select(document).on('keypress', function nextStep() {

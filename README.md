@@ -17,11 +17,16 @@
 
 * Refactor code to make more modular and reusable (print out to better read/see/annotate)
 
+* Voronoi for dots + tooltip (need to store random points as data before creating voronoi)
+
+* Page resizing + mobile stuff 
 
 # Latest Data to-dos (June Data updates)
 
 
+# Prose TODOs
 
+* Methodology 
 ------------------------
 
 
