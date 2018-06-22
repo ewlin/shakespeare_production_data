@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 
+
 # rewrite to test for categories (if no birthday found, try Name then _(actor) )
 
 import requests
 import html5lib
 from bs4 import BeautifulSoup
-from multiprocessing import Pool
+from multiprocessing import Pool, Manager
 import re
 import unicodecsv
 from datetime import datetime
+from operator import itemgetter
 
+manager = Manager()
+
+temp_arr = manager.list()
+url_base = 'https://en.wikipedia.org/wiki/'
 
 
 '''
@@ -42,26 +48,23 @@ def stringify_date(date_obj):
     except AttributeError:
         return 'not a date'
 
-url_base = 'https://en.wikipedia.org/wiki/'
 
 def get_actor_info(actor_meta):
     # write to a different file instead:
     # e.g., data_file = open('data/actors_meta/master_actors_list.tsv', 'a')
 
-    if actor_meta[1] not in ['Iago']:
-        return
-
-    data_file = open('data/ages/iago_ages.tsv', 'a')
+    #data_file = open('data/ages/othello_ages.tsv', 'a')
 
     actor_info = '\t'.join(actor_meta)
 
     actor_gender = 'unknown'
+    is_actor = ''
     actor_ethnicity_cat = []
     actor_ethnicity = []
 
 
     if len(actor_meta) > 1:
-        actor_name = actor_meta[2]
+        actor_name = actor_meta[2].strip('* ').title()
         full_wiki_url = url_base + '_'.join(actor_name.split(' '))
         html = requests.get(full_wiki_url).text
         soup = BeautifulSoup(html, 'html5lib')
@@ -71,6 +74,8 @@ def get_actor_info(actor_meta):
             categories = soup.find('div', {'id': 'mw-normal-catlinks'}).find('ul').findAll('li')
             for each_category in categories:
                 if re.search('disambiguation', each_category.get_text()):
+                    # Fix logic here; if hits disambiguation page, needs to overwrite/rewrite 'categories'
+
                     new_url = url_base + '_'.join(actor_name.split(' ')) + '_(actor)'
                     print(new_url)
                     html = requests.get(new_url).text
@@ -80,6 +85,7 @@ def get_actor_info(actor_meta):
 
         #REDO logic here. Use a tuple of patterns and do a try/except(?) of matching different patterns
         if not person_not_found:
+            categories = soup.find('div', {'id': 'mw-normal-catlinks'}).find('ul').findAll('li')
             # Fun times with categories
             for each_category in categories:
                 category = each_category.get_text()
@@ -89,7 +95,7 @@ def get_actor_info(actor_meta):
                 if re.search(r'(Hispanic|Latin(a|o))', category):
                     actor_ethnicity.append('Latino')
 
-                if re.search(r'Asian)', category):
+                if re.search(r'Asian', category):
                     actor_ethnicity.append('Asian')
 
                 if re.search(r'of\s(.+)\sdescent', category):
@@ -100,6 +106,8 @@ def get_actor_info(actor_meta):
                 elif re.search(r'(M|m)ale', category):
                     actor_gender = 'male'
 
+                if re.search(r'([A|a]ctor)|([A|a]ctress)', category):
+                    is_actor = 'yes'
 
             #birth_date = re.search(r'(\d+\s\w+\s\d\d\d\d|\w+\s\d+\,\s\d\d\d\d)', soup.get_text())
             #better birthday search: looks for (born 12 October 1987) or (born January 23, 1980) or (born 1970)
@@ -115,25 +123,58 @@ def get_actor_info(actor_meta):
                     actor_info = formatted_bday + '\t' + actor_info
                 else:
                     actor_info = 'no birthday on article' + '\t' + actor_info
+
+            ethnicity = ','.join(actor_ethnicity) if len(actor_ethnicity) else 'none'
+            ethnic_cat = ','.join(actor_ethnicity_cat) if len(actor_ethnicity_cat) else 'none'
+            is_actor = is_actor if is_actor else 'flagged'
+
         else:
             actor_info = 'person not found on wiki' + '\t' + actor_info
+            ethnicity = 'unknown'
+            ethnic_cat = 'unknown'
 
-        actor_info = actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity)
-        data_file.write(actor_info.encode('utf-8') + '\n')
-        print(actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity) + '\t' + ','.join(actor_ethnicity_cat))
+        actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor + '\t' + ','.join(actor_ethnicity_cat)
+        #print(actor_info)
+        #print(actor_info.split('\t'))
+        temp_arr.append(actor_info.split('\t'))
+        #data_file.write(actor_info.encode('utf-8') + '\n')
+        #data_file.close()
+        #print(actor_info + '\t' + actor_gender + '\t' + ','.join(actor_ethnicity) + '\t' + ','.join(actor_ethnicity_cat))
 
 
 #write logic so don't rescrape data already found
 #use wiki to scrape for gender (if first paragraph uses 'she' or 'her')
 #scrape for ethnicity?
+'''
 
-with open('data/temp/Iago.tsv') as actors:
+with open('data/cleaned_roles/Romeo.tsv') as actors:
+    actors = unicodecsv.reader(actors, delimiter='\t')
+    for each_actor in actors:
+        get_actor_info(each_actor)
+    print(temp_arr)
+
+'''
+with open('data/temp/Prospero.tsv') as actors:
     actors = unicodecsv.reader(actors, delimiter='\t')
 
-    #for actor in actors:
-        #get_actor_info(actor)
-
+    # need to share state between processes for this to work
+    # https://docs.python.org/3/library/multiprocessing.html#sharing-state-between-processes
     p = Pool(10)
     records = p.map(get_actor_info, actors)
     p.terminate()
     p.join()
+
+    print(len(temp_arr))
+
+    for each_item in temp_arr:
+        print(len(each_item))
+        print(each_item)
+    role_records_sorted = sorted(temp_arr, key=itemgetter(9,10))
+
+    print(role_records_sorted)
+    for each_actor in role_records_sorted:
+        data_file = open('data/ages-test-may-2018/prospero_ages.tsv', 'a')
+        each_actor[3] = each_actor[3].strip('* ').title()
+        actor_info = '\t'.join(each_actor)
+        data_file.write(actor_info.encode('utf-8') + '\n')
+        data_file.close()

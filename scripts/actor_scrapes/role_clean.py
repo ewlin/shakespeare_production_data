@@ -6,12 +6,12 @@ import unicodecsv
 from datetime import datetime
 import dateutil.parser
 
-actors = glob.glob('data/*.tsv')
+actors = glob.glob('data/production_data/*.tsv')
 print actors
 
 role_patterns = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'Lear',
-                'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool',
-                'Prospero', 'Ariel', 'Miranda', 'Cleopatra', 'Antony']
+                'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Shylock',
+                'Prospero', 'Cleopatra', 'Richard', 'Rosalind', 'Portia']
 
 characters = {}
 
@@ -46,6 +46,7 @@ for each_pattern in role_patterns:
         with open(each_file) as productions:
             roles = unicodecsv.reader(productions, delimiter='\t')
             for each_role in roles:
+                print(each_role)
                 prod_date = normalize_date(each_role[0])
                 role = each_role[1]
                 actor = each_role[2]
@@ -78,9 +79,9 @@ for each_pattern in role_patterns:
 for each_character, performances in characters.iteritems():
     cleaned_name = '_'.join(each_character.split(' '))
     role_file = open('data/temp/' + cleaned_name + '.tsv', 'a')
-    sorted_by_perf_date = sorted(performances, key=lambda char: char[0])
+    #sorted_by_perf_date = sorted(performances, key=lambda char: char[0])
     #print(sorted_by_perf_date)
-    for each_performance in sorted_by_perf_date:
+    for each_performance in performances:
         role = '\t'.join(each_performance).encode('utf-8') + '\n'
         role_file.write(role)
     role_file.close()

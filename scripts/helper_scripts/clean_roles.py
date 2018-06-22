@@ -26,7 +26,10 @@ roles = {
     'Cleopatra': ['Cleopatra'],
     'Ariel': ['Ariel'],
     'Miranda': ['Miranda'],
-    'Prospero': ['Prospero']
+    'Prospero': ['Prospero'],
+    'Richard': ['Richard III'],
+    'Julius Caesar': ['Julius Caesar'],
+    'Brutus': ['Marcus Brutus', 'Brutus']
 }
 # glob all the files in temp
 # check if the role matches these exactly. If not, throw them into a temp file to clean manually
@@ -40,7 +43,7 @@ temp_to_clean = []
 for each_actors_list in actors_meta:
     role_file = open(each_actors_list[0])
     role = each_actors_list[1]
-    role_formatted_for_file = ' '.join(role.split('_'))
+    role_formatted_for_file = '_'.join(role.split(' '))
     reader = unicodecsv.reader(role_file, delimiter='\t')
     for actor in reader:
         final_file = open('data/cleaned_roles/' + role_formatted_for_file + '.tsv', 'a')
@@ -55,7 +58,7 @@ print(temp_to_clean)
 
 sorted_by_role_to_clean = sorted(temp_to_clean, key=lambda char: char[1])
 for each_role in sorted_by_role_to_clean:
-    file_to_clean = open('data/temp_to_clean.tsv', 'a')
+    file_to_clean = open('data/temporary_files/temp_to_clean.tsv', 'a')
     file_to_clean.write('\t'.join(each_role).encode('utf8') + '\n')
 
 

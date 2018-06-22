@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest|Antony\s(and|\&)\sCleopatra')
+plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|'
+                            r'The\sTempest|Antony\s(and|\&)\sCleopatra|Richard\sIII|Julius\sCaesar')
 
 landing_url = 'http://www.shakespearetheatre.org/about/history-and-awards/past-production/'
 

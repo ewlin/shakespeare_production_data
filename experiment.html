@@ -1,0 +1,370 @@
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Tajawal:200,300,400,500|Work+Sans:300,400|Spectral:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rufina:400,700|Cardo:400,400i,700|Lato:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lustria" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,700" rel="stylesheet">
+
+    <style>
+      #stripe path {
+        stroke-width: 2px;
+        stroke: white;
+      }
+
+		  body {
+        background: #1a1b1e;
+        height: 100%; 
+        width: 100%;
+        position: fixed;
+		  }
+      .svg-container {
+        position: relative;
+        max-width: 1100px;
+        margin: auto;
+        /*padding-top: 25px;*/
+      }
+
+      div {
+        padding: 0; 
+        margin: 0;
+      }
+        svg {
+            /**border: 1px solid white;**/
+        }
+
+        text {
+            font-size: 12px;
+            font-family: 'Tajawal';
+            letter-spacing: 1px;
+            font-weight: 200;
+        }
+      
+      text.role-text-dots {
+        font-family: 'Arial';
+        font-size: 22px;
+      }
+
+        tspan.note-indicator {
+            font-family: 'Work Sans';
+        }
+
+        text.character-label-initial {
+            font-size: 11.5px;
+        }
+
+        text.label-text {
+            font-size: 10.5px;
+        }
+
+        .bracket-text {
+            font-size: 14px;
+            font-weight: 200;
+        }
+
+        .interquartiles-labels text {
+            font-size: 13px;
+        }
+
+        
+        .sample-axis path, .sample-axis text, .sample-axis .tick line {
+            stroke: #a6abb5;
+        }
+
+        .axis path, .axis text, .axis .tick line {
+            stroke: #a6abb5;
+        }
+			
+			.axis text {
+				font-size: 13px;
+			}
+
+        .button-container {
+            display: inline-block;
+        }
+
+
+        .svg-container header, .svg-container svg {
+            display: inline-block;
+            vertical-align: top;
+
+        }
+
+        .svg-container header {
+            width: 450px;
+            height: 630px;
+
+        }
+
+        /**
+        .svg-container div img {
+            width: 50px;
+            vertical-align: middle;
+        }
+
+
+
+        .svg-container div h1 {
+            display: block;
+            font-family: 'Work Sans';
+            font-weight: 700;
+            color: #5ffcc0;
+            font-size: 70px;
+            line-height: 80px;
+            text-align: center;
+        }
+
+        .byline, .pub-date {
+            font-family: 'Lato';
+            font-weight: 400;
+            margin: auto;
+            text-align: center;
+            font-size: 1em;
+            color: #5ffcef;
+        }
+
+        .byline {
+            margin-top: 20px;
+        }
+
+        .byline span {
+            font-weight: 700;
+        }
+        **/
+    
+
+      .title, .byline, .pub-date, .subtitles {
+        padding: 3px; 
+        background: rgba(26,27,30,.6);
+      }
+      
+      .byline, .pub-date {
+          font-family: 'Lato';
+          font-weight: 400;
+          margin: auto;
+          text-align: center;
+          font-size: 1em;
+          color: #5ffcef;
+      }
+
+      .byline {
+          margin-top: 20px;
+      }
+      .byline span {
+          font-weight: 700;
+      }
+
+        #main-content .titles-card a.logo span {
+            text-decoration: none;
+            border-bottom: none;
+            font-weight: 400;
+            font-family: 'Spectral';
+            text-align: center;
+            color: white;
+        }
+      
+      .subtitles {
+        text-align: center;
+        width: 700px;
+        margin: auto;
+        line-height: 20px;
+        font-family: 'Tajawal';
+      }
+
+        .byline a {
+            text-decoration: none;
+            color: #5ffcef;
+            border-bottom: 2px solid #5ffcef;
+        }
+
+        .byline img {
+            width: 55px;
+			height: 55px;
+            margin-left: 10px;
+            border-radius: 50%;
+            border: solid 2px #ff645f;
+			vertical-align: middle;
+        }
+
+        a {
+				/**color: var(--links-color);**/
+                text-decoration: none;
+                border-bottom: 2px solid #6E5D5D;
+			}
+
+      a.logo {
+        border-bottom: none;
+        font-weight: 400;
+        font-family: 'Spectral';
+      }
+
+
+		  header {
+				margin: 0 auto 3em;
+				text-align: center;
+				padding: 20px 0;
+			}
+
+			header img {
+				width: 50px;
+				vertical-align: middle;
+			}
+
+			header a span {
+				padding-left: 12px;
+				font-size: 1.5em;
+			}
+
+            .title {
+                padding: 0 0;
+                font-size: 3.9em;
+                /**margin: 0 auto 25px;**/
+                margin-top: 1em;
+                margin-bottom: .3em;
+                text-align: center;
+                font-weight: 400;
+                font-family: 'Crimson Text', serif;
+                line-height: 1;
+                color: #aa8983;
+            }
+      
+      #main-content {
+        font-family: 'Crimson Text';
+        color: #f2cbcb;
+        line-height: 1.8; 
+        font-size: 18px;
+        letter-spacing: .2;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+      
+      #main-content h2 {
+        font-family: 'Tajawal';
+        font-size: 20px;
+      }
+      
+      #main-content h2 span {
+        font-size: 16px;
+      }
+      
+      #main-content span {
+        font-family: 'Tajawal';
+      }
+      
+      .legend-prompt {
+        font-family: 'Tajawal';
+        text-align: center;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        padding-top: 25px;
+        font-weight: 600;
+        font-size: 19px;
+      }
+      
+      #main-content span.key-indicator {
+        display: inline-block;
+        line-height: 1;
+        padding-top: 5px;
+        padding-left: 3px;
+        padding-right: 3px;
+        color: white;
+        background: grey; 
+        border-radius: 4px;
+      }
+      
+      span.hamlet-color {
+        color: #FAE12F;
+      }
+      
+      span.romeo-color {
+        color: #F7973A;
+      }
+      
+      span.juliet-color {
+        color: #A96B88;
+      }
+      
+      span.macbeth-color {
+        color: #F36735;
+      }
+
+      
+      span.othello-color {
+        color: #F8B535;
+      }
+      
+      span.iago-color {
+        color: #F45C42;
+      }
+      
+      span.portia-color {
+        color: #AD5468;
+      }
+      
+      span.ladyMacbeth-color {
+        color: #78779E;
+      }
+      
+      span.richardIii-color {
+        color: #fb6b5a;
+      }
+      
+      svg.svg-main.mouse-disabled {
+        pointer-events: none;
+      }
+
+      svg text {
+        pointer-events: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+    </style>
+
+</head>
+<body>
+	<!--
+<button class="transition">Show More</button>
+<button class="hull-tran">Hull change</button>
+<div class='button-container'><button class='dots2'>Animate Dots Next</button></div>
+<div class='button-container'><button class='dots3'>Animate Dots Slide1</button></div>
+<div class='button-container'><button class='dots4'>Animate Dots Slide More</button></div>
+
+	<div class='button-container'><button class='transitions'>Transition</button></div>
+	<div class='button-container'><button class='dots'>Let's get started</button></div>
+	<div class='button-container'><button class='highlight-1'>Highlight Othello</button></div>
+-->
+
+		<div class='svg-container'>
+			<svg class='svg-controls' width="1100"></svg>
+			<svg class='svg-main' width="1100">
+				<defs>
+					<filter id="glowBlur">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
+					</filter>
+					<pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">
+						<path d="M-1,1 l2,-2
+										 M0,4 l4,-4
+										 M3,5 l2,-2"/>
+					</pattern>
+					<mask id="mask">
+						<rect height="100%" width="100%" style="fill: url(#stripe)" />
+					</mask>
+				</defs>
+			</svg>
+
+		</div>
+    <div id='main-content'></div>
+    <div id='tooltip'></div>
+
+    
+<!--
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+    <script src="assets/moment.js"></script>
+    <script src="assets/experiment.js"></script>
+-->
+
+    <script src="dist/app_bundle.js" type="text/javascript" charset="utf-8"></script>
+</body>

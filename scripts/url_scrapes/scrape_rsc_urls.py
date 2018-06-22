@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 from multiprocessing import Pool
 import re
 
-plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|The\sTempest|Antony\s(and|\&)\sCleopatra')
+plays_patterns = re.compile(r'Macbeth|Othello|Romeo\s(and|\&)\sJuliet|Hamlet|King\sLear|'
+                            r'The\sTempest|Antony\s(and|\&)\sCleopatra|Richard\sIII|Julius\sCaesar')
 
 urls = ['http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:hamlet/page/6',
         'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:the-tempest/page/4',
@@ -14,7 +15,9 @@ urls = ['http://collections.shakespeare.org.uk/search/rsc-performances/view_as/l
         'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:macbeth/page/5',
         'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:romeo-juliet/page/5',
         'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:king-lear/page/4',
-        'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:antony-and-cleopatra/page/3']
+        'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:antony-and-cleopatra/page/3',
+        'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:julius-caesar/page/4',
+        'http://collections.shakespeare.org.uk/search/rsc-performances/view_as/list/search/play_title:richard-iii/page/4']
 
 
 def get_urls(urls_list):

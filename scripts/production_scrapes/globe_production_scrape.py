@@ -5,9 +5,10 @@ from multiprocessing import Pool
 import re
 import unicodecsv
 
-role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra|'
+role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
-                           r'Desdemona|Ophelia|Fool|Prospero|Ariel')
+                           r'Desdemona|Ophelia|Fool|Prospero|Ariel|'
+                           r'Cleopatra|Caesar|Richard|Emilia|Brutus')
 
 base_url = 'http://www.shakespearesglobe.com'
 
@@ -44,8 +45,9 @@ def get_production_info(meta):
         if language_performed_in == 'English':
             globe_actors_file = open('data/globe_performers.tsv', 'a')
             #tsv_row_list = [meta[1], each_actor[0], each_actor[1], director, production_company, 'Shakespeare\'s Globe', language_performed_in]
-            tsv_row_list = [meta[1], each_actor[0], each_actor[1], director,
+            tsv_row_list = [meta[1], each_actor[0], each_actor[1].strip(), director,
                             production_company, 'Shakespeare\'s Globe']
+            print(tsv_row_list)
             globe_actors_file.write('\t'.join(tsv_row_list).encode('utf-8') + '\n')
             globe_actors_file.close()
 

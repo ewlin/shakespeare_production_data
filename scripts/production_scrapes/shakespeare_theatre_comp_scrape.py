@@ -8,9 +8,10 @@ from datetime import datetime
 
 months_second_half = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
 
-role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|Cleopatra|'
+role_patterns = re.compile(r'Miranda|Macbeth|Othello|Antony|'
                            r'Iago|Romeo|Hamlet|Lear|Juliet|Lady Macbeth|'
-                           r'Desdemona|Ophelia|Fool|Prospero|Ariel')
+                           r'Desdemona|Ophelia|Fool|Prospero|Ariel|'
+                           r'Cleopatra|Caesar|Richard|Emilia|Brutus')
 
 test_url = ['Antony and Cleopatra', 'http://www.shakespearetheatre.org/performance-id/3603', '07-08', 'normal']
 # play url season flag
@@ -67,7 +68,7 @@ def get_production_info(meta):
         actor_meta = [full_opening_date, each_actor[0], each_actor[1],
                       director, 'Shakespeare Theatre Company', venue]
         print actor_meta
-        data_file = open('data/stc_performers.tsv', 'a')
+        data_file = open('data/stc_performers_new.tsv', 'a')
         data_file.write('\t'.join(actor_meta).encode('utf8') + '\n')
         data_file.close()
 

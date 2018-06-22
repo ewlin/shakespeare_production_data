@@ -5,8 +5,9 @@ from ratelimit import rate_limited
 from multiprocessing import Pool
 
 roles = ['Macbeth', 'Othello', 'Iago', 'Romeo', 'Hamlet', 'King Lear of Britain', 'Lear', 'Juliet', 'Lady Macbeth', 'Desdemona', 'Ophelia', 'Fool']
+
 test_url = 'https://www.ibdb.com/broadway-production/macbeth-494910'
-show_urls = open('shows.csv').read().split()
+show_urls = open('data/old_data/broadway_shows.csv').read().split()
 
 print show_urls
 

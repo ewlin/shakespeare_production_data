@@ -1,17 +1,229 @@
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Tajawal:300,400,500|Work+Sans:300,400|Spectral:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rufina:400,700|Cardo:400,400i,700|Lato:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lustria" rel="stylesheet">
     <style>
+        #stripe path {
+            stroke-width: 2px;
+            stroke: white;
+        }
+
+		body {
+			/**background: #bababa;**/
+            /**background: rgba(49, 38, 45, 0.51);**/
+            background: #1a1b1e;
+		}
+
+        svg {
+            /**border: 1px solid white;**/
+        }
+
+        text {
+            font-size: 12px;
+            font-family: 'Tajawal';
+            font-weight: 300;
+        }
+
+        .bracket-text {
+            font-size: 14px;
+        }
+        
+        .interquartiles-labels text {
+            font-size: 13px;
+        }
+
+        .svg-container {
+            width: 1100px;
+            margin: auto;
+            padding-top: 25px;
+        }
+
+        .axis path, .axis text, .axis .tick line {
+            stroke: #7c8392;
+        }
+
+        .button-container {
+            display: inline-block;
+        }
+
+
+        .svg-container header, .svg-container svg {
+            display: inline-block;
+            vertical-align: top;
+
+        }
+
+        .svg-container header {
+            width: 450px;
+            height: 630px;
+
+        }
+
+        /**
+        .svg-container div img {
+            width: 50px;
+            vertical-align: middle;
+        }
+
+
+
+        .svg-container div h1 {
+            display: block;
+            font-family: 'Work Sans';
+            font-weight: 700;
+            color: #5ffcc0;
+            font-size: 70px;
+            line-height: 80px;
+            text-align: center;
+        }
+
+        .byline, .pub-date {
+            font-family: 'Lato';
+            font-weight: 400;
+            margin: auto;
+            text-align: center;
+            font-size: 1em;
+            color: #5ffcef;
+        }
+
+        .byline {
+            margin-top: 20px;
+        }
+
+        .byline span {
+            font-weight: 700;
+        }
+        **/
+
+
+
+                .byline, .pub-date {
+                    font-family: 'Lato';
+                    font-weight: 400;
+                    margin: auto;
+                    text-align: center;
+                    font-size: 1em;
+                    color: #5ffcef;
+                }
+
+                .byline {
+                    margin-top: 20px;
+                }
+
+                .byline span {
+                    font-weight: 700;
+                }
+
+        a.logo {
+            text-decoration: none;
+            border-bottom: none;
+            font-weight: 400;
+            font-family: 'Spectral';
+            text-align: center;
+            color: white;
+        }
+
+        .byline a {
+            text-decoration: none;
+            color: #5ffcef;
+            border-bottom: 2px solid #5ffcef;
+        }
+
+        .byline img {
+            width: 55px;
+			height: 55px;
+            margin-left: 10px;
+            border-radius: 50%;
+            border: solid 2px #ff645f;
+			vertical-align: middle;
+        }
+
+        a {
+				/**color: var(--links-color);**/
+                text-decoration: none;
+                border-bottom: 2px solid #6E5D5D;
+			}
+
+      a.logo {
+        border-bottom: none;
+        font-weight: 400;
+        font-family: 'Spectral';
+      }
+
+
+		  header {
+				margin: 0 auto 3em;
+				text-align: center;
+				padding: 20px 0;
+			}
+
+			header img {
+				width: 50px;
+				vertical-align: middle;
+			}
+
+			header a span {
+				padding-left: 12px;
+				font-size: 1.5em;
+			}
+
+            .title {
+                padding: 25px 0 0;
+                font-size: 3.9em;
+                /**margin: 0 auto 25px;**/
+                text-align: center;
+                font-weight: 400;
+                font-family: 'Lustria', serif;
+                line-height: 1em;
+                color: #aa8983;
+            }
+
+            .button-container {
+                display: none;
+            }
 
     </style>
+
 </head>
 <body>
+    <!--
+    <button class="transition">Show More</button>
+    <button class="hull-tran">Hull change</button>
+    -->
+<div class='button-container'><button class='transitions'>Transition</button></div>
+<div class='button-container'><button class='dots'>Animate Dots</button></div>
+<div class='button-container'><button class='dots2'>Animate Dots Next</button></div>
 
-    <svg width="600" height="400">
-        <filter id="blurMe">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
-        </filter>
+<div class='svg-container'>
+    <svg width="590" height="630">
+        <defs>
+            <filter id="blurMe">
+                <feGaussianBlur in="SourceGraphic" stdDeviation=".2" />
+            </filter>
+            <pattern id="stripe" patternUnits="userSpaceOnUse" width="4" height="4">
+                <path d="M-1,1 l2,-2
+                M0,4 l4,-4
+                M3,5 l2,-2"/>
+            </pattern>
+            <mask id="mask">
+                <rect height="100%" width="100%" style="fill: url(#stripe)" />
+            </mask>
+        </defs>
     </svg>
+    <header>
+      <a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a>
+      <div class='titles'>
+          <h1 class="title">Casting Shakespeare</h1>
+          <p class="byline">
+              <span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/>
+          </p>
+          <p class="pub-date">July 2018</p>
+      </div>
+    </header>
+
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
     <script src="assets/moment.js"></script>
-    <script src="assets/scatterplot.js"></script>
+    <script src="assets/test_animate_shakespeare.js"></script>
 </body>
