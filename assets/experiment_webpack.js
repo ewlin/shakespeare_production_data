@@ -32,11 +32,21 @@ svg.classed('mouse-disabled', true);
 const brushControls = select('.svg-controls'); 
 //let windowHeight = window.innerHeight;
 let windowHeight = document.querySelector('body').clientHeight; 
-console.log(windowHeight);
+let windowWidth = document.querySelector('body').clientWidth; 
+
+
+console.log(windowWidth);
 //50 is height of brush control rect
 //10 is padding on bottom
-select('.svg-main').attr('height', windowHeight - (windowHeight * .075) - 10);
-select('.svg-controls').attr('height', windowHeight * .075);
+
+        
+select('.svg-main')
+  .attr('height', windowHeight - (windowHeight * .075) - 10)
+  .attr('width', '100%');
+select('.svg-controls')
+  .attr('height', windowHeight * .075)
+  .attr('width', '100%');
+
 
 let animateStop = false; 
 
@@ -131,43 +141,7 @@ queue()
       .attr('alignment-baseline', 'hanging');
 
 
-    //let indicies = {
-    //  romeo: 0,
-    //  hamlet: 1,
-    //  macbeth: 2,
-    //  iago: 3,
-    //  othello: 4,
-    //  richardIii: 5,
-    //  shylock: 6,
-    //  prospero: 7,
-    //  kingLear: 8,
-    //  juliet: 0,
-    //  desdemona: 1,
-    //  ophelia: 2,
-    //  rosalind: 3,
-    //  portia: 4,
-    //  ladyMacbeth: 5,
-    //  cleopatra: 6
-    //}
-//
-    //let characterGenders = {
-    //  hamlet: 'male',
-    //  shylock: 'male',
-    //  romeo: 'male',
-    //  macbeth: 'male',
-    //  kingLear: 'male',
-    //  iago: 'male',
-    //  othello: 'male',
-    //  prospero: 'male',
-    //  richardIii: 'male',
-    //  desdemona: 'female',
-    //  ophelia: 'female',
-    //  rosalind: 'female',
-    //  juliet: 'female',
-    //  ladyMacbeth: 'female',
-    //  cleopatra: 'female',
-    //  portia: 'female'
-    //}
+
     let characterAges = {
       /**
       //Female: '#fc5863','#ec606c','#dc6776','#cb6d7f','#ba7187','#a77590','#90799b','#757ca4','#fc5863'
@@ -365,8 +339,6 @@ queue()
       }
       return rolesArr;
     }
-    console.log('rolesArr:')
-    console.log(processAllPointsAlt3());
 
 
     //Width = 1100
@@ -401,10 +373,11 @@ queue()
         }
       }
     }
-    console.log('test: ' + male(3, .056))
     
+    let pointsData = processAllPointsAlt3(); 
+  
     //New Create role dots (with groups; see function processAllPointsAlt3)   
-    svg.selectAll('.roles').data(processAllPointsAlt3()).enter()
+    svg.selectAll('.roles').data(pointsData).enter()
       .append('g').attr('class', d => `role-dots-group ${d.role}-dots-group`)
       .each(function(roleData, i) {
         const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
@@ -457,7 +430,7 @@ queue()
     for (let eachCharacter in interquartiles) {
       const gender = characterAges[eachCharacter + 'Ages'].gender;
       const index = characterAges[eachCharacter + 'Ages'].idx;
-      const yValue = gender == 'male' ? male(index, true) : female(index, true);
+      const yValue = gender == 'male' ? male(index, 0.5, true) : female(index, 0.5, true);
       const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
       const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
       const charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
@@ -817,7 +790,7 @@ queue()
                 for (let eachCharacter in interquartiles) {
                     const gender = characterAges[eachCharacter + 'Ages'].gender;
                     const index = characterAges[eachCharacter + 'Ages'].idx;
-                    const yValue = gender == 'male' ? male(index, true) : female(index, true);
+                    const yValue = gender == 'male' ? male(index, 0.5, true) : female(index, 0.5, true);
 
                     const interquartileLine = line().y(d => yValue).x(d => scaleX(d));
                     const middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
@@ -1155,10 +1128,11 @@ queue()
                         .attr('fill-opacity', 0)
                 });
             */
-
-
+            
+            pointsData = processAllPointsAlt3(); 
+            
             //let points = svg.selectAll('.role-dots').data(data);
-            let dotGroups = svg.selectAll('.role-dots-group').data(processAllPointsAlt3());
+            let dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
 
             dotGroups.enter();
 
@@ -1166,8 +1140,12 @@ queue()
             let transitionA = transition().duration(1500).ease(easeQuadInOut);
 
             dotGroups.each(function(roleData, i) {
+                const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
+                const matchGender = roleData.ages.filter(d => d.actorGender !== roleOppoGender); 
+                const oppoGender = roleData.ages.filter(d => d.actorGender === roleOppoGender); 
+
                 console.log(roleData.role + ': ' + i)
-                let points = select(this).selectAll('.role-dots').data(roleData.ages);
+                let points = select(this).selectAll('.role-dots').data(matchGender);
                 console.log(points);
 
                 points.exit().remove();
@@ -1179,7 +1157,7 @@ queue()
                             : 'role-dots tail-dot';
                     })
                     .attr('cx', d => scaleX(d.age))
-                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d => roleData.color)
@@ -1195,13 +1173,26 @@ queue()
                 points.transition(transitionA)
                     //.attr('class', 'role-dots')
                     .attr('cx', d => scaleX(d.age))
-                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+                    .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
                     .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
                     //.attr('stroke-opacity', 1)
-
+                ///
+                //select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
+                //  .attr('class', 'role-text-dots')
+                //  .attr('x', d => scaleX(d.age))
+                //  .attr('y', d => roleData.gender == 'male' ? male(roleData.index) : female(roleData.index))
+                //  .attr('fill', d => roleData.color)
+                //  .attr('stroke', d => roleData.color)
+                //  .attr('stroke-opacity', 0)
+                //  .attr('fill-opacity', 0)
+                //  .attr('text-anchor', 'middle')
+                //  .attr('alignment-baseline', 'middle')
+                //  //.style('font-size', '14px')
+                //  .text(d => d.actorGender === 'male' ? '\u2642' : '\u2640');
+                ///
             });
 
 
@@ -1213,7 +1204,7 @@ queue()
 
                 let gender = characterAges[eachCharacter + 'Ages'].gender;
                 let index = characterAges[eachCharacter + 'Ages'].idx;
-                let yValue = gender == 'male' ? male(index, true) : female(index, true);
+                let yValue = gender == 'male' ? male(index, 0.5, true) : female(index, 0.5, true);
 
                 let interquartileLine = line().y(d => yValue).x(d => scaleX(d));
 
@@ -1660,8 +1651,8 @@ queue()
           [function(directionForward) {
             select('.svg-main').style('opacity', 1);
             
-            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 112;
-            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 82;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10; 
             animateDots(17, 23, directionForward)(); 
             let mainContent = select('#main-content');
             //`position: fixed; top: 0; left: 400`
@@ -1672,11 +1663,11 @@ queue()
             let test = window.innerHeight/2 - height;
             console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
-            mainContent.transition().delay(500).style('opacity', 1); 
+            mainContent.transition().delay(300).style('opacity', 1); 
           }, 'Up through 30...'],
           [function(directionForward) {
-            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 112;
-            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 82;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10; 
             animateDots(24, 30, directionForward)(); 
             let mainContent = select('#main-content');
             mainContent.style('opacity', 0); 
@@ -1690,16 +1681,20 @@ queue()
             mainContent.transition(0).delay(300).style('opacity', 1); 
           }, 'From 31 to 45'],
           [function(directionForward) {
-            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 149;
-            const right = +document.querySelector('.svg-main').getBoundingClientRect().right; 
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 109;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10; 
             animateDots(31, 45, directionForward)(); 
             let mainContent = select('#main-content');
+            mainContent.style('opacity', 0); 
+
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             mainContent.html('<h2>From age 31 to 45 <span>(performances since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between the fates of men and women. As a 45-year-old actress you’d be older than any recorded Juliet, Desdemona, Ophelia, Rosalind, or Portia in our sample. I mentioned earlier that we can think of the middle 50% of ages (the interquartile range) of each role as the period in which an actor is mostly likely to be cast in that role. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more mature actresses, by 45, an actress would already be older than more than 75% of her peers who’ve played the role. Contrast this with the fact that at 45, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar middle career males.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height; 
             let test = window.innerHeight/2 - height;
             console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
+            mainContent.transition(0).delay(300).style('opacity', 1); 
+
           }, 'From 46 to retirement...'],
           [function(directionForward) {
             animateDots(46, 66, directionForward)();
@@ -1828,6 +1823,34 @@ queue()
             if (state > 0) {
               state -= 1;
             }
+              
+          }
+        });
+  
+        document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
+          const windowWidth = window.innerWidth; 
+          if (e.clientX > windowWidth/2) {
+            if (eventsQueue[state]) {
+              eventsQueue[state][0](true);
+            }
+            
+            if (state < eventsQueue.length - 1) {
+              state += 1;
+              //select(this).on('click', nextStep);
+              document.querySelector('body').addEventListener('mousedown', nextStep); 
+            } else {
+              document.querySelector('body').addEventListener('mousedown', () => {});
+            }
+            console.log(state);
+          } else {
+            if (state > 1) {
+              eventsQueue[state - 2][0](false); 
+            } else {
+              loadTitlesSlide();
+            }
+            if (state > 0) {
+              state -= 1;
+            }
 
           }
         });
@@ -1948,152 +1971,6 @@ queue()
 			}
 		}
 
-		//let maxMinDates = d3.extent(arr, role => role['opening_date']).map(date => moment(date).valueOf());
-		//let maxMinAgeFreqs = d3.extent(allAgesFreqs);
-		//console.log(maxMinAgeFreqs)
-
-
-        //let scaleY = scaleLinear().domain([0, maxMinAgeFreqs[1]]).range([330, 0]);
-
-		//var area = d3.area()
-		//	.curve(d3.curveCatmullRom)
-    	//    .x(function(d) { return scaleX(parseInt(d[0])); })
-    	//    .y1(function(d) { return scaleY(d[1]); })
-		//	.y0(function(d) { return scaleY(0); });
-
-        /**
-		characterAgeHistogram(characterAges.iagoAges, 'steelblue');
-        characterAgeHistogram(characterAges.bassanioAges, 'orange');
-		//characterAgeHistogram(characterAges.ladyMacbethAges, '#c73683');
-		//characterAgeHistogram(characterAges.rosalindAges, '#fc5863');
-		characterAgeHistogram(characterAges.desdemonaAges, '#fc5863'); //#fa5fb2');
-		//characterAgeHistogram(characterAges.iagoAges, '#5888b0');
-        **/
-        /**
-		function characterAgeHistogram(charAges, color) {
-			let characterAgesArray = [];
-			for (age in charAges) {
-				characterAgesArray.push([age, charAges[age].length])
-			}
-
-			let newArr = function(array) {
-				let newA = [];
-				range(1,100).forEach(integer => {
-					let intStr = integer.toString();
-					let found = array.findIndex(ele => ele[0] == intStr);
-					if (found != -1) {
-						newA.push(array[found]);
-					} else {
-						newA.push([integer.toString(), 0]);
-					}
-				});
-				return newA;
-			}
-
-			let newCharArray = newArr(characterAgesArray);
-
-			svg.append('path')
-				.datum(newCharArray)
-				.attr('d', d => area(d))
-				.attr('fill', color)
-				.attr('stroke', color)
-				.attr('fill-opacity', .7);
-
-
-			svg.selectAll('.ages')
-				.data(newCharArray)
-				.enter()
-				.append('circle')
-				.attr('cx', d => scaleX(parseInt(d[0])))
-				.attr('cy', d => scaleY(d[1]))
-				.attr('r', '2px')
-				//.attr('d', d => line(d))
-				.attr('fill', color)
-				.attr('stroke', color);
-		}
-
-        **/
-
-		//let macbethAgesArray = [];
-		//for (age in characterAges.macbethAges) {
-		//	macbethAgesArray.push([age, characterAges.macbethAges[age].length])
-		//}
-//
-		////console.log(hamletAgesArray);
-		////console.log(romeoAgesArray)
-//
-//
-		//let ladyMacbethAgesArray = [];
-		//for (age in characterAges.ladyMacbethAges) {
-		//	ladyMacbethAgesArray.push([age, characterAges.ladyMacbethAges[age].length])
-		//}
-//
-		//let newArr = function(array) {
-		//	let newA = [];
-		//	range(1,100).forEach(integer => {
-		//		let intStr = integer.toString();
-		//		let found = array.findIndex(ele => ele[0] == intStr);
-		//		if (found != -1) {
-		//			newA.push(array[found]);
-		//		} else {
-		//			newA.push([integer.toString(), 0]);
-		//		}
-		//	});
-		//	return newA;
-		//}
-//
-		////console.log(newArr(macbethAgesArray))
-		////console.log(newArr(bassanioAgesArray))
-		//let newMacbeth = newArr(macbethAgesArray);
-		//let newLadyMac = newArr(ladyMacbethAgesArray);
-		//console.log(newMacbeth.length, newLadyMac.length)
-		////console.log(romeoAgesArray)
-		//svg.append('path')
-		//	.datum(newMacbeth)
-		//	.attr('d', d => area(d))
-		//	.attr('fill', 'steelblue')
-		//	.attr('stroke', 'steelblue')
-		//	.attr('fill-opacity', .4);
-//
-//
-		//svg.selectAll('.ages')
-		//	.data(newMacbeth)
-		//	.enter()
-		//	.append('circle')
-		//	.attr('cx', d => scaleX(parseInt(d[0])))
-		//	.attr('cy', d => scaleY(d[1]))
-		//	.attr('r', '2px')
-		//	//.attr('d', d => line(d))
-		//	.attr('fill', 'none')
-		//	.attr('stroke', 'steelblue');
-//
-		//svg.append('path')
-		//	.datum(newLadyMac)
-		//	.attr('d', d => area(d))
-		//	.attr('fill', '#fc5863')
-		//	.attr('stroke', '#fc5863')
-		//	.attr('fill-opacity', .4);
-//
-		//svg.selectAll('.ages')
-		//	.data(newLadyMac)
-		//	.enter()
-		//	.append('circle')
-		//	.attr('cx', d => scaleX(parseInt(d[0])))
-		//	.attr('cy', d => scaleY(d[1]))
-		//	.attr('r', '2px')
-		//	//.attr('d', d => line(d))
-		//	.attr('fill', '#fc5863')
-		//	.attr('stroke', '#fc5863')
-
-
-
 
 
 	});
-
-
-function randomBetween(maxMin) {
-    let dif = maxMin[1] - maxMin[0];
-    let randomVal = Math.random();
-    return (randomVal * dif) + maxMin[0];
-}
