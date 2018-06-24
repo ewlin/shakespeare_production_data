@@ -1816,38 +1816,40 @@ queue()
             }
         }
         const queueLength = eventsQueue.length;
-        let progressBarScale = scaleLinear().domain([0, queueLength]).range([0, widthMax]);
+        let progressBarScale = scaleLinear().domain([1, queueLength]).range([0, widthMax]);
         console.log('hello', widthMax, queueLength, progressBarScale(4));
         loadTitlesSlide();
+
+        function updateProgressBar() {
+            if (state >= 1) {
+              console.log('true');
+              console.log(progressBarScale(state));
+              if (!document.querySelector('.progress-bar-container')) {
+                select('.svg-controls').append('g').classed('progress-bar-container', true)
+                  .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', widthMax)
+                  .attr('fill', 'grey').attr('opacity', .4)
+                select('.progress-bar-container').append('rect').classed('progress-bar', true).attr('x', 0).attr('y', 0)
+                  .attr('height', '8px')
+                  .attr('width', () => progressBarScale(state))
+                  //.attr('width', 100)
+                  .attr('fill', '#33739b');
+                //#33739b
+              } else {
+                  select('.progress-bar').attr('width', () => progressBarScale(state));
+              }
+
+            }
+        }
         document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
-          function updateProgressBar() {
-              if (state >= 1) {
-                console.log('true');
-                console.log(progressBarScale(state));
-                if (!document.querySelector('.progress-bar-container')) {
-                  select('.svg-controls').append('g').classed('progress-bar-container', true)
-                    .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', widthMax)
-                    .attr('fill', 'grey').attr('opacity', .4)
-                  select('.progress-bar-container').append('rect').classed('progress-bar', true).attr('x', 0).attr('y', 0)
-                    .attr('height', '8px')
-                    .attr('width', () => progressBarScale(state))
-                    //.attr('width', 100)
-                    .attr('fill', '#33739b');
-                  //#33739b
-                } else {
-                    select('.progress-bar').attr('width', () => progressBarScale(state));
-                }
 
-              }
-          }
           console.log('keypressed: ' + e.code);
           if (e.code === 'ArrowRight' || e.code === 'Space') {
             if (eventsQueue[state]) {
               eventsQueue[state][0](true);
             }
 
-            if (state < eventsQueue.length - 1) {
+            if (state < eventsQueue.length) {
               state += 1;
               //select(this).on('click', nextStep);
               document.addEventListener('keydown', nextStep);
@@ -1878,10 +1880,12 @@ queue()
               eventsQueue[state][0](true);
             }
 
-            if (state < eventsQueue.length - 1) {
+            if (state < eventsQueue.length) {
               state += 1;
               //select(this).on('click', nextStep);
               document.querySelector('body').addEventListener('mousedown', nextStep);
+              updateProgressBar();
+
             } else {
               document.querySelector('body').addEventListener('mousedown', () => {});
             }
@@ -1894,6 +1898,7 @@ queue()
             }
             if (state > 0) {
               state -= 1;
+              updateProgressBar();
             }
 
           }

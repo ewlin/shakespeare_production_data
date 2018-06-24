@@ -1,8 +1,12 @@
 <head>
+    <title>Casting Shakespeare: Gender, Age, and Race in the Casting of Actors</title>
     <link href="https://fonts.googleapis.com/css?family=Tajawal:200,300,400,500|Work+Sans:300,400|Spectral:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rufina:400,700|Cardo:400,400i,700|Lato:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lustria" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,700" rel="stylesheet">
+    <link rel="icon"
+      type="image/png"
+      href="assets/images/new-graph.png">
 
     <style>
       #stripe path {
@@ -12,11 +16,11 @@
 
 		  body {
         background: #1a1b1e;
-        height: 100%; 
+        height: 100%;
         width: 100%;
         position: fixed;
-        padding: 0 0; 
-        margin: 0 0; 
+        padding: 0 0;
+        margin: 0 0;
 		  }
       .svg-container {
         position: relative;
@@ -24,10 +28,10 @@
         max-width: 1230px;
         /*padding-top: 25px;*/
       }
-      
-      
+
+
       div {
-        padding: 0; 
+        padding: 0;
         margin: 0;
       }
         svg {
@@ -40,7 +44,7 @@
             letter-spacing: 1px;
             font-weight: 200;
         }
-      
+
       text.role-text-dots {
         font-family: 'Arial';
         font-size: 22px;
@@ -67,7 +71,7 @@
             font-size: 13px;
         }
 
-        
+
         .sample-axis path, .sample-axis text, .sample-axis .tick line {
             stroke: #a6abb5;
         }
@@ -75,7 +79,7 @@
         .axis path, .axis text, .axis .tick line {
             stroke: #a6abb5;
         }
-			
+
 			.axis text {
 				font-size: 13px;
 			}
@@ -132,13 +136,13 @@
             font-weight: 700;
         }
         **/
-    
+
 
       .title, .byline, .pub-date, .subtitles {
-        padding: 3px; 
+        padding: 3px;
         background: rgba(26,27,30,.6);
       }
-      
+
       .byline, .pub-date {
           font-family: 'Lato';
           font-weight: 400;
@@ -163,7 +167,7 @@
             text-align: center;
             color: white;
         }
-      
+
       .subtitles {
         text-align: center;
         width: 700px;
@@ -228,31 +232,31 @@
                 line-height: 1;
                 color: #aa8983;
             }
-      
+
       #main-content {
         font-family: 'Crimson Text';
         color: #f2cbcb;
-        line-height: 1.8; 
+        line-height: 1.8;
         font-size: 18px;
         letter-spacing: .2;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
       }
-      
+
       #main-content h2 {
         font-family: 'Tajawal';
         font-size: 20px;
       }
-      
+
       #main-content h2 span {
         font-size: 16px;
       }
-      
+
       #main-content span {
         font-family: 'Tajawal';
       }
-      
+
       .legend-prompt {
         font-family: 'Tajawal';
         text-align: center;
@@ -262,7 +266,7 @@
         font-weight: 600;
         font-size: 19px;
       }
-      
+
       #main-content span.key-indicator {
         display: inline-block;
         line-height: 1;
@@ -270,47 +274,47 @@
         padding-left: 3px;
         padding-right: 3px;
         color: white;
-        background: grey; 
+        background: grey;
         border-radius: 4px;
       }
-      
+
       span.hamlet-color {
         color: #FAE12F;
       }
-      
+
       span.romeo-color {
         color: #F7973A;
       }
-      
+
       span.juliet-color {
         color: #A96B88;
       }
-      
+
       span.macbeth-color {
         color: #F36735;
       }
 
-      
+
       span.othello-color {
         color: #F8B535;
       }
-      
+
       span.iago-color {
         color: #F45C42;
       }
-      
+
       span.portia-color {
         color: #AD5468;
       }
-      
+
       span.ladyMacbeth-color {
         color: #78779E;
       }
-      
+
       span.richardIii-color {
         color: #fb6b5a;
       }
-      
+
       svg.svg-main.mouse-disabled {
         pointer-events: none;
       }
@@ -361,7 +365,7 @@
     <div id='main-content'></div>
     <div id='tooltip'></div>
 
-    
+
 <!--
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
