@@ -584,11 +584,13 @@ queue()
                 function createBracket(range, anchor, beamLength, thickness, className, label) {
                     if (!document.querySelector(`.${className}`)) {
                         let bracket = svg.append('g').attr('class', className);
+                        /**
                         bracket.append('rect').attr('x', 0).attr('y', range[0])
                             .attr('width', anchor)
                             .attr('height', range[1] - range[0])
                             .attr('fill', '#1a1b1e')
                             .attr('fill-opacity', .73);
+                        **/
 
                         bracket.append('line').attr('x1', anchor).attr('y1', range[0]).attr('x2', anchor).attr('y2', range[1])
                             .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
@@ -617,12 +619,6 @@ queue()
                 }
 
 
-							  //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
-                createBracket([15, (band * 7) + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                createBracket([(band * 7) + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
-
-
                 if (!document.querySelector('.axis')) {
                     svg.append('g')
                 			.attr('class', 'x axis')
@@ -644,12 +640,19 @@ queue()
 
                     const ageAxis = document.querySelector('.axis');
 
+                    //invisible rect
+                    svg.append('rect').attr('x', 0).attr('y', 15)
+                        .attr('width', 40)
+                        .attr('height', heightMax - 25)
+                        .attr('fill', '#1a1b1e')
+                        .attr('fill-opacity', .92);
+
                     const axisLabel = svg.append('text').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                         .attr('text-anchor', 'middle')
                         .attr('stroke', '#a6abb5')
                         .attr('font-size', '9px')
-												.attr('transform', `translate(0,${band * 7 + 13})`)
+						.attr('transform', `translate(0,${band * 7 + 13})`)
 
 
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
@@ -691,6 +694,10 @@ queue()
                 const ageAxis = document.querySelector('.axis');
                 console.log('left side of axis:' + ageAxis.getBoundingClientRect().left);
 
+                //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                  //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+                createBracket([15, (band * 7) + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+                createBracket([(band * 7) + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
 
                 /**
@@ -735,6 +742,8 @@ queue()
                       //    return .4;
                       //}
                   })
+
+                selectAll('.role-dots').attr('mask', 'none');
 
                 if (directionForward) {
                   selectAll('.role-dots')
@@ -1443,7 +1452,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
             //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-            mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+            mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             console.log(band);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
@@ -1702,6 +1711,7 @@ queue()
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 109;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
+            //animateDots(31, 45, directionForward, true)();
             animateDots(31, 45, directionForward)();
             let mainContent = select('#main-content');
             mainContent.style('opacity', 0);
@@ -1972,7 +1982,7 @@ queue()
 
 						filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
 							.attr('r', '7px')
-            	.attr('mask', 'url(#mask)');
+            	            .attr('mask', 'url(#mask)');
 
 						filteredDots.filter(dot => {
 							let actor_gender = dot.actorGender;
