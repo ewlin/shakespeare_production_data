@@ -53,6 +53,7 @@ let state = 0;
 
 queue()
   .defer(csv, 'data/shakespeare_outline.csv')
+  .defer(tsv, 'data/master_actors_list_test.tsv')
   .defer(tsv, 'data/ages/shylock_ages.tsv')
   .defer(tsv, 'data/ages/ophelia_ages.tsv')
   .defer(tsv, 'data/ages/romeo_ages.tsv')
@@ -69,9 +70,9 @@ queue()
   .defer(tsv, 'data/ages/juliet_ages.tsv')
   .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
   .defer(tsv, 'data/ages/prospero_ages.tsv')
-  .await(function(error, shakespeareOutline, ...characters) {
+  .await(function(error, shakespeareOutline, actorsMasterList, ...characters) {
 
-
+    console.log(actorsMasterList);
     //5/15 test (est. count number of productions)
     let productions = [];
 
@@ -233,19 +234,21 @@ queue()
       let start = typeof startYear == 'string' ? startYear : (startYear == null ? '1850' : String(startYear));
       let oppositeGender = filterOppoGender ? (characterAges[character + 'Ages'].gender == 'male' ? 'female' : 'male') : null;
       characterData.forEach(function(role) {
-        if (role['bday'] != 'person not found on wiki'
-            && role['bday'] != 'no birthday on article'
-            && role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
+        // new if statement: role['actor'] in actorsMasterList...
+        let actorIndex = actorsMasterList.findIndex(actor => role['actor'] === actor['actor_name']);
+        //if (role['bday'] != 'person not found on wiki' && role['bday'] != 'no birthday on article' && role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
+        if (actorIndex != -1 && actorsMasterList[actorIndex]['formatted_bday'] != 'person not found on wiki'
+            && actorsMasterList[actorIndex]['formatted_bday'] != 'no birthday on article'
+            && actorsMasterList[actorIndex]['formatted_bday'] != 'not a date' && actorsMasterList[actorIndex]['is_actor'] != 'flagged') {
+          
+          //let age = moment(role['opening_date']).diff(moment(role['bday']), 'years', true);
+          let age = moment(role['opening_date']).diff(moment(actorsMasterList[actorIndex]['formatted_bday']), 'years', true);
 
-          let age = moment(role['opening_date']).diff(moment(role['bday']), 'years', true);
           console.log(age)
           //Old version
           if (age > 0 && moment(role['opening_date']) >= moment(start)
           	&& moment(role['opening_date']) <= moment(end)
           	&& role['gender'] !== oppositeGender) {
-
-          //if (age > 0 && moment(role['opening_date']) >= moment(start)
-          //    && moment(role['opening_date']) <= moment(end)) {
 
             if (character == 'cleopatra' && role['gender'] == 'male') {
               console.log(role);

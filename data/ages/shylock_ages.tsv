@@ -1,5 +1,5 @@
 bday	opening_date	role	actor	director	company	venue	gender	race	actor_flag	ethnicities
-person not found on wiki	1913-01-20T00:00:00	Shylock	John E. Kellerd	director unknown	unknown production company	Harris Theatre	unknown	unknown		
+person not found on wiki	1913-01-20T00:00:00	Shylock	John E. Kellerd	director unknown	unknown production company	Harris Theatre	unknown	unknown
 person not found on wiki	1908-02-17T00:00:00	Shylock	Henry Ludlowe	director unknown	Mr. Hazelton and Mr. North	Bijou Theatre	unknown	unknown
 person not found on wiki	2012-01-01T00:00:00	Shylock	Jacob Cohen	Ilan Ronen	Shakespeare's Globe	Shakespeare's Globe	unknown	unknown
 person not found on wiki	2014-01-01T00:00:00	Shylock	Ognen Drangovski	Bill Buckhurst	Shakespeare's Globe	Shakespeare's Globe	unknown	unknown
@@ -28,7 +28,9 @@ no birthday on article	1944-04-08T00:00:00	Shylock	George Hayes	Robert Atkins	Ro
 1946-08-01T00:00:00	1994-04-08T00:00:00	Shylock	David Calder	David Thacker	Royal Shakespeare Company	Barbican Theatre, London	male	none	yes
 1868-04-10T00:00:00	1928-01-16T00:00:00	Shylock	George Arliss	Winthrop Ames	Winthrop Ames	Broadhurst Theatre	male	none	yes
 1869-08-09T00:00:00	1926-07-07T00:00:00	Shylock	Randle Ayrton	William Bridges-Adams	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	male	none	yes
-no birthday on article	1910-05-06T00:00:00	Shylock	James Carew	Francis Robert Benson	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	male	none	yes
+1944-08-11T00:00:00	2014-12-15T00:00:00	Shylock	Ian Mcdiarmid	Rupert Goold	Almeida Theatre	Almeida Theatre	male	none	yes
+1940-07-13T00:00:00	2011-05-13T00:00:00	Shylock	Patrick Stewart	Rupert Goold	Royal Shakespeare Company	Royal Shakespeare Theatre, Stratford-on-Avon	male	none	yes
+1970-10-02T00:00:00	2017-07-07T00:00:00	Shylock	Mitchell Butel	Anne-Louise Sarks	Bell Shakespeare	Tour	male	none	yes	no birthday on article	1910-05-06T00:00:00	Shylock	James Carew	Francis Robert Benson	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	male	none	yes
 1947-06-01T00:00:00	2016-01-01T00:00:00	Shylock	Jonathan Pryce	Jonathan Munby	Shakespeare's Globe	Shakespeare's Globe	male	none	yes
 1863-06-22T00:00:00	1907-04-29T00:00:00	Shylock	Arthur Bourchier	director unknown	Royal Shakespeare Company	Shakespeare Memorial Theatre, Stratford-upon-Avon	male	none	yes
 1927-10-18T00:00:00	1962-06-19T00:00:00	Shylock	George C. Scott	Joseph Papp	Joseph Papp Public Theater/New York Shakespeare Festival	Delacorte Theater	male	none	yes
