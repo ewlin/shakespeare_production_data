@@ -53,25 +53,35 @@ let state = 0;
 
 queue()
   .defer(csv, 'data/shakespeare_outline.csv')
-  .defer(tsv, 'data/master_actors_list_test.tsv')
+  .defer(tsv, 'data/master_1.tsv')
+  .defer(tsv, 'data/master_2.tsv')
   .defer(tsv, 'data/ages/shylock_ages.tsv')
   .defer(tsv, 'data/ages/ophelia_ages.tsv')
   .defer(tsv, 'data/ages/romeo_ages.tsv')
-  .defer(tsv, 'data/ages_updated/portia_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/portia_actor_ages.tsv')
+  .defer(tsv, 'data/ages/portia_ages.tsv')
   .defer(tsv, 'data/ages/desdemona_ages.tsv')
-  .defer(tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
-  .defer(tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
-  .defer(tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
+  .defer(tsv, 'data/ages/macbeth_ages.tsv')
+  .defer(tsv, 'data/ages/lady_macbeth_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
+  .defer(tsv, 'data/ages/cleopatra_ages.tsv')
   .defer(tsv, 'data/ages/iago_ages.tsv')
   .defer(tsv, 'data/ages/lear_ages.tsv')
-  .defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
-  .defer(tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
-  .defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
+  .defer(tsv, 'data/ages/rosalind_ages.tsv')
+  .defer(tsv, 'data/ages/richard_ages.tsv')
+  .defer(tsv, 'data/ages/hamlet_ages.tsv')
   .defer(tsv, 'data/ages/juliet_ages.tsv')
-  .defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
+  //.defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
+  .defer(tsv, 'data/ages/othello_ages.tsv')
   .defer(tsv, 'data/ages/prospero_ages.tsv')
-  .await(function(error, shakespeareOutline, actorsMasterList, ...characters) {
-
+  .await(function(error, shakespeareOutline, m1, m2, ...characters) {
+    let actorsMasterList = m1.concat(m2);
+  
     console.log(actorsMasterList);
     //5/15 test (est. count number of productions)
     let productions = [];
@@ -1699,12 +1709,12 @@ queue()
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 82;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
-            animateDots(24, 30, directionForward)();
+            animateDots(23, 30, directionForward)();
             let mainContent = select('#main-content');
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 23 to 30 <span>(performances since 1980)</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of Romeo or Juliet. By the time you’re 30, you’d be close to aging out of our favorite tragic young lovers. At 30, you’d be older than 75+% of the actors who\'ve played these roles in our dataset.</p>');
+            mainContent.html('<h2>From age 24 to 30 <span>(performances since 1980)</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of Romeo or Juliet. By the time you’re 30, you’d be close to aging out of our favorite tragic young lovers. At 30, you’d be older than 75+% of the actors who\'ve played these roles in our dataset.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
             console.log(test);
@@ -1715,7 +1725,7 @@ queue()
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 109;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
             //animateDots(31, 45, directionForward, true)();
-            animateDots(31, 45, directionForward)();
+            animateDots(30, 45, directionForward)();
             let mainContent = select('#main-content');
             mainContent.style('opacity', 0);
 
@@ -1729,12 +1739,12 @@ queue()
 
           }, 'From 46 to retirement...'],
           [function(directionForward) {
-            animateDots(46, 66, directionForward)();
+            animateDots(45, 66, directionForward)();
             let mainContent = select('#main-content');
             mainContent.html(null);
           }, 'After 66.'],
           [function(directionForward) {
-            animateDots(67, 86, directionForward)();
+            animateDots(66, 86, directionForward)();
           }, 'End'],
           [function() {
               selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);

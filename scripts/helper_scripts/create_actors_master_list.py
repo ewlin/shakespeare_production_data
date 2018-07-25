@@ -72,7 +72,7 @@ def get_actor_info(actor_name):
 
     if len(actor_meta) > 1:
     '''
-    actors_data_file = open('data/master_actors_list.tsv', 'a')
+    actors_data_file = open('data/nonwiki_master_actors_list.tsv', 'a')
 
     actor_gender = 'unknown'
     is_actor = ''
@@ -191,8 +191,8 @@ def get_actor_info(actor_name):
         #print('\t'.join([actor_name, formatted_bday, actor_gender, ethnicity, age_is_est, bday_data_source, is_actor, photo_url, ethnic_cat]).encode('utf-8'))
         print(actor_info)
 
-        actors_data_file.write(actor_info + '\n')
-        actors_data_file.close()
+        #actors_data_file.write(actor_info + '\n')
+        #actors_data_file.close()
 
     else:
         #actor_info = 'person not found on wiki' + '\t' + actor_info
@@ -201,6 +201,15 @@ def get_actor_info(actor_name):
         age_is_est = 'unknown'
         formatted_bday = 'person not found on wiki'
         print(actor_name, 'person not found on wiki')
+        
+        actor_info = '\t'.join([actor_name, formatted_bday, actor_gender, ethnicity, age_is_est, bday_data_source, is_actor, photo_url, ethnic_cat]).encode('utf-8')
+        
+        actors_data_file.write(actor_info + '\n')
+        actors_data_file.close()
+
+
+        
+
 
     #actor_info = actor_info + '\t' + actor_gender + '\t' + ethnicity + '\t' + is_actor + '\t' + ','.join(actor_ethnicity_cat)
     #print(actor_info)
