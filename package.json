@@ -17,6 +17,7 @@
     "d3-svg-annotation": "^2.2.5",
     "d3-timer": "^1.0.7",
     "d3-transition": "^1.1.1",
+    "d3-voronoi": "^1.1.2",
     "just-debounce-it": "^1.0.1",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",

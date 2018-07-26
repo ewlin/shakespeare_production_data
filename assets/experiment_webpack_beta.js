@@ -16,6 +16,7 @@ import { transition } from 'd3-transition';
 import { brushX, brushSelection } from 'd3-brush';
 import * as annotation from 'd3-svg-annotation';
 import { interval } from 'd3-timer';
+import { voronoi } from 'd3-voronoi';
 import makeCurlyBrace from './curlyBraces';
 //import animateShakespeare from './animate_shakespeare';
 
@@ -81,7 +82,7 @@ queue()
   .defer(tsv, 'data/ages/prospero_ages.tsv')
   .await(function(error, shakespeareOutline, m1, m2, ...characters) {
     let actorsMasterList = m1.concat(m2);
-  
+
     console.log(actorsMasterList);
     //5/15 test (est. count number of productions)
     let productions = [];
@@ -105,7 +106,7 @@ queue()
     let band = (heightMax - 75)/characters.length;
 
     //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
-    const scaleX = scaleLinear().domain([10, 85]).range([60, widthMax - 80]);
+    const scaleX = scaleLinear().domain([10, 86]).range([60, widthMax - 80]);
 
     //Setup for brushing year filter
     const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
@@ -237,7 +238,7 @@ queue()
       console.log(role + ': ' + variance(ages));
       console.log(role + ': ' + quantile(ages, 0.5));
     }
-    console.log(interquartiles);
+    //console.log(interquartiles);
 
     function processPoints(characterData, character, filterOppoGender, startYear, endYear) {
       let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
@@ -250,21 +251,22 @@ queue()
         if (actorIndex != -1 && actorsMasterList[actorIndex]['formatted_bday'] != 'person not found on wiki'
             && actorsMasterList[actorIndex]['formatted_bday'] != 'no birthday on article'
             && actorsMasterList[actorIndex]['formatted_bday'] != 'not a date' && actorsMasterList[actorIndex]['is_actor'] != 'flagged') {
-          
+
           //let age = moment(role['opening_date']).diff(moment(role['bday']), 'years', true);
           let age = moment(role['opening_date']).diff(moment(actorsMasterList[actorIndex]['formatted_bday']), 'years', true);
 
-          console.log(age)
+          role = Object.assign(role, actorsMasterList[actorIndex]);
+          //console.log(age)
           //Old version
           if (age > 0 && moment(role['opening_date']) >= moment(start)
           	&& moment(role['opening_date']) <= moment(end)
           	&& role['gender'] !== oppositeGender) {
 
-            if (character == 'cleopatra' && role['gender'] == 'male') {
-              console.log(role);
-              console.log(role['opening_date']);
-              console.log(role['actor'] + ' ' + age);
-            }
+            //if (character == 'cleopatra' && role['gender'] == 'male') {
+            //  console.log(role);
+            //  console.log(role['opening_date']);
+            //  console.log(role['actor'] + ' ' + age);
+            //}
 
             if (characterAges[character + 'Ages'][age]) {
               characterAges[character + 'Ages'][age].push(role)
@@ -274,10 +276,11 @@ queue()
             characterAgesArrays[character + 'Ages'].push(age);
 
           }
-		}
-	  });
-	}
+		    }
+	    });
+	  }
 
+    console.log('roles and ages:')
     console.log(characterAges);
 
     function processAllPointsAlt() {
@@ -335,6 +338,7 @@ queue()
         for (let age in roleAges) {
           if (age != 'gender' && age != 'color' && age !== 'idx') {
             roleAges[age].forEach(a => {
+              /**
               roleAgesArray.push({
                 age: parseFloat(age),
                 role: role,
@@ -344,6 +348,20 @@ queue()
                 actor: a['actor'],
                 yCoord: Math.random()
               }); //pushing an integer; will be an object once refactored
+              **/
+              roleAgesArray.push({
+                age: parseFloat(age),
+                role: role,
+                race: a['ethnicity'],
+                opening: a['opening_date'],
+                bday: a['formatted_bday'],
+                actorGender: a['actor_gender'],
+                actor: a['actor'],
+                isAgeEst: a['age_is_est'],
+                yCoord: Math.random(),
+                image: a['photo_url'],
+                bdayDataSource: a['bday_data_source']
+              });
               //actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
             });
           }
@@ -389,6 +407,30 @@ queue()
     }
 
     let pointsData = processAllPointsAlt3();
+    console.log('pointsData', pointsData)
+
+    function voronoifyDataPoints(data) {
+      const points = [];
+      data.forEach(char => {
+        char['ages'].forEach((actor, index) => {
+          points.push({
+            id: char.role + index,
+            age: actor.age,
+            yCoord: actor.yCoord,
+            charIndex: char['index'],
+            charGender: char['gender']
+          });
+        });
+      });
+      return points;
+    }
+
+    let voronoifiedPoints = voronoifyDataPoints(pointsData);
+    console.log(voronoifiedPoints);
+
+
+
+    //7/26 TODO: use pointsData to calculate all voronoi points
 
     //New Create role dots (with groups; see function processAllPointsAlt3)
     svg.selectAll('.roles').data(pointsData).enter()
@@ -1763,6 +1805,26 @@ queue()
                   }
                   **/
               });
+              //create voronoi overlay as Test
+              //voronoifiedPoints
+              //.attr('cx', d => scaleX(d.age))
+              //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
+
+              let voronoiGen = voronoi()
+                .x(d => scaleX(d.age))
+                .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
+                .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
+
+              console.log(voronoifiedPoints);
+              console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
+
+              svg.append('g').attr('class', 'voronoi-overlay')
+                .selectAll('.path')
+                .data(voronoiGen.polygons(voronoifiedPoints))
+                .enter()
+                .append('path')
+                .attr('d', d => "M" + d.join("L") + "Z");
+
           }],
           [transitions]
         ];
@@ -1796,12 +1858,12 @@ queue()
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
-            console.log(test);
+            //console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             animateShakespeare(shakespeareOutline);
 
-            console.log('max and min')
-            console.log(max(shakespeareOutline, d => parseInt(d.y)), min(shakespeareOutline, d => parseInt(d.y)))
+            //console.log('max and min')
+            //console.log(max(shakespeareOutline, d => parseInt(d.y)), min(shakespeareOutline, d => parseInt(d.y)))
             function animateShakespeare(data) {
 
               let svg = select('.shakespeare-dots');
@@ -1834,7 +1896,7 @@ queue()
                   .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
                   .attr('fill-opacity', d => Math.random());
                 if (animateStop == true) t.stop();
-                console.log(elapsed);
+                //console.log(elapsed);
               }, 500);
             }
         }
