@@ -2,6 +2,7 @@
     ES6 imports
 
 **/
+
 import moment from 'moment';
 import { queue } from 'd3-queue';
 import { csv, tsv, json } from 'd3-request';
@@ -260,6 +261,7 @@ queue()
           //Old version
           if (age > 0 && moment(role['opening_date']) >= moment(start)
           	&& moment(role['opening_date']) <= moment(end)
+            //TODO: update this to be actorsMasterList[actorIndex]['actor_gender']
           	&& role['gender'] !== oppositeGender) {
 
             //if (character == 'cleopatra' && role['gender'] == 'male') {
@@ -515,6 +517,7 @@ queue()
         .attr('stroke', () => characterAges[eachCharacter + 'Ages'].color)
         .attr('alignment-baseline', 'middle')
         .attr('text-anchor', 'end')
+        .style('letter-spacing', '1')
         .attr('class', 'character-label-initial')
         .text(() => {
         //return eachCharacter.charAt(0).toUpperCase() + eachCharacter.substring(1);
@@ -662,6 +665,7 @@ queue()
                                 .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
 
                         bracket.append('text')
+                            .style('letter-spacing', '1')
                             .attr('class', 'bracket-text')
                             .attr('x', anchor)
                             .attr('y', ((range[1]-range[0])/2) + range[0])
@@ -713,10 +717,12 @@ queue()
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                         .text('AGE OF ACTOR')
+                        .style('letter-spacing', '1')
                         .attr('dy', '8px');
                     axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                         .text('DURING PRODUCTION')
+                        .style('letter-spacing', '1')
                         .attr('dy', '23px').append('tspan').attr('class', 'note-indicator').text('*');
 
 
@@ -1139,8 +1145,8 @@ queue()
 
         //TODO...
 
-
-        function transitions() {
+        //dateRange is an array of length 2: e.g., [1900, 1980]
+        function transitions(dateRange) {
             for (let eachChar in characterAges) {
                 let {gender, color, idx} = characterAges[eachChar];
                 characterAges[eachChar] = {gender: gender, color: color, idx: idx};
@@ -1158,7 +1164,7 @@ queue()
                 if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
                 characterName = characterName.join('');
                 console.log(characterName);
-                processPoints(character, characterName, true, 1900, 1979);
+                processPoints(character, characterName, true, dateRange[0], dateRange[1]); //1900 to 1979
             });
 
             for (let char in characterAgesArrays) {
@@ -1600,6 +1606,7 @@ queue()
               .attr('alignment-baseline', 'middle')
               .attr('text-anchor', 'end')
               .attr('class', 'legend-character-label-initial')
+              .style('letter-spacing', '1.5')
               .text('Example Character');
 
             const braceFullCoords = makeCurlyBrace(scaleX(sampleInterquartiles[3]), 85, scaleX(sampleInterquartiles[0]), 85, 30, 0.54);
@@ -1740,7 +1747,7 @@ queue()
             let mainContent = select('#main-content');
             //`position: fixed; top: 0; left: 400`
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 18 to 23 <span>(performances since 1980)</span></h2><p>There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is described as a girl of 13 in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span>Rosalinds</span>, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).</p>');
+            mainContent.html('<h2>From age 18 to 23 <span>(performances since 1980)</span></h2><p>There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is described as a girl of 13 in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).</p>');
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -1772,7 +1779,7 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 31 to 45 <span>(performances since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between the fates of men and women. As a 45-year-old actress you’d be older than any recorded Juliet, Desdemona, Ophelia, Rosalind, or Portia in our sample. I mentioned earlier that we can think of the middle 50% of ages (the interquartile range) of each role as the period in which an actor is mostly likely to be cast in that role. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more mature actresses, by 45, an actress would already be older than more than 75% of her peers who’ve played the role. Contrast this with the fact that at 45, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar middle career males.</p>');
+            mainContent.html(`<h2>From age 31 to 45 <span>(performances since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between the fates of men and women. As a 45-year-old actress you’d be older than any recorded <span class="juliet-color">Juliet</span>, <span class="desdemona-color">Desdemona</span>, <span class="ophelia-color">Ophelia</span>, <span class="rosalind-color">Rosalind</span>, or <span class="portia-color">Portia</span> in our sample. I mentioned earlier that we can think of the middle 50% of ages (the interquartile range) of each role as the period in which an actor is mostly likely to be cast in that role. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more mature actresses, by 45, an actress would already be older than more than 75% of her peers who’ve played the role. Contrast this with the fact that at 45, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar middle career males.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
             console.log(test);
@@ -1826,7 +1833,12 @@ queue()
                 .attr('d', d => "M" + d.join("L") + "Z");
 
           }],
-          [transitions]
+          [function() {
+              transitions([1900, 1979]);
+          }],
+          [function() {
+              transitions([1900, 2018]);
+          }]
         ];
         //select('body').on('dblclick', eventsQueue[2][0]);
         //console.log(animateDots(30))
@@ -1854,7 +1866,9 @@ queue()
             let windowHeight = window.innerHeight;
             let mainContent = select('#main-content');
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'>What we can learn about how age, gender, and race affect casting from 1000+ productions of 10 Shakespearean plays between 1900 and 2018</p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">July 2018</p></div></header>`);
+            mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'>What we can learn about how age, gender, and race affect casting from 1000+ productions of 10 Shakespearean plays between 1900 and 2018</p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">August 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -1901,7 +1915,7 @@ queue()
             }
         }
         const queueLength = eventsQueue.length;
-        let progressBarScale = scaleLinear().domain([1, queueLength]).range([0, widthMax]);
+        let progressBarScale = scaleLinear().domain([0, queueLength]).range([0, widthMax]);
         console.log('hello', widthMax, queueLength, progressBarScale(4));
         loadTitlesSlide();
 
@@ -1923,7 +1937,10 @@ queue()
                   select('.progress-bar').attr('width', () => progressBarScale(state));
               }
 
-            }
+          } else {
+              const progressBar = document.querySelector('.progress-bar-container');
+              progressBar.parentNode.removeChild(progressBar);
+          }
         }
         document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
@@ -1960,6 +1977,7 @@ queue()
 
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
           const windowWidth = window.innerWidth;
+
           if (e.clientX > windowWidth/2) {
             if (eventsQueue[state]) {
               eventsQueue[state][0](true);

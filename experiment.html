@@ -28,6 +28,21 @@
       href="assets/images/new-graph.png">
 
     <style>
+      p {
+        margin: 0;
+        padding: 0;
+      }
+
+      .instructions {
+         position: absolute;
+         bottom: 35;
+         text-align: center;
+         width: 100%;
+         /*padding: 5px;*/
+         /*margin-top: 40px;*/
+
+      }
+
       #stripe path {
         stroke-width: 2px;
         stroke: white;
@@ -62,6 +77,7 @@
             font-family: 'Tajawal';
             letter-spacing: 1px;
             font-weight: 200;
+            text-rendering: optimizeLegibility;
         }
 
       text.role-text-dots {
@@ -286,7 +302,7 @@
         font-size: 19px;
       }
 
-      #main-content span.key-indicator {
+      span.key-indicator {
         display: inline-block;
         line-height: 1;
         padding-top: 5px;
@@ -297,8 +313,24 @@
         border-radius: 4px;
       }
 
+      span.cta {
+          display: inline-block;
+          line-height: 1;
+          padding-top: 5px;
+          padding-left: 3px;
+          padding-right: 3px;
+          color: white;
+          background: #db1c32;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
       span.hamlet-color {
         color: #FAE12F;
+      }
+
+      span.ophelia-color {
+          color: #c44ec6;
       }
 
       span.romeo-color {
@@ -313,6 +345,9 @@
         color: #F36735;
       }
 
+      span.desdemona-color {
+          color: #FC5863;
+      }
 
       span.othello-color {
         color: #F8B535;
@@ -325,6 +360,11 @@
       span.portia-color {
         color: #AD5468;
       }
+
+      span.rosalind-color {
+        color: #CA6379;
+      }
+
 
       span.ladyMacbeth-color {
         color: #78779E;
@@ -349,7 +389,7 @@
       .voronoi-overlay path {
         fill: none;
         stroke: #666;
-        stroke-opacity: 0.2;
+        stroke-opacity: 0.3;
       }
 
     </style>
