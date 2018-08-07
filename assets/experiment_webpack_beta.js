@@ -1832,23 +1832,28 @@ queue()
           [function(directionForward) {
             animateDots(66, 86, directionForward)();
           }, 'End'],
-          [function() {
-              selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
-              selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
-                  //if (d.age <= maxAge && d.age >= minAge) {
-                  if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                      console.log('good');
-                      return .95;
-                  } else {
-                      return .4;
-                  }
-                  /**
-                  } else {
-                      console.log('invisible');
-                      return 0;
-                  }
-                  **/
-              });
+          [function(directionForward) {
+              if (directionForward) {
+                  selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
+                  selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
+                      //if (d.age <= maxAge && d.age >= minAge) {
+                      if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                          console.log('good');
+                          return .95;
+                      } else {
+                          return .4;
+                      }
+                      /**
+                      } else {
+                          console.log('invisible');
+                          return 0;
+                      }
+                      **/
+                  });
+              } else {
+                  transitions([1980, 2018]);
+              }
+
               //create voronoi overlay as Test
               //voronoifiedPoints
               //.attr('cx', d => scaleX(d.age))
