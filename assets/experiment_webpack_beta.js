@@ -408,28 +408,28 @@ queue()
       }
     }
 
-    let pointsData = processAllPointsAlt3();
-    console.log('pointsData', pointsData)
+
 
     function voronoifyDataPoints(data) {
       const points = [];
       data.forEach(char => {
         char['ages'].forEach((actor, index) => {
-          points.push({
-            id: char.role + index,
-            age: actor.age,
-            yCoord: actor.yCoord,
-            charIndex: char['index'],
-            charGender: char['gender']
-          });
+          if (actor.age >= 18) {
+              points.push({
+                id: char.role + index,
+                age: actor.age,
+                yCoord: actor.yCoord,
+                charIndex: char['index'],
+                charGender: char['gender']
+              });
+          }
+
         });
       });
       return points;
     }
 
-    let voronoifiedPoints = voronoifyDataPoints(pointsData);
-    console.log(voronoifiedPoints);
-
+    let pointsData = processAllPointsAlt3();
 
 
     //7/26 TODO: use pointsData to calculate all voronoi points
@@ -1146,7 +1146,7 @@ queue()
         //TODO...
 
         //dateRange is an array of length 2: e.g., [1900, 1980]
-        function transitions(dateRange) {
+        function transitions(dateRange, makeVoronoi) {
             for (let eachChar in characterAges) {
                 let {gender, color, idx} = characterAges[eachChar];
                 characterAges[eachChar] = {gender: gender, color: color, idx: idx};
@@ -1205,7 +1205,7 @@ queue()
             */
 
             pointsData = processAllPointsAlt3();
-
+            console.log('pointsData', pointsData)
             //let points = svg.selectAll('.role-dots').data(data);
             let dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
 
@@ -1386,7 +1386,27 @@ queue()
 
             }
 						**/
+                    if (makeVoronoi) {
 
+
+                        let voronoifiedPoints = voronoifyDataPoints(pointsData);
+                        console.log(voronoifiedPoints);
+
+                        let voronoiGen = voronoi()
+                          .x(d => scaleX(d.age))
+                          .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
+                          .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
+
+                        console.log(voronoifiedPoints);
+                        console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
+
+                        svg.append('g').attr('class', 'voronoi-overlay')
+                          .selectAll('.path')
+                          .data(voronoiGen.polygons(voronoifiedPoints))
+                          .enter()
+                          .append('path')
+                          .attr('d', d => "M" + d.join("L") + "Z");
+                    }
         }
 
 				//Highlights
@@ -1834,27 +1854,13 @@ queue()
               //.attr('cx', d => scaleX(d.age))
               //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
 
-              let voronoiGen = voronoi()
-                .x(d => scaleX(d.age))
-                .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
-                .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
-
-              console.log(voronoifiedPoints);
-              console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
-
-              svg.append('g').attr('class', 'voronoi-overlay')
-                .selectAll('.path')
-                .data(voronoiGen.polygons(voronoifiedPoints))
-                .enter()
-                .append('path')
-                .attr('d', d => "M" + d.join("L") + "Z");
-
           }],
           [function() {
               transitions([1900, 1979]);
+              select('.voronoi-overlay').remove();
           }],
           [function() {
-              transitions([1900, 2018]);
+              transitions([1900, 2018], true);
           }]
         ];
         //select('body').on('dblclick', eventsQueue[2][0]);
