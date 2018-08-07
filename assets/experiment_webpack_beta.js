@@ -1168,18 +1168,18 @@ queue()
             });
 
             for (let char in characterAgesArrays) {
-                let role = char.substring(0,char.length - 4);
-                let ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
+                const role = char.substring(0,char.length - 4);
+                const ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
                 console.log(ages);
-                let twentyFifthPercentile = quantile(ages, .25);
-                let seventyFifthPercentile = quantile(ages, .75);
+                const twentyFifthPercentile = quantile(ages, .25);
+                const seventyFifthPercentile = quantile(ages, .75);
                 interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
                 console.log(role + ': ' + variance(ages));
             }
 
             console.log(interquartiles);
             //select group
-            let meta = svg.selectAll('.character-meta');
+            const meta = svg.selectAll('.character-meta');
             //select circles
             //let data = processAllPointsAlt2();
             //console.log(data);
@@ -1207,12 +1207,12 @@ queue()
             pointsData = processAllPointsAlt3();
             console.log('pointsData', pointsData)
             //let points = svg.selectAll('.role-dots').data(data);
-            let dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
+            const dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
 
             dotGroups.enter();
 
             console.log(dotGroups)
-            let transitionA = transition().duration(1500).ease(easeQuadInOut);
+            const transitionA = transition().duration(1500).ease(easeQuadInOut).on('end', () => console.log('finished'));
 
             dotGroups.each(function(roleData, i) {
                 const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
@@ -1770,7 +1770,9 @@ queue()
                                 <p class='quote'><em>And one man in his time plays many parts,</em></p>
                                 <p class='quote'><em>His acts being seven ages.</em></p>
                                 <p class='quote quote-author'><b>&mdash; William Shakespeare</b>, <em>As You Like It</em></p></div>
-                                <p class='story'>Imagine you’re 18, a young actor just starting school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Maggie Smith. You dream of reaching iconic status in pop culture-dom by landing roles in major franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p><p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare, making him the most performed playwright in the survey, with quadruple the number of performances as the playwright in second place.</p>`);
+                                <p class='story'>It's the beginning of a new academic year. You're an 18-year-old actor about to start school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Maggie Smith. You dream of reaching iconic status in pop culture-dom by landing roles in major film &amp; TV franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p>
+                                <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare, making him the most performed playwright in the survey, with quadruple the number of performances as the playwright in second place.</p>
+                                <p class='story'>What does the future hold for you as an aspiring Shakespearean? As it turns out, that answer largely depends on your gender...</p>`);
               //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
               console.log(band);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
