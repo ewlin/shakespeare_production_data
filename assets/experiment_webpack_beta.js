@@ -1212,7 +1212,28 @@ queue()
             dotGroups.enter();
 
             console.log(dotGroups)
-            const transitionA = transition().duration(1500).ease(easeQuadInOut).on('end', () => console.log('finished'));
+            const transitionA = transition().duration(1500).ease(easeQuadInOut).on('end', () => {
+                if (makeVoronoi) {
+
+                    let voronoifiedPoints = voronoifyDataPoints(pointsData);
+                    console.log(voronoifiedPoints);
+
+                    let voronoiGen = voronoi()
+                      .x(d => scaleX(d.age))
+                      .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
+                      .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
+
+                    console.log(voronoifiedPoints);
+                    console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
+
+                    svg.append('g').attr('class', 'voronoi-overlay')
+                      .selectAll('.path')
+                      .data(voronoiGen.polygons(voronoifiedPoints))
+                      .enter()
+                      .append('path')
+                      .attr('d', d => "M" + d.join("L") + "Z");
+                }
+            });
 
             dotGroups.each(function(roleData, i) {
                 const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
@@ -1386,27 +1407,7 @@ queue()
 
             }
 						**/
-                    if (makeVoronoi) {
 
-
-                        let voronoifiedPoints = voronoifyDataPoints(pointsData);
-                        console.log(voronoifiedPoints);
-
-                        let voronoiGen = voronoi()
-                          .x(d => scaleX(d.age))
-                          .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
-                          .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
-
-                        console.log(voronoifiedPoints);
-                        console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
-
-                        svg.append('g').attr('class', 'voronoi-overlay')
-                          .selectAll('.path')
-                          .data(voronoiGen.polygons(voronoifiedPoints))
-                          .enter()
-                          .append('path')
-                          .attr('d', d => "M" + d.join("L") + "Z");
-                    }
         }
 
 				//Highlights
@@ -1771,8 +1772,8 @@ queue()
                                 <p class='quote'><em>His acts being seven ages.</em></p>
                                 <p class='quote quote-author'><b>&mdash; William Shakespeare</b>, <em>As You Like It</em></p></div>
                                 <p class='story'>It's the beginning of a new academic year. You're an 18-year-old actor about to start school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Maggie Smith. You dream of reaching iconic status in pop culture-dom by landing roles in major film &amp; TV franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p>
-                                <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare, making him the most performed playwright in the survey, with quadruple the number of performances as the playwright in second place.</p>
-                                <p class='story'>What does the future hold for you as an aspiring Shakespearean? As it turns out, that answer largely depends on your gender...</p>`);
+                                <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> <a href='https://www.americantheatre.org/2017/09/21/the-top-20-most-produced-playwrights-of-the-2017-18-season/' target='_blank'>calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare</a>, making him the most performed playwright in the survey, with quadruple the number of productions as the playwright in second place.</p>
+                                <p class='story'>What does the future hold for you as an aspiring Shakespearean? To answer that question, let’s look at a representative sample of productions of 10 of Shakespeare’s major plays and try to tease out trends in the casting of the lead roles. For now, we’ll limit our sample to productions from 1980 onward, as it’s more representative of modern casting practices. As it turns out, your fate largely depends on your gender...</p>`);
               //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
               console.log(band);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
@@ -1833,12 +1834,44 @@ queue()
 
           }, 'From 46 to retirement...'],
           [function(directionForward) {
+            const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(66)) + 82;
+            const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
+
             animateDots(45, 66, directionForward)();
-            let mainContent = select('#main-content');
-            mainContent.html(null);
+            const mainContent = select('#main-content');
+
+            mainContent.style('opacity', 0);
+            mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+
+            mainContent.html('<h2>From age 46 to 66 <span>(performances since 1980)</span></h2><p>ALOT OF TEXT JUST TO TRY OUT....I have words here. More words on multiple lines how does this look? Good or too smooshed?</p>');
+            const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+
+            mainContent.style('top', window.innerHeight/2 - height/2);
+            mainContent.transition(0).delay(300).style('opacity', 1);
+
           }, 'After 66.'],
           [function(directionForward) {
             animateDots(66, 86, directionForward)();
+            const mainContent = select('#main-content');
+            mainContent.html(null);
+            /**
+            selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
+            selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
+                //if (d.age <= maxAge && d.age >= minAge) {
+                if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                    console.log('good');
+                    return .95;
+                } else {
+                    return .4;
+                }
+                /**
+                } else {
+                    console.log('invisible');
+                    return 0;
+                }
+
+            });**/
+
           }, 'End'],
           [function(directionForward) {
               if (directionForward) {
@@ -2012,6 +2045,11 @@ queue()
         });
 
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
+          console.log(e.target.tagName)
+          if (e.target.tagName == 'A') {
+              return;
+          }
+
           const windowWidth = window.innerWidth;
 
           if (e.clientX > windowWidth/2) {
