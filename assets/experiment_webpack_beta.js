@@ -1993,9 +1993,15 @@ queue()
               console.log('true');
               console.log(progressBarScale(state));
               if (!document.querySelector('.progress-bar-container')) {
+                  /**
+                select('body').append('svg').attr('class', 'progress-bar-svg').append('g').classed('progress-bar-container', true)
+                  .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', widthMax)
+                  .attr('fill', 'grey').attr('opacity', .4);
+                  **/
+
                 select('.svg-controls').append('g').classed('progress-bar-container', true)
                   .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', widthMax)
-                  .attr('fill', 'grey').attr('opacity', .4)
+                  .attr('fill', 'grey').attr('opacity', .4);
                 select('.progress-bar-container').append('rect').classed('progress-bar', true).attr('x', 0).attr('y', 0)
                   .attr('height', '8px')
                   .attr('width', () => progressBarScale(state))
