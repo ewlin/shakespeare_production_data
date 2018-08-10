@@ -43,7 +43,7 @@ console.log(windowWidth);
 
 
 select('.svg-main')
-  .attr('height', windowHeight - (windowHeight * .075) - 10)
+  .attr('height', windowHeight - (windowHeight * .075) - 8)
   .attr('width', '100%');
 select('.svg-controls')
   .attr('height', windowHeight * .075)
@@ -112,9 +112,9 @@ queue()
     //Setup for brushing year filter
     const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
 
-		const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]);
+	const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]);
 
-		const brush = brushX().extent([[100, 20], [widthMax - 100, controlsHeight - 10]])
+	const brush = brushX().extent([[100, 20], [widthMax - 100, controlsHeight - 10]])
       .on('brush', brushed)
       .on('end', brushEnded);
 
@@ -282,8 +282,6 @@ queue()
 	    });
 	  }
 
-    console.log('roles and ages:')
-    console.log(characterAges);
 
     function processAllPointsAlt() {
       let actorsAges = [
@@ -397,7 +395,6 @@ queue()
         let bandHeight = fullHeight/numOfBands;
         let bandStart = index * ((fullHeight - bandHeight)/(numOfBands - 1)) + fullBandStart;
         let bandEnd = bandStart + bandHeight;
-        console.log(bandEnd, bandStart, yCoord)
         if (!randomFlag) {
           //return ((bandEnd - bandStart) * Math.random()) + bandStart;
           return ((bandEnd - bandStart) * yCoord) + bandStart;
@@ -414,9 +411,9 @@ queue()
       const points = [];
       data.forEach(char => {
         char['ages'].forEach((actor, index) => {
-          if (actor.age >= 18) {
+          if (actor.age >= 17) {
               points.push({
-                id: char.role + index,
+                id: char.role + '-' + index,
                 age: actor.age,
                 yCoord: actor.yCoord,
                 charIndex: char['index'],
@@ -428,6 +425,28 @@ queue()
       });
       return points;
     }
+
+    /**
+    function voronoifyDataPoints(data) {
+      const points = [];
+      data.forEach(char => {
+        const charArray = [];
+        char['ages'].forEach((actor, index) => {
+          if (actor.age >= 17) {
+              charArray.push({
+                id: char.role + '-' + index,
+                age: actor.age,
+                yCoord: actor.yCoord,
+                charIndex: char['index'],
+                charGender: char['gender']
+              });
+          }
+
+        });
+        points.push(charArray);
+      });
+      return points;
+  }**/
 
     let pointsData = processAllPointsAlt3();
 
@@ -449,6 +468,7 @@ queue()
               ? 'role-dots center-50-dot'
               : 'role-dots tail-dot';
           })
+          .attr('id', (d, i) => `${d.role}-${i}`)
           .attr('cx', d => scaleX(d.age))
           .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
           .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
@@ -605,13 +625,14 @@ queue()
                         .attr('opacity', 0)
                         .attr('class', eachCharacter + '-label-text')
                         .text(d => formatCharacterName(d));
-
+                /**
                 select('#' + eachCharacter + 'meta')
                     .on('mouseover', function () {
                         select(this).select('.interquartiles-labels').attr('display', 'block');
                     }).on('mouseout', function () {
                         select(this).select('.interquartiles-labels').attr('display', 'none');
                     });
+                **/
 
                 }
 
@@ -815,7 +836,6 @@ queue()
                     .attr('fill-opacity', d => {
                         //if (d.age <= maxAge && d.age >= minAge) {
                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                            console.log('good');
                             return .95;
                         } else {
                             return .4;
@@ -837,7 +857,7 @@ queue()
                           return .1;
                         } else if (d.age <= maxAge) { //} && d.age >= minAge) {
                           if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                              console.log('good');
+                              //console.log('good');
                               return .95;
                           } else {
                               return .4;
@@ -963,7 +983,6 @@ queue()
                                         return .1;
                                     } else {
                                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                                            console.log('good');
                                             return .82;
                                         } else {
                                             return .35;
@@ -1147,6 +1166,10 @@ queue()
 
         //dateRange is an array of length 2: e.g., [1900, 1980]
         function transitions(dateRange, makeVoronoi) {
+            if (!makeVoronoi) {
+                document.querySelector('svg.svg-main').classList.add('mouse-disabled');
+            }
+
             for (let eachChar in characterAges) {
                 let {gender, color, idx} = characterAges[eachChar];
                 characterAges[eachChar] = {gender: gender, color: color, idx: idx};
@@ -1155,29 +1178,23 @@ queue()
                 characterAgesArrays[eachChar] = [];
             }
 
-            console.log(characterAges);
-            console.log(characterAgesArrays);
 
 
             characters.forEach(character => {
                 let characterName = character[0]['role'].toLowerCase().split(' ');
                 if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
                 characterName = characterName.join('');
-                console.log(characterName);
                 processPoints(character, characterName, true, dateRange[0], dateRange[1]); //1900 to 1979
             });
 
             for (let char in characterAgesArrays) {
                 const role = char.substring(0,char.length - 4);
                 const ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
-                console.log(ages);
                 const twentyFifthPercentile = quantile(ages, .25);
                 const seventyFifthPercentile = quantile(ages, .75);
                 interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
-                console.log(role + ': ' + variance(ages));
             }
 
-            console.log(interquartiles);
             //select group
             const meta = svg.selectAll('.character-meta');
             //select circles
@@ -1205,33 +1222,45 @@ queue()
             */
 
             pointsData = processAllPointsAlt3();
-            console.log('pointsData', pointsData)
             //let points = svg.selectAll('.role-dots').data(data);
             const dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
 
             dotGroups.enter();
 
-            console.log(dotGroups)
             const transitionA = transition().duration(1500).ease(easeQuadInOut).on('end', () => {
                 if (makeVoronoi) {
 
+                    document.querySelector('svg.svg-main').classList.remove('mouse-disabled');
+
                     let voronoifiedPoints = voronoifyDataPoints(pointsData);
-                    console.log(voronoifiedPoints);
+
 
                     let voronoiGen = voronoi()
                       .x(d => scaleX(d.age))
                       .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
                       .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
 
-                    console.log(voronoifiedPoints);
-                    console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
+                    //console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
 
                     svg.append('g').attr('class', 'voronoi-overlay')
                       .selectAll('.path')
                       .data(voronoiGen.polygons(voronoifiedPoints))
                       .enter()
                       .append('path')
-                      .attr('d', d => "M" + d.join("L") + "Z");
+                      //.attr('id', d => d.data.id)
+                      .attr('d', d => "M" + d.join("L") + "Z")
+                      .on('mouseover', d => {
+                          console.log(select(`#${d.data.id}`))//
+                          select(`#${d.data.id}`).attr('r', '10px');
+                      }).on('mouseout', d => {
+                          //3.6 3
+                          if (select(`#${d.data.id}`).classed('tail-dot')) {
+                              select(`#${d.data.id}`).attr('r', '3px');
+                          } else {
+                              select(`#${d.data.id}`).attr('r', '3.6px');
+                          }
+                      });
+
                 }
             });
 
@@ -1240,9 +1269,7 @@ queue()
                 const matchGender = roleData.ages.filter(d => d.actorGender !== roleOppoGender);
                 const oppoGender = roleData.ages.filter(d => d.actorGender === roleOppoGender);
 
-                console.log(roleData.role + ': ' + i)
                 let points = select(this).selectAll('.role-dots').data(matchGender);
-                console.log(points);
 
                 points.exit().remove();
 
@@ -1252,13 +1279,14 @@ queue()
                             ? 'role-dots center-50-dot'
                             : 'role-dots tail-dot';
                     })
+                    .attr('id', (d, i) => `${d.role}-${i}`)
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d => roleData.color)
                     .attr('fill-opacity', 0)
-							      .attr('stroke-opacity', 0)
+					.attr('stroke-opacity', 0)
                     //.attr('filter', 'url(#blurMe)')
                     .transition(transitionA)
                     .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
@@ -1268,6 +1296,7 @@ queue()
 
                 points.transition(transitionA)
                     //.attr('class', 'role-dots')
+                    .attr('id', (d, i) => `${d.role}-${i}`)
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
@@ -1536,10 +1565,8 @@ queue()
             //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             mainContent.html(`<p class='legend-text'>Before we get started, let’s get acquainted with how to navigate this story. To keep going, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</p><p class='legend-text'>How to read the charts coming up:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-            console.log(band);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
-            console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             const embedSVG = select('.embedded-svg');
             //generate random ages; 40 data points
@@ -1572,8 +1599,7 @@ queue()
             }
             let sortedSampleAges = generateAges().sort((a,b) => a - b);
             let sampleInterquartiles = [sortedSampleAges[0], quantile(sortedSampleAges, 0.25), quantile(sortedSampleAges, 0.75), sortedSampleAges[sortedSampleAges.length - 1]];
-            console.log('samples');
-            console.log(sampleInterquartiles);
+
             embedSVG.append('g')
               .classed('sampleRole', true)
               .selectAll('.roles')
@@ -1631,7 +1657,6 @@ queue()
               .text('Example Character');
 
             const braceFullCoords = makeCurlyBrace(scaleX(sampleInterquartiles[3]), 85, scaleX(sampleInterquartiles[0]), 85, 30, 0.54);
-            console.log(braceFullCoords)
             sampleMeta.append('path')
               .classed('curly-brace-full', true)
               .attr('d', braceFullCoords)
@@ -1647,7 +1672,6 @@ queue()
               .text('Full range of ages of actors when playing this role');
 
             const braceInterquartileCoords = makeCurlyBrace(scaleX(sampleInterquartiles[1]), 140, scaleX(sampleInterquartiles[2]), 140, 30, 0.54);
-            console.log(braceFullCoords)
             sampleMeta.append('path')
               .classed('curly-brace-interquartile', true)
               .attr('d', braceInterquartileCoords)
@@ -1777,8 +1801,6 @@ queue()
               //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
               console.log(band);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
-              let test = window.innerHeight/2 - height;
-              console.log(test);
               mainContent.style('top', window.innerHeight/2 - height/2);
 
               select('.svg-main').style('opacity', 0);
@@ -1796,8 +1818,6 @@ queue()
             mainContent.html('<h2>From age 18 to 23 <span>(performances since 1980)</span></h2><p>There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is described as a girl of 13 in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare anomaly like Howard, or Joey to get cast in these roles while you’re still in school (or even freshly out of school).</p>');
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
-            let test = window.innerHeight/2 - height;
-            console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition().delay(300).style('opacity', 1);
           }, 'Up through 30...'],
@@ -1811,8 +1831,6 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             mainContent.html('<h2>From age 24 to 30 <span>(performances since 1980)</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of Romeo or Juliet. By the time you’re 30, you’d be close to aging out of our favorite tragic young lovers. At 30, you’d be older than 75+% of the actors who\'ve played these roles in our dataset.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
-            let test = window.innerHeight/2 - height;
-            console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
           }, 'From 31 to 45'],
@@ -1827,8 +1845,6 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             mainContent.html(`<h2>From age 31 to 45 <span>(performances since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between the fates of men and women. As a 45-year-old actress you’d be older than any recorded <span class="juliet-color">Juliet</span>, <span class="desdemona-color">Desdemona</span>, <span class="ophelia-color">Ophelia</span>, <span class="rosalind-color">Rosalind</span>, or <span class="portia-color">Portia</span> in our sample. I mentioned earlier that we can think of the middle 50% of ages (the interquartile range) of each role as the period in which an actor is mostly likely to be cast in that role. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more mature actresses, by 45, an actress would already be older than more than 75% of her peers who’ve played the role. Contrast this with the fact that at 45, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar middle career males.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
-            let test = window.innerHeight/2 - height;
-            console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
 
@@ -1879,7 +1895,7 @@ queue()
                   selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
                       //if (d.age <= maxAge && d.age >= minAge) {
                       if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                          console.log('good');
+                          //console.log('good');
                           return .95;
                       } else {
                           return .4;
@@ -1984,24 +2000,26 @@ queue()
             }
         }
         const queueLength = eventsQueue.length;
-        let progressBarScale = scaleLinear().domain([0, queueLength]).range([0, widthMax]);
-        console.log('hello', widthMax, queueLength, progressBarScale(4));
+
+
+        let progressBarScale = scaleLinear().domain([0, queueLength]).range([0, windowWidth]);
+        //console.log('hello', widthMax, queueLength, progressBarScale(4));
         loadTitlesSlide();
 
         function updateProgressBar() {
             if (state >= 1) {
-              console.log('true');
               console.log(progressBarScale(state));
-              if (!document.querySelector('.progress-bar-container')) {
-                  /**
-                select('body').append('svg').attr('class', 'progress-bar-svg').append('g').classed('progress-bar-container', true)
-                  .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', widthMax)
+              if (!document.querySelector('.progress-bar-svg')) {
+                select('body').append('svg').attr('class', 'progress-bar-svg').attr('height', '8px').attr('width', windowWidth)
+                  .append('g').classed('progress-bar-container', true)
+                  .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', windowWidth)
                   .attr('fill', 'grey').attr('opacity', .4);
-                  **/
 
+                  /**
                 select('.svg-controls').append('g').classed('progress-bar-container', true)
                   .append('rect').attr('x', 0).attr('y', 0).attr('height', '8px').attr('width', widthMax)
                   .attr('fill', 'grey').attr('opacity', .4);
+                   **/
                 select('.progress-bar-container').append('rect').classed('progress-bar', true).attr('x', 0).attr('y', 0)
                   .attr('height', '8px')
                   .attr('width', () => progressBarScale(state))
@@ -2013,7 +2031,7 @@ queue()
               }
 
           } else {
-              const progressBar = document.querySelector('.progress-bar-container');
+              const progressBar = document.querySelector('.progress-bar-svg');
               progressBar.parentNode.removeChild(progressBar);
           }
         }
@@ -2190,7 +2208,6 @@ queue()
         //});
 
 		//Find max freq of roles at each age
-		console.log(characterAges);
 		let allAgesFreqs = [];
 		for (let character in characterAges) {
 			//let ages = Object.keys(characterAges[character]);
