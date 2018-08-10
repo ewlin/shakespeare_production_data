@@ -847,9 +847,9 @@ queue()
                         }
                         **/
                     })
-                    .attr('stroke-opacity', (d) => {
-                        d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
-                    });
+                    //.attr('stroke-opacity', (d) => {
+                    //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
+                    //});
                 } else {
                   selectAll('.role-dots').interrupt().transition(0)
                     .attr('fill-opacity', d => {
@@ -1251,7 +1251,11 @@ queue()
                       .attr('d', d => "M" + d.join("L") + "Z")
                       .on('mouseover', d => {
                           console.log(select(`#${d.data.id}`))//
-                          select(`#${d.data.id}`).attr('r', '10px');
+                          //Move the first two .attr lines to when initializing dots?
+                          select(`#${d.data.id}`).attr('r', '10px')
+                            .attr('stroke-width', '3px')
+                            .attr('stroke', d => characterAges[d.role + 'Ages']['color'])
+                            .attr('stroke-opacity', 1)
                       }).on('mouseout', d => {
                           //3.6 3
                           if (select(`#${d.data.id}`).classed('tail-dot')) {
@@ -1259,6 +1263,8 @@ queue()
                           } else {
                               select(`#${d.data.id}`).attr('r', '3.6px');
                           }
+
+                          select(`#${d.data.id}`).attr('stroke-opacity', 0);
                       });
 
                 }
@@ -2069,8 +2075,11 @@ queue()
         });
 
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
-          console.log(e.target.tagName)
           if (e.target.tagName == 'A') {
+
+          } else if (e.target.classList.contains('cta')) {
+              //e.stopPropagation();
+              console.log('this is the button');
               return;
           }
 
