@@ -9,7 +9,7 @@ import { csv, tsv, json } from 'd3-request';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
 import { variance, quantile, median, max, min } from 'd3-array';
-import { select, selectAll } from 'd3-selection';
+import { select, selectAll, event } from 'd3-selection';
 import { line } from 'd3-shape';
 import { easeLinear, easeQuadInOut } from 'd3-ease';
 import 'd3-transition';
@@ -1211,7 +1211,7 @@ queue()
 
             for (let char in characterAgesArrays) {
                 const role = char.substring(0,char.length - 4);
-                const ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 18 && age < 100);
+                const ages = characterAgesArrays[char].sort((a,b) => a - b).filter(age => age > 10 && age < 90);
                 const twentyFifthPercentile = quantile(ages, .25);
                 const seventyFifthPercentile = quantile(ages, .75);
                 interquartiles[role] = [ages[0], twentyFifthPercentile, seventyFifthPercentile, ages[ages.length-1]];
@@ -1289,6 +1289,7 @@ queue()
                           //how to create tooltip
                           //color
                           //how to display birthday
+                          console.log(event.pageX, event.pageY);
                           const imgLink = d.data.actor.image;
                           const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
                           const pronoun = d.data.charGender === 'male' ? 'He' : 'She';
@@ -1300,21 +1301,21 @@ queue()
                             .attr('stroke-opacity', 1);
                           select('#tooltip')
                             .style('opacity', 1)
-                            .style('width', '400px')
+                            .style('width', '450px')
                             .style('height', 'auto')
                             .style('top', 20)
                             .style('left', 10)
                             //.style('background', 'white')
-                            .style('border-top', `7px solid ${characterAges[d.data.actor.role + 'Ages'].color}`)
+                            .style('border-top', `8px solid ${characterAges[d.data.actor.role + 'Ages'].color}`)
                             .html(`${imgLinkHTML}
-                                    <div class='tooltip-container' style='width: ${imgLinkHTML ? '70%' : '100%'}'><p><span class='tooltip-actor'><b>${d.data.actor.actor}</b></span> played
-                                    <span class='${d.data.actor.role}-color'>${formatCharacterName(d.data.actor.role)}</span> in a production of <em>${characterToPlayDict[d.data.actor.role]}</em>
+                                    <div class='tooltip-container' style='width: ${imgLinkHTML ? '335px' : '100%'}'><p class='tooltip-main-content'><span class='tooltip-actor'><b>${d.data.actor.actor}</b></span> played
+                                    <span class='tooltip-role ${d.data.actor.role}-color'>${formatCharacterName(d.data.actor.role)}</span> in a production of <em>${characterToPlayDict[d.data.actor.role]}</em>
                                     directed by <b>${d.data.actor.director}</b> that opened on ${moment(d.data.actor.opening).format("MMMM Do, YYYY")}, and was ${ageIsEst ? 'approximately ' : ''} <b>${Math.floor(d.data.age)}
                                     years old</b> at the time of the production.</p>
-                                    <p><b>Production Company/Producers:</b> ${d.data.actor.producers}</p>
-                                    <p><b>Venue:</b> ${d.data.actor.theatre}</p>
-                                    <p>${pronoun} was born
-                                    ${ageIsEst ? 'in ~' + moment(d.data.actor.bday).year() : 'on ' + moment(d.data.actor.bday).format("MMMM Do, YYYY")}
+                                    <p class='tooltip-divider tooltip-details'><b>Production Company/Producers:</b> ${d.data.actor.producers}</p>
+                                    <p class='tooltip-details'><b>Venue:</b> ${d.data.actor.theatre}</p>
+                                    <p class='tooltip-details'>${pronoun} was born
+                                    ${ageIsEst ? 'in ~' + moment(d.data.actor.bday).year() : 'on ' + moment(d.data.actor.bday).format("MMMM Do, YYYY")} (<b><em>Source: </em></b>${d.data.actor.bdayDataSource})
                                     </p>
                                     </div>`)
                       }).on('mouseout', d => {
