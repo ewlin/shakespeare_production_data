@@ -154,7 +154,24 @@ queue()
       .attr('text-anchor', 'end')
       .attr('alignment-baseline', 'hanging');
 
-
+    const characterToPlayDict = {
+        'juliet': 'Romeo and Juliet',
+        'romeo': 'Romeo and Juliet',
+        'ophelia': 'Hamlet',
+        'hamlet': 'Hamlet',
+        'desdemona': 'Othello',
+        'othello': 'Othello',
+        'iago': 'Othello',
+        'richardIii': 'Richard III',
+        'rosalind': 'As You Like It',
+        'portia': 'The Merchant of Venice',
+        'shylock': 'The Merchant of Venice',
+        'ladyMacbeth': 'Macbeth',
+        'macbeth': 'Macbeth',
+        'cleopatra': 'Antony and Cleopatra',
+        'prospero': 'The Tempest',
+        'kingLear': 'King Lear',
+    }
 
     let characterAges = {
       /**
@@ -225,7 +242,7 @@ queue()
       let characterName = character[0]['role'].toLowerCase().split(' ');
       if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
       characterName = characterName.join('');
-      processPoints(character, characterName, true, 1980);
+      processPoints(character, characterName, true, 1980, 2019);
       //processPoints(character, characterName, 1900, 2018);
     });
 
@@ -248,6 +265,7 @@ queue()
       characterData.forEach(function(role) {
         // new if statement: role['actor'] in actorsMasterList...
         let actorIndex = actorsMasterList.findIndex(actor => role['actor'] === actor['actor_name']);
+
         //if (role['bday'] != 'person not found on wiki' && role['bday'] != 'no birthday on article' && role['bday'] != 'not a date' && role['actor_flag'] != 'flagged') {
         if (actorIndex != -1 && actorsMasterList[actorIndex]['formatted_bday'] != 'person not found on wiki'
             && actorsMasterList[actorIndex]['formatted_bday'] != 'no birthday on article'
@@ -360,7 +378,10 @@ queue()
                 isAgeEst: a['age_is_est'],
                 yCoord: Math.random(),
                 image: a['photo_url'],
-                bdayDataSource: a['bday_data_source']
+                bdayDataSource: a['bday_data_source'],
+                producers: a['company'],
+                theatre: a['venue'],
+                director: a['director']
               });
               //actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
             });
@@ -369,7 +390,9 @@ queue()
         roleAgesArray.sort((a,b) => a.age - b.age);
         rolesArr.push({role: role, gender: characterGender, index: characterAges[role + 'Ages']['idx'], color: characterColor, ages: roleAgesArray});
       }
+      console.log(rolesArr);
       return rolesArr;
+
     }
 
 
@@ -405,7 +428,17 @@ queue()
       }
     }
 
-
+    function formatCharacterName(originalText) {
+      const secondWordIndex = originalText.search(/[A-Z]/);
+      let text;
+      if (secondWordIndex > -1) {
+        const storeSecondWordFirstLetter = originalText[secondWordIndex];
+        text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + (originalText === 'richardIii' ? originalText.substring(secondWordIndex + 1).toUpperCase() : originalText.substring(secondWordIndex + 1));
+      }
+      console.log(text);
+      return text ? text[0].toUpperCase() + text.substring(1)
+                  : originalText[0].toUpperCase() + originalText.substring(1);
+    }
 
     function voronoifyDataPoints(data) {
       const points = [];
@@ -413,6 +446,7 @@ queue()
         char['ages'].forEach((actor, index) => {
           if (actor.age >= 17) {
               points.push({
+                actor: actor,
                 id: char.role + '-' + index,
                 age: actor.age,
                 yCoord: actor.yCoord,
@@ -516,18 +550,6 @@ queue()
       const fullCharacterAgesRange = interquartiles[eachCharacter];
       const dataRange = [fullCharacterAgesRange[0], fullCharacterAgesRange[0]];
       const dataRangeMiddleFifty = [middleFiftyPercent[0], middleFiftyPercent[0]];
-
-      function formatCharacterName(originalText) {
-        const secondWordIndex = originalText.search(/[A-Z]/);
-        let text;
-        if (secondWordIndex > -1) {
-          const storeSecondWordFirstLetter = originalText[secondWordIndex];
-          text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + (originalText === 'richardIii' ? originalText.substring(secondWordIndex + 1).toUpperCase() : originalText.substring(secondWordIndex + 1));
-        }
-        console.log(text);
-        return text ? text[0].toUpperCase() + text.substring(1)
-                    : originalText[0].toUpperCase() + originalText.substring(1);
-      }
 
       charMeta.append('text').datum(dataRange)
         .attr('x', d => scaleX(d[0]) - 5)
@@ -1249,13 +1271,52 @@ queue()
                       .append('path')
                       //.attr('id', d => d.data.id)
                       .attr('d', d => "M" + d.join("L") + "Z")
+                      /**{
+                        age: parseFloat(age),
+                        role: role,
+                        race: a['ethnicity'],
+                        opening: a['opening_date'],
+                        bday: a['formatted_bday'],
+                        actorGender: a['actor_gender'],
+                        actor: a['actor'],
+                        isAgeEst: a['age_is_est'],
+                        yCoord: Math.random(),
+                        image: a['photo_url'],
+                        bdayDataSource: a['bday_data_source']
+                        }**/
                       .on('mouseover', d => {
-                          console.log(select(`#${d.data.id}`))//
+                          //TODO: create temp variables based on data.
+                          //how to create tooltip
+                          //color
+                          //how to display birthday
+                          const imgLink = d.data.actor.image;
+                          const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
+                          const pronoun = d.data.charGender === 'male' ? 'He' : 'She';
+                          const ageIsEst = d.data.actor.isAgeEst == 'TRUE' ? true : false;
                           //Move the first two .attr lines to when initializing dots?
                           select(`#${d.data.id}`).attr('r', '10px')
                             .attr('stroke-width', '3px')
                             .attr('stroke', d => characterAges[d.role + 'Ages']['color'])
-                            .attr('stroke-opacity', 1)
+                            .attr('stroke-opacity', 1);
+                          select('#tooltip')
+                            .style('opacity', 1)
+                            .style('width', '400px')
+                            .style('height', 'auto')
+                            .style('top', 20)
+                            .style('left', 10)
+                            //.style('background', 'white')
+                            .style('border-top', `7px solid ${characterAges[d.data.actor.role + 'Ages'].color}`)
+                            .html(`${imgLinkHTML}
+                                    <div class='tooltip-container' style='width: ${imgLinkHTML ? '70%' : '100%'}'><p><span class='tooltip-actor'><b>${d.data.actor.actor}</b></span> played
+                                    <span class='${d.data.actor.role}-color'>${formatCharacterName(d.data.actor.role)}</span> in a production of <em>${characterToPlayDict[d.data.actor.role]}</em>
+                                    directed by <b>${d.data.actor.director}</b> that opened on ${moment(d.data.actor.opening).format("MMMM Do, YYYY")}, and was ${ageIsEst ? 'approximately ' : ''} <b>${Math.floor(d.data.age)}
+                                    years old</b> at the time of the production.</p>
+                                    <p><b>Production Company/Producers:</b> ${d.data.actor.producers}</p>
+                                    <p><b>Venue:</b> ${d.data.actor.theatre}</p>
+                                    <p>${pronoun} was born
+                                    ${ageIsEst ? 'in ~' + moment(d.data.actor.bday).year() : 'on ' + moment(d.data.actor.bday).format("MMMM Do, YYYY")}
+                                    </p>
+                                    </div>`)
                       }).on('mouseout', d => {
                           //3.6 3
                           if (select(`#${d.data.id}`).classed('tail-dot')) {
@@ -1265,6 +1326,9 @@ queue()
                           }
 
                           select(`#${d.data.id}`).attr('stroke-opacity', 0);
+
+                          select('#tooltip')
+                            .style('opacity', 0);
                       });
 
                 }
@@ -1924,11 +1988,40 @@ queue()
 
           }],
           [function() {
+              select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
               transitions([1900, 1979]);
-              select('.voronoi-overlay').remove();
           }],
           [function() {
-              transitions([1900, 2018], true);
+              //const slideDistance = scaleX(minAge) - scaleX(18);
+              function translateUp() {
+                  select('.svg-main').transition().duration(2100).attr('transform', `translate(0,-${band * 9})`);
+                  //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                  //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                  //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
+                  //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+              }
+              translateUp();
+
+              select('.voronoi-overlay').remove();
+
+          }],
+          [function() {
+              //const slideDistance = scaleX(minAge) - scaleX(18);
+              function translateDown() {
+                  select('.svg-main').transition().duration(2100).attr('transform', `translate(0,${band * 9 + 20})`);
+                  //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                  //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                  //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
+                  //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+              }
+              translateDown();
+
+              select('.voronoi-overlay').remove();
+
+          }],
+          [function() {
+              select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
+              transitions([1900, 2019], true);
           }]
         ];
         //select('body').on('dblclick', eventsQueue[2][0]);
@@ -1959,7 +2052,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
 
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'>What we can learn about how age, gender, and race affect casting from 1000+ productions of 10 Shakespearean plays between 1900 and 2018</p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">August 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>What we can learn about how age, gender, and race affect casting from 1000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">August 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;

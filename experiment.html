@@ -23,6 +23,7 @@
     <link href="https://fonts.googleapis.com/css?family=Rufina:400,700|Cardo:400,400i,700|Lato:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lustria|IM+Fell+English+SC" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=IM+Fell+English:400,400i" rel="stylesheet">
     <link rel="icon"
       type="image/png"
       href="assets/images/new-graph.png">
@@ -43,6 +44,7 @@
 
       .instructions {
          font-family: 'Tajawal';
+         font-weight: 500;
          font-size: .9em;
          position: absolute;
          bottom: 35;
@@ -191,7 +193,7 @@
       }
 
       .byline, .pub-date {
-          font-family: 'Lato';
+          font-family: 'IM Fell English';
           font-weight: 400;
           margin: auto;
           text-align: center;
@@ -202,8 +204,14 @@
       .byline {
           margin-top: 20px;
       }
-      .byline span {
+      #main-content .byline span {
+          font-family: 'IM Fell English';
           font-weight: 700;
+          letter-spacing: 2px;
+      }
+
+      .pub-date {
+          letter-spacing: 2px;
       }
 
         #main-content .titles-card a.logo span {
@@ -220,7 +228,9 @@
         width: 700px;
         margin: auto;
         line-height: 20px;
-        font-family: 'Tajawal';
+        letter-spacing: 1px;
+        font-family: 'IM Fell English';
+        font-size: 1.1em;
       }
 
         .byline a {
@@ -364,37 +374,59 @@
           cursor: pointer;
       }
 
-      span.hamlet-color {
-        color: #FAE12F;
-      }
-
-      span.ophelia-color {
-          color: #c44ec6;
-      }
-
       span.romeo-color {
         color: #F7973A;
       }
 
-      span.juliet-color {
-        color: #A96B88;
+      span.hamlet-color {
+        color: #FAE12F;
+      }
+
+      span.iago-color {
+        color: #F45C42;
       }
 
       span.macbeth-color {
         color: #F36735;
       }
 
-      span.desdemona-color {
-          color: #FC5863;
-      }
-
       span.othello-color {
         color: #F8B535;
       }
 
-      span.iago-color {
-        color: #F45C42;
+      span.richardIii-color {
+        color: #fb6b5a;
       }
+
+      span.shylock-color {
+        color: #c0c400;
+      }
+
+      span.prospero-color {
+        color: #FC7136;
+      }
+
+      span.kingLear-color {
+        color: #F57A3E;
+      }
+
+
+
+
+
+
+      span.juliet-color {
+        color: #A96B88;
+      }
+
+      span.desdemona-color {
+          color: #FC5863;
+      }
+
+      span.ophelia-color {
+          color: #c44ec6;
+      }
+
 
       span.portia-color {
         color: #AD5468;
@@ -404,14 +436,15 @@
         color: #CA6379;
       }
 
-
       span.ladyMacbeth-color {
         color: #78779E;
       }
 
-      span.richardIii-color {
-        color: #fb6b5a;
+      span.cleopatra-color {
+        color: #577EAD;
       }
+
+
 
       svg.svg-main.mouse-disabled {
         pointer-events: none;
@@ -440,6 +473,42 @@
       .voronoi-overlay {
           cursor: pointer;
       }
+
+      #tooltip {
+         font-family: 'Tajawal';
+         opacity: 0;
+         position: absolute;
+         color: black;
+         pointer-events: none;
+         display: flex;
+         background: rgba(230,230,230,1);
+         box-shadow: 0 3px 3px 1px rgba(210,210,210,.5);
+         padding-bottom: 10px;
+
+      }
+
+      #tooltip h1, #tooltip h2, #tooltip h3, #tooltip p {
+         padding: 0;
+         margin: 0;
+      }
+
+      .tooltip-img-container {
+          width: 28%;
+          padding-top: 17px;
+          padding-left: 12px;
+          padding-right: 3px;
+      }
+
+      .tooltip-container {
+          /*width: 65%;*/
+          padding-top: 17px;
+          padding-right: 12px;
+          padding-left: 12px;
+      }
+
+       .tooltip-img-container img {
+         width: 100%;
+       }
 
     </style>
 
