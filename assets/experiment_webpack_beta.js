@@ -9,7 +9,7 @@ import { csv, tsv, json } from 'd3-request';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
 import { variance, quantile, median, max, min } from 'd3-array';
-import { select, selectAll, event } from 'd3-selection';
+import { select, selectAll, event, mouse } from 'd3-selection';
 import { line } from 'd3-shape';
 import { easeLinear, easeQuadInOut } from 'd3-ease';
 import 'd3-transition';
@@ -1290,6 +1290,44 @@ queue()
                           //color
                           //how to display birthday
                           console.log(event.pageX, event.pageY);
+                          console.log(mouse(document.querySelector('body')));
+
+
+                          const containerCoords = {top: 0, left: 0, right: windowWidth, bottom: windowHeight};
+                          let leftAnchor, rightAnchor;
+                          const tooltip = select('#tooltip');
+
+                          function determinQuadrant(container, coordsToCheck) {
+                            const {left, right, top, bottom} = container;
+                            const xHalfway = (right - left)/2 + left;
+                            const yHalfway = (bottom - top)/2 + top;
+
+
+                            if (coordsToCheck[0] >= xHalfway && coordsToCheck[1] >= yHalfway) {
+                                //lower right quad
+                                console.log('LR');
+                                tooltip.style('top', 20).style('left', 10);
+                            } else if (coordsToCheck[0] >= xHalfway && coordsToCheck[1] < yHalfway) {
+                                //upper right quad
+                                console.log('UR');
+                                tooltip.style('bottom', null).style('left', null);
+                                tooltip.style('top', coordsToCheck[1] + 18).style('right', windowWidth - coordsToCheck[0]);
+
+                            } else if (coordsToCheck[0] < xHalfway && coordsToCheck[1] < yHalfway) {
+                                //upper left quad
+                                console.log('UL');
+                                tooltip.style('bottom', null).style('right', null);
+                                tooltip.style('top', coordsToCheck[1] + 18).style('left', coordsToCheck[0] + 18);
+
+                            } else if (coordsToCheck[0] < xHalfway && coordsToCheck[1] >= yHalfway) {
+                                //lower left quad
+                                console.log('LL');
+                                tooltip.style('top', 20).style('left', 10);
+                            }
+                          }
+
+                          determinQuadrant(containerCoords, mouse(document.querySelector('body')));
+
                           const imgLink = d.data.actor.image;
                           const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
                           const pronoun = d.data.charGender === 'male' ? 'He' : 'She';
@@ -1299,12 +1337,11 @@ queue()
                             .attr('stroke-width', '3px')
                             .attr('stroke', d => characterAges[d.role + 'Ages']['color'])
                             .attr('stroke-opacity', 1);
-                          select('#tooltip')
+
+                          tooltip
                             .style('opacity', 1)
                             .style('width', '450px')
                             .style('height', 'auto')
-                            .style('top', 20)
-                            .style('left', 10)
                             //.style('background', 'white')
                             .style('border-top', `8px solid ${characterAges[d.data.actor.role + 'Ages'].color}`)
                             .html(`${imgLinkHTML}
