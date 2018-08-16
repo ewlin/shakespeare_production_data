@@ -1347,8 +1347,12 @@ queue()
 
                           const imgLink = d.data.actor.image;
                           const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
-                          const pronoun = d.data.charGender === 'male' ? 'He' : 'She';
+                          const pronoun = d.data.charGender === 'male' ? 'himself' : 'herself';
                           const ageIsEst = d.data.actor.isAgeEst == 'TRUE' ? true : false;
+
+                          const directorText = d.data.actor.director == 'director unknown'
+                            ? ''
+                            : `directed by ${d.data.actor.director == d.data.actor.actor ? pronoun : '<b>' + d.data.actor.director + '</b>'}`;
                           //Move the first two .attr lines to when initializing dots?
                           select(`#${d.data.id}`).attr('r', '10px')
                             .attr('stroke-width', '3px')
@@ -1364,7 +1368,7 @@ queue()
                             .html(`${imgLinkHTML}
                                     <div class='tooltip-container' style='width: ${imgLinkHTML ? '335px' : '100%'}'><p class='tooltip-main-content'><span class='tooltip-actor'><b>${d.data.actor.actor}</b></span> played
                                     <span class='tooltip-role ${d.data.actor.role}-color'>${formatCharacterName(d.data.actor.role)}</span> in a production of <em>${characterToPlayDict[d.data.actor.role]}</em>
-                                    directed by <b>${d.data.actor.director}</b> that opened on ${moment(d.data.actor.opening).format("MMMM Do, YYYY")}, and was ${ageIsEst ? 'approximately ' : ''} <b>${Math.floor(d.data.age)}
+                                    ${directorText} that opened on ${moment(d.data.actor.opening).format("MMMM Do, YYYY")}, and was ${ageIsEst ? 'approximately ' : ''} <b>${Math.floor(d.data.age)}
                                     years old</b> at the time of the production.</p>
                                     <p class='tooltip-divider tooltip-details'><b>Production Company/Producers:</b> ${d.data.actor.producers}</p>
                                     <p class='tooltip-details'><b>Venue:</b> ${d.data.actor.theatre}</p>
