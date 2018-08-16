@@ -42,10 +42,10 @@ console.log(windowWidth);
 //10 is padding on bottom
 
 
-select('.svg-main')
+svg
   .attr('height', windowHeight - (windowHeight * .075) - 8)
   .attr('width', '100%');
-select('.svg-controls')
+brushControls
   .attr('height', windowHeight * .075)
   .attr('width', '100%');
 
@@ -667,11 +667,11 @@ queue()
                 //calculate max Width for partial axis
                 //ration of max width
                 // (widthMax - 100)/75 == the width of each year in age
-                let maxAxisWidth = (widthMax - 100)/75 * (maxAge - 10);
+                const maxAxisWidth = (widthMax - 100)/75 * (maxAge - 10);
                 // let scaleX = scaleLinear().domain([15, 85]).range([40, widthMax - 80]);
-                let scaleXNew = scaleLinear().domain([10, maxAge]).range([60, scaleX(maxAge)]);
+                const scaleXNew = scaleLinear().domain([10, maxAge]).range([60, scaleX(maxAge)]);
 
-                let tickValues = [18, 20];
+                const tickValues = [18, 20];
 
                 while (tickValues[tickValues.length - 1] < maxAge) {
                     let nextLabelVal = maxAge - tickValues[tickValues.length - 1] < 10 ? maxAge : tickValues[tickValues.length - 1] + 10;
@@ -956,7 +956,7 @@ queue()
 
 
 
-                    let initialLabel = svg.select(`#${eachCharacter}meta`).select('.character-label-initial').datum(dataRange);
+                    const initialLabel = svg.select(`#${eachCharacter}meta`).select('.character-label-initial').datum(dataRange);
 
                     if (directionForward) {
                       initialLabel
@@ -1289,11 +1289,17 @@ queue()
                           //how to create tooltip
                           //color
                           //how to display birthday
-                          console.log(event.pageX, event.pageY);
-                          console.log(mouse(document.querySelector('body')));
+                          //console.log(event.pageX, event.pageY);
+                          //console.log(mouse(document.querySelector('body')));
 
 
-                          const containerCoords = {top: 0, left: 0, right: windowWidth, bottom: windowHeight};
+                          const containerCoords = {
+                              top: 0,
+                              left: 0,
+                              right: windowWidth,
+                              bottom: windowHeight
+                          };
+
                           let leftAnchor, rightAnchor;
                           const tooltip = select('#tooltip');
 
@@ -1306,27 +1312,38 @@ queue()
                             if (coordsToCheck[0] >= xHalfway && coordsToCheck[1] >= yHalfway) {
                                 //lower right quad
                                 console.log('LR');
-                                tooltip.style('top', 20).style('left', 10);
+                                tooltip.style('top', null).style('left', null);
+
+                                tooltip.style('bottom', windowHeight - coordsToCheck[1] - 18)
+                                    .style('right', windowWidth - (coordsToCheck[0] + (windowWidth - 1230)/2));
                             } else if (coordsToCheck[0] >= xHalfway && coordsToCheck[1] < yHalfway) {
                                 //upper right quad
                                 console.log('UR');
                                 tooltip.style('bottom', null).style('left', null);
-                                tooltip.style('top', coordsToCheck[1] + 18).style('right', windowWidth - coordsToCheck[0]);
+                                tooltip.style('top', coordsToCheck[1] +  windowHeight * .075 + 18)
+                                    .style('right', windowWidth - (coordsToCheck[0] + (windowWidth - 1230)/2));
 
                             } else if (coordsToCheck[0] < xHalfway && coordsToCheck[1] < yHalfway) {
                                 //upper left quad
                                 console.log('UL');
                                 tooltip.style('bottom', null).style('right', null);
-                                tooltip.style('top', coordsToCheck[1] + 18).style('left', coordsToCheck[0] + 18);
+                                tooltip.style('top', coordsToCheck[1] +  windowHeight * .075 + 18)
+                                    .style('left', coordsToCheck[0] + (windowWidth - 1230)/2 + 18);
 
                             } else if (coordsToCheck[0] < xHalfway && coordsToCheck[1] >= yHalfway) {
                                 //lower left quad
                                 console.log('LL');
-                                tooltip.style('top', 20).style('left', 10);
+                                tooltip.style('top', null).style('right', null);
+
+                                tooltip.style('bottom', windowHeight - coordsToCheck[1] - 18)
+                                    .style('left', coordsToCheck[0] + (windowWidth - 1230)/2 + 18);
                             }
                           }
 
-                          determinQuadrant(containerCoords, mouse(document.querySelector('body')));
+                          //instead of mouse(), use dot locations
+                          const x = scaleX(d.data.age);
+                          const y = d.data.charGender == 'male' ? male(d.data.charIndex, d.data.yCoord) : female(d.data.charIndex, d.data.yCoord);
+                          determinQuadrant(containerCoords, [x, y]);
 
                           const imgLink = d.data.actor.image;
                           const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
@@ -1351,7 +1368,7 @@ queue()
                                     years old</b> at the time of the production.</p>
                                     <p class='tooltip-divider tooltip-details'><b>Production Company/Producers:</b> ${d.data.actor.producers}</p>
                                     <p class='tooltip-details'><b>Venue:</b> ${d.data.actor.theatre}</p>
-                                    <p class='tooltip-details'>${pronoun} was born
+                                    <p class='tooltip-details'>${d.data.actor.actor} was born
                                     ${ageIsEst ? 'in ~' + moment(d.data.actor.bday).year() : 'on ' + moment(d.data.actor.bday).format("MMMM Do, YYYY")} (<b><em>Source: </em></b>${d.data.actor.bdayDataSource})
                                     </p>
                                     </div>`)
@@ -1367,6 +1384,8 @@ queue()
 
                           select('#tooltip')
                             .style('opacity', 0);
+                      }).on('mousedown', d => {
+                          event.stopPropagation();
                       });
 
                 }
@@ -1659,6 +1678,148 @@ queue()
             animateDots(46, 85, false)
         ];
         */
+        function skipToExplore() {
+            const tickValues = [18, 20];
+
+            while (tickValues[tickValues.length - 1] < 86) {
+                let nextLabelVal = 86 - tickValues[tickValues.length - 1] < 10 ? 86 : tickValues[tickValues.length - 1] + 10;
+                tickValues.push(nextLabelVal);
+            }
+
+            state = eventsQueue.length;
+            animateStop = true;
+            select('.svg-main').style('opacity', 1);
+
+            const mainContent = select('#main-content');
+            mainContent.html(null);
+
+            function createBracket(range, anchor, beamLength, thickness, className, label) {
+                if (!document.querySelector(`.${className}`)) {
+                    let bracket = svg.append('g').attr('class', className);
+                    /**
+                    bracket.append('rect').attr('x', 0).attr('y', range[0])
+                        .attr('width', anchor)
+                        .attr('height', range[1] - range[0])
+                        .attr('fill', '#1a1b1e')
+                        .attr('fill-opacity', .73);
+                    **/
+
+                    bracket.append('line').attr('x1', anchor).attr('y1', range[0]).attr('x2', anchor).attr('y2', range[1])
+                        .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
+
+                    bracket.append('line').attr('x1', anchor)
+                        .attr('y1', range[0] + thickness/2)
+                        .attr('x2', anchor + beamLength)
+                        .attr('y2', range[0] + thickness/2)
+                        .attr('stroke-width', `${thickness}px`)
+                        .attr('stroke', 'white');
+
+                    bracket.append('line').attr('x1', anchor).attr('y1', range[1] - thickness/2)
+                            .attr('x2', anchor + beamLength).attr('y2', range[1] - thickness/2)
+                            .attr('stroke-width', `${thickness}px`).attr('stroke', 'white');
+
+                    bracket.append('text')
+                        .style('letter-spacing', '1')
+                        .attr('class', 'bracket-text')
+                        .attr('x', anchor)
+                        .attr('y', ((range[1]-range[0])/2) + range[0])
+                        .attr('stroke', 'white')
+                        .attr('text-anchor', 'middle')
+                        .attr('transform', `rotate(270, ${anchor}, ${(range[1]-range[0])/2 + range[0]}) translate(0,-10)`)
+                        .text(label);
+
+                }
+            }
+
+
+            if (!document.querySelector('.axis')) {
+                svg.append('g')
+                    .attr('class', 'x axis')
+                    .attr('opacity', 0)
+                                        //.attr('transform', `translate(0,${heightMax/2 - 10})`)
+                 .call(axisBottom(scaleX).tickValues(tickValues).tickSize(heightMax - 25))
+                  .transition(2000)
+                  .attr('opacity', 1)
+
+                                    selectAll('.axis .tick text')
+                  .attr('transform', `translate(0,-${(band * 9) + 18})`);
+
+                                    selectAll('.axis .tick line')
+                                        .attr('stroke-dasharray', '2,2')
+                                        .attr('stroke-opacity', .2)
+                                        .attr('transform', `translate(0,15)`);
+
+                select('.domain').remove();
+
+                const ageAxis = document.querySelector('.axis');
+
+                //invisible rect
+                svg.append('rect').attr('x', 0).attr('y', 15)
+                    .attr('width', 40)
+                    .attr('height', heightMax - 25)
+                    .attr('fill', '#1a1b1e')
+                    .attr('fill-opacity', .92);
+
+                const axisLabel = svg.append('text').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
+                    .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
+                    .attr('text-anchor', 'middle')
+                    .attr('stroke', '#a6abb5')
+                    .attr('font-size', '9px')
+                    .attr('transform', `translate(0,${band * 7 + 13})`)
+
+
+                axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
+                    .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
+                    .text('AGE OF ACTOR')
+                    .style('letter-spacing', '1')
+                    .attr('dy', '8px');
+                axisLabel.append('tspan').attr('y', ageAxis.getBoundingClientRect().top - document.querySelector('.svg-main').getBoundingClientRect().top)
+                    .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
+                    .text('DURING PRODUCTION')
+                    .style('letter-spacing', '1')
+                    .attr('dy', '23px').append('tspan').attr('class', 'note-indicator').text('*');
+
+
+                    /*
+                    .append('tspan')
+                    .attr('class', 'note-indicator')
+                    .text('*')
+                    .attr('font-size', '12px');
+                    //.attr('baseline-shift', 'super');
+                    */
+
+            } else {
+                svg.select('g.axis').transition(2000)
+                    .call(axisBottom(scaleX)
+                    .tickValues(tickValues)
+                    .tickSize(heightMax - 25));
+
+                select('.domain').remove();
+
+                selectAll('.axis .tick text')
+                    .attr('transform', `translate(0,-${(band * 9) + 18})`);
+
+                selectAll('.axis .tick line')
+                    .attr('stroke-dasharray', '2,2')
+                    .attr('stroke-opacity', .2)
+                    .attr('transform', `translate(0,15)`);
+            }
+
+            const ageAxis = document.querySelector('.axis');
+            console.log('left side of axis:' + ageAxis.getBoundingClientRect().left);
+
+            //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+              //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+            createBracket([15, (band * 7) + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
+            createBracket([(band * 7) + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
+
+
+
+            eventsQueue[eventsQueue.length - 1][0]();
+            selectAll('.label-text').attr('opacity', 1).select('textPath').attr('opacity', 1);
+
+        }
+
         const eventsQueue = [
           [function() {
 
@@ -2126,7 +2287,7 @@ queue()
                 .attr('fill-opacity', .4);
 
 
-              var t = interval(function(elapsed) {
+              let t = interval(function(elapsed) {
                 svg.selectAll('circle').transition().duration(400)
                   .attr('r', () => (Math.random() * 3 + 5) + 'px')
                   .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
@@ -2211,6 +2372,8 @@ queue()
           } else if (e.target.classList.contains('cta')) {
               //e.stopPropagation();
               console.log('this is the button');
+              skipToExplore();
+
               return;
           }
 
