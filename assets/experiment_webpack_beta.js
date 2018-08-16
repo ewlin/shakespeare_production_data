@@ -1693,6 +1693,8 @@ queue()
             const mainContent = select('#main-content');
             mainContent.html(null);
 
+            updateProgressBar();
+
             function createBracket(range, anchor, beamLength, thickness, className, label) {
                 if (!document.querySelector(`.${className}`)) {
                     let bracket = svg.append('g').attr('class', className);
@@ -1816,7 +1818,17 @@ queue()
 
 
             eventsQueue[eventsQueue.length - 1][0]();
+            selectAll('.character-meta-inner').attr('opacity', 1);
+            selectAll('.character-label-initial').attr('opacity', 0);
+            selectAll('.arrow').attr('opacity', 0);
+
             selectAll('.label-text').attr('opacity', 1).select('textPath').attr('opacity', 1);
+            selectAll('.character-meta').select('circle').attr('fill-opacity', 0.6);
+
+            //.attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
+
+
+
 
         }
 
