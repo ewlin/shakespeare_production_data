@@ -1375,7 +1375,10 @@ queue()
                           }
 
                           const ageIsEst = d.data.actor.isAgeEst == 'TRUE' ? true : false;
+                          const genderBend = (d.data.charGender == 'male' && d.data.actor.actorGender == 'female' ||
+                                                d.data.charGender == 'female' && d.data.actor.actorGender == 'male') ? true : false;
 
+                          const genderBendText = genderBend ? `<p class='tooltip-details'><span class='tooltip-role-gender ${d.data.actor.role}-color'>${d.data.charGender == 'male' ? '\u2640' : '\u2642'}</span> <b>${d.data.actor.actor} is playing a character of the opposite gender</b></p>` : '';
 
                           let actorEthnicity;
                           let raceLine;
@@ -1427,6 +1430,7 @@ queue()
                                     ${ageIsEst ? 'in ~' + moment(d.data.actor.bday).year() : 'on ' + moment(d.data.actor.bday).format("MMMM Do, YYYY")} (<b><em>Source: </em></b>${d.data.actor.bdayDataSource})
                                     </p>
                                     ${actorEthnicity}
+                                    ${genderBendText}
                                     </div>`)
                       }).on('mouseout', d => {
                           //3.6 3
@@ -2210,7 +2214,7 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<h2>From age 31 to 45 <span>(performances since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between the opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more seasonsed actresses, by 45, an actress would already be older than over 75% of her peers who’ve played the role. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar middle career males.</p>`);
+            mainContent.html(`<h2>From age 31 to 45 <span>(performances since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more seasonsed actresses, by 45, an actress would already be older than over 75% of her peers who’ve played the role. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar middle career males.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
@@ -2226,7 +2230,7 @@ queue()
             mainContent.style('opacity', 0);
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-            mainContent.html('<h2>From age 46 to 66 <span>(performances since 1980)</span></h2><p>ALOT OF TEXT JUST TO TRY OUT....I have words here. More words on multiple lines how does this look? Good or too smooshed?</p>');
+            mainContent.html('<h2>From age 46 to 66 <span>(performances since 1980)</span></h2><p>By the time you hit retirement age in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a>, as an actress, you’re basically out of female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than 25% or more of the actors who have played this role.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
 
             mainContent.style('top', window.innerHeight/2 - height/2);
