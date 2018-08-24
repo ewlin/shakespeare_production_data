@@ -103,13 +103,13 @@ Adrian Lester	1968-08-14T00:00:00	male	Black	FALSE		Wikipedia	TRUE		Jamaican
 Nina Sosanya	1969-06-06T00:00:00	female	Black	FALSE		Wikipedia	TRUE		Nigerian,Yoruba
 Victor Williams	1970-09-19T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/48/Victor_Williams_actor.jpg/220px-Victor_Williams_actor.jpg	none
 Shaun Parkes	1973-02-09T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Shaun-Parkes-20081003_09378.jpg/200px-Shaun-Parkes-20081003_09378.jpg	Barbadian
-Kananu Kirimi	1977-01-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		Kenyan,Scottish
-Nonso Anozie	1979-01-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Nonso_Anozie_at_the_Pan_Premiere_%28cropped%29.jpg/220px-Nonso_Anozie_at_the_Pan_Premiere_%28cropped%29.jpg	Nigerian
+Kananu Kirimi	1977-07-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		Kenyan,Scottish
+Nonso Anozie	1979-05-28T00:00:00	male	Black	FALSE	https://www.imdb.com/name/nm1996829/	Wikipedia/IMDb	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Nonso_Anozie_at_the_Pan_Premiere_%28cropped%29.jpg/220px-Nonso_Anozie_at_the_Pan_Premiere_%28cropped%29.jpg	Nigerian
 Ty Jones	1970-01-01T00:00:00	male	Black	TRUE		http://www1.udel.edu/udaily/2016/mar/PaulRJonesLecture031116.html	TRUE		none
-Lorraine Burroughs	1981-01-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		none
-Vinette Robinson	1985-01-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		West Indian
+Lorraine Burroughs	1981-07-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		none
+Vinette Robinson	1985-07-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		West Indian
 Condola Rashad	1986-12-11T00:00:00	female	Black	FALSE		Wikipedia	TRUE		none
-Paapa Essiedu	1990-01-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Hayfestival-2016-brotton-essiedu-peake.jpg/220px-Hayfestival-2016-brotton-essiedu-peake.jpg	Ghanaian
+Paapa Essiedu	1990-07-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Hayfestival-2016-brotton-essiedu-peake.jpg/220px-Hayfestival-2016-brotton-essiedu-peake.jpg	Ghanaian
 Ray Fearon	1973-08-05T00:00:00	male	Black	FALSE		Google	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Kathrine_Windfeld_och_Ray_Fearon.JPG/220px-Kathrine_Windfeld_och_Ray_Fearon.JPG	none
 Adetomiwa Edun	1984-03-04T00:00:00	male	Black	FALSE		Wikipedia/Google	TRUE		Yoruba,Ghanaian,Ghanaian,English
 Tendayi Jembere	no birthday on article	male	Black	FALSE			TRUE		Zimbabwean
@@ -189,7 +189,7 @@ Lena Ashwell	1872-09-28T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikime
 Maude Adams	1872-11-11T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/78/Maude_Adams1.jpg/220px-Maude_Adams1.jpg	English
 Lilian Braithwaite	1873-03-09T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Lilian_Braithwaite_by_Charles_Sims.jpg/220px-Lilian_Braithwaite_by_Charles_Sims.jpg	none
 Fay Davis	1873-12-15T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Charles Leggett	1967-07-01T00:00:00	male	none	TRUE	https://drama.cmu.edu/people/alumni/class-of-1989/	Carnegie Mellon University alumni profile	TRUE		none
+Charles Leggett	1967-01-01T00:00:00	male	none	TRUE	https://drama.cmu.edu/people/alumni/class-of-1989/	Carnegie Mellon University alumni profile	TRUE		none
 Gertrude Elliott	1874-12-14T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Robert Loraine	1876-01-14T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Robert_Loraine_Vanity_Fair_10_January_1912.jpg/220px-Robert_Loraine_Vanity_Fair_10_January_1912.jpg	none
 Hutin Britton	1876-04-24T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
@@ -328,7 +328,7 @@ Laurence Payne	1919-06-05T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Uta Hagen	1919-06-12T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/55/Robeson_Hagen_Othello.jpg/200px-Robeson_Hagen_Othello.jpg	none
 Sam Wanamaker	1919-06-14T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Sam_Wanamaker_-_1961.jpg/220px-Sam_Wanamaker_-_1961.jpg	Ukrainian-Jewish
 Michael Higgins	1920-01-20T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Leo Mckern	1920-03-16T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0a/McKernRyansDaughter.png/220px-McKernRyansDaughter.png	none
+Leo McKern	1920-03-16T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0a/McKernRyansDaughter.png/220px-McKernRyansDaughter.png	none
 William Hutt	1920-05-02T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/8/84/William_Hutt.jpg	none
 David Peel	1920-06-19T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Michael Aldridge	1920-09-09T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/thumb/2/2c/Seymour6519.jpg/220px-Seymour6519.jpg	none
@@ -450,7 +450,7 @@ David Canary	1938-08-25T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedi
 Derek Jacobi	1938-10-22T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Derek_Jacobi_2013.jpg/220px-Derek_Jacobi_2013.jpg	French,French,Huguenot,German,German
 Nicholas Pennell	1938-11-19T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Jackie Burroughs	1939-02-02T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/4/4a/Jackie_Burroughs.jpg	English
-Linda Marsh	1939-02-08T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/23px-Flag_of_the_United_States.svg.png	none
+Linda Marsh	1939-02-08T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Janet Suzman	1939-02-09T00:00:00	female	none	FALSE		Wikipedia	TRUE		Lithuanian-Jewish,Lithuanian-Jewish
 Kathleen Widdoes	1939-03-21T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Ian McKellen	1939-05-25T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/15/SDCC13_-_Ian_McKellen.jpg/220px-SDCC13_-_Ian_McKellen.jpg	Scottish,Ulster-Scottish
@@ -460,13 +460,13 @@ Carole Shelley	1939-08-16T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wiki
 Len Cariou	1939-09-30T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/83/Len_Cariou_at_PaleyFest_2014.jpg/220px-Len_Cariou_at_PaleyFest_2014.jpg	Breton
 F Murray Abraham	1939-10-24T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/dc/F_Murray.Abraham_cropped.jpg/220px-F_Murray.Abraham_cropped.jpg	Italian,Syrian-Assyrian,Syrian,Italian,Assyrian
 F. Murray Abraham	1939-10-24T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/dc/F_Murray.Abraham_cropped.jpg/220px-F_Murray.Abraham_cropped.jpg	Italian,Syrian-Assyrian,Syrian,Italian,Assyrian
-Kika Markham	1940-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Kika_Markham.jpg/220px-Kika_Markham.jpg	none
+Kika Markham	1940-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Kika_Markham.jpg/220px-Kika_Markham.jpg	none
 Estelle Kohler	1940-03-28T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Al Pacino	1940-04-25T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/98/Al_Pacino.jpg/220px-Al_Pacino.jpg	Italian,Italian,Sicilian,Italian
 Michael Gambon	1940-10-19T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Michael_Gambon_cropped.jpg/220px-Michael_Gambon_cropped.jpg	Irish
 Dakin Matthews	1940-11-07T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Sam Waterston	1940-11-15T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/70/Sam_Waterston_at_PaleyFest_2013.jpg/220px-Sam_Waterston_at_PaleyFest_2013.jpg	English,Scottish
-Barry Otto	1941-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Barry_Otto.jpg/220px-Barry_Otto.jpg	none
+Barry Otto	1941-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Barry_Otto.jpg/220px-Barry_Otto.jpg	none
 Michael Moriarty	1941-04-05T00:00:00	male	none	FALSE		Wikipedia	TRUE		Irish
 Hannah Gordon	1941-04-09T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Stacy Keach	1941-06-02T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/52/StacyKeachMay07.jpg/220px-StacyKeachMay07.jpg	American
@@ -476,7 +476,7 @@ Pamela Payton-Wright	1941-11-01T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Peter Eyre	1942-03-11T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Kenneth Welsh	1942-03-30T00:00:00	male	none	FALSE		Wikipedia	TRUE		British
 John Shrapnel	1942-04-27T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-John Kani	1942-08-30T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/13/John_Kani.jpg/220px-John_Kani.jpg	none
+John Kani	1942-08-30T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/13/John_Kani.jpg/220px-John_Kani.jpg	none
 Lynn Farleigh	1942-12-03T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Gemma Jones	1942-12-04T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/79/Gemma_Jones_cropped.jpg/220px-Gemma_Jones_cropped.jpg	Welsh
 Sarah Badel	1943-03-30T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
@@ -484,7 +484,7 @@ Christopher Walken	1943-03-31T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wi
 Michael Pennington	1943-06-07T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Maureen O'Brien	1943-06-29T00:00:00	female	none	FALSE		Wikipedia	TRUE		Irish
 Lisa Harrow	1943-08-25T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Ian Barritt	1944-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+Ian Barritt	1944-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Kitty Winn	1944-02-21T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Jill Clayburgh	1944-04-30T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Jill_Clayburgh.JPG/220px-Jill_Clayburgh.JPG	Jewish
 Roger Rees	1944-05-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/48/Roger_Rees.jpg/220px-Roger_Rees.jpg	none
@@ -524,7 +524,7 @@ Maureen Anderman	1946-10-26T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wi
 Barrie Rutter	1946-12-12T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Barrie.Rutter.JPG/150px-Barrie.Rutter.JPG	none
 Marianne Faithfull	1946-12-29T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Marianne_Faithfull%2C_Women%27s_World_Awards_2009_b.jpg/220px-Marianne_Faithfull%2C_Women%27s_World_Awards_2009_b.jpg	Austrian,Jewish
 Henry Herbert	1947-02-20T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Rex Young	1967-07-01T00:00:00	male	none	TRUE		https://inside.sou.edu/theatre/al-young.html	TRUE		none
+Rex Young	1967-01-01T00:00:00	male	none	TRUE	https://inside.sou.edu/theatre/al-young.html	Southern Oregon University alumni profile	TRUE		none
 Jonathan Pryce	1947-06-01T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/10/JonathanPryce2007_cropped.jpg/220px-JonathanPryce2007_cropped.jpg	none
 Ivonne Coll	1947-06-18T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Ivonne_Coll_at_2015_PaleyFest.jpg/220px-Ivonne_Coll_at_2015_PaleyFest.jpg	Irish
 J. Kenneth Campbell	1947-07-22T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
@@ -534,7 +534,7 @@ Miles Anderson	1947-10-23T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Kevin Kline	1947-10-24T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/00/KevinKlineSept10TIFF.jpg/220px-KevinKlineSept10TIFF.jpg	German-Jewish,Irish
 Richard Dreyfuss	1947-10-29T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/08/Richard_Dreyfuss_Cannes_2013.jpg/220px-Richard_Dreyfuss_Cannes_2013.jpg	none
 Deborah Findlay	1947-12-23T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Rod Beattie	1948-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+Rod Beattie	1948-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Malcolm Storry	1948-01-13T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Tom Wilkinson	1948-02-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Belle_13_%289779878364%29.jpg/220px-Belle_13_%289779878364%29.jpg	English
 Sinead Cusack	1948-02-18T00:00:00	female	none	FALSE		Wikipedia	TRUE		English
@@ -545,7 +545,7 @@ Frances Tomelty	1948-10-06T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Thomas Thieme	1948-10-29T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/23/Thomas_Thieme.jpg/220px-Thomas_Thieme.jpg	none
 Andrea Marcovicci	1948-11-18T00:00:00	female	none	FALSE		Wikipedia	TRUE		Romanian
 Sammie Winmill	1948-11-28T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Judy Buxton	1949-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Judy Buxton	1949-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Francesca James	1949-01-23T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Charlotte Cornwell	1949-04-26T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Cheryl Campbell	1949-05-22T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
@@ -569,7 +569,7 @@ Carl Lumbly	1951-08-14T00:00:00	male	none	FALSE		Wikipedia	TRUE		Jamaican
 Harry Groener	1951-09-10T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Harry_Groener.jpg/220px-Harry_Groener.jpg	none
 Harry Hamlin	1951-10-30T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Harry_Hamlin.jpg/220px-Harry_Hamlin.jpg	Scottish,English
 Brent Carver	1951-11-17T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Jill Baker	1952-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Jill Baker	1952-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Anton Lesser	1952-02-14T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/52/Anton_Lesser_%282011%29.jpg/220px-Anton_Lesser_%282011%29.jpg	none
 Michael Thomas	1952-04-11T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Stephen Lang	1952-07-11T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Stephen_Lang_2014.jpg/220px-Stephen_Lang_2014.jpg	Hungarian-Jewish,Russian-Jewish,Irish
@@ -577,8 +577,8 @@ Diane Venora	1952-08-10T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Jane Wymark	1952-10-31T00:00:00	female	none	FALSE		Wikipedia	TRUE		English,American,Finnish
 Mandy Patinkin	1952-11-30T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/63/MandyPatinkin.jpg/220px-MandyPatinkin.jpg	Jewish,Russian-Jewish,Polish-Jewish,Jewish
 Goldie Semple	1952-12-11T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Alison Peebles	1953-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
-Brid Brennan	1953-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Alison Peebles	1953-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Brid Brennan	1953-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Ciaran Hinds	1953-02-09T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/70/Ciaran_hinds.jpg/220px-Ciaran_hinds.jpg	none
 Philip Anglim	1953-02-11T00:00:00	male	none	FALSE		Wikipedia	TRUE		French,Irish,Jewish
 Alfred Molina	1953-05-24T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/de/AlfredMolinaByJustinHoch2009.jpg/220px-AlfredMolinaByJustinHoch2009.jpg	Spanish,Italian,Italian,Spanish,Italian
@@ -589,13 +589,13 @@ Roger Allam	1953-10-26T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia
 Peter Firth	1953-10-27T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Firth.jpg/220px-Firth.jpg	none
 Frances Conroy	1953-11-13T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Frances_Conroy_at_PaleyFest_2014_-_13491478183.jpg/220px-Frances_Conroy_at_PaleyFest_2014_-_13491478183.jpg	none
 Tom Hulce	1953-12-06T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/9c/TomHulce_%28cropped%29.jpg/220px-TomHulce_%28cropped%29.jpg	none
-Kathryn Pogson	1954-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
-Penny Downie	1954-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Kathryn Pogson	1954-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Penny Downie	1954-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Mary Jo Randle	1954-04-28T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Janet Maw	1954-05-16T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Stephen Ouimette	1954-06-30T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Matthew Marsh	1954-07-08T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Scott Wentworth	1955-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+Scott Wentworth	1955-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Harriet Harris	1955-01-08T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Kelsey Grammer	1955-02-21T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Kelsey_Grammer_2010_%28cropped%29.jpg/220px-Kelsey_Grammer_2010_%28cropped%29.jpg	British,United States Virgin Islands
 Kate Mulgrew	1955-04-29T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Kate_Mulgrew_Shankbone_Metropolitan_Opera_2009.jpg/225px-Kate_Mulgrew_Shankbone_Metropolitan_Opera_2009.jpg	Irish
@@ -612,10 +612,10 @@ Tessa Peake-Jones	1957-05-09T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Alex Jennings	1957-05-10T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Frances Barber	1957-05-13T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Michael Maloney	1957-06-19T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Michael_Maloney_MingFilmFest_2011_n2.jpg/200px-Michael_Maloney_MingFilmFest_2011_n2.jpg	none
-Frances Mcdormand	1957-06-23T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Frances_McDormand_2015_%28cropped%29.jpg/220px-Frances_McDormand_2015_%28cropped%29.jpg	none
+Frances McDormand	1957-06-23T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Frances_McDormand_2015_%28cropped%29.jpg/220px-Frances_McDormand_2015_%28cropped%29.jpg	none
 Kelly Mcgillis	1957-07-09T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0a/KellyMcGillisSept10TIFF.jpg/220px-KellyMcGillisSept10TIFF.jpg	none
 Kate Buffery	1957-07-23T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Sylvestra Le Touzel	1958-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Sylvestra Le Touzel	1958-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Kim Coates	1958-02-21T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/63/Kim_Coates_by_Gage_Skidmore.jpg/220px-Kim_Coates_by_Gage_Skidmore.jpg	none
 Alec Baldwin	1958-04-03T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/71/Alec_Baldwin_by_Gage_Skidmore.jpg/220px-Alec_Baldwin_by_Gage_Skidmore.jpg	French,Irish
 Melinda Mullins	1958-04-20T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Melinda_Mullins.jpg/220px-Melinda_Mullins.jpg	none
@@ -643,8 +643,8 @@ Patrick Page	1962-04-27T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedi
 James Marsters	1962-08-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/3/34/James_Marsters_2016.jpg/220px-James_Marsters_2016.jpg	none
 Jasper Britton	1962-12-11T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/c/c3/Jasper_Britton_as_Petruchio_for_the_RSC.jpg	none
 Ralph Fiennes	1962-12-22T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/43/Ralph_Fiennes_2013.jpg/220px-Ralph_Fiennes_2013.jpg	Irish,Scottish,Irish,Scottish
-Amanda Root	1963-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
-Amanda Harris	1963-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Amanda Root	1963-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Amanda Harris	1963-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Alex Kingston	1963-03-11T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/66/Alex_Kingston_July_2017.jpg/220px-Alex_Kingston_July_2017.jpg	German,Jewish
 Sarah Woodward	1963-04-03T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Rebecca Saire	1963-04-16T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
@@ -653,21 +653,21 @@ Natasha Richardson	1963-05-11T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.
 David Westhead	1963-06-01T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Albert Schultz	1963-07-30T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Albert_Schultz.jpg/220px-Albert_Schultz.jpg	German
 Jonny Phillips	1963-09-05T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Conrad Nelson	1964-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
-John Douglas Thompson	1964-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		Jamaican
+Conrad Nelson	1964-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+John Douglas Thompson	1964-07-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE		Jamaican
 Clare Holman	1964-01-12T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Jane Horrocks	1964-01-18T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Francesca Buller	1964-01-20T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Christopher Eccleston	1964-02-16T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/66/Christopher_Eccleston_Thor_2_cropped.png/220px-Christopher_Eccleston_Thor_2_cropped.png	none
-Faran Tahir	1964-02-16T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/dd/FaranTahirByPhilKonstantin2.jpg/220px-FaranTahirByPhilKonstantin2.jpg	Pakistani,Pakistani
+Faran Tahir	1964-02-16T00:00:00	male	Asian	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/dd/FaranTahirByPhilKonstantin2.jpg/220px-FaranTahirByPhilKonstantin2.jpg	Pakistani,Pakistani
 Adrian Schiller	1964-02-21T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Andy Serkis	1964-04-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/52/Andy_Serkis_by_Gage_Skidmore_2.jpg/220px-Andy_Serkis_by_Gage_Skidmore_2.jpg	Armenian,Iraqi
-Michael Rogers	1964-05-18T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Utopiales_2011_Michael_Rogers_3.jpg/220px-Utopiales_2011_Michael_Rogers_3.jpg	none
+Michael Rogers	1964-05-18T00:00:00	male	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Utopiales_2011_Michael_Rogers_3.jpg/220px-Utopiales_2011_Michael_Rogers_3.jpg	none
 Martin Marquez	1964-10-08T00:00:00	male	none	FALSE		Wikipedia	TRUE		Spanish
 Angus Wright	1964-11-11T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Conleth Hill	1964-11-24T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/23/Conleth_Hill_by_Gage_Skidmore_3.jpg/220px-Conleth_Hill_by_Gage_Skidmore_3.jpg	none
 Lia Williams	1964-11-26T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Claire Skinner	1965-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		Irish
+Claire Skinner	1965-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		Irish
 Alan Cumming	1965-01-27T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/56/AlanCummingSept2013TIFF.jpg/220px-AlanCummingSept2013TIFF.jpg	Scottish
 Celine Bonnier	1965-08-31T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Anastasia Hille	1965-11-28T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
@@ -686,7 +686,7 @@ Adrian Scarborough	1968-05-10T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Samantha Spiro	1968-06-20T00:00:00	female	none	FALSE		Wikipedia	TRUE		German-Jewish
 Michael Stuhlbarg	1968-07-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Michael_Stuhlbarg_in_2018_%283%29.jpg/220px-Michael_Stuhlbarg_in_2018_%283%29.jpg	none
 Lucy Cohu	1968-10-02T00:00:00	female	none	FALSE		Wikipedia	TRUE		Greek
-Penny Layden	1969-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Penny Layden	1969-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Michael Sheen	1969-02-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Michael_Sheen_at_PaleyFest_2014.jpg/220px-Michael_Sheen_at_PaleyFest_2014.jpg	none
 Jonathan Wrather	1969-03-16T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Alexandra Gilbreath	1969-03-28T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
@@ -697,8 +697,8 @@ Jamie Glover	1969-07-10T00:00:00	male	none	FALSE		Wikipedia	TRUE		Scottish
 Dominic West	1969-10-15T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Dominic_West_%286577113511%29_%28cropped%29.jpg/220px-Dominic_West_%286577113511%29_%28cropped%29.jpg	Irish
 Elizabeth Marvel	1969-11-27T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/08/Elizabethmarvel1.png/220px-Elizabethmarvel1.png	none
 Jennifer Ehle	1969-12-29T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Jennifer_Ehle_%2830443863926%29.jpg/220px-Jennifer_Ehle_%2830443863926%29.jpg	German,Romanian,English
-Zubin Varla	1970-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		Parsi
-Katy Stephens	1970-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Zubin Varla	1970-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		Parsi
+Katy Stephens	1970-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Will Keen	1970-03-04T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 John Simm	1970-07-10T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fb/John_Simm_%282010%29.jpg/220px-John_Simm_%282010%29.jpg	none
 Robert Beck	1970-08-01T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
@@ -708,7 +708,7 @@ Anne-Marie Duff	1970-10-08T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wik
 Ethan Hawke	1970-11-06T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Ethan_Hawke_2018.jpg/220px-Ethan_Hawke_2018.jpg	none
 Peter Sarsgaard	1971-03-07T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Sarsgaard_at_WUSTL_2007.jpg/220px-Sarsgaard_at_WUSTL_2007.jpg	Danish
 Graham Abbey	1971-03-24T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Ewan Mcgregor	1971-03-31T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/75/Ewan_McGregor_Cannes_2012.jpg/220px-Ewan_McGregor_Cannes_2012.jpg	none
+Ewan McGregor	1971-03-31T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/75/Ewan_McGregor_Cannes_2012.jpg/220px-Ewan_McGregor_Cannes_2012.jpg	none
 David Tennant	1971-04-18T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/3/31/2009_07_31_David_Tennant_smile_09.jpg/220px-2009_07_31_David_Tennant_smile_09.jpg	Northern Ireland
 Christian Camargo	1971-07-07T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Christian_Camargo.jpg/220px-Christian_Camargo.jpg	Mexican
 Eve Best	1971-07-31T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Eve_Best_cropped.jpg/220px-Eve_Best_cropped.jpg	none
@@ -716,23 +716,23 @@ Jonathan Slinger	1972-08-15T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Kate Fleetwood	1972-09-24T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Jude Law	1972-12-29T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Jude_Law_-_Headshot.jpg/220px-Jude_Law_-_Headshot.jpg	none
 Emma Cunniffe	1973-07-03T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Gyuri Sarossy	1974-01-01T00:00:00	unknown	none	TRUE		Wikipedia	TRUE		Hungarian
+Gyuri Sarossy	1974-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		Hungarian
 Flora Montgomery	1974-01-04T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Joseph Millson	1974-04-27T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Maxine Peake	1974-07-14T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fa/MaxinePeak_2015.JPG/220px-MaxinePeak_2015.JPG	none
 Matthew Rhys	1974-11-08T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/71/Matthew_Rhys.jpg/220px-Matthew_Rhys.jpg	none
-Chukwudi Iwuji	1975-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+Chukwudi Iwuji	1975-07-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE		none
 Jeffrey Carlson	1975-06-23T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Lucian Msamati	1976-01-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/a/a4/Lucian_Msamati_%282010%29_headshot.jpg	Tanzanian
-Sara Topham	1976-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
-Georgina Rich	1976-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Lucian Msamati	1976-03-05T00:00:00	male	Black	TRUE		Wikipedia/Google	TRUE	upload.wikimedia.org/wikipedia/commons/a/a4/Lucian_Msamati_%282010%29_headshot.jpg	Tanzanian
+Sara Topham	1976-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Georgina Rich	1976-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Michelle Hardwick	1976-02-26T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Corey Stoll	1976-03-14T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Corey_Stoll_by_Gage_Skidmore.jpg/220px-Corey_Stoll_by_Gage_Skidmore.jpg	none
 Elliot Cowan	1976-07-09T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Benedict Cumberbatch	1976-07-19T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Benedict_Cumberbatch_by_Gage_Skidmore.jpg/220px-Benedict_Cumberbatch_by_Gage_Skidmore.jpg	none
 Andrew Scott	1976-10-21T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Pride_04_%2815269391641%29.jpg/220px-Pride_04_%2815269391641%29.jpg	none
 Naomi Frederick	1976-11-29T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Rupert Evans	1977-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+Rupert Evans	1977-03-30T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Sam Spruell	1977-01-01T00:00:00	male	none	FALSE		Wikipedia	TRUE		British,English
 Tara Sharma	1977-01-11T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Tara_promotes_%2710ml_Love%27.jpg/220px-Tara_promotes_%2710ml_Love%27.jpg	Indian
 Orlando Bloom	1977-01-13T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/81/Orlando_Bloom_Cannes_2013.jpg/220px-Orlando_Bloom_Cannes_2013.jpg	none
@@ -749,7 +749,7 @@ Edward Hogg	1979-01-26T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Laura Rogers	1979-03-10T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Juliet Rylance	1979-07-26T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Juliet_Rylance_at_the_74th_Annual_Peabody_Awards.jpg/220px-Juliet_Rylance_at_the_74th_Annual_Peabody_Awards.jpg	Dutch
 Lex Shrapnel	1979-10-06T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Pippa Nixon	1980-01-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Pippa Nixon	1980-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Michael Urie	1980-08-08T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Michael_Urie_2012.jpg/220px-Michael_Urie_2012.jpg	Italian,Scottish,Italian
 Ben Whishaw	1980-10-14T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/77/Ben_Whishaw.png/220px-Ben_Whishaw.png	English,German,German,Russian,Russian,French,French
 Tom Hiddleston	1981-02-09T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/3/39/Tom_Hiddleston_in_2013.jpg/220px-Tom_Hiddleston_in_2013.jpg	Scottish
@@ -759,8 +759,8 @@ Tom Burke	1981-06-30T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Morven Christie	1981-09-01T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Zoe Tapper	1981-10-26T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Michelle Dockery	1981-12-15T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Michelle_Dockery_2013_2.jpg/220px-Michelle_Dockery_2013_2.jpg	Irish
-Nicholas Shaw	1982-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
-Ruth Negga	1982-01-07T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Ruth_Negga_by_Gage_Skidmore_3.jpg/220px-Ruth_Negga_by_Gage_Skidmore_3.jpg	Ethiopian,Irish
+Nicholas Shaw	1982-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
+Ruth Negga	1982-01-07T00:00:00	female	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Ruth_Negga_by_Gage_Skidmore_3.jpg/220px-Ruth_Negga_by_Gage_Skidmore_3.jpg	Ethiopian,Irish
 Christina Cole	1982-05-08T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/c/cc/ChristinaColeSept10.jpg/220px-ChristinaColeSept10.jpg	none
 Lily Rabe	1982-06-29T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Take-a-look-at-the-full-cast-of-american-horror-story-hotel-377370.jpg/220px-Take-a-look-at-the-full-cast-of-american-horror-story-hotel-377370.jpg	Jewish
 David Dawson	1982-09-07T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/b/ba/Daviddawson2.jpg	none
@@ -783,9 +783,9 @@ Lily James	1989-04-05T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedi
 Jessica Brown Findlay	1989-09-14T00:00:00	female	none	FALSE		Wikipedia	TRUE		Scottish
 Ellie Kendrick	1990-06-08T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Ellie_Kendrick.jpg/220px-Ellie_Kendrick.jpg	none
 Joanna Vanderham	1991-10-18T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Joanna_Vanderham_at_the_BIFA_2015.jpg/220px-Joanna_Vanderham_at_the_BIFA_2015.jpg	Dutch
-Jack Laskey	no birthday on article	male	none	FALSE			TRUE		none
+Jack Laskey	1982-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Ian McDiarmid	1944-08-11T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fe/IanMcDiarmid.jpg/220px-IanMcDiarmid.jpg	none
-Jennifer Ikeda	no birthday on article	female	none	FALSE			TRUE		none
+Jennifer Ikeda	1979-01-01T00:00:00	female	Asian	FALSE	https://www.backstage.com/news/regional-roundup_92/	Backstage: Regional Roundup (Juilliard Class '01)	TRUE		none
 Vivien Leigh	no birthday on article	female	none	FALSE			TRUE		none
 Kate Reid	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/en/b/bb/Kate_Reid_1966.jpg	none
 Leila Crerar	no birthday on article	female	none	FALSE			TRUE		none
@@ -802,19 +802,19 @@ Christopher Shyer	no birthday on article	male	none	FALSE			TRUE		none
 Annika Boras	no birthday on article	female	none	FALSE			TRUE		none
 Leslee Udwin	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/45/P1140027_%2817223616286%29.jpg/220px-P1140027_%2817223616286%29.jpg	Israeli
 Mark Nelson	no birthday on article	male	none	FALSE			TRUE		none
-Justin Blanchard	1980-07-01T00:00:00	male	none	TRUE		NYU Class '02	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/40/Justin_Blanchard_01.jpg/180px-Justin_Blanchard_01.jpg	none
+Justin Blanchard	1980-01-01T00:00:00	male	none	TRUE		NYU Class '02	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/40/Justin_Blanchard_01.jpg/180px-Justin_Blanchard_01.jpg	none
 Richard Kay	no birthday on article	male	none	FALSE			TRUE		none
 Daniel Hawksford	no birthday on article	male	none	FALSE			TRUE		none
 Ken Stott	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ken_Stott.jpg/250px-Ken_Stott.jpg	Italian,Italian,Italian
 Alec Guinness	1914-04-02T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sir_Alec_Guinness_Allan_Warren.jpg/220px-Sir_Alec_Guinness_Allan_Warren.jpg	English
 John Barrymore	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Portrait_of_John_Barrymore.jpg/220px-Portrait_of_John_Barrymore.jpg	English,Irish
 Russell Thorndike	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/89/Russell_Thorndyke_1925.jpg/220px-Russell_Thorndyke_1925.jpg	none
-Kathryn Hunter	1957-04-09T00:00:00	female	none	FALSE		https://www.imdb.com/name/nm0402898/	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Kathryn_Hunter.jpg/269px-Kathryn_Hunter.jpg	Greek,Greek,Greek
+Kathryn Hunter	1957-04-09T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0402898/	IMDb	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Kathryn_Hunter.jpg/269px-Kathryn_Hunter.jpg	Greek,Greek,Greek
 Anita Hegh	no birthday on article	female	none	FALSE			TRUE		Scandinavian,Norwegian,Estonian
 Richard Madden	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/27/Richard_Madden_%289347943769%29_%28cropped%29.jpg/220px-Richard_Madden_%289347943769%29_%28cropped%29.jpg	Irish
 James Carpenter	1952-06-01T00:00:00	male	none	TRUE		https://www.mercurynews.com/2012/12/14/james-carpenter-the-bay-areas-master-actor/?clearUserState=true	TRUE		none
 Ben Carlson	no birthday on article	male	none	FALSE			TRUE		none
-Michelle Terry	no birthday on article	female	none	FALSE			TRUE		none
+Michelle Terry	1979-01-01T00:00:00	female	none	TRUE	https://www.imdb.com/name/nm2642270/	IMDb	TRUE		none
 Eric Maxon	no birthday on article	male	none	FALSE			TRUE		none
 Deirdre Mullins	no birthday on article	female	none	FALSE			TRUE		none
 Thea Holme	no birthday on article	female	none	FALSE			TRUE		none
@@ -856,3 +856,9 @@ Sally Dexter	1960-04-15T00:00:00	female	none	FALSE		Google	TRUE		none
 Susan Coyne	not a date	female	none	FALSE		Wikipedia	TRUE		none
 Alan Mahon	1993-04-01T00:00:00	male	none	TRUE		https://www.thereviewshub.com/interview-alan-mahon-reflects-on-outrageous-fortune/	TRUE		none
 Ron Cephas Jones	1957-01-08T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/8/84/Ron_Cephas_Jones_3.jpg	
+André Holland	1979-12-28T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/f/fe/Andre_Holland_%2832992815392%29.jpg	
+Joshua Spafford	1972-05-18T00:00:00	male	Asian	FALSE	https://www.imdb.com/name/nm0816592/	IMDb	TRUE		
+Joel de la Fuente	1969-04-21T00:00:00	male	Asian	FALSE		Wikipedia	TRUE		
+Tina Horii	1968-07-01T00:00:00	female	Asian	TRUE		Wikipedia	TRUE		
+Will Lyman	1948-05-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/5/54/Will_Lyman_2009.jpg	
+James Waterston	1969-01-17T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/e/e1/James_Waterston.jpg	

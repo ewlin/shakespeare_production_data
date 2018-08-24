@@ -19,7 +19,7 @@
 
 
 
-    <link href="https://fonts.googleapis.com/css?family=Tajawal:200,300,400,500|Work+Sans:300,400|Spectral:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Tajawal:200,300,400,500,700|Work+Sans:300,400|Spectral:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Rufina:400,700|Cardo:400,400i,700|Lato:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lustria|IM+Fell+English+SC" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600,700" rel="stylesheet">
@@ -38,7 +38,7 @@
           font-family: 'Tajawal';
           font-size: .9em;
           font-weight: 500;
-          padding: 50px 50px 0 50px;
+          padding: 0 50px 0 50px;
           margin-bottom: 20px;
       }
 
@@ -372,6 +372,11 @@
           background: #33739b;
           border-radius: 4px;
           cursor: pointer;
+          transition: 0.25s;
+      }
+
+      span.cta:hover {
+          background: #3a99d4;
       }
 
       span.romeo-color {
@@ -459,7 +464,7 @@
       }
 
       .voronoi-overlay path {
-        fill: black;
+        /*fill: black;*/
         fill-opacity: 0;
         stroke: #666;
         stroke-opacity: 0;
@@ -490,6 +495,14 @@
       #tooltip h1, #tooltip h2, #tooltip h3, #tooltip p {
          padding: 0;
          margin: 0;
+      }
+
+      #tooltip b {
+          font-weight: 500;
+      }
+
+      #tooltip .tooltip-actor b {
+          font-weight: 700;
       }
 
       .tooltip-img-container {
@@ -533,6 +546,18 @@
           padding-left: 7px;
           padding-right: 7px;
           border-radius: 3px;
+       }
+
+       .inline-svg {
+           display:inline-block;
+       }
+
+       #tooltip section span {
+           line-height: 20px;
+           vertical-align: middle;
+           font-size: .9em;
+           display: inline-block;
+           padding-left: 5px;
        }
 
     </style>
