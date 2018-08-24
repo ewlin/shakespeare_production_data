@@ -358,10 +358,11 @@ queue()
         const characterGender = roleAges.gender;
         const characterColor = roleAges.color;
         const roleAgesArray = [];
+        let index = 0;
         //let genderIndex = actorsAges.findIndex(d => d.gender == characterGender);
         for (let age in roleAges) {
           if (age != 'gender' && age != 'color' && age !== 'idx') {
-            roleAges[age].forEach(a => {
+            roleAges[age].forEach((a, i) => {
               /**
               roleAgesArray.push({
                 age: parseFloat(age),
@@ -374,6 +375,7 @@ queue()
               }); //pushing an integer; will be an object once refactored
               **/
               roleAgesArray.push({
+                tempID: index,
                 age: parseFloat(age),
                 role: role,
                 race: a['ethnicity'],
@@ -389,6 +391,8 @@ queue()
                 theatre: a['venue'],
                 director: a['director']
               });
+
+              index++;
               //actorsAges.push({role: role, gender: characterGender, age: parseInt(age), index: indicies[role], color: characterColor})
             });
           }
@@ -453,7 +457,7 @@ queue()
           if (actor.age >= 17) {
               points.push({
                 actor: actor,
-                id: char.role + '-' + index,
+                id: char.role + '-' + actor.tempID,
                 age: actor.age,
                 yCoord: actor.yCoord,
                 charIndex: char['index'],
@@ -508,7 +512,8 @@ queue()
               ? 'role-dots center-50-dot'
               : 'role-dots tail-dot';
           })
-          .attr('id', (d, i) => `${d.role}-${i}`)
+          //.attr('id', (d, i) => `${d.role}-${i}`)
+          .attr('id', d => `${d.role}-${d.tempID}`)
           .attr('cx', d => scaleX(d.age))
           .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
           .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
@@ -528,6 +533,7 @@ queue()
 
 
         select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
+          .attr('id', d => `${d.role}-${d.tempID}`)
           .attr('class', 'role-text-dots')
           .attr('x', d => scaleX(d.age))
           .attr('y', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
@@ -1194,7 +1200,7 @@ queue()
         //TODO...
 
         //dateRange is an array of length 2: e.g., [1900, 1980]
-        function transitions(dateRange, makeVoronoi) {
+        function transitions(dateRange, makeVoronoi, filterOppoGender, barOpacity) {
             if (!makeVoronoi) {
                 document.querySelector('svg.svg-main').classList.add('mouse-disabled');
             }
@@ -1213,7 +1219,7 @@ queue()
                 let characterName = character[0]['role'].toLowerCase().split(' ');
                 if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
                 characterName = characterName.join('');
-                processPoints(character, characterName, true, dateRange[0], dateRange[1]); //1900 to 1979
+                processPoints(character, characterName, filterOppoGender, dateRange[0], dateRange[1]); //1900 to 1979
             });
 
             for (let char in characterAgesArrays) {
@@ -1251,6 +1257,7 @@ queue()
             */
 
             pointsData = processAllPointsAlt3();
+            console.log("here's test data: ", pointsData);
             //let points = svg.selectAll('.role-dots').data(data);
             const dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
 
@@ -1264,7 +1271,7 @@ queue()
                     let voronoifiedPoints = voronoifyDataPoints(pointsData);
 
 
-                    let voronoiGen = voronoi()
+                    const voronoiGen = voronoi()
                       .x(d => scaleX(d.age))
                       .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
                       .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
@@ -1358,7 +1365,15 @@ queue()
 
                           const imgLink = d.data.actor.image;
                           const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
-                          const pronoun = d.data.charGender === 'male' ? ['He','himself'] : ['She','herself'];
+                          let pronoun;
+                          if (d.data.actor.actorGender == 'male') {
+                              pronoun = ['He','himself'];
+                          } else if (d.data.actor.actorGender == 'female') {
+                              pronoun = ['She','herself'];
+                          } else {
+                              pronoun = d.data.charGender === 'male' ? ['He','himself'] : ['She','herself'];
+                          }
+
                           const ageIsEst = d.data.actor.isAgeEst == 'TRUE' ? true : false;
 
 
@@ -1390,8 +1405,9 @@ queue()
                             ? ''
                             : `directed by ${d.data.actor.director == d.data.actor.actor ? pronoun[1] : '<b>' + d.data.actor.director + '</b>'}`;
                           //Move the first two .attr lines to when initializing dots?
+                          console.log(select(`#${d.data.id}`));
                           select(`#${d.data.id}`).attr('r', '10px')
-                            .attr('stroke-width', '3px')
+                            .attr('stroke-width', '4px')
                             .attr('stroke', d => characterAges[d.role + 'Ages']['color'])
                             .attr('stroke-opacity', 1);
 
@@ -1454,7 +1470,7 @@ queue()
                             ? 'role-dots center-50-dot'
                             : 'role-dots tail-dot';
                     })
-                    .attr('id', (d, i) => `${d.role}-${i}`)
+                    .attr('id', (d, i) => `${d.role}-${d.tempID}`)
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
@@ -1471,14 +1487,30 @@ queue()
 
                 points.transition(transitionA)
                     //.attr('class', 'role-dots')
-                    .attr('id', (d, i) => `${d.role}-${i}`)
+                    .attr('id', (d, i) => `${d.role}-${d.tempID}`)
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
                     .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-                    .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+                    .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35);
+
+
                     //.attr('stroke-opacity', 1)
+                select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
+                      .attr('id', d => `${d.role}-${d.tempID}`)
+                      .attr('class', 'role-text-dots')
+                      .attr('x', d => scaleX(d.age))
+                      .attr('y', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
+                      .attr('fill', d => roleData.color)
+                      .attr('stroke', d => roleData.color)
+                      .attr('stroke-opacity', 0)
+                      //.attr('stroke-width', '2px')
+                      .attr('fill-opacity', 1)
+                      .attr('text-anchor', 'middle')
+                      .attr('alignment-baseline', 'middle')
+                      //.style('font-size', '14px')
+                      .text(d => d.actorGender === 'male' ? '\u2642' : '\u2640');
                 ///
                 //select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
                 //  .attr('class', 'role-text-dots')
@@ -1497,6 +1529,7 @@ queue()
 
 
 
+
             for (let eachCharacter in interquartiles) {
                 //).attr('id', eachCharacter + 'meta');
                 let pad = 30;
@@ -1512,7 +1545,11 @@ queue()
 
                 let characterMeta = select('#' + eachCharacter + 'meta');
                 characterMeta.select('.thick-line-quartile').datum(middleFiftyPercent).transition(transitionA)
-                    .attr('d', interquartileLine);
+                    .attr('d', interquartileLine)
+
+                if (barOpacity) {
+                    characterMeta.select('.thick-line-quartile').attr('opacity', .35);
+                }
 
                 characterMeta.select('.thin-line-quartile').datum([interquartiles[eachCharacter][0], interquartiles[eachCharacter][3]])
                     .transition(transitionA)
@@ -2238,7 +2275,7 @@ queue()
                       **/
                   });
               } else {
-                  transitions([1980, 2018]);
+                  transitions([1980, 2018], false, true);
               }
 
               //create voronoi overlay as Test
@@ -2249,7 +2286,7 @@ queue()
           }],
           [function() {
               select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
-              transitions([1900, 1979]);
+              transitions([1900, 1979], false, true);
           }],
           [function() {
               //const slideDistance = scaleX(minAge) - scaleX(18);
@@ -2283,7 +2320,7 @@ queue()
               //const transitionSlide = transition().duration(2100).on('end', () => transitions([1900, 2019], true));
               //select('.svg-main').transition(transitionSlide).attr('transform', `translate(0,0)`);
               select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
-              transitions([1900, 2019], true);
+              transitions([1900, 2019], true, false, true);
           }]
         ];
         //select('body').on('dblclick', eventsQueue[2][0]);
