@@ -4,6 +4,9 @@
   "description": "Interactive data-viz look at casting in Shakespearean plays ",
   "private": "true",
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.0",
     "d3-array": "^1.2.1",
     "d3-axis": "^1.0.8",
     "d3-brush": "^1.0.4",
@@ -24,11 +27,12 @@
     "moment": "^2.22.1"
   },
   "devDependencies": {
-    "webpack": "^4.6.0",
+    "webpack": "^4.17.1",
     "webpack-cli": "^2.0.15"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
     "watch": "webpack --watch",
     "build": "webpack"
   },

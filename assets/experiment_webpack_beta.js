@@ -113,24 +113,35 @@ queue()
     //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
     const scaleX = scaleLinear().domain([10, 86]).range([60, widthMax - 80]);
 
+
+    //annotations setup
+    const makeAnnotations = annotation.annotation()
+        .type(annotation.annotationLabel);
+
+    const annotationGroup = select('.svg-main')
+      .append("g")
+      .attr("class", "annotation-group");
+
     //Setup for brushing year filter
     const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
 
 	const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]);
 
 	const brush = brushX().extent([[100, 20], [widthMax - 100, controlsHeight - 10]])
-      .on('brush', brushed)
+      //.on('brush', brushed)
       .on('end', brushEnded);
 
     function brushed() {
       const selection = brushSelection(this);
+      //console.log('selection: ' + selection);
       if (brushSelection(this)) {
         const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
+
         if (selection[1] - selection[0] >= 100) {
           select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0]);
           select('.end-year-label').attr('x', selection[1] - 5).attr('opacity', 1).text(years[1]);
         } else {
-          select('.start-year-label').attr('opacity', 0);
+          select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0] + '-' + years[1]);
           select('.end-year-label').attr('opacity', 0);
         }
 
@@ -139,24 +150,34 @@ queue()
 
     function brushEnded() {
       if (brushSelection(this)) {
+        const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
         console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
         filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))();
+        if (document.querySelector('.chart-title-year-range')) {
+            select('.chart-title-year-range').html(`${years[0]} and ${years[1]}`);
+        }
+      } else {
+        brushGroup.call(brush.move, [1900, 2018].map(scaleYear));
       }
     }
 
-		const brushGroup = select('.svg-controls').append('g').classed('brush', true);
+	const brushGroup = select('.svg-controls').append('g').classed('brush', true);
 
-		brushGroup.call(brush);
+	brushGroup.call(brush);
 
-		const startYear = select('.svg-controls').append('text').classed('start-year-label', true)
-		  .attr('y', 25)
-		  .attr('stroke', 'white')
-		  .attr('alignment-baseline', 'hanging');
-		const endYear = select('.svg-controls').append('text').classed('end-year-label', true)
+    /**
+	const startYear = select('.svg-controls').append('text').classed('start-year-label', true)
+	   .attr('y', 25)
+       .attr('stroke', 'white')
+       .attr('alignment-baseline', 'hanging');
+	const endYear = select('.svg-controls').append('text').classed('end-year-label', true)
       .attr('y', 25)
       .attr('stroke', 'white')
       .attr('text-anchor', 'end')
       .attr('alignment-baseline', 'hanging');
+     **/
+
+    select('.overlay').style('pointer-events', 'none');
 
     const characterToPlayDict = {
         'juliet': 'Romeo and Juliet',
@@ -209,9 +230,9 @@ queue()
       macbethAges: {gender: 'male', color: '#F36735', idx: 2},
       ladyMacbethAges: {gender: 'female', color: '#78779E', idx: 5},
       cleopatraAges: {gender: 'female', color: '#577EAD', idx: 6},
-      iagoAges: {gender: 'male', color: '#F45C42', idx: 3},
+      iagoAges: {gender: 'male', color: '#F45C42', idx: 4},
       kingLearAges: {gender: 'male', color: '#F57A3E', idx: 8},
-      othelloAges: {gender: 'male', color: '#F8B535', idx: 4},
+      othelloAges: {gender: 'male', color: '#F8B535', idx: 3},
       prosperoAges: {gender: 'male', color: '#FC7136', idx: 7},
       rosalindAges: {gender: 'female', color: '#CA6379', idx: 3},
       portiaAges: {gender: 'female', color: '#AD5468', idx: 4},
@@ -675,7 +696,7 @@ queue()
 
 
 
-        function animateDots(minAge = 0, maxAge = 90, directionForward, slideFlag) {
+        function animateDots(minAge = 0, maxAge = 90, directionForward, completeRange, slideFlag) {
             return function(direction) {
 
                 const delayFactor = 110;
@@ -781,7 +802,7 @@ queue()
                         .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                         .text('DURING PRODUCTION')
                         .style('letter-spacing', '1')
-                        .attr('dy', '23px').append('tspan').attr('class', 'note-indicator').text('*');
+                        .attr('dy', '23px');//.append('tspan').attr('class', 'note-indicator').text('*');
 
 
                         /*
@@ -1081,6 +1102,80 @@ queue()
                                 .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
                                 //.attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
 
+
+                            console.log(eachCharacter);
+
+                                    if (completeRange && eachCharacter == 'kingLear') {
+                                        selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
+                                        selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
+                                            //if (d.age <= maxAge && d.age >= minAge) {
+                                            if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
+                                                //console.log('good');
+                                                return .95;
+                                            } else {
+                                                return .4;
+                                            }
+
+                                        });
+                                        //const slideDistance = scaleX(minAge) - scaleX(18);
+                                        function translateDown() {
+                                            const transitionDown = transition().duration(1500).on('end', function() {
+
+                                                const mainContent = select('#main-content');
+
+                                                //mainContent.style('opacity', 0);
+                                                mainContent.style('width', 1230);
+                                                mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
+                                                //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+
+                                                mainContent.html(`<h2>Female role age distributions in <span>productions since 1980</span></h2><p>In recent decades, actresses have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
+                                                <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a staring turn in Shakespeare,
+                                                you pretty much have to do so before you turn 40. You might think that is nothing surprising about this, given that these characters are all young, and naturally, the actresses cast should also be on the younger end.
+                                                But interestingly enough, this wasn’t always the case.</p>`);
+                                                const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+                                                const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
+
+                                                mainContent.style('top', (topOfSVGContainer - height)/2);
+
+                                                //mainContent.style('top', window.innerHeight/2 - height/2);
+                                                mainContent.transition(0).delay(300).style('opacity', 1);
+
+                                            }).on('interrupt', function() {
+                                                console.log(state);
+                                            });
+                                            if (isSafari) {
+                                                select('.svg-main').transition(transitionDown).style('transform', `translate(0px,${band * 9 + 20}px)`);
+                                            } else {
+                                                select('.svg-main').transition(transitionDown).attr('transform', `translate(0,${band * 9 + 20})`);
+                                            }
+                                            //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                                            //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                                            //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
+                                            //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                                        }
+                                        translateDown();
+
+                                        /**
+                                        const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(66)) + 82;
+                                        const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
+
+                                        animateDots(45, 66, directionForward)();
+                                        const mainContent = select('#main-content');
+
+                                        mainContent.style('opacity', 0);
+                                        mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+
+                                        mainContent.html('<h2>From age 46 to 66 <span>productions since 1980</span></h2><p>By the time you hit retirement age as an actress, you’re basically out of female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played the parts.</p>');
+                                        const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+
+                                        mainContent.style('top', window.innerHeight/2 - height/2);
+                                        mainContent.transition(0).delay(300).style('opacity', 1);
+                                        **/
+
+                                    }
+
+
+
                         });
                     } else {
                       arrow.interrupt().transition(100)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
@@ -1096,6 +1191,19 @@ queue()
                       selectAll(`.${eachCharacter}-label-text`).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
                       select(`#${eachCharacter}-label-circle`)
                         .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
+
+                      function translateReset() {
+                          if (isSafari) {
+                              select('.svg-main').transition().duration(2100).style('transform', `translate(0px,0px)`);
+                          } else {
+                              select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
+                          }
+                      }
+
+                      translateReset();
+                      //transitions([1980, 2018], false, true);
+
+                      //selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
 
 
                     }
@@ -1202,7 +1310,7 @@ queue()
         //TODO...
 
         //dateRange is an array of length 2: e.g., [1900, 1980]
-        function transitions(dateRange, makeVoronoi, filterOppoGender, barOpacity) {
+        function transitions(dateRange, makeVoronoi, filterOppoGender, indicatePOC, barOpacity) {
             if (!makeVoronoi) {
                 document.querySelector('svg.svg-main').classList.add('mouse-disabled');
             }
@@ -1394,7 +1502,8 @@ queue()
                           }
 
                           actorEthnicity = raceLine
-                            ? `<section><svg class='inline-svg' height='12' width='13.85'><polygon points='0,13 7.5,0 15,13' style="fill:black"/></svg><span><b>${pronoun[0] + ' ' + raceLine}</b></span></section>`
+                            ? `<section><svg class='inline-svg' height='12' width='13.85'><pattern id="stripe-3" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
+                            <mask id="mask-3"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask><polygon mask='url(#mask)' points='0,13 7.5,0 15,13' style="fill:${characterAges[d.data.actor.role + 'Ages'].color}"/></svg><span><b>${pronoun[0] + ' ' + raceLine}</b></span></section>`
                             : '';
 
                           //console.log(raceLine, actorEthnicity);
@@ -1441,13 +1550,10 @@ queue()
                       }).on('mouseout', d => {
                           //3.6 3
                           //filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
-                          /**
-                          if (d.data.actor.race != 'unknown' && d.data.actor.race != 'none') {
-                             /select(`#${d.data.id}`).attr('r', '7px');
-                          } else
-                          **/
 
-                          if (select(`#${d.data.id}`).classed('tail-dot')) {
+                          if (indicatePOC && d.data.actor.race != 'unknown' && d.data.actor.race != 'none') {
+                             select(`#${d.data.id}`).attr('r', '6px');
+                          } else if (select(`#${d.data.id}`).classed('tail-dot')) {
                               select(`#${d.data.id}`).attr('r', '3px');
                           } else {
                               select(`#${d.data.id}`).attr('r', '3.6px');
@@ -1468,9 +1574,11 @@ queue()
                 const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
                 const matchGender = roleData.ages.filter(d => d.actorGender !== roleOppoGender);
                 const oppoGender = roleData.ages.filter(d => d.actorGender === roleOppoGender);
+                console.log(matchGender)
+                console.log(oppoGender)
 
-
-                let points = select(this).selectAll('.role-dots').data(matchGender);
+                const points = select(this).selectAll('.role-dots').data(matchGender);
+                points.attr('mask', 'none');
 
                 points.exit().remove();
 
@@ -1483,31 +1591,52 @@ queue()
                     .attr('id', (d, i) => `${d.role}-${d.tempID}`)
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
-                    .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+                    .attr('r', d => {
+                        if (indicatePOC && d.race != 'unknown' && d.race != 'none') return '6px';
+                        return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px';
+                    })
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d => roleData.color)
                     .attr('fill-opacity', 0)
 					.attr('stroke-opacity', 0)
                     //.attr('filter', 'url(#blurMe)')
                     .transition(transitionA)
-                    .attr('r', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? '3.6px' : '3px')
-                    .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35)
+                    .attr('r', d => {
+                        if (indicatePOC && d.race != 'unknown' && d.race != 'none') return '6px';
+                        return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px';
+                    })
+                    .attr('fill-opacity', d => {
+                        if (indicatePOC && d.race != 'unknown' && d.race != 'none') return .9;
+                        return d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35;
+                    });
 
-
+                    //filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
+                        //.attr('r', '5px')
+                        //.attr('mask', 'url(#mask)');
 
                 points.transition(transitionA)
                     //.attr('class', 'role-dots')
                     .attr('id', (d, i) => `${d.role}-${d.tempID}`)
                     .attr('cx', d => scaleX(d.age))
                     .attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
-                    .attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+                    //.attr('r', d => d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px')
+                    .attr('r', d => {
+                        if (indicatePOC && d.race != 'unknown' && d.race != 'none') return '6px';
+                        return d.age >= interquartiles[roleData.role][1] && d.age <= interquartiles[roleData.role][2] ? '3.6px' : '3px';
+                    })
                     .attr('fill', d => roleData.color)
                     //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
-                    .attr('fill-opacity', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35);
-
+                    .attr('fill-opacity', d => {
+                        if (indicatePOC && d.race != 'unknown' && d.race != 'none') return .9;
+                        return d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35;
+                    })
 
                     //.attr('stroke-opacity', 1)
-                select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
+                const pointsText = select(this).selectAll('.role-text-dots').data(oppoGender);
+
+                pointsText.exit().remove();
+
+                pointsText.enter().append('text')
                       .attr('id', d => `${d.role}-${d.tempID}`)
                       .attr('class', 'role-text-dots')
                       .attr('x', d => scaleX(d.age))
@@ -1515,12 +1644,26 @@ queue()
                       .attr('fill', d => roleData.color)
                       .attr('stroke', d => roleData.color)
                       .attr('stroke-opacity', 0)
+                      //.attr('mask', d => indicatePOC && d.race != 'unknown' && d.race != 'none' ? 'url(#mask)' : 'none')
                       //.attr('stroke-width', '2px')
                       .attr('fill-opacity', 1)
                       .attr('text-anchor', 'middle')
                       .attr('alignment-baseline', 'middle')
                       //.style('font-size', '14px')
+                      .text(d => d.actorGender === 'male' ? '\u2642' : '\u2640')
+                      .transition(transitionA)
                       .text(d => d.actorGender === 'male' ? '\u2642' : '\u2640');
+
+                pointsText.transition(transitionA)
+                    .attr('id', (d, i) => `${d.role}-${d.tempID}`)
+                    .attr('x', d => scaleX(d.age))
+                    .attr('y', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord));
+
+
+                selectAll('.role-dots').attr('mask', d => indicatePOC && d.race != 'unknown' && d.race != 'none' ? 'url(#mask)' : 'none');
+
+
+
                 ///
                 //select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
                 //  .attr('class', 'role-text-dots')
@@ -1553,30 +1696,36 @@ queue()
 
                 let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
 
-                let characterMeta = select('#' + eachCharacter + 'meta');
-                characterMeta.select('.thick-line-quartile').datum(middleFiftyPercent).transition(transitionA)
-                    .attr('d', interquartileLine)
+                const characterMeta = select('#' + eachCharacter + 'meta');
+
 
                 if (barOpacity) {
                     characterMeta.select('.thick-line-quartile').attr('opacity', .35);
                 }
 
-                characterMeta.select('.thin-line-quartile').datum([interquartiles[eachCharacter][0], interquartiles[eachCharacter][3]])
-                    .transition(transitionA)
-                    .attr('d', interquartileLine);
+                    characterMeta.select('.thick-line-quartile').datum(middleFiftyPercent).transition(transitionA)
+                        .attr('d', interquartileLine);
+                    characterMeta.select('.thin-line-quartile').datum([interquartiles[eachCharacter][0], interquartiles[eachCharacter][3]])
+                        .transition(transitionA)
+                        .attr('d', interquartileLine);
 
-                characterMeta.select('circle').transition(transitionA).attr('cx', () => {
-                    //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
-                    return scaleX(interquartiles[eachCharacter][3]) + pad;
-                });
-                let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
-                let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
+                    characterMeta.select('circle').transition(transitionA).attr('cx', () => {
+                        //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
+                        return scaleX(interquartiles[eachCharacter][3]) + pad;
+                    });
+                    const arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
+                    const arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
 
-                //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
-                //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
+                    //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
+                    //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
 
-                characterMeta.select('#' + eachCharacter + 'label').transition(transitionA)
-                        .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`);
+                    characterMeta.select('#' + eachCharacter + 'label').transition(transitionA)
+                            .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`);
+
+
+
+
+
 
                 let text = characterMeta.select('.interquartiles-labels').selectAll('text').data(interquartiles[eachCharacter]);
 
@@ -1705,6 +1854,7 @@ queue()
 					const annotations = [
 						//note color: #b4b8c0
 						{
+                            type: annotation.annotationCalloutCircle,
 							note: {
 								//label: 'Test text for this annotation. Somethings about Othello and Iago and race and ethnicity. This surprisingly does not look ugly thank you haha. I was worried. We can definitely work with this. Images might work better outside of SVG',
 								label: 'Patrick Stewart\'s staring turn in Jude Kelly\'s 1997 production of Othello with the Shakespeare Theatre Company was a rare exception to the modern \'no White Othello\' rule. Kelly shrewdly cast a White Othello amidst an all-Black cast, turning the traditional racial tensions in the play on its head.',
@@ -1720,18 +1870,17 @@ queue()
 							x: +annotationCoordinates.stewartOthello.coordinates[0],
 							y: +annotationCoordinates.stewartOthello.coordinates[1],
 							dx: 65,
-							dy: -20
+							dy: -20,
+                            subject: {radius: 18}
 						}
 					];
 
-					const makeAnnotations = annotation.annotation()
-          	.type(annotation.annotationLabel)
-          	.annotations(annotations);
+			//const makeAnnotations = annotation.annotation()
+          	//.type(annotation.annotationLabel)
+          	makeAnnotations.annotations(annotations);
 
-					select('.svg-main')
-						.append("g")
-          	.attr("class", "annotation-group")
-          	.call(makeAnnotations);
+            select('.annotation-group')
+                .call(makeAnnotations);
 
 					select('.annotation-note-label').attr('fill', '#b4b8c0');
           select('.annotation-connector path')
@@ -1742,6 +1891,7 @@ queue()
             .attr('stroke', 'grey')
             .attr('stroke-width', '3px');
 
+          select('.note-line').remove();
 
           //select('div.main-content')
           //  .style('')
@@ -1765,14 +1915,6 @@ queue()
 
 
 
-        /*
-        const eventsQueue = [
-            animateDots(17, 23),
-            animateDots(24, 30),
-            animateDots(31, 45, false),
-            animateDots(46, 85, false)
-        ];
-        */
         function skipToExplore() {
             const tickValues = [18, 20];
 
@@ -1874,7 +2016,7 @@ queue()
                     .attr('x', (ageAxis.getBoundingClientRect().left - document.querySelector('.svg-main').getBoundingClientRect().left)/2)
                     .text('DURING PRODUCTION')
                     .style('letter-spacing', '1')
-                    .attr('dy', '23px').append('tspan').attr('class', 'note-indicator').text('*');
+                    .attr('dy', '23px');//.append('tspan').attr('class', 'note-indicator').text('*');
 
 
                     /*
@@ -2192,12 +2334,12 @@ queue()
             let mainContent = select('#main-content');
             //`position: fixed; top: 0; left: 400`
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 18 to 23 <span>(productions since 1980)</span></h2><p>There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast in one of these roles.</p>');
+            mainContent.html('<h2>From age 18 to 23 <span>productions since 1980</span></h2><p>There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast in one of these roles.</p>');
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition().delay(300).style('opacity', 1);
-          }, 'Up through 30...'],
+          }],
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 82;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
@@ -2206,11 +2348,11 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 24 to 30 <span>(productions since 1980)</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would still be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of <span class="romeo-color">Romeo</span> or <span class="juliet-color">Juliet</span>. By the time you hit 30, you’re close to aging out of the parts of everyone\'s favorite tragic young lovers: you’d be older than 75+% of the actors who\'ve played these two roles in our dataset.</p>');
+            mainContent.html('<h2>From age 24 to 30 <span>productions since 1980</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would still be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of <span class="romeo-color">Romeo</span> or <span class="juliet-color">Juliet</span>. By the time you hit 30, you’re close to aging out of the parts of everyone\'s favorite tragic young lovers: you’d be older than 75+% of the actors who\'ve played these two roles in our dataset.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
-          }, 'From 31 to 45'],
+          }],
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(45)) + 109;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
@@ -2220,12 +2362,12 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<h2>From age 31 to 45 <span>(productions since 1980)</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more seasonsed actresses, by 45, an actress would already be older than over 75% of her peers who’ve played the role. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar mid-career males. The only lead Shakespearean female role with a similar age distribution as these male roles is <span class='cleopatra-color'>Cleopatra</span>. Sadly, <em>Antony and Cleopatra</em> is also less frequently produced than many of Shakespeare's other plays.</p>`);
+            mainContent.html(`<h2>From age 31 to 45 <span>productions since 1980</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more seasonsed actresses, by 45, an actress would already be older than over 75% of her peers who’ve played the role. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar mid-career males. The only lead Shakespearean female role with a similar age distribution as these male roles is <span class='cleopatra-color'>Cleopatra</span>. Sadly, <em>Antony and Cleopatra</em> is also less frequently produced than many of Shakespeare's other plays.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
 
-          }, 'From 46 to retirement...'],
+          }],
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(66)) + 82;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
@@ -2236,17 +2378,43 @@ queue()
             mainContent.style('opacity', 0);
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-            mainContent.html('<h2>From age 46 to 66 <span>(productions since 1980)</span></h2><p>By the time you hit retirement age as an actress, you’re basically out of female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played this role.</p>');
+            mainContent.html('<h2>From age 46 to 66 <br><span>productions since 1980</span></h2><p>By the time you hit retirement age as an actress, you’re basically out of female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played the parts.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
 
             mainContent.style('top', window.innerHeight/2 - height/2);
-            mainContent.transition(0).delay(300).style('opacity', 1);
+            mainContent.interrupt().transition(0).delay(300).style('opacity', 1);
 
-          }, 'After 66.'],
+          }],
           [function(directionForward) {
-            animateDots(66, 86, directionForward)();
             const mainContent = select('#main-content');
-            mainContent.html(null);
+
+            if (directionForward) {
+                animateDots(66, 86, directionForward, true)();
+                mainContent.html(null);
+            } else {
+                transitions([1980, 2018], false, true);
+                mainContent.style('opacity', 0);
+
+                //mainContent.style('opacity', 0);
+                mainContent.style('width', 1230);
+                mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
+                //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+
+                mainContent.html(`<h2>Female role age distributions in <span>productions since 1980</span></h2><p>In recent decades, actresses have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
+                <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a staring turn in Shakespeare,
+                you pretty much have to do so before you turn 40. You might think that is nothing surprising about this, given that these characters are all young, and naturally, the actresses cast should also be on the younger end.
+                But interestingly enough, this wasn’t always the case.</p>`);
+                const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+                const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
+
+                mainContent.style('top', (topOfSVGContainer - height)/2);
+                mainContent.transition(1000).style('opacity', 1);
+
+                //mainContent.style('top', window.innerHeight/2 - height/2);
+                //mainContent.transition(0).delay(300).style('opacity', 1);
+            }
+
+
             /**
             selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
             selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
@@ -2265,8 +2433,47 @@ queue()
 
             });**/
 
-          }, 'End'],
+          }],
+
+          [function() {
+              transitions([1900, 1979], false, true);
+              const mainContent = select('#main-content');
+
+              mainContent.style('opacity', 0);
+              mainContent.style('width', 1230);
+              mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
+              //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+
+              mainContent.html(`<h2>Female role age distributions in <span>productions between 1900-1979</span></h2><p>Things were quite different in the early decades of the 20th century.
+                  Actresses in their late 30s and throughout their 40s were regularly cast in, or played roles such as <span class='rosalind-color'>Rosalind</span> and <span class='portia-color'>Portia</span>,
+                  and it was not uncommon to see <span class='juliet-color'>Juliets</span> and <span class='desdemona-color'>Desdemonas</span> in their 40s either. In general, the spreads (or distributions)
+                  of the ages of actresses in almost all the roles were much wider (ranging from 10 to 20 years wider) prior to 1980, and in particular, prior to the 1950s. </p>`);
+              const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+              const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
+
+              mainContent.style('top', (topOfSVGContainer - height)/2);
+              mainContent.transition(1000).style('opacity', 1);
+
+          }],
           [function(directionForward) {
+              const mainContent = select('#main-content');
+              mainContent.style('opacity', 0);
+
+              function translateUp() {
+                  //select('.svg-main').transition().duration(2100).attr('transform', `translate(0,-${band * 9})`);
+                  if (isSafari) {
+                      select('.svg-main').transition().duration(1500).style('transform', `translate(0px,-${band * 9}px)`);
+                  } else {
+                      select('.svg-main').transition().duration(1500).attr('transform', `translate(0,-${band * 9})`);
+                  }
+
+                  //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                  //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+                  //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
+                  //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
+              }
+              translateUp();
+              /**
               if (directionForward) {
                   selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
                   selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
@@ -2282,24 +2489,44 @@ queue()
                           console.log('invisible');
                           return 0;
                       }
-                      **/
+
                   });
               } else {
                   transitions([1980, 2018], false, true);
               }
 
+              const blankAnnotations = [
+                  //note color: #b4b8c0
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          //label: 'Test text for this annotation. Somethings about Othello and Iago and race and ethnicity. This surprisingly does not look ugly thank you haha. I was worried. We can definitely work with this. Images might work better outside of SVG',
+                          label: '',
+                      },
+
+                      x: 0,
+                      y: 0,
+
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
+
               //create voronoi overlay as Test
               //voronoifiedPoints
               //.attr('cx', d => scaleX(d.age))
               //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
-
+              **/
           }],
           [function() {
               //select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
               if (isSafari) {
-                  select('.svg-main').style('transform', `translate(0px,0px)`);
+                  select('.svg-main').transition().duration(1500).style('transform', `translate(0px,0px)`);
               } else {
-                  select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
+                  select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
               }
               transitions([1900, 1979], false, true);
           }],
@@ -2308,9 +2535,9 @@ queue()
               function translateUp() {
                   //select('.svg-main').transition().duration(2100).attr('transform', `translate(0,-${band * 9})`);
                   if (isSafari) {
-                      select('.svg-main').transition().duration(2100).style('transform', `translate(0px,-${band * 9}px)`);
+                      select('.svg-main').transition().duration(1500).style('transform', `translate(0px,-${band * 9}px)`);
                   } else {
-                      select('.svg-main').transition().duration(2100).attr('transform', `translate(0,-${band * 9})`);
+                      select('.svg-main').transition().duration(1500).attr('transform', `translate(0,-${band * 9})`);
                   }
 
                   //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
@@ -2324,12 +2551,20 @@ queue()
 
           }],
           [function() {
+              //DO NOT DELETE
+              select('#tooltip')
+                .style('opacity', 0);
+
+              select('#main-content')
+                .html(null);
+
+
               //const slideDistance = scaleX(minAge) - scaleX(18);
               function translateDown() {
                   if (isSafari) {
-                      select('.svg-main').transition().duration(2100).style('transform', `translate(0px,${band * 9 + 20}px)`);
+                      select('.svg-main').transition().duration(1500).style('transform', `translate(0px,${band * 9 + 20}px)`);
                   } else {
-                      select('.svg-main').transition().duration(2100).attr('transform', `translate(0,${band * 9 + 20})`);
+                      select('.svg-main').transition().duration(1500).attr('transform', `translate(0,${band * 9 + 20})`);
                   }
                   //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
                   //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
@@ -2340,16 +2575,49 @@ queue()
 
               select('.voronoi-overlay').remove();
 
+              //disable brush
+              brushGroup.call(brush.move, null);
+              select('.svg-controls').attr('opacity', 0);
+              select('.overlay').style('pointer-events', 'none');
+              select('.brush').style('pointer-events', 'none');
+
+
           }],
           [function() {
               //const transitionSlide = transition().duration(2100).on('end', () => transitions([1900, 2019], true));
               //select('.svg-main').transition(transitionSlide).attr('transform', `translate(0,0)`);
               if (isSafari) {
-                  select('.svg-main').transition().duration(2100).style('transform', `translate(0,0)`);
+                  select('.svg-main').transition().duration(1500).style('transform', `translate(0,0)`);
               } else {
-                  select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
+                  select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
               }
-              transitions([1900, 2019], true, false, true);
+              transitions([1900, 2019], true, false, true, true);
+
+              //activate brush
+
+              select('.svg-controls').attr('opacity', 1);
+              select('.selection').attr('opacity', 1).attr('stroke-opacity', 0);
+              select('.brush').style('pointer-events', 'all');
+              select('.overlay').style('pointer-events', 'all');
+              brushGroup.call(brush.move, [1900, 2018].map(scaleYear));
+              selectAll('.handle').attr('fill', '#33739b');
+
+
+              const mainContent = select('#main-content');
+              mainContent.html(`<div class="chart-legend"><h2>Shakespearean Productions Between <span class="chart-title-year-range">1900 and 2018</span></h2>
+              <section><svg width='13' height='13' class='inline-svg'><pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
+              <mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
+              <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color</span></section>
+              <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p></div>`);
+
+              select('.inline-svg circle').attr('mask', 'url(#mask-2)').attr('fill', 'white');
+
+              const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(66)) + 30;
+              const top = +document.querySelector('.svg-controls').getBoundingClientRect().bottom;
+
+              mainContent.style('width', '362px').style('left', left).style('top', top);//.style('right', 40);
+
+
           }]
         ];
         //select('body').on('dblclick', eventsQueue[2][0]);
@@ -2380,7 +2648,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
 
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into 1,100+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">August 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into 1,100+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -2579,6 +2847,15 @@ queue()
 				//Rough draft
 				function filterPoints(dateRange) {
 					return function() {
+                        //const voronoiActive = select('.voronoi-overlay').selectAll('path').filter(d => {
+                        //    return moment(d.data.actor.opening) >= moment(String(dateRange[0])) && moment(d.data.actor.opening) < moment(String(dateRange[1] + 1));
+                        //});
+
+                        select('.voronoi-overlay').selectAll('path').attr('pointer-events', d => {
+                            return moment(d.data.actor.opening) >= moment(String(dateRange[0])) && moment(d.data.actor.opening) < moment(String(dateRange[1] + 1))
+                                ? 'all'
+                                : 'none';
+                        });
 
 
 						const filteredDots = selectAll('.role-dots').filter(d => {
@@ -2592,22 +2869,30 @@ queue()
 						selectAll('.role-dots')
 							.attr('fill-opacity', d => {
 								return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
-									? (d.race != 'unknown' && d.race != 'none' ? 1 : .6)
+									? (d.race != 'unknown' && d.race != 'none' ? .9 : .6)
 									: .05;
 							})
 							.attr('stroke', d => {
 								if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
 							});
 
+                        selectAll('.role-text-dots')
+    						.attr('fill-opacity', d => {
+    							return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
+    								? 1
+                                    : .05;
+    						});
+    						//.attr('stroke', d => {
+    						//	if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
+    						//});
+
 						const othelloPOCDots = filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none' && dot.role == 'othello')._groups[0].length;
 						const othelloDots = filteredDots.filter(dot => dot.role == 'othello')._groups[0].length;
 
 						console.log(othelloPOCDots + ', ' + othelloDots);
 
+                        /**
 
-						filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
-							.attr('r', '7px')
-            	            .attr('mask', 'url(#mask)');
 
 						filteredDots.filter(dot => {
 							let actor_gender = dot.actorGender;
@@ -2623,6 +2908,7 @@ queue()
 						.attr('stroke', 'white')
 						.attr('stroke-width', '2px')
 						.attr('stroke-opacity', 1);
+                        **/
 					}
 
 				}
