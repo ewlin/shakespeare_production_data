@@ -54,6 +54,7 @@ brushControls
 
 let animateStop = false;
 let state = 0;
+let locked = false;
 
 queue()
   .defer(csv, 'data/shakespeare_outline.csv')
@@ -84,20 +85,11 @@ queue()
   .defer(tsv, 'data/ages/othello_ages.tsv')
   .defer(tsv, 'data/ages/prospero_ages.tsv')
   .await(function(error, shakespeareOutline, m1, m2, ...characters) {
-    let actorsMasterList = m1.concat(m2);
+    const actorsMasterList = m1.concat(m2);
 
     console.log(actorsMasterList);
     //5/15 test (est. count number of productions)
-    let productions = [];
 
-    for (let eachRole in characters) {
-      for (let eachActor in characters[eachRole]) {
-        const production = characters[eachRole][eachActor]['director'] + ' ' + characters[eachRole][eachActor]['opening_date'] + characters[eachRole][eachActor]['venue'];
-        if (!productions.includes(production)) productions.push(production);
-      }
-    }
-
-    console.log(productions.length + ' productions');
     //Save special points for annotations
     let annotationCoordinates = {
       stewartOthello: {text: '', coordinates: []},
@@ -424,6 +416,28 @@ queue()
         rolesArr.push({role: role, gender: characterGender, index: characterAges[role + 'Ages']['idx'], color: characterColor, ages: roleAgesArray});
       }
       console.log(rolesArr);
+
+      const productions = [];
+
+      rolesArr.forEach(roleArr => {
+          roleArr.ages.forEach(perf => {
+              const production = perf['director'] + ' ' + perf['opening'];
+              if (!productions.includes(production)) productions.push(production);
+          });
+      });
+
+      console.log(productions.length + ' productions');
+
+      /**
+      for (let eachRole in rolesArr) {
+        for (let eachActor in characters[eachRole]) {
+          const production = characters[eachRole][eachActor]['director'] + ' ' + characters[eachRole][eachActor]['opening_date'] + characters[eachRole][eachActor]['venue'];
+          if (!productions.includes(production)) productions.push(production);
+        }
+      }
+
+      console.log(productions.length + ' productions');
+      **/
       return rolesArr;
 
     }
@@ -1022,7 +1036,19 @@ queue()
                         .ease(easeLinear)
                         .attr('x', d => scaleX(d[1]))
                         .attr('opacity', d => d[0] == d[1] ? 0 : 1)
+
+                        .on('start', () => {
+                            if (eachCharacter == 'kingLear') {
+                                locked = true
+                                console.log(locked)
+                            }
+
+                        })
                         .on('end', function() {
+                            if (eachCharacter == 'kingLear' && !completeRange) {
+                                locked = false
+                                console.log(locked)
+                            }
                             select(this).attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                             svg.select(`#${eachCharacter}meta`)
                                 .select('.character-label-initial')
@@ -1120,7 +1146,7 @@ queue()
                                         //const slideDistance = scaleX(minAge) - scaleX(18);
                                         function translateDown() {
                                             const transitionDown = transition().duration(1500).on('end', function() {
-
+                                                locked = false;
                                                 const mainContent = select('#main-content');
 
                                                 //mainContent.style('opacity', 0);
@@ -1138,10 +1164,8 @@ queue()
                                                 mainContent.style('top', (topOfSVGContainer - height)/2);
 
                                                 //mainContent.style('top', window.innerHeight/2 - height/2);
-                                                mainContent.transition(0).delay(300).style('opacity', 1);
+                                                mainContent.transition().duration(0).delay(300).style('opacity', 1);
 
-                                            }).on('interrupt', function() {
-                                                console.log(state);
                                             });
                                             if (isSafari) {
                                                 select('.svg-main').transition(transitionDown).style('transform', `translate(0px,${band * 9 + 20}px)`);
@@ -1178,7 +1202,8 @@ queue()
 
                         });
                     } else {
-                      arrow.interrupt().transition(100)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
+                      arrow.interrupt()
+                      .transition(100)//.attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                       .attr('x', d => scaleX(d[1]))
                       .attr('opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0 : 1);
                       //svg.select(`#${eachCharacter}meta`)
@@ -1193,10 +1218,12 @@ queue()
                         .attr('fill-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 0.6 : 0);
 
                       function translateReset() {
+                          //on('start') locked = TRUE
+                          //on('end') locked = False
                           if (isSafari) {
-                              select('.svg-main').transition().duration(2100).style('transform', `translate(0px,0px)`);
+                              select('.svg-main').transition().duration(1500).style('transform', `translate(0px,0px)`);
                           } else {
-                              select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
+                              select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
                           }
                       }
 
@@ -2382,7 +2409,7 @@ queue()
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
 
             mainContent.style('top', window.innerHeight/2 - height/2);
-            mainContent.interrupt().transition(0).delay(300).style('opacity', 1);
+            mainContent.transition(0).delay(300).style('opacity', 1)
 
           }],
           [function(directionForward) {
@@ -2604,7 +2631,7 @@ queue()
 
 
               const mainContent = select('#main-content');
-              mainContent.html(`<div class="chart-legend"><h2>Shakespearean Productions Between <span class="chart-title-year-range">1900 and 2018</span></h2>
+              mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <span class="chart-title-year-range">1900 and 2018</span></h2>
               <section><svg width='13' height='13' class='inline-svg'><pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
               <mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
               <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color</span></section>
@@ -2648,7 +2675,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
 
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into 1,100+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into data from 1,100+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -2732,35 +2759,37 @@ queue()
         }
         document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
+            if (!locked) {
+              console.log('keypressed: ' + e.code);
+              if (e.code === 'ArrowRight' || e.code === 'Space') {
+                if (eventsQueue[state]) {
+                  eventsQueue[state][0](true);
+                }
 
-          console.log('keypressed: ' + e.code);
-          if (e.code === 'ArrowRight' || e.code === 'Space') {
-            if (eventsQueue[state]) {
-              eventsQueue[state][0](true);
-            }
+                if (state < eventsQueue.length) {
+                  state += 1;
+                  //select(this).on('click', nextStep);
+                  document.addEventListener('keydown', nextStep);
+                  updateProgressBar();
+                } else {
+                  document.addEventListener('keydown', () => {});
+                }
+                console.log(state);
 
-            if (state < eventsQueue.length) {
-              state += 1;
-              //select(this).on('click', nextStep);
-              document.addEventListener('keydown', nextStep);
-              updateProgressBar();
-            } else {
-              document.addEventListener('keydown', () => {});
-            }
-            console.log(state);
+              } else if (e.code === 'ArrowLeft') {
+                if (state > 1) {
+                  eventsQueue[state - 2][0](false);
+                } else {
+                  loadTitlesSlide();
+                }
+                if (state > 0) {
+                  state -= 1;
+                  updateProgressBar();
+                }
 
-          } else if (e.code === 'ArrowLeft') {
-            if (state > 1) {
-              eventsQueue[state - 2][0](false);
-            } else {
-              loadTitlesSlide();
-            }
-            if (state > 0) {
-              state -= 1;
-              updateProgressBar();
-            }
-
+              }
           }
+
         });
 
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
@@ -2773,36 +2802,39 @@ queue()
 
               return;
           }
+          if (!locked) {
+              const windowWidth = window.innerWidth;
 
-          const windowWidth = window.innerWidth;
+              if (e.clientX > windowWidth/2) {
+                if (eventsQueue[state]) {
+                  eventsQueue[state][0](true);
+                }
 
-          if (e.clientX > windowWidth/2) {
-            if (eventsQueue[state]) {
-              eventsQueue[state][0](true);
-            }
+                if (state < eventsQueue.length) {
+                  state += 1;
+                  //select(this).on('click', nextStep);
+                  document.querySelector('body').addEventListener('mousedown', nextStep);
+                  updateProgressBar();
 
-            if (state < eventsQueue.length) {
-              state += 1;
-              //select(this).on('click', nextStep);
-              document.querySelector('body').addEventListener('mousedown', nextStep);
-              updateProgressBar();
+                } else {
+                  document.querySelector('body').addEventListener('mousedown', () => {});
+                }
+                console.log(state);
+              } else {
+                if (state > 1) {
+                  eventsQueue[state - 2][0](false);
+                } else {
+                  loadTitlesSlide();
+                }
+                if (state > 0) {
+                  state -= 1;
+                  updateProgressBar();
+                }
 
-            } else {
-              document.querySelector('body').addEventListener('mousedown', () => {});
-            }
-            console.log(state);
-          } else {
-            if (state > 1) {
-              eventsQueue[state - 2][0](false);
-            } else {
-              loadTitlesSlide();
-            }
-            if (state > 0) {
-              state -= 1;
-              updateProgressBar();
-            }
-
+              }
           }
+
+
         });
         //select(document).on('keypress', function nextStep() {
         //    //console.log(this);

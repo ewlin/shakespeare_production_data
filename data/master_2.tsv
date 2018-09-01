@@ -202,13 +202,13 @@ Gintara Kizys	person not found on wiki	unknown	unknown	unknown					unknown
 Bethan Cullinane	person not found on wiki	unknown	unknown	unknown					unknown	
 John Douglas	person not found on wiki	unknown	unknown	unknown					unknown	
 Caroline Martin	person not found on wiki	unknown	unknown	unknown					unknown	
-Liz Sklar	person not found on wiki	unknown	unknown	unknown					unknown	
+Liz Sklar	1981-01-01T00:00:00	female	unknown	TRUE	https://www.linkedin.com/in/elizabeth-sklar-1b272b12/	LinkedIn			unknown	***
 Natalie Klamar	person not found on wiki	unknown	unknown	unknown					unknown	
-Emma Darwall-Smith	person not found on wiki	unknown	unknown	unknown					unknown	
-Norah Lopez Holden	person not found on wiki	unknown	unknown	unknown					unknown	
-Beatrice Beckley	person not found on wiki	unknown	unknown	unknown					unknown	
-Ethel Carrington	person not found on wiki	unknown	unknown	unknown					unknown	
-Olivia Vinall	person not found on wiki	unknown	unknown	unknown					unknown	***
+Emma Darwall-Smith	1974-07-01T00:00:00	female	unknown	TRUE	https://www.imdb.com/name/nm1463032/	IMDb			unknown	
+Norah Lopez Holden	1995-01-01T00:00:00	female	unknown	TRUE	https://www.rada.ac.uk/profiles/norah-lopez-holden/	RADA alumni profile			unknown	
+Beatrice Beckley	1884-06-24T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0065773/	IMDb			unknown	
+Ethel Carrington	1889-07-01T00:00:00	female	unknown	TRUE	https://www.npg.org.uk/collections/search/person/mp61630/ethel-carrington	National Portrait Gallery			unknown	
+Olivia Vinall	person not found on wiki	unknown	unknown	unknown					unknown	
 Jackie Morrison	1968-09-27T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0607171/	IMDb			unknown	
 Debra Beaumont	1967-05-02T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0064586/	IMDb			unknown	
 Jason Cottle	1971-01-01T00:00:00	male	unknown	TRUE	https://www.imdb.com/name/nm0183039/	IMDb			unknown	
@@ -449,7 +449,7 @@ Arthur Whitby	1869-09-22T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/n
 Edward Lyall Swete	1865-07-25T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0842493/	IMDb			unknown	
 John E. Kellerd	1862-05-14T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0445799/	IMDb			unknown	
 F R Benson	1858-11-04T00:00:00	male	unknown	FALSE		Wikipedia			unknown	
-N De Silva	1858-08-28T00:00:00	female	unknown	FALSE	Wikipedia				unknown	
+N De Silva	1858-08-28T00:00:00	female	unknown	FALSE		Wikipedia			unknown	
 Adelaide Helen Calvert	1836-07-01T00:00:00	unknown	unknown	TRUE		Wikipedia			unknown	
 Shubham Saraf	1992-01-01T00:00:00	male	Asian	TRUE	https://www.linkedin.com/in/shubham-saraf-00677183/	LinkedIn				
 Jessica Warbeck	1992-01-02T00:00:00	female	unknown	FALSE	https://twitter.com/JessicaWarbeck/status/947874908964605952	Actress Twitter account				
@@ -470,4 +470,4 @@ Aidan Quinn	1959-03-08T00:00:00	male	unknown	FALSE		Wikipedia		upload.wikimedia.
 Reynaldo Piniella	1990-01-01T00:00:00	male	Latino	TRUE	http://depthome.brooklyn.cuny.edu/english/TellingOurStories/PDFs/2008Anthology.pdf	Brooklyn College student info				
 Sigrid Wise	1995-01-01T00:00:00	female	none	TRUE	http://news.webster.edu/webster-life/2016/conservatory-summer-student-theater-activity.html	Webster University student info				
 Shirine Babb	1978-01-01T00:00:00	female	Black	TRUE	https://www.linkedin.com/in/shirine-babb-a54a906b/	LinkedIn				
-Sara Harlett	1971-01-01T00:00:00	female		TRUE	http://www.cornish.edu/news/article/decking_the_stages_with_cornish_alumni/	Cornish College of the Arts alumni news				
+Sara Harlett	1971-01-01T00:00:00	female	unknown	TRUE	http://www.cornish.edu/news/article/decking_the_stages_with_cornish_alumni/	Cornish College of the Arts alumni news				
