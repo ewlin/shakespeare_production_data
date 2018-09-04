@@ -6,11 +6,11 @@ Charles Barron	1950-10-07T00:00:00	unknown	Black	FALSE		Wikipedia	flagged		none
 Reginald Pole	1500-03-12T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 William Thornton	1759-05-20T00:00:00	unknown	none	FALSE		Wikipedia	flagged		British Virgin Islands
 Mary Sumner	1828-12-31T00:00:00	female	none	FALSE		Wikipedia	flagged		none
-Edna Thomas	1881-04-11T00:00:00	female	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Edna_Harker_Thomas.jpg/175px-Edna_Harker_Thomas.jpg	none
+Edna Thomas	1885-11-01T00:00:00	female	Black	FALSE	https://www.imdb.com/name/nm0858777/	IMDb	TRUE		none
 William Stack	1882-03-05T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Robert Upton	1884-02-03T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 John Seitz	1892-06-23T00:00:00	unknown	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/en/thumb/1/1a/SeitzCamera.jpg/220px-SeitzCamera.jpg	none
-Kathryn Meisle	1899-10-14T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
+Kathryn Meisle	1960-06-07T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0577060/	IMDb	TRUE		none
 Ethel Johnson	1908-10-08T00:00:00	female	none	FALSE		Wikipedia	flagged		none
 Keith Fleming	1909-11-16T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 Fritz Leiber	1910-12-24T00:00:00	male	none	FALSE		Wikipedia	flagged		none
@@ -18,8 +18,8 @@ Guy Burgess	1911-04-16T00:00:00	unknown	none	FALSE		Wikipedia	flagged	upload.wik
 Peter Glenville	1913-10-28T00:00:00	unknown	none	FALSE		Wikipedia	flagged		Irish
 Francis James	1918-04-21T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 Roland Oliver	1923-03-30T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
-Margaret Whiting	1924-07-22T00:00:00	female	none	FALSE		Wikipedia	flagged		none
-Helen Craig	1934-08-30T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
+Margaret Whiting	1932-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Helen Craig	1912-05-13T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/7/7a/Helen_Craig_%281936_still%29.jpg	none
 Sam Valentine	1934-10-13T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 Thomas Kean	1935-04-21T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 Tom Peters	1942-11-07T00:00:00	unknown	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TomPeters.jpg/220px-TomPeters.jpg	none
@@ -49,7 +49,7 @@ Tom Bevan	no birthday on article	unknown	none	FALSE			flagged		none
 Elizabeth Owens	no birthday on article	unknown	none	FALSE			flagged		none
 Nikkole Salter	no birthday on article	unknown	none	FALSE			flagged		none
 Ann Noble	no birthday on article	unknown	none	FALSE			flagged		none
-Derbhle Crotty	no birthday on article	unknown	none	FALSE			flagged		none
+Derbhle Crotty	1968-07-01T00:00:00	female	none	TRUE		Wikipedia			none
 George Hayes	no birthday on article	unknown	none	FALSE			flagged		none
 Lucy Peacock	no birthday on article	unknown	none	FALSE			flagged		none
 John Wood	no birthday on article	unknown	none	FALSE			flagged		none
@@ -59,7 +59,7 @@ Liam Brennan	no birthday on article	unknown	none	FALSE			flagged		none
 John Byron	no birthday on article	unknown	none	FALSE			flagged		none
 Robert Harris	no birthday on article	unknown	none	FALSE			flagged		none
 Elizabeth Chadwick	no birthday on article	unknown	none	FALSE			flagged		none
-Eleanor Robson	no birthday on article	unknown	none	FALSE			flagged		none
+Eleanor Robson	1879-12-13T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/b/be/Eleanor_Robson_Belmont_in_1916.jpg	none
 Sandra Macdonald	no birthday on article	unknown	none	FALSE			flagged		none
 Duncan Bell	no birthday on article	unknown	none	FALSE			flagged		none
 Andrew Vincent	no birthday on article	unknown	none	FALSE			flagged		none
@@ -786,7 +786,7 @@ Joanna Vanderham	1991-10-18T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wi
 Jack Laskey	1982-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Ian McDiarmid	1944-08-11T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fe/IanMcDiarmid.jpg/220px-IanMcDiarmid.jpg	none
 Jennifer Ikeda	1979-01-01T00:00:00	female	Asian	FALSE	https://www.backstage.com/news/regional-roundup_92/	Backstage: Regional Roundup (Juilliard Class '01)	TRUE		none
-Vivien Leigh	no birthday on article	female	none	FALSE			TRUE		none
+Vivien Leigh	1913-11-05T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/b/b6/Vivien_Leigh_Scarlet.jpg	none
 Kate Reid	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/en/b/bb/Kate_Reid_1966.jpg	none
 Leila Crerar	no birthday on article	female	none	FALSE			TRUE		none
 Noreen Kershaw	no birthday on article	female	none	FALSE			TRUE		none
@@ -800,7 +800,7 @@ Jay Goede	no birthday on article	male	none	FALSE			TRUE		none
 Claire Cox	no birthday on article	female	none	FALSE			TRUE		none
 Christopher Shyer	no birthday on article	male	none	FALSE			TRUE		none
 Annika Boras	no birthday on article	female	none	FALSE			TRUE		none
-Leslee Udwin	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/45/P1140027_%2817223616286%29.jpg/220px-P1140027_%2817223616286%29.jpg	Israeli
+Leslee Udwin	1957-07-01T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/45/P1140027_%2817223616286%29.jpg/220px-P1140027_%2817223616286%29.jpg	Israeli
 Mark Nelson	no birthday on article	male	none	FALSE			TRUE		none
 Justin Blanchard	1980-01-01T00:00:00	male	none	TRUE		NYU Class '02	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/40/Justin_Blanchard_01.jpg/180px-Justin_Blanchard_01.jpg	none
 Richard Kay	no birthday on article	male	none	FALSE			TRUE		none
@@ -837,21 +837,21 @@ Michael Winters	no birthday on article	male	none	FALSE			TRUE		none
 Erin Krakow	no birthday on article	female	none	FALSE			TRUE		none
 Louis Mellis	no birthday on article	male	none	FALSE			TRUE		none
 Kate Fahy	no birthday on article	female	none	FALSE			TRUE		none
-Mandana Jones	no birthday on article	female	none	FALSE			TRUE		Iranian
+Mandana Jones	1967-02-26T00:00:00	female	Asian	FALSE	https://www.imdb.com/name/nm0428730/	IMDb	TRUE		Iranian
 Jolly Abraham	no birthday on article	male	none	FALSE			TRUE		none
-Rachel Brosnahan	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Rachel_Brosnahan_July_9%2C_2014_%28cropped%29.jpg/220px-Rachel_Brosnahan_July_9%2C_2014_%28cropped%29.jpg	Irish,British
+Rachel Brosnahan	1990-12-15T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Rachel_Brosnahan_July_9%2C_2014_%28cropped%29.jpg/220px-Rachel_Brosnahan_July_9%2C_2014_%28cropped%29.jpg	Irish,British
 Stephen Russell	no birthday on article	male	none	FALSE			TRUE		none
-Lisa Dillon	no birthday on article	female	none	FALSE			TRUE		Polish
-Julia Ford	no birthday on article	female	none	FALSE			TRUE		none
+Lisa Dillon	1979-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		Polish
+Julia Ford	1963-08-07T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0285726/	IMDb	TRUE		none
 Hermione Gulliford	no birthday on article	female	none	FALSE			TRUE		none
-Michelle Beck	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/69/Bridge_Project_Opening_with_Michelle_Beck.jpg/220px-Bridge_Project_Opening_with_Michelle_Beck.jpg	none
-Michelle Giroux	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/66/Michelle_Giroux.jpg/220px-Michelle_Giroux.jpg	none
-Rachel Pickup	no birthday on article	female	none	FALSE			TRUE		American,English
+Michelle Beck	no birthday on article	female	Black	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/69/Bridge_Project_Opening_with_Michelle_Beck.jpg/220px-Bridge_Project_Opening_with_Michelle_Beck.jpg	none
+Michelle Giroux	1975-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/66/Michelle_Giroux.jpg/220px-Michelle_Giroux.jpg	none
+Rachel Pickup	1973-07-15T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0681974/	IMDb	TRUE		American,English
 Gayle Rankin	no birthday on article	female	none	FALSE			TRUE		none
 Topol	1935-09-03T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Helen Schlesinger	no birthday on article	female	none	FALSE			TRUE		German
+Helen Schlesinger	1967-07-01T00:00:00	female	none	TRUE		Google	TRUE		German
 Sello Maake Ka-Ncube	1960-03-12T00:00:00	male	Black	FALSE		Wikipedia	TRUE		none
-Simon Scardifield	not a date	male	none	FALSE		Wikipedia	TRUE		none
+Simon Scardifield	1970-01-01T00:00:00	male	none	TRUE	https://www.linkedin.com/in/simon-scardifield-6465891b/	LinkedIn	TRUE		none
 Sally Dexter	1960-04-15T00:00:00	female	none	FALSE		Google	TRUE		none
 Susan Coyne	not a date	female	none	FALSE		Wikipedia	TRUE		none
 Alan Mahon	1993-04-01T00:00:00	male	none	TRUE		https://www.thereviewshub.com/interview-alan-mahon-reflects-on-outrageous-fortune/	TRUE		none

@@ -1,41 +1,55 @@
-Opening Date	Role	Actor	Director	Company	Venue	
-2018-07-20T00:00:00	Desdemona	Jessica Warbeck	Claire van Kampen	Shakespeare's Globe	Shakespeare's Globe	
-2000-02-10T00:00:00	Desdemona	Tina Horii	Jonathan Bank	National Asian American Theatre Company 	The Connelly Theatre	
-2010-07-28T00:00:00	Desdemona	Marianna Bassham	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2018-04-25T00:00:00	Hamlet	Michelle Terry	Federay Holmes	Shakespeare's Globe	Shakespeare's Globe	
-2005-07-16T00:00:00	Hamlet	Jeffrey Donovan	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2016-06-30T00:00:00	Hamlet	Frank Cox-O'Connell	Birgit Schreyer Duarte	Shakespeare in High Park	High Park Amphitheatre	https://www.theglobeandmail.com/arts/theatre-and-performance/soulpepper-presents-the-just-a-classic-tale-about-the-cost-of-extremism/article29033742/
-2005-08-18T00:00:00	Hamlet	Albert Schultz	Joseph Ziegler	Soulpepper	Premiere Dance Theatre, Toronto	
-1985-02-01T00:00:00	Hamlet	Aidan Quinn	Robert Falls	Wisdom Bridge Theater	Wisdom Bridge Theater	
-2018-07-20T00:00:00	Iago	Mark Rylance	Claire van Kampen	Shakespeare's Globe	Shakespeare's Globe	
-2000-02-10T00:00:00	Iago	Joel de la Fuente	Jonathan Bank	National Asian American Theatre Company 	The Connelly Theatre	
-2010-07-28T00:00:00	Iago	James Waterston	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2017-07-19T00:00:00	Juliet	Gracyn Mix	Allegra Libonati	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2018-06-28T00:00:00	Juliet	Rachel Cairns	Frank Cox-O'Connell	Shakespeare in High Park	High Park Amphitheatre	
-2010-06-29T00:00:00	Juliet	Christine Horne	Vikki Anderson	Dream in High Park	High Park Amphitheatre	
-2015-07-22T00:00:00	King Lear	Will Lyman	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2017-06-29T00:00:00	King Lear	Diane D’Aquila	Alistair Newton	Shakespeare in High Park	High Park Amphitheatre	
-2003-07-18T00:00:00	Lady Macbeth	Jennie Israel	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2003-07-18T00:00:00	Macbeth	Jay O. Sanders	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2018-04-25T00:00:00	Ophelia	Shubham Saraf	Federay Holmes	Shakespeare's Globe	Shakespeare's Globe	
-2005-07-16T00:00:00	Ophelia	Georgia Hatzis	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2016-06-30T00:00:00	Ophelia	Rose Tuong	Birgit Schreyer Duarte	Shakespeare in High Park	High Park Amphitheatre	https://soulpepper.ca/performances/rose-a-concert-presentation/2012/rose-tuong/1703
-2005-08-18T00:00:00	Ophelia	Patricia Fagan	Joseph Ziegler	Soulpepper	Premiere Dance Theatre, Toronto	
-2018-07-20T00:00:00	Othello	André Holland	Claire van Kampen	Shakespeare's Globe	Shakespeare's Globe	
-2000-02-10T00:00:00	Othello	Joshua Spafford	Jonathan Bank	National Asian American Theatre Company 	The Connelly Theatre	
-2010-07-28T00:00:00	Othello	Seth Gilliam	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2000-07-21T00:00:00	Prospero	Will Lyman	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2018-07-18T00:00:00	Richard III	Faran Tahir	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2018-09-12T00:00:00	Richard III	Sara Harlett	Rosa Joshi	Seattle Shakespeare Company	Leo K. Theatre	
-2017-07-19T00:00:00	Romeo	John Zdrojeski	Allegra Libonati	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-2018-06-28T00:00:00	Romeo	David Patrick Flemming	Frank Cox-O'Connell	Shakespeare in High Park	High Park Amphitheatre	
-2010-06-29T00:00:00	Romeo	Jeff Irving	Vikki Anderson	Dream in High Park	High Park Amphitheatre	
-2018-05-02T00:00:00	Rosalind	Jack Laskey	Federay Holmes	Shakespeare's Globe	Shakespeare's Globe	
-2008-07-18T00:00:00	Rosalind	Marin Ireland	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common	
-1943-10-24T00:00:00	Hamlet	John Carradine	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
-1943-10-24T00:00:00	Ophelia	Sonia Sorel	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
-1943-10-30T00:00:00	Shylock	John Carradine	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
-1943-10-30T00:00:00	Portia	Sonia Sorel	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
-1943-11-04T00:00:00	Othello	John Carradine	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
-1943-11-04T00:00:00	Desdemona	Sonia Sorel	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
-1943-11-04T00:00:00	Iago	Alfred Allegro	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco	
+BDAY	Opening Date	Role	Actor	Director	Company	Venue
+	2018-07-20T00:00:00	Desdemona	Jessica Warbeck	Claire van Kampen	Shakespeare's Globe	Shakespeare's Globe
+	2000-02-10T00:00:00	Desdemona	Tina Horii	Jonathan Bank	National Asian American Theatre Company 	The Connelly Theatre
+	2010-07-28T00:00:00	Desdemona	Marianna Bassham	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2018-04-25T00:00:00	Hamlet	Michelle Terry	Federay Holmes	Shakespeare's Globe	Shakespeare's Globe
+	2005-07-16T00:00:00	Hamlet	Jeffrey Donovan	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2016-06-30T00:00:00	Hamlet	Frank Cox-O'Connell	Birgit Schreyer Duarte	Shakespeare in High Park	High Park Amphitheatre	https://www.theglobeandmail.com/arts/theatre-and-performance/soulpepper-presents-the-just-a-classic-tale-about-the-cost-of-extremism/article29033742/
+	2005-08-18T00:00:00	Hamlet	Albert Schultz	Joseph Ziegler	Soulpepper	Premiere Dance Theatre, Toronto
+	1985-02-01T00:00:00	Hamlet	Aidan Quinn	Robert Falls	Wisdom Bridge Theater	Wisdom Bridge Theater
+	2018-07-20T00:00:00	Iago	Mark Rylance	Claire van Kampen	Shakespeare's Globe	Shakespeare's Globe
+	2000-02-10T00:00:00	Iago	Joel de la Fuente	Jonathan Bank	National Asian American Theatre Company 	The Connelly Theatre
+	2010-07-28T00:00:00	Iago	James Waterston	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2017-07-19T00:00:00	Juliet	Gracyn Mix	Allegra Libonati	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2018-06-28T00:00:00	Juliet	Rachel Cairns	Frank Cox-O'Connell	Shakespeare in High Park	High Park Amphitheatre
+	2010-06-29T00:00:00	Juliet	Christine Horne	Vikki Anderson	Dream in High Park	High Park Amphitheatre
+	2015-07-22T00:00:00	King Lear	Will Lyman	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2017-06-29T00:00:00	King Lear	Diane D’Aquila	Alistair Newton	Shakespeare in High Park	High Park Amphitheatre
+	2003-07-18T00:00:00	Lady Macbeth	Jennie Israel	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2003-07-18T00:00:00	Macbeth	Jay O. Sanders	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2018-04-25T00:00:00	Ophelia	Shubham Saraf	Federay Holmes	Shakespeare's Globe	Shakespeare's Globe
+	2005-07-16T00:00:00	Ophelia	Georgia Hatzis	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2016-06-30T00:00:00	Ophelia	Rose Tuong	Birgit Schreyer Duarte	Shakespeare in High Park	High Park Amphitheatre	https://soulpepper.ca/performances/rose-a-concert-presentation/2012/rose-tuong/1703
+	2005-08-18T00:00:00	Ophelia	Patricia Fagan	Joseph Ziegler	Soulpepper	Premiere Dance Theatre, Toronto
+	2018-07-20T00:00:00	Othello	André Holland	Claire van Kampen	Shakespeare's Globe	Shakespeare's Globe
+	2000-02-10T00:00:00	Othello	Joshua Spafford	Jonathan Bank	National Asian American Theatre Company 	The Connelly Theatre
+	2010-07-28T00:00:00	Othello	Seth Gilliam	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2000-07-21T00:00:00	Prospero	Will Lyman	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2018-07-18T00:00:00	Richard III	Faran Tahir	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2018-09-12T00:00:00	Richard III	Sara Harlett	Rosa Joshi	Seattle Shakespeare Company	Leo K. Theatre
+	2017-07-19T00:00:00	Romeo	John Zdrojeski	Allegra Libonati	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	2018-06-28T00:00:00	Romeo	David Patrick Flemming	Frank Cox-O'Connell	Shakespeare in High Park	High Park Amphitheatre
+	2010-06-29T00:00:00	Romeo	Jeff Irving	Vikki Anderson	Dream in High Park	High Park Amphitheatre
+	2018-05-02T00:00:00	Rosalind	Jack Laskey	Federay Holmes	Shakespeare's Globe	Shakespeare's Globe
+	2008-07-18T00:00:00	Rosalind	Marin Ireland	Steven Maler	Commonwealth Shakespeare Company	Parkman Bandstand, Boston Common
+	1943-10-24T00:00:00	Hamlet	John Carradine	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1943-10-24T00:00:00	Ophelia	Sonia Sorel	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1943-10-30T00:00:00	Shylock	John Carradine	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1943-10-30T00:00:00	Portia	Sonia Sorel	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1943-11-04T00:00:00	Othello	John Carradine	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1943-11-04T00:00:00	Desdemona	Sonia Sorel	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1943-11-04T00:00:00	Iago	Alfred Allegro	John Carradine	John Carradine and His Shakespeare Players	Geary Theatre, San Francisco
+	1963-05-07T00:00:00	Hamlet	George Grizzard	Tyrone Guthrie	The Guthrie Theater 	The Guthrie Theater
+	1963-05-07T00:00:00	Ophelia	Ellen Geer	Tyrone Guthrie	The Guthrie Theater 	The Guthrie Theater
+	2017-02-11T00:00:00	King Lear	Stephen Yoakam	Joseph Haj	The Guthrie Theater 	The Guthrie Theater
+	2014-03-08T00:00:00	Iago	Stephen Yoakam	Marion McClinton	The Guthrie Theater 	The Guthrie Theater
+	2003-11-01T00:00:00	Iago	Bill McCallum	Joe Dowling	The Guthrie Theater 	The Guthrie Theater
+	2013-03-01T00:00:00	Rosalind	Elizabeth Stahlmann	Dan Rothenberg	The Acting Company in association with The Guthrie Theater	The New Victory Theater, NYC	
+	2010-01-13T00:00:00	Romeo	Sonny Valicenti	Penny Metropulos	The Acting Company in association with The Guthrie Theater	The Guthrie Theater
+	2002-01-25T00:00:00	Cleopatra	Laila Robins	Mark Lamos	The Guthrie Theater 	The Guthrie Theater
+	1937-01-01T00:00:00	Rosalind	Edith Evans	Esme Church	Old Vic, London	Old Vic, London
+	1926-01-01T00:00:00	Rosalind	Edith Evans	Andrew Leigh	Old Vic, London	Old Vic, London
+	1961-07-12T00:00:00	Rosalind	Kim Hunter	Word Baker	American Shakespeare Festival, Stratford, Connecticut	unknown
+	2003-11-01T00:00:00	Othello	Lester Purry	Joe Dowling	The Guthrie Theater 	The Guthrie Theater
+	2003-11-01T00:00:00	Desdemona	Cheyenne Casebier	Joe Dowling	The Guthrie Theater 	The Guthrie Theater
+	2005-03-12T00:00:00	Rosalind	Bianca Amato	Joe Dowling	The Guthrie Theater 	The Guthrie Theater
