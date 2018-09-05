@@ -106,13 +106,6 @@ queue()
     const scaleX = scaleLinear().domain([10, 86]).range([60, widthMax - 80]);
 
 
-    //annotations setup
-    const makeAnnotations = annotation.annotation()
-        .type(annotation.annotationLabel);
-
-    const annotationGroup = select('.svg-main')
-      .append("g")
-      .attr("class", "annotation-group");
 
     //Setup for brushing year filter
     const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
@@ -711,7 +704,13 @@ queue()
 
                 }
 
+        //annotations setup
+        const makeAnnotations = annotation.annotation()
+            .type(annotation.annotationLabel);
 
+        const annotationGroup = select('.svg-main')
+            .append('g')
+            .attr("class", 'annotation-group');
 
         function animateDots(minAge = 0, maxAge = 90, directionForward, completeRange, slideFlag) {
             return function(direction) {
@@ -1915,7 +1914,7 @@ queue()
             select('.annotation-group')
                 .call(makeAnnotations);
 
-					select('.annotation-note-label').attr('fill', '#b4b8c0');
+	      select('.annotation-note-label').attr('fill', '#b4b8c0');
           select('.annotation-connector path')
             .attr('stroke', '#b4b8c0')
             .attr('stroke-width', '2px');
@@ -2115,7 +2114,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
             //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-            mainContent.html(`<p class='legend-text'>Before we get started, let’s get acquainted with how to navigate this story. To keep going, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</p><p class='legend-text'>For this story, data from over 1,000 professional productions in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a> of 10 Shakespearean plays since 1900 was collected, including <em>Hamlet</em>, <em>Othello</em>, <em>Macbeth</em>, <em>King Lear</em>, <em>Romeo and Juliet</em>, <em>Antony and Cleopatra</em>, <em>The Tempest</em>, <em>The Merchant of Venice</em>, <em>As You Like It</em>, and <em>Richard III</em>. We chose these plays in part to ensure that we have a <a target='_blank' href="https://www.theguardian.com/stage/interactive/2012/dec/10/shakespeare-women-interactive">relatively balanced and representative group of major female and male roles</a>.</p><p class='legend-text'>Each character comes with an age distribution chart, where each dot represents an actor playing the role in a particular production, and they’re plotted on the chart based on their age at the time of the production. Some actors have played the same role on multiple occasions in different productions. In such cases, each production with the same actor is represented by a separate dot. Here's how to read the age distribution charts:</p><svg class="embedded-svg" width=${right-left} height=240></svg>`);
+            mainContent.html(`<p class='legend-text'>Before we get started, let’s get acquainted with how to navigate this story. To keep going, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</p><p class='legend-text'>For this story, data from over 1,000 professional productions in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a> of 10 Shakespearean plays since 1900 was collected, including <em>Hamlet</em>, <em>Othello</em>, <em>Macbeth</em>, <em>King Lear</em>, <em>Romeo and Juliet</em>, <em>Antony and Cleopatra</em>, <em>The Tempest</em>, <em>The Merchant of Venice</em>, <em>As You Like It</em>, and <em>Richard III</em>. We chose these plays in part to ensure that we have a <a target='_blank' href="https://www.theguardian.com/stage/interactive/2012/dec/10/shakespeare-women-interactive">relatively balanced and representative group of major female and male roles</a>.</p><p class='legend-text'>Each character comes with an age distribution chart, where each dot ( <span class='legend-dot'></span> ) represents an actor playing the role in a particular production, and they’re plotted on the chart based on their age at the time of the production. Some actors have played the same role on multiple occasions in different productions. In such cases, each production with the same actor is represented by a separate dot. Here's how to read the age distribution charts:</p><svg class="embedded-svg" width=${right-left} height=240></svg>`);
             //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -2615,7 +2614,8 @@ queue()
               } else {
                   transitions([1980, 2018], false, true);
               }
-
+              **/
+              /**
               const blankAnnotations = [
                   //note color: #b4b8c0
                   {
@@ -2642,7 +2642,7 @@ queue()
               //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
               **/
           }],
-          [function() {
+          [function(directionForward) {
               //select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
               /**
               if (isSafari) {
@@ -2654,14 +2654,18 @@ queue()
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              transitions([1980, 2019], false, false);
+              if (directionForward) {
+                  transitions([1980, 2019], false, false);
+              }
+
+              selectAll('.role-text-dots').attr('opacity', 0);
 
               mainContent.html(`<h2>Male role age distributions in <span>productions since 1980</span></h2><p>Perhaps due to both improvements in
                   <a href='http://budgetmodel.wharton.upenn.edu/issues/2016/1/25/mortality-in-the-united-states-past-present-and-future' target="_blank">life expectancy</a> in the late 20th century, and increasing audience expectations
                   for an actor’s age to match the age of the character he’s playing (likely due to the pressures from film and TV), nearly 75% of modern-day actors playing <span class="kingLear-color">King Lear</span> are over 60,
-                  a considerable change from productions prior to the 1980s. While it’s true that the age distributions of younger male roles like <span class="romeo-color">Romeo</span> and <span class="hamlet-color">Hamlet</span>
-                  have also contracted like their female counterparts in recent years, given that there are more middle age and older roles for males to choose from,
-                  there’s hardly a dearth of opportunities for men near the twilight of their careers when compared with the possibilities for women.</p>`);
+                  a considerable change from productions prior to the 1980s. While it’s true that the age distributions of younger male roles like <span class="romeo-color">Romeo</span> and <span class="hamlet-color">Hamlet</span> have
+                  also contracted in recent years, with the average ages of <span class="kingLear-color">King Lears</span> and <span class="prospero-color">Prosperos</span> trending upward, male actors continue to have
+                  pretty healthy pickings of Shakespearean roles throughout their careers.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               console.log(document.querySelector('body').getBoundingClientRect());
@@ -2672,6 +2676,22 @@ queue()
                   if (i == 0) console.log('d is: ', d);
                   //if (d.actor = )
               });
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
+
           }],
           [function(directionForward) {
               //const slideDistance = scaleX(minAge) - scaleX(18);
@@ -2687,6 +2707,137 @@ queue()
               console.log(document.querySelector('body').getBoundingClientRect());
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               mainContent.style('opacity', 1);
+
+              //transitions([1980, 2019], false, false);
+
+
+
+              selectAll('.role-text-dots').each(function(ele) {
+                  const roleTransition = select(this).transition().duration(1000).attr('opacity', 1);
+                  if (ele.actor == 'Martha Henry' && ele.role == 'prospero') {
+                      roleTransition.on('start', () => locked = true).on('end', () => {
+                          locked = false;
+
+                          const annotationMeta = [
+                              {
+                                  type: 'genderBend',
+                                  actorName: 'Martha Henry',
+                                  character: 'prospero',
+                                  text: 'Martha Henry played Prospero in 2018',
+                                  points: [[33, -18]],
+
+                                  //maybe openingdate?
+                                  //subject: {radius: 18}
+                                  /**
+                                  connector: {
+                                      end: 'arrow',
+                                      type: 'curve',
+                                      points: [[33, -18]]
+                                      //points: [[25, 25], [45, 22]]
+                                  },
+                                  x: +annotationCoordinates.stewartOthello.coordinates[0],
+                                  y: +annotationCoordinates.stewartOthello.coordinates[1],
+                                  dx: -65,
+                                  dy: -20,
+                                  subject: {radius: 18}
+                                  **/
+
+                              }
+                          ];
+                          const newAnnotations = [
+
+                          ];
+                          annotationMeta.forEach(annoMeta => {
+                              const index = characterAges[`${annoMeta.character}Ages`].idx;
+                              select(`.${annoMeta.character}-dots-group`).selectAll('text').each(charActor => {
+                                  if (charActor.actor == annoMeta.actorName) {
+                                      console.log(index, charActor.actor, charActor.age, charActor.yCoord);
+                                      const charAnnotation = {
+                                          type: annotation.annotationCalloutCircle,
+                                          note: {
+                                              label: annoMeta.text,
+                                              wrap: 125
+                                          },
+                                          connector: {
+              								end: 'arrow',
+              								type: 'curve',
+                                            points: [[-50, -20]]
+
+              								//points: [[-40, -20]]
+              								//points: [[25, 25], [45, 22]]
+              							  },
+                                          x: scaleX(charActor.age),
+              							  y: male(index, charActor.yCoord),
+              							  dx: -125,
+              							  dy: -75,
+                                          subject: {radius: 23}
+                                      }
+                                      newAnnotations.push(charAnnotation);
+                                  }
+
+                              });
+                          });
+                          makeAnnotations.annotations(newAnnotations);
+
+                          select('.annotation-group')
+                            .call(makeAnnotations);
+                          select('.annotation-note-label').attr('fill', 'white');//.attr('stroke', 'white');
+                            /**
+
+
+
+                            select('.annotation-connector path.connector-end')
+                              .attr('fill', '#b4b8c0')
+                              .attr('stroke', 'grey')
+                              .attr('stroke-width', '3px');
+
+                            select('.note-line').remove();
+                            **/
+                            select('.annotation-connector path')
+                              .attr('stroke', '#b4b8c0')
+                              .attr('stroke-width', '2px')
+                              .attr('stroke-dasharray', '2 2');
+
+                            select('.annotation-connector path.connector-end')
+                              .attr('fill', '#b4b8c0')
+                              .attr('stroke', 'white');
+
+                            const rect = select('.annotation-note-bg');
+                            rect.attr('fill-opacity', 1)
+                                .attr('fill', '#1a1b1e')
+                            select('.subject').attr('stroke-dasharray', '2 1').attr('stroke', 'white');
+
+                            select('.note-line').remove();
+
+
+                      });
+
+
+                  }
+              });
+                  /**
+                  const blankAnnotations = [
+                      {
+                          type: annotation.annotationLabel,
+                          note: {
+                              label: '',
+                          },
+
+
+                      }
+                  ];
+
+                  makeAnnotations.annotations(blankAnnotations);
+
+                  select('.annotation-group')
+                    .call(makeAnnotations);
+
+                  //create voronoi overlay as Test
+                  //voronoifiedPoints
+                  //.attr('cx', d => scaleX(d.age))
+                  //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
+                  **/
+
 
 
               function translateUp() {
@@ -2765,7 +2916,7 @@ queue()
               <section><svg width='13' height='13' class='inline-svg'><pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
               <mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
               <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color</span></section>
-              <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p></div>`);
+              <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p><button class='cta story-skip'>Click</button></div>`);
 
               select('.inline-svg circle').attr('mask', 'url(#mask-2)').attr('fill', 'white');
 
@@ -2805,7 +2956,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
 
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta exploreDataSkip'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -2928,8 +3079,11 @@ queue()
           } else if (e.target.classList.contains('cta')) {
               //e.stopPropagation();
               console.log('this is the button');
-              skipToExplore();
 
+              if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
+              if (e.target.classList.contains('story-skip')) {
+                  eventsQueue[2][0](false); 
+              }
               return;
           }
           if (!locked) {
