@@ -1955,7 +1955,7 @@ queue()
                 tickValues.push(nextLabelVal);
             }
 
-            state = eventsQueue.length;
+            state = eventsQueue.length - 1;
             animateStop = true;
             select('.svg-main').style('opacity', 1);
 
@@ -2086,7 +2086,7 @@ queue()
 
 
 
-            eventsQueue[eventsQueue.length - 1][0]();
+            eventsQueue[eventsQueue.length - 2][0]();
             selectAll('.character-meta-inner').attr('opacity', 1);
             selectAll('.character-label-initial').attr('opacity', 0);
             selectAll('.arrow').attr('opacity', 0);
@@ -2102,19 +2102,42 @@ queue()
         }
 
         const eventsQueue = [
+            [function(directionForward) {
+                //stop shakespeare interval animation timer
+                animateStop = true;
+
+                const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
+                const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
+                let mainContent = select('#main-content');
+                mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+                //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
+                //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+                mainContent.html(`<div class='quote-container'><p class='quote'><em>All the world's a stage,</em></p>
+                                  <p class='quote'><em>And all the men and women merely players;</em></p>
+                                  <p class='quote'><em>They have their exits and their entrances,</em></p>
+                                  <p class='quote'><em>And one man in his time plays many parts,</em></p>
+                                  <p class='quote'><em>His acts being seven ages.</em></p>
+                                  <p class='quote quote-author'><b>&mdash; William Shakespeare</b>, <em>As You Like It</em></p></div>
+                                  <p class='story'>It's the beginning of a new academic year. You're an 18-year-old actor about to start school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Maggie Smith. You dream of reaching iconic status in pop culture-dom by landing roles in major film &amp; TV franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p>
+                                  <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> <a href='https://www.americantheatre.org/2017/09/21/the-top-20-most-produced-playwrights-of-the-2017-18-season/' target='_blank'>calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare</a>, making him the most performed playwright in the survey, with quadruple the number of productions as the playwright in second place.</p>
+                                  <p class='story'>What does the future hold for you as an aspiring Shakespearean? As it turns out, your fate largely depends on your gender...</p>`);
+                //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+                console.log(band);
+                const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+                mainContent.style('top', window.innerHeight/2 - height/2);
+
+            }],
           [function() {
 
-            //stop shakespeare interval animation timer
-            animateStop = true;
             const band = 55;
 
             const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
-            let mainContent = select('#main-content');
+            const mainContent = select('#main-content');
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
             //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-            mainContent.html(`<p class='legend-text'>Before we get started, let’s get acquainted with how to navigate this story. To keep going, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</p><p class='legend-text'>For this story, data from over 1,000 professional productions in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a> of 10 Shakespearean plays since 1900 was collected, including <em>Hamlet</em>, <em>Othello</em>, <em>Macbeth</em>, <em>King Lear</em>, <em>Romeo and Juliet</em>, <em>Antony and Cleopatra</em>, <em>The Tempest</em>, <em>The Merchant of Venice</em>, <em>As You Like It</em>, and <em>Richard III</em>. We chose these plays in part to ensure that we have a <a target='_blank' href="https://www.theguardian.com/stage/interactive/2012/dec/10/shakespeare-women-interactive">relatively balanced and representative group of major female and male roles</a>.</p><p class='legend-text'>Each character comes with an age distribution chart, where each dot ( <span class='legend-dot'></span> ) represents an actor playing the role in a particular production, and they’re plotted on the chart based on their age at the time of the production. Some actors have played the same role on multiple occasions in different productions. In such cases, each production with the same actor is represented by a separate dot. Here's how to read the age distribution charts:</p><svg class="embedded-svg" width=${right-left} height=240></svg>`);
+            mainContent.html(`<p class='legend-text'><b>Before we get any further, let's get better acquainted with how to navigate this story. To keep going, use the  <span class='key-indicator'>&#x21e8;</span>  key or  <span class='key-indicator'>&nbsp;SPACE&nbsp;</span>  bar on your keyboard, and  <span class='key-indicator'>&#x21e6;</span>  to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</b></p><p class='legend-text'>For this story, data from over 1,000 professional productions in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a> of 10 Shakespearean plays since 1900 was collected, including <em>Hamlet</em>, <em>Othello</em>, <em>Macbeth</em>, <em>King Lear</em>, <em>Romeo and Juliet</em>, <em>Antony and Cleopatra</em>, <em>The Tempest</em>, <em>The Merchant of Venice</em>, <em>As You Like It</em>, and <em>Richard III</em>. We chose these plays in part to ensure that we have a <a target='_blank' href="https://www.theguardian.com/stage/interactive/2012/dec/10/shakespeare-women-interactive">relatively balanced and representative group of major female and male roles</a>.</p><p class='legend-text'>Each character comes with an age distribution chart, where each dot ( <span class='legend-dot'></span> ) represents an actor playing the role in a particular production, and they’re plotted on the chart based on their age at the time of the production. Some actors have played the same role on multiple occasions in different productions. In such cases, each production with the same actor is represented by a separate dot. <b>Here's how to read the age distribution charts:</b></p><svg class="embedded-svg" width=${right-left} height=240></svg>`);
             //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -2331,32 +2354,9 @@ queue()
               .attr('stroke', '#b4b8c0')
               .attr('stroke-width', '1px');
 
+            select('.svg-main').style('opacity', 0);
 
           }, 'From ages 17 to 22..'],
-          [function(directionForward) {
-              const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
-              const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
-              let mainContent = select('#main-content');
-              mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-              //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
-              //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-              mainContent.html(`<div class='quote-container'><p class='quote'><em>All the world's a stage,</em></p>
-                                <p class='quote'><em>And all the men and women merely players;</em></p>
-                                <p class='quote'><em>They have their exits and their entrances,</em></p>
-                                <p class='quote'><em>And one man in his time plays many parts,</em></p>
-                                <p class='quote'><em>His acts being seven ages.</em></p>
-                                <p class='quote quote-author'><b>&mdash; William Shakespeare</b>, <em>As You Like It</em></p></div>
-                                <p class='story'>It's the beginning of a new academic year. You're an 18-year-old actor about to start school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Maggie Smith. You dream of reaching iconic status in pop culture-dom by landing roles in major film &amp; TV franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p>
-                                <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> <a href='https://www.americantheatre.org/2017/09/21/the-top-20-most-produced-playwrights-of-the-2017-18-season/' target='_blank'>calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare</a>, making him the most performed playwright in the survey, with quadruple the number of productions as the playwright in second place.</p>
-                                <p class='story'>What does the future hold for you as an aspiring Shakespearean? To answer that question, let’s look at a representative sample of productions of 10 of Shakespeare’s major plays and try to tease out trends in the casting of the lead roles. For now, we’ll limit our sample to productions from 1980 onward, as it’s more representative of modern casting practices. As it turns out, your fate largely depends on your gender...</p>`);
-              //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-              console.log(band);
-              const height = +document.querySelector('#main-content').getBoundingClientRect().height;
-              mainContent.style('top', window.innerHeight/2 - height/2);
-
-              select('.svg-main').style('opacity', 0);
-
-          }],
           [function(directionForward) {
             select('.svg-main').style('opacity', 1);
 
@@ -2365,8 +2365,9 @@ queue()
             animateDots(17, 23, directionForward)();
             let mainContent = select('#main-content');
             //`position: fixed; top: 0; left: 400`
+            // To answer that question, let’s look at a representative sample of productions of 10 of Shakespeare’s major plays and try to tease out trends in the casting of the lead roles. For now, we’ll limit our sample to productions from 1980 onward, as it’s more representative of modern casting practices.
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 18 to 23 <span>productions since 1980</span></h2><p>There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast in one of these roles.</p>');
+            mainContent.html(`<h2>From age 18 to 23 <span>productions since 1980</span></h2><p>For now, we'll limit our focus to productions from 1980 onwards, since these are more representative of modern casting practices. There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast in one of these roles.</p>`);
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
@@ -2551,7 +2552,7 @@ queue()
               function translateUp() {
                   const transitionUp = transition().duration(1500).on('end', function () {
                       locked = false;
-                      mainContent.style('opacity', 1);
+                      mainContent.transition(1000).style('opacity', 1);
                       mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude was also true with male roles, but in the opposite direction.
                           If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                           Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
@@ -2583,7 +2584,7 @@ queue()
                   translateUp();
               } else {
                   transitions([1900,1980], false, true);
-                  mainContent.style('opacity', 1);
+                  mainContent.transition(1000).style('opacity', 1);
                   mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude was also true with male roles, but in the opposite direction.
                       If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                       Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
@@ -2670,7 +2671,7 @@ queue()
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               console.log(document.querySelector('body').getBoundingClientRect());
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
-              mainContent.style('opacity', 1);
+              mainContent.transition(1000).style('opacity', 1);
 
               selectAll('.role-dots').each((d,i) => {
                   if (i == 0) console.log('d is: ', d);
@@ -2706,7 +2707,7 @@ queue()
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               console.log(document.querySelector('body').getBoundingClientRect());
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
-              mainContent.style('opacity', 1);
+              mainContent.transition(1000).style('opacity', 1);
 
               //transitions([1980, 2019], false, false);
 
@@ -2925,6 +2926,58 @@ queue()
 
               mainContent.style('width', '362px').style('left', left).style('top', top);//.style('right', 40);
 
+              select('.svg-main').style('opacity', 1);
+
+
+
+          }],
+          [() => {
+              select('#tooltip')
+                .style('opacity', 0);
+
+              select('.svg-main').style('opacity', 0);
+
+              select('.voronoi-overlay').remove();
+
+              //disable brush
+              brushGroup.call(brush.move, null);
+              select('.svg-controls').attr('opacity', 0);
+              select('.overlay').style('pointer-events', 'none');
+              select('.brush').style('pointer-events', 'none');
+
+              const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
+              const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
+              let mainContent = select('#main-content');
+              mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+
+              mainContent.html(`<h2 class='methodology'>Notes, Sources, & Methodology</h2>
+
+              <p class='legend-text methodology'>Data for this project is a work in progress. The bulk of production data was collected from <a href=https://theatricalia.com/ target="_blank">Theatricalia</a> (for productions in the UK),
+              and the <a href="https://www.ibdb.com/" target="_blank">Internet Broadway Database</a> and the <a href="http://www.lortel.org/Archives" target="_blank">Lortel Archives</a> for Broadway and Off-Broadway productions.
+              Various other productions were collected from "Past Production" sections of various theatrical companies such as the <a href="https://www.sfstl.com/in-the-park/" target="_blank">Shakespeare Festival St. Louis</a>,
+              <a href="http://www.shakespearesglobe.com/discovery-space/previous-productions" target="_blank">Shakespeare's Globe</a>, and <a href="http://www.shakespearetheatre.org/about/history-and-awards/past-production/" target="_blank">the Shakespeare Theatre Company</a>
+              among many others. Sites with production data in a consistently-formatted manner were scraped using a Python script and the help of <a href="https://www.crummy.com/software/BeautifulSoup/" target="_blank">Beautiful Soup</a> among other Python packages.
+              The remaining production data was manually collected. Additional production data and corrections to existing data may be added to this project at any time.</p>
+
+              <p class='legend-text methodology'>Actor ages were calculated based on the opening date of each production and the actors' birthdays. Birthdays were primarily collected from Wikipedia and IMDb (if the actor has a page or profile on either/both). For actors that only have a public birth year, we
+              used July 1 of that year as an estimate. Additionally, the following method was used to estimate the age of actors without a publically available or verifiable birth date:</p>
+
+              <p class='legend-text methodology'>If a profile or article featuring an actor/actress is available, and an age is mentioned in the article, we took the publication date, subtracted the age in years, and then subtracted an additional 6 months, and take the 1st of that month as the actor's estimated birthday.
+              As an example, if we had an article published on September 5, 2018 that mentioned a certain actor is currently 29, the estimated birthday of that actor would be March 1, 1989. For some actors, we have knowledge of a graduating year for a bachelor's degree. Barring any additional information,
+              we would subtract either 21 or 22 years (some BA degrees in the UK are 3 years in length), and set the birthday to January 1st of that year. So we'd estimate the birthday of an actor who graduated from a 4-year BA program in 2018 as January 1, 1996. We understand that this approach might cause
+              some errors in our dataset, since not everyone graduates on time, or starts a BA program immediately at 18.</p>
+
+              <p class='legend-text methodology'>Actor ethnicities were determined based on categories on their Wikipedia page (e.g., "Black British male actors"), acknowledgement of a certain ethnic background in a feature or interview, a certain surname, or based on their physical appearance in photos.
+              We acknowledge that some of these approaches may be prone to human error. Please reach out to me on Twitter if you’d like to submit a data correction.</p>
+
+              <p class='legend-text methodology'>Design, code, and prose by <a href="https://twitter.com/ericwilliamlin/" target="_blank">Eric William Lin</a>. Python and D3 were used extensively throughout the entire course of the project. Additional acknowledgements and <3 to Susie Lu's
+              <a href="http://d3-annotation.susielu.com/" target="_blank">d3-annotation</a>, <a href="https://github.com/alexhornbake" target="_blank">Alex Hornbake</a> (I owe you a beer at some point for your svg curly braces code), and Aliza Aufrichtig’s awesome tool
+              <a href="https://spotify.github.io/coordinator/" target="_blank">coördinator</a>. Data for productions + metadata of actors (i.e., birthdays) can be found <a href='https://github.com/ewlin/shakespeare_production_data/tree/master/data' target='_blank'>here</a>.</p>
+
+              <div><iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fericwilliamlin.com%2Fshakespeare_production_data&layout=button_count&size=large&mobile_iframe=false&width=84&height=28&appId" width="84" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe></div>`);
+              const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+              mainContent.style('top', window.innerHeight/2 - height/2);
+
 
           }]
         ];
@@ -3082,7 +3135,7 @@ queue()
 
               if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
               if (e.target.classList.contains('story-skip')) {
-                  eventsQueue[2][0](false); 
+                  eventsQueue[2][0](false);
               }
               return;
           }

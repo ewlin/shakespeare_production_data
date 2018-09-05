@@ -41,12 +41,12 @@ Daniel Briere	1977-10-06T00:00:00	unknown	none	FALSE		Wikipedia	flagged		French
 Felicity Jones	1983-10-17T00:00:00	female	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Felicity_Jones_December_2016.jpg/220px-Felicity_Jones_December_2016.jpg	Italian,Italian,Tuscan
 Matthew Lewis	1989-06-27T00:00:00	male	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Matthew_Lewis_in_June_2011.jpg/220px-Matthew_Lewis_in_June_2011.jpg	none
 Kate Forbes	1990-04-06T00:00:00	female	none	FALSE		Wikipedia	flagged		none
-Enid Graham	2017-01-17T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
+Enid Graham	1970-02-08T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0334027/	IMDb	TRUE		none
 John Wyse	no birthday on article	unknown	none	FALSE			flagged		none
 Martin Connor	no birthday on article	unknown	none	FALSE			flagged		none
 Helen Carey	no birthday on article	unknown	none	FALSE			flagged		none
 Tom Bevan	no birthday on article	unknown	none	FALSE			flagged		none
-Elizabeth Owens	no birthday on article	unknown	none	FALSE			flagged		none
+Elizabeth Owens	1928-02-26T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0654353/	IMDb	TRUE		none
 Nikkole Salter	no birthday on article	unknown	none	FALSE			flagged		none
 Ann Noble	no birthday on article	unknown	none	FALSE			flagged		none
 Derbhle Crotty	1968-07-01T00:00:00	female	none	TRUE		Wikipedia			none
@@ -787,54 +787,54 @@ Jack Laskey	1982-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Ian McDiarmid	1944-08-11T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fe/IanMcDiarmid.jpg/220px-IanMcDiarmid.jpg	none
 Jennifer Ikeda	1979-01-01T00:00:00	female	Asian	FALSE	https://www.backstage.com/news/regional-roundup_92/	Backstage: Regional Roundup (Juilliard Class '01)	TRUE		none
 Vivien Leigh	1913-11-05T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/b/b6/Vivien_Leigh_Scarlet.jpg	none
-Kate Reid	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/en/b/bb/Kate_Reid_1966.jpg	none
+Kate Reid	1930-11-04T00:00:00	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/en/b/bb/Kate_Reid_1966.jpg	none
 Leila Crerar	no birthday on article	female	none	FALSE			TRUE		none
-Noreen Kershaw	no birthday on article	female	none	FALSE			TRUE		none
-Antoni Cimolino	no birthday on article	male	none	FALSE			TRUE		none
+Noreen Kershaw	1950-10-16T00:00:00	female	none	FALSE			TRUE		none
+Antoni Cimolino	1962-01-01T00:00:00	male	none	TRUE	http://www.uwindsor.ca/dailynews/2016-01-05/alumnus-antoni-cimolino-named-order-canada	Univerity of Windsor alumni profile	TRUE		none
 Patrick Stewart	1940-07-13T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Patrick_Stewart_Photo_Call_Logan_Berlinale_2017_%28cropped%29.jpg/220px-Patrick_Stewart_Photo_Call_Logan_Berlinale_2017_%28cropped%29.jpg	none
-Simon Templeman	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/en/thumb/6/6e/SimonTempleman.jpg/200px-SimonTempleman.jpg	none
+Simon Templeman	1954-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/thumb/6/6e/SimonTempleman.jpg/200px-SimonTempleman.jpg	none
 Michelle Fairley	1963-07-11T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Michelle_Fairley_%282012_snapshot%29.jpg/220px-Michelle_Fairley_%282012_snapshot%29.jpg	none
-Angelique Rockas	no birthday on article	female	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/03/Angelique_Rockas_-_Headshot_Medea.jpg/220px-Angelique_Rockas_-_Headshot_Medea.jpg	Greek
+Angelique Rockas	1950-07-01T00:00:00	female	none	TRUE		Google	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/03/Angelique_Rockas_-_Headshot_Medea.jpg/220px-Angelique_Rockas_-_Headshot_Medea.jpg	Greek
 Ian Bartholomew	1954-08-23T00:00:00	male	none	FALSE		Google	TRUE		none
-Jay Goede	no birthday on article	male	none	FALSE			TRUE		none
-Claire Cox	no birthday on article	female	none	FALSE			TRUE		none
+Jay Goede	1963-11-02T00:00:00	male	none	FALSE			TRUE		none
+Claire Cox	1975-12-19T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0184967/	IMDb	TRUE		none
 Christopher Shyer	no birthday on article	male	none	FALSE			TRUE		none
-Annika Boras	no birthday on article	female	none	FALSE			TRUE		none
-Leslee Udwin	1957-07-01T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/45/P1140027_%2817223616286%29.jpg/220px-P1140027_%2817223616286%29.jpg	Israeli
-Mark Nelson	no birthday on article	male	none	FALSE			TRUE		none
+Annika Boras	1981-02-28T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm2661837/	IMDb	TRUE		none
+Leslee Udwin	1957-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/45/P1140027_%2817223616286%29.jpg/220px-P1140027_%2817223616286%29.jpg	Israeli
+Mark Nelson	1955-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Justin Blanchard	1980-01-01T00:00:00	male	none	TRUE		NYU Class '02	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/40/Justin_Blanchard_01.jpg/180px-Justin_Blanchard_01.jpg	none
-Richard Kay	no birthday on article	male	none	FALSE			TRUE		none
-Daniel Hawksford	no birthday on article	male	none	FALSE			TRUE		none
-Ken Stott	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ken_Stott.jpg/250px-Ken_Stott.jpg	Italian,Italian,Italian
+Richard Kay	1937-03-16T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm3218634/	IMDb	TRUE		none
+Daniel Hawksford	1980-04-10T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
+Ken Stott	1954-10-19T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ken_Stott.jpg/250px-Ken_Stott.jpg	Italian,Italian,Italian
 Alec Guinness	1914-04-02T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sir_Alec_Guinness_Allan_Warren.jpg/220px-Sir_Alec_Guinness_Allan_Warren.jpg	English
-John Barrymore	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Portrait_of_John_Barrymore.jpg/220px-Portrait_of_John_Barrymore.jpg	English,Irish
-Russell Thorndike	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/89/Russell_Thorndyke_1925.jpg/220px-Russell_Thorndyke_1925.jpg	none
+John Barrymore	1882-02-15T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Portrait_of_John_Barrymore.jpg/220px-Portrait_of_John_Barrymore.jpg	English,Irish
+Russell Thorndike	1885-02-06T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/8/89/Russell_Thorndyke_1925.jpg/220px-Russell_Thorndyke_1925.jpg	none
 Kathryn Hunter	1957-04-09T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0402898/	IMDb	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Kathryn_Hunter.jpg/269px-Kathryn_Hunter.jpg	Greek,Greek,Greek
-Anita Hegh	no birthday on article	female	none	FALSE			TRUE		Scandinavian,Norwegian,Estonian
-Richard Madden	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/27/Richard_Madden_%289347943769%29_%28cropped%29.jpg/220px-Richard_Madden_%289347943769%29_%28cropped%29.jpg	Irish
+Anita Hegh	1972-05-11T00:00:00	female	none	FALSE		Google	TRUE		Scandinavian,Norwegian,Estonian
+Richard Madden	1986-06-18T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/27/Richard_Madden_%289347943769%29_%28cropped%29.jpg/220px-Richard_Madden_%289347943769%29_%28cropped%29.jpg	Irish
 James Carpenter	1952-06-01T00:00:00	male	none	TRUE		https://www.mercurynews.com/2012/12/14/james-carpenter-the-bay-areas-master-actor/?clearUserState=true	TRUE		none
 Ben Carlson	no birthday on article	male	none	FALSE			TRUE		none
 Michelle Terry	1979-01-01T00:00:00	female	none	TRUE	https://www.imdb.com/name/nm2642270/	IMDb	TRUE		none
-Eric Maxon	no birthday on article	male	none	FALSE			TRUE		none
-Deirdre Mullins	no birthday on article	female	none	FALSE			TRUE		none
-Thea Holme	no birthday on article	female	none	FALSE			TRUE		none
-Joanne Mitchell	no birthday on article	female	none	FALSE			TRUE		none
-Michael Benz	no birthday on article	male	none	FALSE			TRUE		none
-Samuel West	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Samuel_West_at_the_London_Film_Festival_screening_of_Hyde_Park_on_Hudson%2C_October_2012.jpg/220px-Samuel_West_at_the_London_Film_Festival_screening_of_Hyde_Park_on_Hudson%2C_October_2012.jpg	none
+Eric Maxon	1882-05-22T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0561616/	IMDb	TRUE		none
+Deirdre Mullins	1983-02-01T00:00:00	female	none	TRUE	https://www.irishtimes.com/culture/stage/it-was-the-one-part-i-would-dream-about-1.529411	The Irish Times. Actress feature/profile. 	TRUE		none
+Thea Holme	1904-07-01T00:00:00	female	none	TRUE		Samuel West	TRUE		none
+Joanne Mitchell	1971-07-30T00:00:00	female	none	FALSE		Samuel West	TRUE		none
+Michael Benz	1982-01-01T00:00:00	male	none	TRUE	https://www.georgetown.edu/news/michael-benz-hamlet-shakespeare.html	Georgetown University alumni profile	TRUE		none
+Samuel West	1966-06-19T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Samuel_West_at_the_London_Film_Festival_screening_of_Hyde_Park_on_Hudson%2C_October_2012.jpg/220px-Samuel_West_at_the_London_Film_Festival_screening_of_Hyde_Park_on_Hudson%2C_October_2012.jpg	none
 Lewis Hallam	no birthday on article	male	none	FALSE			TRUE		none
-Khyva St. Albans	no birthday on article	female	none	FALSE			TRUE		none
+Khyva St. Albans	1896-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Scott Shepherd	no birthday on article	male	none	FALSE			TRUE		none
-Sian Brooke	no birthday on article	female	none	FALSE			TRUE		Welsh
-Mariah Gale	no birthday on article	female	none	FALSE			TRUE		none
-Patrick O'Kane	no birthday on article	male	none	FALSE			TRUE		none
+Sian Brooke	1980-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		Welsh
+Mariah Gale	1980-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
+Patrick O'Kane	1965-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Ishia Bennison	1949-08-11T00:00:00	female	none	FALSE		http://coronationstreet.wikia.com/wiki/Ishia_Bennison	TRUE		none
-Philip Bowen	no birthday on article	male	none	FALSE			TRUE		none
+Philip Bowen	1946-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Rob Campbell	no birthday on article	male	none	FALSE			TRUE		none
 Bill Camp	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/47/Bill_Camp_%2851526%29.jpg/220px-Bill_Camp_%2851526%29.jpg	none
-Nicholas Gleaves	no birthday on article	male	none	FALSE			TRUE		none
+Nicholas Gleaves	1969-01-01T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Paul Higgins	1964-07-01T00:00:00	male	none	FALSE		Google	TRUE		none
 Michael Winters	no birthday on article	male	none	FALSE			TRUE		none
-Erin Krakow	no birthday on article	female	none	FALSE			TRUE		none
+Erin Krakow	1984-09-05T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Louis Mellis	no birthday on article	male	none	FALSE			TRUE		none
 Kate Fahy	no birthday on article	female	none	FALSE			TRUE		none
 Mandana Jones	1967-02-26T00:00:00	female	Asian	FALSE	https://www.imdb.com/name/nm0428730/	IMDb	TRUE		Iranian
