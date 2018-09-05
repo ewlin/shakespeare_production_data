@@ -113,7 +113,7 @@ queue()
 	const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]);
 
 	const brush = brushX().extent([[100, 20], [widthMax - 100, controlsHeight - 10]])
-      //.on('brush', brushed)
+      .on('brush', brushed)
       .on('end', brushEnded);
 
     function brushed() {
@@ -122,12 +122,8 @@ queue()
       if (brushSelection(this)) {
         const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
 
-        if (selection[1] - selection[0] >= 100) {
-          select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0]);
-          select('.end-year-label').attr('x', selection[1] - 5).attr('opacity', 1).text(years[1]);
-        } else {
-          select('.start-year-label').attr('x', selection[0] + 5).attr('opacity', 1).text(years[0] + '-' + years[1]);
-          select('.end-year-label').attr('opacity', 0);
+        if (document.querySelector('.chart-title-year-range')) {
+            select('.chart-title-year-range').html(`${years[0]} and ${years[1]}`);
         }
 
       }
@@ -136,6 +132,7 @@ queue()
     function brushEnded() {
       if (brushSelection(this)) {
         const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
+
         console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
         filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))();
         if (document.querySelector('.chart-title-year-range')) {
@@ -2913,11 +2910,12 @@ queue()
 
 
               const mainContent = select('#main-content');
-              mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <span class="chart-title-year-range">1900 and 2018</span></h2>
+              mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <br><span class="chart-title-year-range">1900 and 2018</span></h2>
               <section><svg width='13' height='13' class='inline-svg'><pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
               <mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
               <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color</span></section>
-              <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p><button class='cta story-skip'>Click</button></div>`);
+              <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p>
+              <section><span>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range</span></section></div>`);
 
               select('.inline-svg circle').attr('mask', 'url(#mask-2)').attr('fill', 'white');
 
