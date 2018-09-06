@@ -2364,7 +2364,7 @@ queue()
             //`position: fixed; top: 0; left: 400`
             // To answer that question, let’s look at a representative sample of productions of 10 of Shakespeare’s major plays and try to tease out trends in the casting of the lead roles. For now, we’ll limit our sample to productions from 1980 onward, as it’s more representative of modern casting practices.
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<h2>From age 18 to 23 <span>productions since 1980</span></h2><p>For now, we'll limit our focus to productions from 1980 onwards, since these are more representative of modern casting practices. There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast in one of these roles.</p>`);
+            mainContent.html(`<h2>From age 18 to 23 <span>productions since 1980</span></h2><p>For now, we'll limit our focus to productions from 1980 onwards, since these are more representative of modern casting practices. There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast as one of these characters.</p>`);
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
@@ -2392,7 +2392,10 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<h2>From age 31 to 45 <span>productions since 1980</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample. Even in the case of <span class="ladyMacbeth-color">Lady Macbeth</span>, a rather juicy role for more seasonsed actresses, by 45, an actress would already be older than over 75% of her peers who’ve played the role. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>, <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar mid-career males. The only lead Shakespearean female role with a similar age distribution as these male roles is <span class='cleopatra-color'>Cleopatra</span>. Sadly, <em>Antony and Cleopatra</em> is also less frequently produced than many of Shakespeare's other plays.</p>`);
+            mainContent.html(`<h2>From age 31 to 45 <span>productions since 1980</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample.
+            You'd even be older than over 75% of your peers who've played <span class="ladyMacbeth-color">Lady Macbeth</span> on stage, a rather juicy role for more seasonsed actresses. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>,
+            <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar mid-career males. The only lead Shakespearean female role that has a higher median age is <span class='cleopatra-color'>Cleopatra</span>, and sadly, <em>Antony and Cleopatra</em>
+            is also less frequently produced than many of Shakespeare's other plays.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
@@ -2408,7 +2411,7 @@ queue()
             mainContent.style('opacity', 0);
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-            mainContent.html('<h2>From age 46 to 66 <br><span>productions since 1980</span></h2><p>By the time you hit retirement age as an actress, you’re basically out of female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played the parts.</p>');
+            mainContent.html('<h2>From age 46 to 66 <br><span>productions since 1980</span></h2><p>By the time you hit <a href="https://en.wikipedia.org/wiki/Retirement_age" target="_blank">retirement age</a> as an actress, you’re basically out of lead female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played the parts.</p>');
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
 
             mainContent.style('top', window.innerHeight/2 - height/2);
@@ -2550,7 +2553,7 @@ queue()
                   const transitionUp = transition().duration(1500).on('end', function () {
                       locked = false;
                       mainContent.transition(1000).style('opacity', 1);
-                      mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude was also true with male roles, but in the opposite direction.
+                      mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude in casting was also true with male roles, but in the opposite direction.
                           If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                           Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
                           those of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
@@ -2777,7 +2780,7 @@ queue()
 
                               select('.annotation-group')
                                 .call(makeAnnotations);
-                              selectAll('.annotation-note-label').attr('fill', 'white');//.attr('stroke', 'white');
+                              selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
 
                                 selectAll('.annotation-connector path.connector')
                                   .attr('stroke', '#b4b8c0')
@@ -2854,6 +2857,22 @@ queue()
               select('#main-content')
                 .html(null);
 
+              //reset annotations
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
 
               //const slideDistance = scaleX(minAge) - scaleX(18);
               function translateDown() {
@@ -2867,7 +2886,13 @@ queue()
                   //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
                   //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
               }
-              translateDown();
+              //translateDown();
+
+              if (isSafari) {
+                  select('.svg-main').transition().duration(1500).style('transform', `translate(0,0)`);
+              } else {
+                  select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
+              }
 
               select('.voronoi-overlay').remove();
 
@@ -2955,12 +2980,12 @@ queue()
               <p class='legend-text methodology'>If a profile or article featuring an actor/actress is available, and an age is mentioned in the article, we took the publication date, subtracted the age in years, and then subtracted an additional 6 months, and take the 1st of that month as the actor's estimated birthday.
               As an example, if we had an article published on September 5, 2018 that mentioned a certain actor is currently 29, the estimated birthday of that actor would be March 1, 1989. For some actors, we have knowledge of a graduating year for a bachelor's degree. Barring any additional information,
               we would subtract either 21 or 22 years (some BA degrees in the UK are 3 years in length), and set the birthday to January 1st of that year. So we'd estimate the birthday of an actor who graduated from a 4-year BA program in 2018 as January 1, 1996. We understand that this approach might cause
-              some errors in our dataset, since not everyone graduates on time, or starts a BA program immediately at 18.</p>
+              some errors in our dataset, since not everyone graduates on time, or starts a BA program immediately at 18. Actors for whom there are no publically available birth dates, or some evidence or record of approximate age at a certain date, are excluded from this analysis.</p>
 
-              <p class='legend-text methodology'>Actor ethnicities were determined based on categories on their Wikipedia page (e.g., "Black British male actors"), acknowledgement of a certain ethnic background in a feature or interview, a certain surname, or based on their physical appearance in photos.
+              <p class='legend-text methodology'>Actor ethnicities & genders were determined based on categories on their Wikipedia page (e.g., "Black British male actors"), acknowledgement of a certain ethnic background in a feature or interview, a certain surname, or based on their physical appearance in photos.
               We acknowledge that some of these approaches may be prone to human error. Please reach out to me on Twitter if you’d like to submit a data correction.</p>
 
-              <p class='legend-text methodology'>Design, code, and prose by <a href="https://twitter.com/ericwilliamlin/" target="_blank">Eric William Lin</a>. Python and D3 were used extensively throughout the entire course of the project. Additional acknowledgements and <3 to <a href='https://momentjs.com/' target='_blank'>Moment.js</a>, Susie Lu's
+              <p class='legend-text methodology'>Design, code, and prose by <a href="https://twitter.com/ericwilliamlin/" target="_blank">Eric William Lin</a>. Python and D3 were used extensively throughout the entire course of the project. Additional acknowledgements and <span class='love'>&hearts;</span> to <a href='https://momentjs.com/' target='_blank'>Moment.js</a>, Susie Lu's
               <a href="http://d3-annotation.susielu.com/" target="_blank">d3-annotation</a>, <a href="https://github.com/alexhornbake" target="_blank">Alex Hornbake</a> (I owe you a beer at some point for your svg curly braces code), and Aliza Aufrichtig’s awesome tool
               <a href="https://spotify.github.io/coordinator/" target="_blank">coördinator</a>. Data for productions + metadata of actors (i.e., birthdays) can be found <a href='https://github.com/ewlin/shakespeare_production_data/tree/master/data' target='_blank'>here</a>.</p>
 
