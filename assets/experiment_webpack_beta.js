@@ -214,7 +214,7 @@ queue()
       cleopatraAges: {gender: 'female', color: '#76818f', idx: 6},
       //cleopatraAges: {gender: 'female', color: '#577EAD', idx: 6},
       iagoAges: {gender: 'male', color: '#F45C42', idx: 4},
-      kingLearAges: {gender: 'male', color: '#F57A3E', idx: 8},
+      kingLearAges: {gender: 'male', color: '#c5805e', idx: 8},
       othelloAges: {gender: 'male', color: '#F8B535', idx: 3},
       prosperoAges: {gender: 'male', color: '#FC7136', idx: 7},
       rosalindAges: {gender: 'female', color: '#CA6379', idx: 3},
@@ -1154,7 +1154,7 @@ queue()
                                                 //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
                                                 mainContent.html(`<h2>Female role age distributions in <span>productions since 1980</span></h2><p>In recent decades, as an actress, you've have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
-                                                <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a staring turn in Shakespeare,
+                                                <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a starring turn in Shakespeare,
                                                 you pretty much have to do so before you turn 40. You might think that there is nothing surprising about this, given that these characters are all young, and naturally, the actresses cast should also be on the younger end.
                                                 But interestingly enough, this wasn’t always the case.</p>`);
                                                 const height = +document.querySelector('#main-content').getBoundingClientRect().height;
@@ -1886,7 +1886,7 @@ queue()
                             type: annotation.annotationCalloutCircle,
 							note: {
 								//label: 'Test text for this annotation. Somethings about Othello and Iago and race and ethnicity. This surprisingly does not look ugly thank you haha. I was worried. We can definitely work with this. Images might work better outside of SVG',
-								label: 'Patrick Stewart\'s staring turn in Jude Kelly\'s 1997 production of Othello with the Shakespeare Theatre Company was a rare exception to the modern \'no White Othello\' rule. Kelly shrewdly cast a White Othello amidst an all-Black cast, turning the traditional racial tensions in the play on its head.',
+								label: 'Patrick Stewart\'s starring turn in Jude Kelly\'s 1997 production of Othello with the Shakespeare Theatre Company was a rare exception to the modern \'no White Othello\' rule. Kelly shrewdly cast a White Othello amidst an all-Black cast, turning the traditional racial tensions in the play on its head.',
 								wrap: 200,
 								align: 'left'
 							},
@@ -2106,7 +2106,7 @@ queue()
                 const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
                 const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
                 let mainContent = select('#main-content');
-                mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+                mainContent.style('position', 'absolute').style('left', left + 'px').style('width', right - left);
                 //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
                 //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
                 mainContent.html(`<div class='quote-container'><p class='quote'><em>All the world's a stage,</em></p>
@@ -2434,7 +2434,7 @@ queue()
                 //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
                 mainContent.html(`<h2>Female role age distributions in <span>productions since 1980</span></h2><p>In recent decades, as an actress, you've have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
-                <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a staring turn in Shakespeare,
+                <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a starring turn in Shakespeare,
                 you pretty much have to do so before you turn 40. You might think that there is nothing surprising about this, given that these characters are all young, and naturally, the actresses cast should also be on the younger end.
                 But interestingly enough, this wasn’t always the case.</p>`);
                 const height = +document.querySelector('#main-content').getBoundingClientRect().height;
@@ -2556,7 +2556,7 @@ queue()
                       mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude in casting was also true with male roles, but in the opposite direction.
                           If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                           Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
-                          those of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
+                          that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
                       const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                       const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
                       console.log(document.querySelector('body').getBoundingClientRect());
@@ -2588,7 +2588,7 @@ queue()
                   mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude was also true with male roles, but in the opposite direction.
                       If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                       Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
-                      those of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
+                      that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
                   console.log(document.querySelector('body').getBoundingClientRect());
@@ -2700,9 +2700,10 @@ queue()
               mainContent.style('opacity', 0);
 
               mainContent.html(`<h2>Gender-bending comes back with full force in the new millenium</h2><p>If you’re an actress worried about the lack of stage opportunities after a certain age, don’t despair.
-                  A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent actresses have started taking on traditionally older male roles like <span class="kingLear-color">Lear</span> and <span class="prospero-color">Prospero</span>.
-                  Crossdressing is nothing new for Shakespearean productions: back when they were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>,
-                  and throughout the 1800 and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage.</p>`);
+                  A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent older actresses like Martha Henry <img class='actor-face prospero-color' src='assets/images/actor_faces/henry.png' /> and Glenda Jackson <img class='actor-face kingLear-color' src='assets/images/actor_faces/jackson.png' /> have started tackling traditionally older male roles like <span class="kingLear-color">Lear</span> and <span class="prospero-color">Prospero</span>.
+                  Though crossdressing is nothing new for Shakespearean productions—back when they were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>,
+                  and throughout the 1800 and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—older actresses finding ways to stay in the
+                  Shakespearean spotlight through male roles (represented in graph as <span class='legend-symbol'>\u2640</span>) like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a recent development.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               console.log(document.querySelector('body').getBoundingClientRect());
@@ -2982,8 +2983,8 @@ queue()
               we would subtract either 21 or 22 years (some BA degrees in the UK are 3 years in length), and set the birthday to January 1st of that year. So we'd estimate the birthday of an actor who graduated from a 4-year BA program in 2018 as January 1, 1996. We understand that this approach might cause
               some errors in our dataset, since not everyone graduates on time, or starts a BA program immediately at 18. Actors for whom there are no publically available birth dates, or some evidence or record of approximate age at a certain date, are excluded from this analysis.</p>
 
-              <p class='legend-text methodology'>Actor ethnicities & genders were determined based on categories on their Wikipedia page (e.g., "Black British male actors"), acknowledgement of a certain ethnic background in a feature or interview, a certain surname, or based on their physical appearance in photos.
-              We acknowledge that some of these approaches may be prone to human error. Please reach out to me on Twitter if you’d like to submit a data correction.</p>
+              <p class='legend-text methodology'>Actor ethnicities & genders were determined based on categories on their Wikipedia page (e.g., "Black British male actors"), acknowledgement of a certain ethnic background in an interview, a certain surname, or based on their physical appearance in photos.
+              We acknowledge that some of these approaches may be prone to human error. Please reach out to me on Twitter if you’d like to submit a data correction, if you've spotted a typo or mistake, or have a suggestion for a better approach in estimating the ages of actors.</p>
 
               <p class='legend-text methodology'>Design, code, and prose by <a href="https://twitter.com/ericwilliamlin/" target="_blank">Eric William Lin</a>. Python and D3 were used extensively throughout the entire course of the project. Additional acknowledgements and <span class='love'>&hearts;</span> to <a href='https://momentjs.com/' target='_blank'>Moment.js</a>, Susie Lu's
               <a href="http://d3-annotation.susielu.com/" target="_blank">d3-annotation</a>, <a href="https://github.com/alexhornbake" target="_blank">Alex Hornbake</a> (I owe you a beer at some point for your svg curly braces code), and Aliza Aufrichtig’s awesome tool
