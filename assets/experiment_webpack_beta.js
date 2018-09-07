@@ -2725,7 +2725,7 @@ queue()
                                   type: 'genderBend',
                                   actorName: 'Martha Henry',
                                   character: 'prospero',
-                                  text: 'Martha Henry played Prospero in at the Stratford Festival in 2018 at the age of 80',
+                                  text: 'Martha Henry played Prospero at the Stratford Festival in 2018 at the age of 80',
                                   points: [[2, -45]],
                                   dx: -20,
                                   dy: -165,
