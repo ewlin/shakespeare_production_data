@@ -135,7 +135,7 @@ Paul Robeson	1898-04-09T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimed
 Wendy Williams	1964-07-18T00:00:00	female	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/17/Wendy_Williams.png/220px-Wendy_Williams.png	none
 José Ferrer	1912-01-08T00:00:00	male	Latino	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/thumb/8/81/Jose_Ferrer_-_1952.jpg/220px-Jose_Ferrer_-_1952.jpg	none
 Raul Julia	1940-03-09T00:00:00	male	Latino	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Raul_Julia_-_Dracula.jpg/220px-Raul_Julia_-_Dracula.jpg	none
-Martin Sheen	1940-08-03T00:00:00	male	Latino	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sheen%2C_Martin_%282008%29.jpg/220px-Sheen%2C_Martin_%282008%29.jpg	Galician,Irish,Spanish
+Martin Sheen	1940-08-03T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sheen%2C_Martin_%282008%29.jpg/220px-Sheen%2C_Martin_%282008%29.jpg	Galician,Irish,Spanish
 Oscar Isaac	1979-03-09T00:00:00	male	Latino	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Oscar_Isaac_by_Gage_Skidmore.jpg/220px-Oscar_Isaac_by_Gage_Skidmore.jpg	Cuban,French,Guatemalan,Cuban,French
 Mary Hall	1876-01-01T00:00:00	female	none	TRUE	https://www.imdb.com/name/nm0355883/	IMDb	TRUE		none
 Frank Cellier	1884-02-23T00:00:00	male	none	FALSE	https://en.wikipedia.org/wiki/Frank_Cellier_(actor)	Wikipedia	TRUE

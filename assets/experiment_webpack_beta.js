@@ -9,7 +9,7 @@ import { csv, tsv, json } from 'd3-request';
 import { scaleLinear } from 'd3-scale';
 import { axisBottom } from 'd3-axis';
 import { variance, quantile, median, max, min } from 'd3-array';
-import { select, selectAll, event, mouse } from 'd3-selection';
+import { select, selectAll, event, mouse, matcher } from 'd3-selection';
 import { line } from 'd3-shape';
 import { easeLinear, easeQuadInOut } from 'd3-ease';
 import 'd3-transition';
@@ -382,6 +382,7 @@ queue()
                 yCoord: Math.random()
               }); //pushing an integer; will be an object once refactored
               **/
+              const yCoordinate = a['actor'] == 'Glenda Jackson' && role == 'kingLear' ? .4 : Math.random();
               roleAgesArray.push({
                 tempID: index,
                 age: parseFloat(age),
@@ -392,7 +393,7 @@ queue()
                 actorGender: a['actor_gender'],
                 actor: a['actor'],
                 isAgeEst: a['age_is_est'],
-                yCoord: Math.random(),
+                yCoord: yCoordinate,
                 image: a['photo_url'],
                 bdayDataSource: a['bday_data_source'],
                 producers: a['company'],
@@ -1153,7 +1154,7 @@ queue()
                                                 mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
                                                 //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-                                                mainContent.html(`<h2>Female role age distributions in <span>productions since 1980</span></h2><p>In recent decades, as an actress, you've have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
+                                                mainContent.html(`<h2>Female roles age distributions in <span class='year-range-highlight'>productions since 1980</span></h2><p>In recent decades, as an actress, you've have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
                                                 <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a starring turn in Shakespeare,
                                                 you pretty much have to do so before you turn 40. You might think that there is nothing surprising about this, given that these characters are all young, and naturally, the actresses cast should also be on the younger end.
                                                 But interestingly enough, this wasn’t always the case.</p>`);
@@ -1336,7 +1337,7 @@ queue()
         //TODO...
 
         //dateRange is an array of length 2: e.g., [1900, 1980]
-        function transitions(dateRange, makeVoronoi, filterOppoGender, indicatePOC, barOpacity) {
+        function transitions(dateRange, makeVoronoi, filterOppoGender, indicatePOC, barOpacity, callBack) {
             if (!makeVoronoi) {
                 document.querySelector('svg.svg-main').classList.add('mouse-disabled');
             }
@@ -1401,6 +1402,9 @@ queue()
 
             const transitionA = transition().duration(1500).ease(easeQuadInOut).on('end', () => {
                 locked = false;
+                if (callBack) {
+                    callBack();
+                }
                 if (makeVoronoi) {
 
                     document.querySelector('svg.svg-main').classList.remove('mouse-disabled');
@@ -2134,7 +2138,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
             //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-            mainContent.html(`<p class='legend-text'><b>Before we go any further, let's get better acquainted with how to navigate this story. To keep going, use the  <span class='key-indicator'>&#x21e8;</span>  key or  <span class='key-indicator'>&nbsp;SPACE&nbsp;</span>  bar on your keyboard, and  <span class='key-indicator'>&#x21e6;</span>  to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</b></p><p class='legend-text'>For this story, data from over 1,000 professional productions in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a> of 10 Shakespearean plays since 1900 was collected, including <em>Hamlet</em>, <em>Othello</em>, <em>Macbeth</em>, <em>King Lear</em>, <em>Romeo and Juliet</em>, <em>Antony and Cleopatra</em>, <em>The Tempest</em>, <em>The Merchant of Venice</em>, <em>As You Like It</em>, and <em>Richard III</em>. We chose these plays in part to ensure that we have a <a target='_blank' href="https://www.theguardian.com/stage/interactive/2012/dec/10/shakespeare-women-interactive">relatively balanced and representative group of major female and male roles</a>.</p><p class='legend-text'>Each character comes with an age distribution chart, where each dot ( <span class='legend-dot'></span> ) represents an actor playing the role in a particular production, and they’re plotted on the chart based on their age at the time of the production. Some actors have played the same role on multiple occasions in different productions. In such cases, each production with the same actor is represented by a separate dot. <b>Here's how to read the age distribution charts:</b></p><svg class="embedded-svg" width=${right-left} height=240></svg>`);
+            mainContent.html(`<p class='legend-text'><b>Before we go any further, let's get better acquainted with how to navigate this story. To keep going, use the  <span class='key-indicator'>&#x21e8;</span>  key or  <span class='key-indicator'>&nbsp;SPACE&nbsp;</span>  bar on your keyboard, and  <span class='key-indicator'>&#x21e6;</span>  to go back. Alternatively, you can also CLICK on the right or left sides of the page to navigate.</b></p><p class='legend-text'>For this story, data from over 1,000 professional theatrical productions in the <a href="https://en.wikipedia.org/wiki/Anglosphere" target="_blank">Anglosphere</a> of 10 Shakespearean plays since 1900 was collected, including <em>Hamlet</em>, <em>Othello</em>, <em>Macbeth</em>, <em>King Lear</em>, <em>Romeo and Juliet</em>, <em>Antony and Cleopatra</em>, <em>The Tempest</em>, <em>The Merchant of Venice</em>, <em>As You Like It</em>, and <em>Richard III</em>. We chose these plays in part to ensure that we have a <a target='_blank' href="https://www.theguardian.com/stage/interactive/2012/dec/10/shakespeare-women-interactive">relatively balanced and representative group of major female and male roles</a>.</p><p class='legend-text'>Each character comes with an age distribution chart, where each dot ( <span class='legend-dot'></span> ) represents an actor playing the role in a particular production, and they’re plotted on the chart based on their age at the time of the production. Some actors have played the same role on multiple occasions in different productions. In such cases, each production with the same actor is represented by a separate dot. <b>Here's how to read the age distribution charts:</b></p><svg class="embedded-svg" width=${right-left} height=240></svg>`);
             //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -2364,7 +2368,7 @@ queue()
             //`position: fixed; top: 0; left: 400`
             // To answer that question, let’s look at a representative sample of productions of 10 of Shakespeare’s major plays and try to tease out trends in the casting of the lead roles. For now, we’ll limit our sample to productions from 1980 onward, as it’s more representative of modern casting practices.
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<h2>From age 18 to 23 <span>productions since 1980</span></h2><p>For now, we'll limit our focus to productions from 1980 onwards, since these are more representative of modern casting practices. There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast as one of these characters.</p>`);
+            mainContent.html(`<h2>From age 18 to 23 <span class='year-range-highlight'>productions since 1980</span></h2><p>For now, we'll limit our focus to productions from 1980 onwards, since these are more representative of modern casting practices. There are few Shakespearean lead roles available to the university-age actor in professional productions, with the obvious exceptions of <span class="romeo-color">Romeo</span> and <span class="juliet-color">Juliet</span>. <span class="juliet-color">Juliet</span> is <a href="https://en.wikipedia.org/wiki/Juliet#Juliet\'s_age" target="_blank">described as a girl of 13</a> in Shakespeare’s original text and <span class="romeo-color">Romeo</span> is likely just a few years older; they’re undoubtedly the youngest of Shakespeare’s protagonists. There are a few early-20s <span class="hamlet-color">Hamlets</span> and <span class="rosalind-color">Rosalinds</span>, but you’d have to be a rare (and very, very lucky) <a href="https://www.newcanaannewsonline.com/news/article/New-Canaan-director-to-helm-Hamlet-6821035.php" target="_blank">anomaly</a> to be cast as one of these characters.</p>`);
             mainContent.style('opacity', 0);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
@@ -2378,7 +2382,7 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html('<h2>From age 24 to 30 <span>productions since 1980</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would still be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of <span class="romeo-color">Romeo</span> or <span class="juliet-color">Juliet</span>. By the time you hit 30, you’re close to aging out of the parts of everyone\'s favorite tragic young lovers: you’d be older than 75+% of the actors who\'ve played these two roles in our dataset.</p>');
+            mainContent.html(`<h2>From age 24 to 30 <span class='year-range-highlight'>productions since 1980</span></h2><p>As an actor, your Shakespearean career is now in full swing. We start to see all sorts of opportunities open up for both actors and actresses. You would still be on the younger end for <span class="hamlet-color">Hamlet</span> or <span class="othello-color">Othello</span> or <span class="portia-color">Portia</span>, but your mid-to-late 20s is your best chance to snag the role of <span class="romeo-color">Romeo</span> or <span class="juliet-color">Juliet</span>. By the time you hit 30, you’re close to aging out of the parts of everyone\'s favorite tragic young lovers: you’d be older than 75+% of the actors who\'ve played these two roles in our dataset.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition(0).delay(300).style('opacity', 1);
@@ -2392,7 +2396,7 @@ queue()
             mainContent.style('opacity', 0);
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
-            mainContent.html(`<h2>From age 31 to 45 <span>productions since 1980</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample.
+            mainContent.html(`<h2>From age 31 to 45 <span class='year-range-highlight'>productions since 1980</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample.
             You'd even be older than over 75% of your peers who've played <span class="ladyMacbeth-color">Lady Macbeth</span> on stage, a rather juicy role for more seasonsed actresses. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>,
             <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar mid-career males. The only lead Shakespearean female role that has a higher median age is <span class='cleopatra-color'>Cleopatra</span>, and sadly, <em>Antony and Cleopatra</em>
             is also less frequently produced than many of Shakespeare's other plays.</p>`);
@@ -2411,7 +2415,7 @@ queue()
             mainContent.style('opacity', 0);
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-            mainContent.html('<h2>From age 46 to 66 <br><span>productions since 1980</span></h2><p>By the time you hit <a href="https://en.wikipedia.org/wiki/Retirement_age" target="_blank">retirement age</a> as an actress, you’re basically out of lead female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played the parts.</p>');
+            mainContent.html(`<h2>From age 46 to 66 <br><span class='year-range-highlight'>productions since 1980</span></h2><p>By the time you hit <a href="https://en.wikipedia.org/wiki/Retirement_age" target="_blank">retirement age</a> as an actress, you’re basically out of lead female roles to play. Contrast this with the major male roles like <span class="kingLear-color">King Lear</span> or <span class="shylock-color">Shylock</span>, where at 66, you’re still younger than at least 25% or more of the actors who have played the parts.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
 
             mainContent.style('top', window.innerHeight/2 - height/2);
@@ -2433,7 +2437,7 @@ queue()
                 mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
                 //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-                mainContent.html(`<h2>Female role age distributions in <span>productions since 1980</span></h2><p>In recent decades, as an actress, you've have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
+                mainContent.html(`<h2>Female roles age distributions in <span class='year-range-highlight'>productions since 1980</span></h2><p>In recent decades, as an actress, you've have had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
                 <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a starring turn in Shakespeare,
                 you pretty much have to do so before you turn 40. You might think that there is nothing surprising about this, given that these characters are all young, and naturally, the actresses cast should also be on the younger end.
                 But interestingly enough, this wasn’t always the case.</p>`);
@@ -2471,6 +2475,26 @@ queue()
           [function(directionForward) {
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
+
+              //remove burbage circle
+              select('.burbage-circle').remove();
+
+              //clear annotations
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
 
               if (directionForward) {
                   transitions([1900, 1980], false, true);
@@ -2529,7 +2553,7 @@ queue()
                   mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
                   //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
-                  mainContent.html(`<h2>Female role age distributions in <span>productions between 1900-1979</span></h2><p>Things were quite different in the early decades of the 20th century.
+                  mainContent.html(`<h2>Female roles age distributions in <span class='year-range-highlight'>productions between 1900-1979</span></h2><p>Things were quite different in the early decades of the 20th century.
                       Actresses in their late 30s and their 40s were regularly cast in, or played roles such as <span class='rosalind-color'>Rosalind</span> and <span class='portia-color'>Portia</span> (as opposed to being outliers near the end of the upper quartile of ages),
                       and it was not uncommon to see <span class='juliet-color'>Juliets</span> and <span class='desdemona-color'>Desdemonas</span> in their 40s either. In general, the spreads (or statistical dispersion, for the geeks)
                       of the ages of actresses in almost all the roles were much wider (ranging from 10 to 20 years wider) prior to 1980, and in particular, prior to the 1950s. </p>`);
@@ -2549,11 +2573,12 @@ queue()
               mainContent.style('width', 1230);
               mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
 
+
               function translateUp() {
                   const transitionUp = transition().duration(1500).on('end', function () {
                       locked = false;
                       mainContent.transition(1000).style('opacity', 1);
-                      mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude in casting was also true with male roles, but in the opposite direction.
+                      mainContent.html(`<h2>Male roles age distributions in <span class='year-range-highlight'>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude in casting was also true with male roles, but in the opposite direction.
                           If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                           Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
                           that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
@@ -2582,10 +2607,19 @@ queue()
 
               if (directionForward) {
                   translateUp();
+                  select('.svg-main').append('circle')
+                     .classed('burbage-circle', true)
+                     .attr('r', `7`)
+                     .attr('cx', scaleX(parseFloat(moment("1606-12-26T00:00:00").diff(moment("1567-01-06T00:00:00"), 'years', true))))
+                     .attr('cy', male(8, .1))
+                     .attr('fill', characterAges['kingLearAges'].color)
+                     .attr('stroke', 'white')
+                     .attr('stroke-width', '2px');
+
               } else {
                   transitions([1900,1980], false, true);
                   mainContent.transition(1000).style('opacity', 1);
-                  mainContent.html(`<h2>Male role age distributions in <span>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude was also true with male roles, but in the opposite direction.
+                  mainContent.html(`<h2>Male roles age distributions in <span class='year-range-highlight'>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude was also true with male roles, but in the opposite direction.
                       If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
                       Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
                       that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
@@ -2617,6 +2651,30 @@ queue()
               }
               **/
               /**
+
+              const charAnnotation = {
+                  type: annotation.annotationCalloutCircle,
+                  note: {
+                      label: annoMeta.text,
+                      wrap: 125,
+                      align: 'right'
+                  },
+                  connector: {
+                   end: 'arrow',
+                   type: 'curve',
+                   //points: annoMeta.points ? annoMeta.points : null,
+
+                   //points: [[-40, -20]]
+                   //points: [[25, 25], [45, 22]]
+                 },
+                 x: scaleX(moment("1606-12-26T00:00:00")-moment("1567-01-06T00:00:00")),
+                 y: male(8, .1),
+                 dx: -15,
+                 dy: -60,
+                 subject: {radius: 13}
+              }
+
+
               const blankAnnotations = [
                   //note color: #b4b8c0
                   {
@@ -2631,17 +2689,60 @@ queue()
 
                   }
               ];
+              **/
 
-              makeAnnotations.annotations(blankAnnotations);
+              const charAnnotation = [{
+                  type: annotation.annotationCalloutCircle,
+                  note: {
+                      label: `Richard Burbage, Shakespeare's business partner and a fellow actor, was 39 when he played
+                      Lear in the first recorded performance of the play on December 26, 1606 at Whitehall with King James I in the audience.`,
+                      wrap: 175,
+                      align: 'right'
+                  },
+                  connector: {
+                   end: 'arrow',
+                   type: 'curve',
+                   //points: annoMeta.points ? annoMeta.points : null,
+
+                   points: [[-60, 6]]
+                   //points: [[25, 25], [45, 22]]
+                 },
+                 x: scaleX(parseFloat(moment("1606-12-26T00:00:00").diff(moment("1567-01-06T00:00:00"), 'years', true))),
+                 //x: scaleX(39.1),
+                 y: male(8, .1),
+                 dx: -175,
+                 dy: -60,
+                 subject: {radius: 13}
+             }];
+
+
+              makeAnnotations.annotations(charAnnotation);
 
               select('.annotation-group')
                 .call(makeAnnotations);
+                selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+
+                  selectAll('.annotation-connector path.connector')
+                    .attr('stroke', '#b4b8c0')
+                    .attr('stroke-width', '2px')
+                    .attr('stroke-dasharray', '2 2');
+
+                  selectAll('.annotation-connector path.connector-end')
+                    .attr('fill', '#b4b8c0')
+                    .attr('stroke', 'white');
+
+                  const rect = selectAll('.annotation-note-bg');
+                  rect.attr('fill-opacity', 1)
+                      .attr('fill', '#1a1b1e')
+                  selectAll('.subject').attr('stroke-dasharray', '2 1').attr('stroke', 'white');
+
+                  selectAll('.note-line').remove();
 
               //create voronoi overlay as Test
               //voronoifiedPoints
               //.attr('cx', d => scaleX(d.age))
               //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
-              **/
+
           }],
           [function(directionForward) {
               //select('.svg-main').transition().duration(2100).attr('transform', `translate(0,0)`);
@@ -2661,7 +2762,7 @@ queue()
 
               selectAll('.role-text-dots').attr('opacity', 0);
 
-              mainContent.html(`<h2>Male role age distributions in <span>productions since 1980</span></h2><p>Perhaps due to both improvements in
+              mainContent.html(`<h2>Male roles age distributions in <span class='year-range-highlight'>productions since 1980</span></h2><p>Perhaps due to both improvements in
                   <a href='http://budgetmodel.wharton.upenn.edu/issues/2016/1/25/mortality-in-the-united-states-past-present-and-future' target="_blank">life expectancy</a> in the late 20th century, and increasing audience expectations
                   for an actor’s age to match the age of the character he’s playing (likely due to the pressures from film and TV), nearly 75% of modern-day actors playing <span class="kingLear-color">King Lear</span> are over 60,
                   a considerable change from productions prior to the 1980s. While it’s true that the age distributions of younger male roles like <span class="romeo-color">Romeo</span> and <span class="hamlet-color">Hamlet</span> have
@@ -2677,6 +2778,64 @@ queue()
                   if (i == 0) console.log('d is: ', d);
                   //if (d.actor = )
               });
+
+              if (!directionForward) {
+                  const charAnnotation = [{
+                      type: annotation.annotationCalloutCircle,
+                      note: {
+                          label: `Richard Burbage, Shakespeare's business partner and a fellow actor, was 39 when he played
+                          Lear in the first recorded performance of the play on December 26, 1606 at Whitehall with King James I in the audience.`,
+                          wrap: 175,
+                          align: 'right'
+                      },
+                      connector: {
+                       end: 'arrow',
+                       type: 'curve',
+                       //points: annoMeta.points ? annoMeta.points : null,
+
+                       points: [[-60, 6]]
+                       //points: [[25, 25], [45, 22]]
+                     },
+                     x: scaleX(parseFloat(moment("1606-12-26T00:00:00").diff(moment("1567-01-06T00:00:00"), 'years', true))),
+                     //x: scaleX(39.1),
+                     y: male(8, .1),
+                     dx: -175,
+                     dy: -60,
+                     subject: {radius: 13}
+                 }];
+
+                 select('.svg-main').append('circle')
+                    .classed('burbage-circle', true)
+                    .attr('r', `7`)
+                    .attr('cx', scaleX(parseFloat(moment("1606-12-26T00:00:00").diff(moment("1567-01-06T00:00:00"), 'years', true))))
+                    .attr('cy', male(8, .1))
+                    .attr('fill', characterAges['kingLearAges'].color)
+                    .attr('stroke', 'white')
+                    .attr('stroke-width', '2px');
+
+                  makeAnnotations.annotations(charAnnotation);
+
+                  select('.annotation-group')
+                    .call(makeAnnotations);
+                    selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+
+                      selectAll('.annotation-connector path.connector')
+                        .attr('stroke', '#b4b8c0')
+                        .attr('stroke-width', '2px')
+                        .attr('stroke-dasharray', '2 2');
+
+                      selectAll('.annotation-connector path.connector-end')
+                        .attr('fill', '#b4b8c0')
+                        .attr('stroke', 'white');
+
+                      const rect = selectAll('.annotation-note-bg');
+                      rect.attr('fill-opacity', 1)
+                          .attr('fill', '#1a1b1e')
+                      selectAll('.subject').attr('stroke-dasharray', '2 1').attr('stroke', 'white');
+
+                      selectAll('.note-line').remove();
+              }
+              /**
               const blankAnnotations = [
                   {
                       type: annotation.annotationLabel,
@@ -2692,6 +2851,7 @@ queue()
 
               select('.annotation-group')
                 .call(makeAnnotations);
+            **/
 
           }],
           [function(directionForward) {
@@ -2710,9 +2870,32 @@ queue()
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               mainContent.transition(1000).style('opacity', 1);
 
+              //remove burbage circle
+              select('.burbage-circle').remove();
+
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
+
               //transitions([1980, 2019], false, false);
 
-
+              if (!directionForward) {
+                  transitions([1980, 2019], false, false);
+                  selectAll('.character-meta').select('.character-meta-inner').attr('opacity', 1);
+                  selectAll('.role-dots-group').attr('opacity', 1)
+              }
 
               selectAll('.role-text-dots').each(function(ele) {
                   const roleTransition = select(this).transition().duration(1000).attr('opacity', 1);
@@ -2770,7 +2953,7 @@ queue()
                                              y: male(index, charActor.yCoord),
                                              dx: annoMeta.dx,
                                              dy: annoMeta.dy,
-                                              subject: {radius: 23}
+                                              subject: {radius: 21}
                                           }
                                           newAnnotations.push(charAnnotation);
                                       }
@@ -2831,23 +3014,291 @@ queue()
                   **/
 
 
+              //translateUp();
+              //select('.svg-main').attr('transform', `translate(0,-${band * 9})`);
+              //select('.voronoi-overlay').remove();
+
+          }],
+          [function(directionForward) {
+              if (directionForward) {
+                  transitions([1900,2019], false, true, true, false, function() {
+                      selectAll('.character-meta').each(function(char) {
+                          console.log(this.id);
+                          if (this.id !== 'othellometa') {
+                              select(this).select('.character-meta-inner')
+                                .attr('opacity', .1);
+                          }
+                      });
+
+                      selectAll('.role-dots-group').each(function(char) {
+                          if (!select(this).classed('othello-dots-group')) {
+                              select(this).attr('opacity', .07);
+                          }
+                      });
+                  });
+              } else {
+                  filterPoints([1900,2018])();
+              }
+
+              const mainContent = select('#main-content');
+              mainContent.style('opacity', 0);
+
+              mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2018</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight all non-white actors
+              with a textured circle ( <svg width='13' height='13' class='inline-svg'><circle cx='6' cy='7' r='6'/></svg> ). There’s perhaps no other character in Shakespeare’s oeuvre as inextricably linked to race as <span class="othello-color">Othello</span>. Shakespeare's original text offers hints to
+              <span class="othello-color">Othello's</span> physical features—at one point in the play, the Moor exclaims, "Her [Desdemona's] name, that was as fresh as Dian's visage, <b>is now begrimed and black as mine own face</b>." (III.iii.441-443)
+              The view towards the Moor’s <a href="https://en.wikipedia.org/wiki/Othello#Race" target="_blank">ethnic identity</a> has morphed and changed throughout history, and today, the role
+              has become the quintessential heavyweight role for a male actor of color* to tackle. Looking at our entire sample of <span class="othello-color">Othellos</span> since 1900, we see mostly a sea of minority actors playing the Moor of Venice. But what if we filtered by time period?</p>
+              <p class='footnote'>*The term 'people of color' and its various derivatives (e.g., writers of color, actors of color, etc.) are used primarily in North America. In the UK, the terms
+              <a href='https://www.theguardian.com/commentisfree/2015/may/22/black-asian-minority-ethnic-bame-bme-trevor-phillips-racial-minorities' target='_blank'>BME and BAME</a> (black and minority ethnic, and black, Asian, and minority ethnic, respectively) are more commonly used.</p>`);
+              const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+              const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
+              mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
+              mainContent.transition(1000).style('opacity', 1);
+
+              select('.inline-svg circle').attr('mask', 'url(#mask)').attr('fill', 'white');
+
+                //reset annotations
+                const blankAnnotations = [
+                    {
+                        type: annotation.annotationLabel,
+                        note: {
+                            label: ' ',
+                            title: ' ',
+                            wrap: 0
+                        },
+                    }
+                ];
+
+                makeAnnotations.annotations(blankAnnotations);
+
+                select('.annotation-group')
+                  .call(makeAnnotations);
+          }],
+          [function() {
+              filterPoints([1900, 1945])();
+              const mainContent = select('#main-content');
+              mainContent.style('opacity', 0);
+
+              mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 1945</span></h2><p>CONTENT GOES HERE</p>`);
+              const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+              const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
+              mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
+              mainContent.transition(1000).style('opacity', 1);
+
+          }],
+          [function() {
+              filterPoints([1946, 1979])();
+              select('.iago-dots-group').attr('opacity', .07);
+              select('#iagometa').select('.character-meta-inner').attr('opacity', .1);
+          }],
+          [function(directionForward) {
+              filterPoints([1980, 2018])();
+              select('.iago-dots-group').attr('opacity', 1);
+              select('#iagometa').select('.character-meta-inner').attr('opacity', 1);
+              const mainContent = select('#main-content');
+              mainContent.style('opacity', 0);
+
+              //reset annotations
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
 
               function translateUp() {
+                  const transitionUp = transition().duration(1500).on('end', function () {
+                      locked = false;
+                      mainContent.transition(1000).style('opacity', 1);
+                      mainContent.html(`<h2>Male roles age distributions in <span class='year-range-highlight'>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude in casting was also true with male roles, but in the opposite direction.
+                          If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
+                          Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
+                          that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
+                      const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+                      const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
+                      console.log(document.querySelector('body').getBoundingClientRect());
+                      mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
+
+                  }).on('start', function() {
+                      locked = true;
+                  });
                   //select('.svg-main').transition().duration(2100).attr('transform', `translate(0,-${band * 9})`);
                   if (isSafari) {
-                      select('.svg-main').transition().duration(1500).style('transform', `translate(0px,-${band * 9}px)`);
+                      select('.svg-main').transition(transitionUp).style('transform', `translate(0px,-${band * 7 + windowHeight * .075 + 10}px)`);
                   } else {
-                      select('.svg-main').transition().duration(1500).attr('transform', `translate(0,-${band * 9})`);
+                      select('.svg-main').transition(transitionUp).attr('transform', `translate(0,-${band * 7 + windowHeight * .075 + 10})`);
                   }
+
+
 
                   //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
                   //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
                   //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
                   //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
               }
-              //translateUp();
-              //select('.svg-main').attr('transform', `translate(0,-${band * 9})`);
-              //select('.voronoi-overlay').remove();
+
+              if (!directionForward) {
+                  translateUp();
+                  selectAll('.character-meta').each(function(char) {
+                      console.log(this.id);
+                      if (this.id !== 'othellometa' && this.id !== 'iagometa') {
+                          select(this).select('.character-meta-inner')
+                            .attr('opacity', .1);
+                      }
+                  });
+
+                  selectAll('.role-dots-group').each(function(char) {
+                      if (!select(this).classed('othello-dots-group') && !select(this).classed('iago-dots-group')) {
+                          select(this).attr('opacity', .07);
+                      }
+                  });
+
+
+              }
+          }],
+          [function(directionForward) {
+              const mainContent = select('#main-content');
+              mainContent.style('opacity', 0);
+              filterPoints([1900,1989])();
+
+              selectAll('.role-dots-group').attr('opacity', 1);
+              selectAll('.character-meta-inner').attr('opacity', 1);
+
+
+              function translateDown() {
+                  const transitionUp = transition().duration(1500).on('end', function () {
+                      locked = false;
+                      mainContent.style('bottom', null);
+                      mainContent.style('width', 1230);
+                      mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
+                      //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+                      appendMainContent();
+
+                      const annotationMeta = [
+                          {
+                              type: 'color',
+                              actorName: 'Edna Thomas',
+                              character: 'ladyMacbeth',
+                              text: 'The 1936 WPA/Federal Theater Project all-Black production of Macbeth starring Edna Thomas as Lady Macbeth was directed by Orson Welles',
+                              points: [[72, 20]],
+                              dx: 320,
+                              dy: -75,
+                              align: 'middle'
+                          },
+                          {
+                              type: 'color',
+                              actorName: 'Sabrina Le Beauf',
+                              character: 'rosalind',
+                              text: 'Sabrina Le Beauf, several seasons into playing Sondra Huxtable on The Cosby Show, appeared on stage as Rosalind in a largely race-blind production of As You Like It in 1989',
+                              points: [[-43, 19]],
+                              wrap: 137,
+                              dx: -125,
+                              dy: 0,
+                          }
+                      ];
+
+                      createAnnotations(annotationMeta);
+
+                      function createAnnotations(annotationsArray) {
+                          const newAnnotations = [];
+                          annotationsArray.forEach(annoMeta => {
+                              const index = characterAges[`${annoMeta.character}Ages`].idx;
+                              select(`.${annoMeta.character}-dots-group`).selectAll('circle').each(charActor => {
+                                  if (charActor.actor == annoMeta.actorName) {
+                                      console.log(index, charActor.actor, charActor.age, charActor.yCoord);
+                                      const charAnnotation = {
+                                          type: annotation.annotationCalloutCircle,
+                                          note: {
+                                              label: annoMeta.text,
+                                              wrap: annoMeta.wrap ? annoMeta.wrap : 125,
+                                              align: annoMeta['align'] ? annoMeta.align : 'right'
+                                          },
+                                          connector: {
+                                           end: 'arrow',
+                                           type: 'curve',
+                                            points: annoMeta.points ? annoMeta.points : null,
+
+                                           //points: [[-40, -20]]
+                                           //points: [[25, 25], [45, 22]]
+                                         },
+                                         x: scaleX(charActor.age),
+                                         y: female(index, charActor.yCoord),
+                                         dx: annoMeta.dx,
+                                         dy: annoMeta.dy,
+                                         subject: {radius: 12}
+                                      }
+                                      newAnnotations.push(charAnnotation);
+                                  }
+
+                              });
+                          });
+
+                          console.log('annotations: ', newAnnotations);
+                          makeAnnotations.annotations(newAnnotations);
+
+                          select('.annotation-group')
+                            .call(makeAnnotations);
+                          selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+
+                            selectAll('.annotation-connector path.connector')
+                              .attr('stroke', '#b4b8c0')
+                              .attr('stroke-width', '2px')
+                              .attr('stroke-dasharray', '2 2');
+
+                            selectAll('.annotation-connector path.connector-end')
+                              .attr('fill', '#b4b8c0')
+                              .attr('stroke', 'white');
+
+                            const rect = selectAll('.annotation-note-bg');
+                            rect.attr('fill-opacity', 1)
+                                .attr('fill', '#1a1b1e')
+                            selectAll('.subject').attr('stroke-dasharray', '2 1').attr('stroke', 'white');
+
+                            selectAll('.note-line').remove();
+                        }
+
+                  }).on('start', function() {
+                      locked = true;
+                  });
+
+
+                  if (isSafari) {
+                      select('.svg-main').transition(transitionUp).style('transform', `translate(0px,${band * 7}px)`);
+                  } else {
+                      select('.svg-main').transition(transitionUp).attr('transform', `translate(0,${band * 7})`);
+                  }
+
+              }
+
+              function appendMainContent() {
+                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions between 1900-1989</span></h2><p>Even as the practice of white actors donning blackface to play <span class="othello-color">Othello</span> started going away in the second half of the 20th century, and more actors of color were cast in the role, non-white actors were still rarely appearing as leads in other Shakespearean plays through the 1980s. The few actors of color you do see in the charts were often part of productions that were highly segregated, such as in the African-American-only <a href="https://en.wikipedia.org/wiki/Federal_Theatre_Project#African-American_theatre" target="_blank">Negro Theatre Unit</a> that was part of the Federal Theatre Project started during the Great Depression. By the mid-to-late 80s, you'll sometimes encounter a genuinely race-blind production like Michael Kahn’s 1989 <a href="http://www.shakespearetheatre.org/events/as-you-like-it-88-89/" target="_blank">Shakespeare Theatre Company production of</a> <em>As You Like It</em>, where Sabrina Le Beauf <img class='actor-face rosalind-color' src='assets/images/actor_faces/lebeauf.png' /> played <span class='rosalind-color'>Rosalind</span>, while Emery Battis <img class='actor-face actor-face-generic' src='assets/images/actor_faces/battis.png' />, a white actor, played her father. But for the most part, productions like these were rare even as we approached the 90s.</p>`);
+                  const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+                  const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
+
+                  mainContent.style('top', (topOfSVGContainer - height)/2);
+                  mainContent.transition(1000).style('opacity', 1);
+
+              }
+
+              if (directionForward) {
+                  translateDown();
+              } else {
+                  appendMainContent();
+              }
+
+
+          }],
+          [function() {
+              filterPoints([1990,2018])();
 
           }],
           [function() {
@@ -2875,19 +3326,6 @@ queue()
               select('.annotation-group')
                 .call(makeAnnotations);
 
-              //const slideDistance = scaleX(minAge) - scaleX(18);
-              function translateDown() {
-                  if (isSafari) {
-                      select('.svg-main').transition().duration(1500).style('transform', `translate(0px,${band * 9 + 20}px)`);
-                  } else {
-                      select('.svg-main').transition().duration(1500).attr('transform', `translate(0,${band * 9 + 20})`);
-                  }
-                  //selectAll('.role-dots-group').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
-                  //selectAll('.character-meta-inner').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
-                  //selectAll('.character-label-initial').attr('stroke', 'rgb(255,255,255)');
-                  //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
-              }
-              //translateDown();
 
               if (isSafari) {
                   select('.svg-main').transition().duration(1500).style('transform', `translate(0,0)`);
@@ -2896,6 +3334,7 @@ queue()
               }
 
               select('.voronoi-overlay').remove();
+              select('.svg-main').classed('mouse-disabled', true);
 
               //disable brush
               brushGroup.call(brush.move, null);
@@ -2926,16 +3365,16 @@ queue()
               brushGroup.call(brush.move, [1900, 2018].map(scaleYear));
               selectAll('.handle').attr('fill', '#33739b');
 
-
+              //<pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
+              //<mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
               const mainContent = select('#main-content');
               mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <br><span class="chart-title-year-range">1900 and 2018</span></h2>
-              <section><svg width='13' height='13' class='inline-svg'><pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
-              <mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
-              <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color</span></section>
+              <section><svg width='13' height='13' class='inline-svg'>
+              <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color/BME Actor</span></section>
               <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p>
               <section><span>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range</span></section></div>`);
 
-              select('.inline-svg circle').attr('mask', 'url(#mask-2)').attr('fill', 'white');
+              select('.inline-svg circle').attr('mask', 'url(#mask)').attr('fill', 'white');
 
               const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(66)) + 30;
               const top = +document.querySelector('.svg-controls').getBoundingClientRect().bottom;
@@ -3025,7 +3464,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
 
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img src='assets/images/new-graph.png' /><span>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta exploreDataSkip'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img class='logo' src='assets/images/new-graph.png' /><span class='logo'>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A visual deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar or <span class='key-indicator'>&#x21e8;</span> to start reading the story.</p><p>Otherwise, <span class='cta exploreDataSkip'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -3143,16 +3582,12 @@ queue()
         });
 
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
-          if (e.target.tagName == 'A') {
+          if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
               return;
           } else if (e.target.classList.contains('cta')) {
-              //e.stopPropagation();
-              console.log('this is the button');
 
               if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
-              if (e.target.classList.contains('story-skip')) {
-                  eventsQueue[2][0](false);
-              }
+
               return;
           }
           if (!locked) {
