@@ -3434,7 +3434,7 @@ queue()
 
 
           }],
-          [function() {
+          [function(directionForward) {
               //DO NOT DELETE
               select('#tooltip')
                 .style('opacity', 0);
@@ -3442,6 +3442,9 @@ queue()
               select('#main-content')
                 .html(null);
 
+              if (!directionForward) {
+                  transitions([1900,2018], false, true, true, false);
+              }
               //reset annotations
               const blankAnnotations = [
                   {
