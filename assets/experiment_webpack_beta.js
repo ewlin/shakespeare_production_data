@@ -88,13 +88,7 @@ queue()
     const actorsMasterList = m1.concat(m2);
 
     console.log(actorsMasterList);
-    //5/15 test (est. count number of productions)
 
-    //Save special points for annotations
-    let annotationCoordinates = {
-      stewartOthello: {text: '', coordinates: []},
-      canadaIago: {text: '', coordinates:[]},
-    };
     //.clientWidth in Firefox has a bug
     let widthMax = document.querySelector('.svg-main').getBoundingClientRect().width;
     let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
@@ -553,6 +547,7 @@ queue()
           //.attr('stroke-opacity', 0)
           .attr('fill-opacity', 0)
           .attr('stroke-opacity', 0)
+          /*
           .each(function(actor) {
             if (actor.actor === 'Patrick Stewart' && actor.role === 'othello') {
               annotationCoordinates['stewartOthello'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
@@ -561,7 +556,7 @@ queue()
               annotationCoordinates['canadaIago'].coordinates.push(this.getAttribute('cx'), this.getAttribute('cy'));
             }
           });
-
+          */
 
         select(this).selectAll('.oppo-roles').data(oppoGender).enter().append('text')
           .attr('id', d => `${d.role}-${d.tempID}`)
@@ -580,7 +575,6 @@ queue()
 
       });
 
-    console.log(annotationCoordinates);
 
 
     for (let eachCharacter in interquartiles) {
@@ -1554,7 +1548,6 @@ queue()
                             ? ''
                             : `directed by ${d.data.actor.director == d.data.actor.actor ? pronoun[1] : '<b>' + d.data.actor.director + '</b>'}`;
                           //Move the first two .attr lines to when initializing dots?
-                          console.log(select(`#${d.data.id}`));
                           select(`#${d.data.id}`).attr('r', '10px')
                             .attr('stroke-width', '4px')
                             .attr('stroke', d => characterAges[d.role + 'Ages']['color'])
@@ -1607,8 +1600,6 @@ queue()
                 const roleOppoGender = roleData['gender'] == 'male' ? 'female' : 'male';
                 const matchGender = roleData.ages.filter(d => d.actorGender !== roleOppoGender);
                 const oppoGender = roleData.ages.filter(d => d.actorGender === roleOppoGender);
-                console.log(matchGender)
-                console.log(oppoGender)
 
                 const points = select(this).selectAll('.role-dots').data(matchGender);
                 points.attr('mask', 'none');
@@ -1772,79 +1763,12 @@ queue()
                     .text(d => d);
 
 
-                /**
-                charMeta.select('.label-text')
-                        .datum(eachCharacter)
-                        .attr('class', 'label-text')
-                        .append('textPath')
-                        .attr('xlink:href', d => '#' + d + 'label')
-                        //.attr('alignment-baseline', 'hanging')
-                        .attr('text-anchor', 'middle')
-                        .attr('startOffset', '50%')
-                        .attr('stroke', '#7c8392')
-                        .text(d => d[0].toUpperCase() + d.substring(1,d.length));
-                **/
-            }
-		              /**
-            for (let eachCharacter in interquartiles) {
-                let gender = characterGenders[eachCharacter];
-                let index = characterAges[eachCharacter + 'Ages'].idx;
-                let yValue = gender == 'male' ? male(index, true) : female(index, true);
-                let interquartileLine = line().y(d => yValue).x(d => scaleX(d));
-            ]let charMeta = svg.append('g').classed('character-meta', true).attr('id', eachCharacter + 'meta');
-                let middleFiftyPercent = interquartiles[eachCharacter].slice(1,3);
-                charMeta.append('path').datum(middleFiftyPercent)
-                    .attr('d', interquartileLine)
-                    //.attr('stroke', '#42454c')
-                    .attr('stroke', '#7c8392')
-                    .attr('stroke-width', '6.5px')
-                    .attr('opacity', .7);
-                charMeta.append('path').datum(interquartiles[eachCharacter])
-                    .attr('d', interquartileLine)
-                    .attr('stroke', '#7c8392')
-                    .attr('stroke-width', '1.5px')
-                    .attr('opacity', .5)
-                    .attr('stroke-dasharray', '3,1');
-                let radius = 21.5;
-                let pad = 30;
-                charMeta.append('circle').attr('r', radius).attr('cy', yValue).attr('cx', () => {
-                    //return (interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(84)) + pad;
-                    return scaleX(interquartiles[eachCharacter][3]) + pad;
-                }).attr('stroke', '#7c8392')
-                .attr('fill', () => characterAges[eachCharacter + 'Ages'].color)
-                .attr('fill-opacity', .6)
-                let arcStartX = scaleX(interquartiles[eachCharacter][3]) - (radius + 3) + pad;
-                let arcEndX = scaleX(interquartiles[eachCharacter][3]) + (radius + 3) + pad;
-                //let arcStartX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad;
-                //let arcEndX = interquartiles[eachCharacter][3] < 80 ? scaleX(interquartiles[eachCharacter][3]) : scaleX(80) + pad + 1;
-                charMeta.append('path')
-                        .attr('id', eachCharacter + 'label')
-                        .attr('d', `M ${arcStartX},${yValue} A ${radius + 3},${radius + 3}, 0 1,1 ${arcEndX},${yValue}`)
-                        .attr('stroke-width', '3px')
-                        .attr('fill', 'none');
-                charMeta.append('text')
-                        .datum(eachCharacter)
-                        .attr('class', 'label-text')
-                        .append('textPath')
-                        .attr('xlink:href', d => '#' + d + 'label')
-                        //.attr('alignment-baseline', 'hanging')
-                        .attr('text-anchor', 'middle')
-                        .attr('startOffset', '50%')
-                        .attr('stroke', '#7c8392')
-                        .text(d => d[0].toUpperCase() + d.substring(1,d.length));
-
-                //charMeta.on('mouseover', function() {
-                //    console.log(middleFiftyPercent);
-                //});
-                //select('#' + eachCharacter + 'meta').on('mouseover', function() {
-                //    console.log(middleFiftyPercent);
-                //});
 
             }
-						**/
 
         }
 
+/*
 				//Highlights
 
 				function highlight1 () {
@@ -1947,7 +1871,7 @@ queue()
         //Highlight Patrick Stewart Othello
 				//select('.highlight-1').on('click', highlight1);
 
-
+*/
 
 
         function skipToExplore() {
@@ -2080,10 +2004,7 @@ queue()
             }
 
             const ageAxis = document.querySelector('.axis');
-            console.log('left side of axis:' + ageAxis.getBoundingClientRect().left);
 
-            //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-              //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
             createBracket([15, (band * 7) + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
             createBracket([(band * 7) + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
@@ -2125,7 +2046,6 @@ queue()
                                   <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> <a href='https://www.americantheatre.org/2017/09/21/the-top-20-most-produced-playwrights-of-the-2017-18-season/' target='_blank'>calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare</a>, making him the most performed playwright in the survey, with quadruple the number of productions as the playwright in second place.</p>
                                   <p class='story'>What does the future hold for you as an aspiring Shakespearean? When in your career should you try to aim for the spotlight of the leading lady (or leading man)? As it turns out, your fate largely depends on your gender, and if you're a young actress, you don't have much time to waste...</p>`);
                 //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
-                console.log(band);
                 const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                 mainContent.style('top', window.innerHeight/2 - height/2);
 
@@ -2285,7 +2205,6 @@ queue()
 
             const heightToShift = document.querySelector('.curly-brace-full').getBoundingClientRect().bottom - document.querySelector('.embedded-svg').getBoundingClientRect().top;
 
-            console.log('to shift: ' + heightToShift);
             sampleAxis.attr('transform', `translate(0,${heightToShift})`);
 
             sampleAxis
@@ -2449,28 +2368,7 @@ queue()
                 mainContent.style('top', (topOfSVGContainer - height)/2);
                 mainContent.transition(1000).style('opacity', 1);
 
-                //mainContent.style('top', window.innerHeight/2 - height/2);
-                //mainContent.transition(0).delay(300).style('opacity', 1);
             }
-
-
-            /**
-            selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
-            selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
-                //if (d.age <= maxAge && d.age >= minAge) {
-                if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                    console.log('good');
-                    return .95;
-                } else {
-                    return .4;
-                }
-                /**
-                } else {
-                    console.log('invisible');
-                    return 0;
-                }
-
-            });**/
 
           }],
 
@@ -2501,31 +2399,6 @@ queue()
               if (directionForward) {
                   transitions([1900, 1980], false, true);
                   changeMainContent();
-                  /**
-
-                  selectAll('.role-dots-group').filter(g => {
-                      return g.gender == 'female';
-                  }).each(group => {
-
-                      select(`.${group.role}-dots-group`).selectAll('.role-dots')
-                      .filter(d => {
-                          //console.log(moment(d.opening), moment("1951"));
-                          return moment(d.opening) < moment("1951");
-                      })
-                      .each(d => {
-                          console.log(d);
-                          select('.svg-main').append('circle').datum(d).classed('call-out-dot', true)
-                            .attr('fill-opacity', 0)
-                            .attr('stroke-opacity', .5)
-                            .attr('stroke-dasharray', '2 1')
-                            .attr('stroke-width', 1)
-                            .attr('stroke', 'white')
-                            .attr('cx', d => scaleX(d.age))
-                            .attr('cy', d => group.gender == 'male' ? male(group.index, d.yCoord) : female(group.index, d.yCoord))
-                            .attr('r', 8);
-                        });
-
-                  });**/
 
 
               } else {
@@ -2586,7 +2459,6 @@ queue()
                           that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
                       const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                       const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
-                      console.log(document.querySelector('body').getBoundingClientRect());
                       mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
 
                   }).on('start', function() {
@@ -2627,71 +2499,8 @@ queue()
                       that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
-                  console.log(document.querySelector('body').getBoundingClientRect());
                   mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               }
-              /**
-              if (directionForward) {
-                  selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
-                  selectAll('.role-dots').transition().duration(1000).attr('fill-opacity', d => {
-                      //if (d.age <= maxAge && d.age >= minAge) {
-                      if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                          //console.log('good');
-                          return .95;
-                      } else {
-                          return .4;
-                      }
-                      /**
-                      } else {
-                          console.log('invisible');
-                          return 0;
-                      }
-
-                  });
-              } else {
-                  transitions([1980, 2018], false, true);
-              }
-              **/
-              /**
-
-              const charAnnotation = {
-                  type: annotation.annotationCalloutCircle,
-                  note: {
-                      label: annoMeta.text,
-                      wrap: 125,
-                      align: 'right'
-                  },
-                  connector: {
-                   end: 'arrow',
-                   type: 'curve',
-                   //points: annoMeta.points ? annoMeta.points : null,
-
-                   //points: [[-40, -20]]
-                   //points: [[25, 25], [45, 22]]
-                 },
-                 x: scaleX(moment("1606-12-26T00:00:00")-moment("1567-01-06T00:00:00")),
-                 y: male(8, .1),
-                 dx: -15,
-                 dy: -60,
-                 subject: {radius: 13}
-              }
-
-
-              const blankAnnotations = [
-                  //note color: #b4b8c0
-                  {
-                      type: annotation.annotationLabel,
-                      note: {
-                          //label: 'Test text for this annotation. Somethings about Othello and Iago and race and ethnicity. This surprisingly does not look ugly thank you haha. I was worried. We can definitely work with this. Images might work better outside of SVG',
-                          label: '',
-                      },
-
-                      x: 0,
-                      y: 0,
-
-                  }
-              ];
-              **/
 
               const charAnnotation = [{
                   type: annotation.annotationCalloutCircle,
@@ -2773,14 +2582,8 @@ queue()
                   pretty healthy pickings of Shakespearean roles throughout their careers.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
-              console.log(document.querySelector('body').getBoundingClientRect());
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               mainContent.transition(1000).style('opacity', 1);
-
-              selectAll('.role-dots').each((d,i) => {
-                  if (i == 0) console.log('d is: ', d);
-                  //if (d.actor = )
-              });
 
               if (!directionForward) {
                   const charAnnotation = [{
@@ -2869,7 +2672,6 @@ queue()
                   and throughout the 1800s and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—actresses playing other male roles (represented in graph as <span class='legend-symbol'>\u2640</span>), especially older characters like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a more recent development.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
-              console.log(document.querySelector('body').getBoundingClientRect());
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               mainContent.transition(1000).style('opacity', 1);
 
@@ -2936,7 +2738,6 @@ queue()
                                   const index = characterAges[`${annoMeta.character}Ages`].idx;
                                   select(`.${annoMeta.character}-dots-group`).selectAll('text').each(charActor => {
                                       if (charActor.actor == annoMeta.actorName) {
-                                          console.log(index, charActor.actor, charActor.age, charActor.yCoord);
                                           const charAnnotation = {
                                               type: annotation.annotationCalloutCircle,
                                               note: {
@@ -3026,7 +2827,6 @@ queue()
               if (directionForward) {
                   transitions([1900,2019], false, true, true, false, function() {
                       selectAll('.character-meta').each(function(char) {
-                          console.log(this.id);
                           if (this.id !== 'othellometa') {
                               select(this).select('.character-meta-inner')
                                 .attr('opacity', .1);
@@ -3046,7 +2846,7 @@ queue()
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2018</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight all non-white actors
+              mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2018</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight all non-white actors
               with a textured circle ( <svg width='13' height='13' class='inline-svg'><circle cx='6' cy='7' r='6'/></svg> ). There’s perhaps no other character in Shakespeare’s oeuvre as inextricably linked to race as <span class="othello-color">Othello</span>. Shakespeare's original text offers hints to
               <span class="othello-color">Othello's</span> physical features—at one point in the play, the Moor exclaims, "Her [Desdemona's] name, that was as fresh as Dian's visage, <b>is now begrimed and black as mine own face</b>." (III.iii.441-443)
               The view towards the Moor’s <a href="https://en.wikipedia.org/wiki/Othello#Race" target="_blank">ethnic identity</a> has morphed and changed throughout history, and today, the role
@@ -3103,7 +2903,7 @@ queue()
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 1979</span></h2>
+              mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 1979</span></h2>
               <p>From the turn of the 20th century to the end of WWII, <span class='othello-color'>Othellos</span> were almost entirely played by white actors in blackface on stage, and this continued well into the latter
               half of the 20th century. Even as late as 1964, Laurence Olivier <img class='actor-face othello-color' src='assets/images/actor_faces/olivier-othello.png' /> would appear in heavy facial makeup as <span class='othello-color'>Othello</span>, in a National Theatre
               production directed by John Dexter. (Opposite him as <span class="desdemona-color">Desdemona</span> was Dame Maggie Smith <img class='actor-face desdemona-color' src='assets/images/actor_faces/smith.png' />, most familiar to us all as Professor Minerva McGonagall.)
@@ -3164,13 +2964,13 @@ queue()
 
               function createContent() {
                   mainContent.transition(1000).style('opacity', 1);
-                  mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1980 to 2018</span></h2><p>By the mid-80s, the role of <span class="othello-color">Othello</span> was, for all intents and purposes, removed from the white actor’s repertoire.
-                  If, as a director, you were to cast a white actor as <span class="othello-color">Othello</span> in a production today, you should be prepared for the firestorm you’re likely to set off. But on occasion, more creative minds have also found fresh and interesting ways to subvert this modern taboo. Jude Kelly’s 1997 production
-                  of the play was essentially a mirror negative of the usual productions: It starred Patrick Stewart <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>, while the rest of the cast was all-black, including
-                  Ron Canada <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>.</p>`);
+                  mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1980 to 2018</span></h2><p>By the mid-80s, the role of <span class="othello-color">Othello</span> was, for all intents and purposes, gone from the white actor’s repertoire.
+                  If, as a director, you were to cast a white actor as <span class="othello-color">Othello</span> in a production today, you should be prepared for the firestorm you’re likely to set off. But on occasion, more creative minds have also found fresh and interesting ways to subvert this modern taboo. Jude Kelly’s
+                  <a href='http://www.shakespearetheatre.org/events/othello-97-98/' target='_blank'>1997 production</a> of the play was essentially a photo negative of the usual productions: It starred Patrick Stewart <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>,
+                  while the rest of the cast was all-black, including Ron Canada <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>, the Moorish general's villainous ensign. In most productions, <span class="iago-color">Iago</span> and <span class="desdemona-color">Desdemona</span>,
+                  <span class="othello-color">Othello's</span> wife, almost always goes to white actors, in order to highlight the racial tensions central to the play.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
-                  console.log(document.querySelector('body').getBoundingClientRect());
                   mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
 
                   const annotationMeta = [
@@ -3178,18 +2978,18 @@ queue()
                           type: 'color',
                           actorName: 'Patrick Stewart',
                           character: 'othello',
-                          text: 'Patrick Stewart\'s turn as the Moor of Venice in the Shakespeare Theatre Company\'s 1997 production of Othello marks the rare return of a white actor playing the role in modern times',
+                          text: 'Patrick Stewart\'s turn as the Moor of Venice in the Shakespeare Theatre Company\'s 1997 production of Othello marked the rare return of a white actor playing the role in modern times',
                           points: [[72, 20]],
                           dx: 330,
                           dy: 30,
                           align: 'middle',
-                          radius: 6,
+                          radius: 9,
                       },
                       {
                           type: 'color',
                           actorName: 'Ron Canada',
                           character: 'iago',
-                          text: 'Ron Canada played Iago, opposite of Patrick Stewart\'s Othello, making him one of the few black actors who have played this role',
+                          text: 'Ron Canada played Iago opposite of Patrick Stewart\'s Othello, making him one of a handful of black actors who have played this role',
                           points: [[-43, 19]],
                           wrap: 137,
                           dx: -140,
@@ -3205,7 +3005,6 @@ queue()
                           const index = characterAges[`${annoMeta.character}Ages`].idx;
                           select(`.${annoMeta.character}-dots-group`).selectAll('circle').each(charActor => {
                               if (charActor.actor == annoMeta.actorName) {
-                                  console.log(index, charActor.actor, charActor.age, charActor.yCoord);
                                   const charAnnotation = {
                                       type: annotation.annotationCalloutCircle,
                                       note: {
@@ -3261,7 +3060,6 @@ queue()
               if (!directionForward) {
                   translateUp();
                   selectAll('.character-meta').each(function(char) {
-                      console.log(this.id);
                       if (this.id !== 'othellometa' && this.id !== 'iagometa') {
                           select(this).select('.character-meta-inner')
                             .attr('opacity', .1);
@@ -3364,7 +3162,6 @@ queue()
                           const index = characterAges[`${annoMeta.character}Ages`].idx;
                           select(`.${annoMeta.character}-dots-group`).selectAll('circle').each(charActor => {
                               if (charActor.actor == annoMeta.actorName) {
-                                  console.log(index, charActor.actor, charActor.age, charActor.yCoord);
                                   const charAnnotation = {
                                       type: annotation.annotationCalloutCircle,
                                       note: {
@@ -3429,6 +3226,8 @@ queue()
 
           }],
           [function(directionForward) {
+              select('.svg-main').style('opacity', 1);
+
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
               filterPoints([1990,2018])();
@@ -3467,8 +3266,6 @@ queue()
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
 
-                  mainContent.style('background', null);
-
                   mainContent.style('top', (topOfSVGContainer - height)/2);
                   mainContent.transition(1000).style('opacity', 1);
                   const annotationMeta = [
@@ -3501,7 +3298,6 @@ queue()
                           const index = characterAges[`${annoMeta.character}Ages`].idx;
                           select(`.${annoMeta.character}-dots-group`).selectAll('circle').each(charActor => {
                               if (charActor.actor == annoMeta.actorName) {
-                                  console.log(index, charActor.actor, charActor.age, charActor.yCoord);
                                   const charAnnotation = {
                                       type: annotation.annotationCalloutCircle,
                                       note: {
@@ -3529,7 +3325,6 @@ queue()
                           });
                       });
 
-                      console.log('annotations: ', newAnnotations);
                       makeAnnotations.annotations(newAnnotations);
 
                       select('.annotation-group')
@@ -3569,6 +3364,9 @@ queue()
               select('#tooltip')
                 .style('opacity', 0);
 
+              select('.svg-main').style('opacity', 0);
+
+              /**
               const mainContent = select('#main-content').html(null);
 
               mainContent.style('width', null);
@@ -3578,11 +3376,30 @@ queue()
                 .style('left', 0)
                 .style('right', 0)
                 .style('bottom', 0)
-                .style('background', 'rgba(40,40,40,.8)');
+                .style('background', 'null');
+              */
+
+              const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
+              const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
+              let mainContent = select('#main-content');
+              mainContent.style('position', 'absolute').style('left', left + 'px').style('width', right - left);
+
+              mainContent.style('background', null);
 
               mainContent.style('padding-left', null);
               mainContent.style('padding-bottom', null);
               mainContent.style('padding-right', null);
+
+
+              //BAND IS DYNAMIC, but HEIGHT OF EMBEDDED SVG is static
+              //mainContent.html(`<p>Let\'s explore the age distributions of actors playing various prominent roles from the 10 plays mentioned earlier. We can think of the historical range of ages of actors playing a certain role as <em>the window of opportunity</em> for any actor who wants to play that role. That is, if most <span class="hamlet-color">Hamlets</span> have been played by actors in their 30s, then an actor in his 30s has a much better chance of being cast in an upcoming production than an actor in his 50s. <b><em>At any given age, what roles are open to you as an actor?</em></b></p><p>We’ll first look at only <b>productions from 1980 onwards</b>&#8212we\'ll come back to the full dataset in a bit&#8212since more recent performances are more representative of the conditions and environment that an actor would face today.</p><p class="legend-prompt">How to read the chart:</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
+              mainContent.html(`<h2 class='story-h2'>Epilogue</h2>
+                                <p class='story'>Today, the <a href=’https://www.rada.ac.uk/acting/ba-hons-acting/’ target=’_blank’>3-year BA in Acting program</a> at The Royal Academy of Dramatic Arts (RADA) in London, the alma mater of Ralph Fiennes, Rosemary Harris, and Alan Rickman, among many other equally familiar names, admits exactly 28 students each year: 14 male, 14 female. And, at least according to my informal tally, the <a href=’https://ysdshowcase.com/the-class-of-2018/’ target=’_blank’>most recent graduating class of actors from the Yale School of Drama</a> is also a paragon of diversity in both gender and race. Yet, while the educational gatekeepers of a young actor’s career are moving to a more equitable equilibrium, the professional side of things remains far more complicated.</p>
+                                <p class='story'>On one hand, since the 1990s, we’ve seen the floodgates open for actors of color in the types of Shakespearean opportunities available. As an actor of color, you’re no longer confined to the single role of <span class='othello-color'>Othello</span>. As theatergoers, we’re willing to suspend our disbelief to watch a black <span class='ophelia-color'>Ophelia</span> with a Chinese brother. But this willingness of ours is also selectively contradictory. Whether consciously or unconsciously, we’ve somehow collectively decided that female roles like <span class='juliet-color'>Juliet</span> and <span class='ophelia-color'>Ophelia</span> are defined by youth and innocence, and must be played by young actresses. But as we've seen, audiences a century ago were perfectly accepting of middle-aged actresses in these parts.</p>
+                                <p class='story'>Perhaps these contradictions in our selective need for believability on stage is simply reflective of the ever-changing turbulence of larger societal forces outside of theatre, and maybe we should simply embrace it, and let it lead us to more surprising moments of creativity. For if a director can still find a thoughtful way to cast a white <span class='othello-color'>Othello</span> today, then maybe it’s not too late for you, the 60-year-old actress, to jump on stage and take back the role of the beautiful and clever <span class='portia-color'>Portia</span>.</p>
+                                <p class='story-legend-text legend-text'>Press the <span class='key-indicator'>&#x21e8;</span> key or the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar to start exploring the dataset in more detail! Hover over each dot ( <span class='legend-dot'></span> ) or symbol (\u2642/\u2640) to read more about the actor, and the associated production.</p>`)
+              const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+              mainContent.style('top', window.innerHeight/2 - height/2);
 
 
               if (!directionForward) {
@@ -3625,13 +3442,7 @@ queue()
 
           }],
           [function(directionForward) {
-              //const transitionSlide = transition().duration(2100).on('end', () => transitions([1900, 2019], true));
-              //select('.svg-main').transition(transitionSlide).attr('transform', `translate(0,0)`);
-              if (isSafari) {
-                  select('.svg-main').transition().duration(1500).style('transform', `translate(0,0)`);
-              } else {
-                  select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
-              }
+              select('.svg-main').style('opacity', 1);
 
               transitions([1900, 2019], true, false, true, true);
 
@@ -3725,25 +3536,7 @@ queue()
 
           }]
         ];
-        //select('body').on('dblclick', eventsQueue[2][0]);
-        //console.log(animateDots(30))
-        //let animate30 = animateDots(30);
-        //select('.transitions').on('click', transitions);
-        //select('.dots').on('click', function nextStep() {
-        //    //console.log(this);
-        //    select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
-        //    if (eventsQueue[state]) {
-        //        eventsQueue[state][0]();
-        //    }
-        //    if (state < eventsQueue.length - 1) {
-        //        state += 1;
-        //        select(this).on('click', nextStep);
-        //    } else {
-        //        select(this).on('click', () => {});
-        //        select(this).attr('disabled', true);
-        //    }
-        //    console.log(state);
-        //});
+
         function loadTitlesSlide () {
             animateStop = false;
             const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
@@ -3757,12 +3550,9 @@ queue()
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
-            //console.log(test);
             mainContent.style('top', window.innerHeight/2 - height/2);
             animateShakespeare(shakespeareOutline);
 
-            //console.log('max and min')
-            //console.log(max(shakespeareOutline, d => parseInt(d.y)), min(shakespeareOutline, d => parseInt(d.y)))
             function animateShakespeare(data) {
 
               let svg = select('.shakespeare-dots');
@@ -3838,7 +3628,6 @@ queue()
         document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
             if (!locked) {
-              console.log('keypressed: ' + e.code);
               if (e.code === 'ArrowRight' || e.code === 'Space') {
                 if (eventsQueue[state]) {
                   eventsQueue[state][0](true, state);
@@ -3853,10 +3642,12 @@ queue()
                   document.addEventListener('keydown', () => {});
                 }
                 console.log(state);
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
                 });
+                **/
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
                   eventsQueue[state - 2][0](false, state);
@@ -3867,11 +3658,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
+                **/
 
               }
           }
@@ -3905,10 +3697,12 @@ queue()
                   document.querySelector('body').addEventListener('mousedown', () => {});
                 }
                 console.log(state);
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
+                **/
               } else {
                 if (state > 1) {
                   eventsQueue[state - 2][0](false, state);
@@ -3919,55 +3713,21 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
+                **/
 
               }
           }
 
 
         });
-        //select(document).on('keypress', function nextStep() {
-        //    //console.log(this);
-        //    select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
-//
-        //    if (eventsQueue[state]) {
-        //        eventsQueue[state][0]();
-        //    }
-//
-        //    if (state < eventsQueue.length - 1) {
-        //        state += 1;
-        //        select(this).on('click', nextStep);
-        //    } else {
-        //        select(this).on('click', () => {});
-        //        select(this).attr('disabled', true);
-        //    }
-        //    console.log(state);
-        //});
 
 
-        //let t = timer(function nextStep(elapsed) {
-        //    console.log(elapsed);
-        //    if (elapsed > state * 20000) {
-        //      //select(this).node().innerHTML = eventsQueue.length - 1 == state ? select(this).node().innerHTML : eventsQueue[state][1];
-        //      if (eventsQueue[state]) {
-        //          eventsQueue[state][0]();
-        //      }
-        //      if (state < eventsQueue.length - 1) {
-        //          state += 1;
-        //          //select(this).on('click', nextStep);
-        //      } else {
-        //          //select(this).on('click', () => {});
-        //          //select(this).attr('disabled', true);
-        //          t.stop();
-        //      }
-        //      console.log(state);
-        //
-        //    }
-        //
-        //}, 20000);
+
 
 				//Rough draft
 				function filterPoints(dateRange) {
@@ -4007,63 +3767,10 @@ queue()
     								? 1
                                     : .05;
     						});
-    						//.attr('stroke', d => {
-    						//	if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
-    						//});
 
-						const othelloPOCDots = filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none' && dot.role == 'othello')._groups[0].length;
-						const othelloDots = filteredDots.filter(dot => dot.role == 'othello')._groups[0].length;
-
-						console.log(othelloPOCDots + ', ' + othelloDots);
-
-                        /**
-
-
-						filteredDots.filter(dot => {
-							let actor_gender = dot.actorGender;
-							if (characterAges[dot.role + 'Ages'].gender == 'male' && actor_gender == 'female') {
-								return true;
-							} else if (characterAges[dot.role + 'Ages'].gender == 'female' && actor_gender == 'male') {
-								return true;
-							} else {
-								return false;
-							}
-						})
-						.attr('r', '7px')
-						.attr('stroke', 'white')
-						.attr('stroke-width', '2px')
-						.attr('stroke-opacity', 1);
-                        **/
 					}
 
 				}
-
-
-
-        /**
-        select('.dots2').on('click', animateDots(24, 30));
-        select('.dots3').on('click', animateDots(31, 45, false));
-        select('.dots4').on('click', animateDots(46, 85, false));
-        **/
-        //select('svg').on('click', animateDots(31, 85));
-
-        //select('svg').on('click', function() {
-            //select('svg').transition().duration(1000).attr("transform", "translate(" + -100 + "," + -100 + ")")
-            //select('svg').transition().duration(2000).attr("transform", "scale(" + 1.3 + ")")
-        //});
-
-		//Find max freq of roles at each age
-		let allAgesFreqs = [];
-		for (let character in characterAges) {
-			//let ages = Object.keys(characterAges[character]);
-			for (let age in characterAges[character]) {
-                if (age != 'gender') {
-                    let freq = characterAges[character][age].length;
-    				allAgesFreqs.push(freq);
-                }
-
-			}
-		}
 
 
 
