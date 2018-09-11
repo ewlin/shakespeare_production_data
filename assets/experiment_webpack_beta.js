@@ -3529,7 +3529,7 @@ queue()
               <a href="http://d3-annotation.susielu.com/" target="_blank">d3-annotation</a>, <a href="https://github.com/alexhornbake" target="_blank">Alex Hornbake</a> (I owe you a beer at some point for your svg curly braces code), and Aliza Aufrichtig’s awesome tool
               <a href="https://spotify.github.io/coordinator/" target="_blank">coördinator</a>. Data for productions + metadata of actors (i.e., birthdays) can be found <a href='https://github.com/ewlin/shakespeare_production_data/tree/master/data' target='_blank'>here</a>.</p>
 
-              <div><iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fericwilliamlin.com%2Fshakespeare_production_data&layout=button_count&size=large&mobile_iframe=false&width=84&height=28&appId" width="84" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe></div>`);
+              <div><iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fericwilliamlin.com%2Fshakespeare_production_data&layout=button_count&size=large&mobile_iframe=false&width=84&height=28&appId" width="130" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe></div>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               mainContent.style('top', window.innerHeight/2 - height/2);
 
@@ -3642,12 +3642,12 @@ queue()
                   document.addEventListener('keydown', () => {});
                 }
                 console.log(state);
-
+                /*
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
                 });
-
+                */
 
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
@@ -3660,12 +3660,12 @@ queue()
                   updateProgressBar();
                 }
 
-
+                /*
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
-
+                */
 
 
 
@@ -3701,12 +3701,12 @@ queue()
                   document.querySelector('body').addEventListener('mousedown', () => {});
                 }
                 console.log(state);
-
+                /*
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
-
+                */
 
               } else {
                 if (state > 1) {
@@ -3718,12 +3718,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /*
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                
+                */
 
               }
           }
