@@ -639,7 +639,7 @@ queue()
         .attr('stroke', '#d4cdda')
         //.attr('stroke', '#7c8392')
         .attr('stroke-width', '6.5px')
-        .attr('opacity', .85);
+        .attr('opacity', .7);
 
 
                 let text = charMetaInner.append('g').classed('interquartiles-labels', true)
@@ -1267,7 +1267,7 @@ queue()
                 //.attr('stroke', '#42454c')
                 .attr('stroke', '#7c8392')
                 .attr('stroke-width', '6.5px')
-                .attr('opacity', .85);
+                .attr('opacity', .7);
 
             charMeta.append('path').datum(interquartiles[eachCharacter])
                 .attr('d', interquartileLine)
@@ -1734,6 +1734,8 @@ queue()
 
                 if (barOpacity) {
                     characterMeta.select('.thick-line-quartile').attr('opacity', .35);
+                } else {
+                    characterMeta.select('.thick-line-quartile').attr('opacity', .7);
                 }
 
                     characterMeta.select('.thick-line-quartile').datum(middleFiftyPercent).transition(transitionA)
@@ -1796,7 +1798,7 @@ queue()
                     //.attr('stroke', '#42454c')
                     .attr('stroke', '#7c8392')
                     .attr('stroke-width', '6.5px')
-                    .attr('opacity', .85);
+                    .attr('opacity', .7);
                 charMeta.append('path').datum(interquartiles[eachCharacter])
                     .attr('d', interquartileLine)
                     .attr('stroke', '#7c8392')
@@ -2119,7 +2121,7 @@ queue()
                                   <p class='quote'><em>And one man in his time plays many parts,</em></p>
                                   <p class='quote'><em>His acts being seven ages.</em></p>
                                   <p class='quote quote-author'><b>&mdash; William Shakespeare</b>, <em>As You Like It</em> (II.vii.139-143)</p></div>
-                                  <p class='story'>It's the beginning of a new academic year. You're an 18-year-old actor about to start school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Maggie Smith. You dream of reaching iconic status in pop culture-dom by landing roles in major film &amp; TV franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p>
+                                  <p class='story'>It's the beginning of a new academic year. You're an 18-year-old actor about to start school at a competitive drama program like Juilliard or RADA. Your idols are actors like Sir Ian McKellen, Oscar Isaac, and Dame Judi Dench. You dream of reaching iconic status in pop culture-dom by landing roles in major film &amp; TV franchises like <em>The Avengers</em> or <em>Game of Thrones</em>, while maintaining a parallel career in theatre.</p>
                                   <p class='story'>If you’re hoping to have a career in theatre, you’re going to have a hard time avoiding the outsized presence of the Bard himself. For the 2017-18 theatrical season, <em>American Theatre</em> <a href='https://www.americantheatre.org/2017/09/21/the-top-20-most-produced-playwrights-of-the-2017-18-season/' target='_blank'>calculated that out of 1,917 productions by member theaters of the Theatre Communications Group, 108 (a little under 6%) were works by Shakespeare</a>, making him the most performed playwright in the survey, with quadruple the number of productions as the playwright in second place.</p>
                                   <p class='story'>What does the future hold for you as an aspiring Shakespearean? When in your career should you try to aim for the spotlight of the leading lady (or leading man)? As it turns out, your fate largely depends on your gender, and if you're a young actress, you don't have much time to waste...</p>`);
                 //mainContent.html(`<p>Let’s get acquainted with how to navigate through this article. <span>CLICK</span> anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> or <span>SPACE</span> keys on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. You can also click on the right or left sides of the page to navigate. </p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
@@ -2276,7 +2278,7 @@ queue()
                 .attr('d', interquartileLine)
                 .attr('stroke', '#d4cdda')
                 .attr('stroke-width', '6.5px')
-                .attr('opacity', .85);
+                .attr('opacity', .7);
 
 
             const sampleAxis = embedSVG.append('g').attr('class', 'x sample-axis');
@@ -2694,9 +2696,9 @@ queue()
               const charAnnotation = [{
                   type: annotation.annotationCalloutCircle,
                   note: {
-                      label: `Richard Burbage, Shakespeare's business partner and a fellow actor, was 39 when he played
+                      label: `Richard Burbage, Shakespeare's business partner and a fellow actor, was just shy of 40 when he played
                       Lear in the first recorded performance of the play on December 26, 1606 at Whitehall with King James I in the audience.`,
-                      wrap: 175,
+                      wrap: 155,
                       align: 'right'
                   },
                   connector: {
@@ -2711,9 +2713,9 @@ queue()
                  x: scaleX(parseFloat(moment("1606-12-26T00:00:00").diff(moment("1567-01-06T00:00:00"), 'years', true))),
                  //x: scaleX(39.1),
                  y: male(8, .1),
-                 dx: -185,
+                 dx: -255,
                  dy: -60,
-                 subject: {radius: 13}
+                 subject: {radius: 11}
              }];
 
 
@@ -2784,9 +2786,9 @@ queue()
                   const charAnnotation = [{
                       type: annotation.annotationCalloutCircle,
                       note: {
-                          label: `Richard Burbage, Shakespeare's business partner and a fellow actor, was 39 when he played
+                          label: `Richard Burbage, Shakespeare's business partner and a fellow actor, was just shy of 40 when he played
                           Lear in the first recorded performance of the play on December 26, 1606 at Whitehall with King James I in the audience.`,
-                          wrap: 175,
+                          wrap: 155,
                           align: 'right'
                       },
                       connector: {
@@ -2800,9 +2802,9 @@ queue()
                      x: scaleX(parseFloat(moment("1606-12-26T00:00:00").diff(moment("1567-01-06T00:00:00"), 'years', true))),
                      //x: scaleX(39.1),
                      y: male(8, .1),
-                     dx: -185,
+                     dx: -255,
                      dy: -60,
-                     subject: {radius: 13}
+                     subject: {radius: 11}
                  }];
 
                  select('.svg-main').append('circle')
@@ -3076,21 +3078,42 @@ queue()
                   .call(makeAnnotations);
           }],
           [function() {
-              filterPoints([1900, 1945])();
+              filterPoints([1900, 1979])();
+
+              //reset annotations
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
+
+              select('.iago-dots-group').attr('opacity', .07);
+              select('#iagometa').select('.character-meta-inner').attr('opacity', .1);
+
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 1945</span></h2><p>CONTENT GOES HERE</p>`);
+              mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 1979</span></h2>
+              <p>From the turn of the 20th century to the end of WWII, <span class='othello-color'>Othellos</span> were almost entirely played by white actors in blackface on stage, and this continued well into the latter
+              half of the 20th century. Even as late as 1964, Laurence Olivier <img class='actor-face othello-color' src='assets/images/actor_faces/olivier-othello.png' /> would appear in heavy facial makeup as <span class='othello-color'>Othello</span>, in a National Theatre
+              production directed by John Dexter. (Opposite him as <span class="desdemona-color">Desdemona</span> was Dame Maggie Smith <img class='actor-face desdemona-color' src='assets/images/actor_faces/smith.png' />, most familiar to us all as Professor Minerva McGonagall.)
+              Despite this, more and more Black-British and African-American (and the occasional Asian and Latino) actors started to be cast as the Moor in the 60s and 70s, and by the early 80s, the practice of white actors playing <span class='othello-color'>Othello</span> would mostly
+              become a thing of the past.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               mainContent.transition(1000).style('opacity', 1);
 
-          }],
-          [function() {
-              filterPoints([1946, 1979])();
-              select('.iago-dots-group').attr('opacity', .07);
-              select('#iagometa').select('.character-meta-inner').attr('opacity', .1);
           }],
           [function(directionForward) {
               filterPoints([1980, 2018])();
@@ -3119,15 +3142,7 @@ queue()
               function translateUp() {
                   const transitionUp = transition().duration(1500).on('end', function () {
                       locked = false;
-                      mainContent.transition(1000).style('opacity', 1);
-                      mainContent.html(`<h2>Male roles age distributions in <span class='year-range-highlight'>productions between 1900-1979</span></h2><p>This more relaxed attitude towards verisimilitude in casting was also true with male roles, but in the opposite direction.
-                          If it surprises you to think a 45-year-old actress can be cast as <span class='juliet-color'>Juliet</span>, it might also shock you when looking at the age distributions of actors playing <span class="kingLear-color">King Lear</span> or <span class="prospero-color">Prospero</span> pre-1980.
-                          Actors in their 30s and 40s used to regularly perform these roles the modern theater-goer has been conditioned into thinking are the exclusive province of old men. In fact, the age distribution of <span class="kingLear-color">King Lear</span> during this period is barely differentiable from
-                          that of <span class="macbeth-color">Macbeth</span> or <span class="othello-color">Othello</span>.</p>`);
-                      const height = +document.querySelector('#main-content').getBoundingClientRect().height;
-                      const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
-                      console.log(document.querySelector('body').getBoundingClientRect());
-                      mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
+                      createContent();
 
                   }).on('start', function() {
                       locked = true;
@@ -3147,6 +3162,102 @@ queue()
                   //selectAll('.axis').transition().duration(2100).attr('transform', `translate(-${slideDistance},0)`);
               }
 
+              function createContent() {
+                  mainContent.transition(1000).style('opacity', 1);
+                  mainContent.html(`<h2><span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1980 to 2018</span></h2><p>By the mid-80s, the role of <span class="othello-color">Othello</span> was, for all intents and purposes, removed from the white actor’s repertoire.
+                  If, as a director, you were to cast a white actor as <span class="othello-color">Othello</span> in a production today, you should be prepared for the firestorm you’re likely to set off. But on occasion, more creative minds have also found fresh and interesting ways to subvert this modern taboo. Jude Kelly’s 1997 production
+                  of the play was essentially a mirror negative of the usual productions: It starred Patrick Stewart <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>, while the rest of the cast was all-black, including
+                  Ron Canada <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>.</p>`);
+                  const height = +document.querySelector('#main-content').getBoundingClientRect().height;
+                  const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
+                  console.log(document.querySelector('body').getBoundingClientRect());
+                  mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
+
+                  const annotationMeta = [
+                      {
+                          type: 'color',
+                          actorName: 'Patrick Stewart',
+                          character: 'othello',
+                          text: 'Patrick Stewart\'s turn as the Moor of Venice in the Shakespeare Theatre Company\'s 1997 production of Othello marks the rare return of a white actor playing the role in modern times',
+                          points: [[72, 20]],
+                          dx: 330,
+                          dy: 30,
+                          align: 'middle',
+                          radius: 6,
+                      },
+                      {
+                          type: 'color',
+                          actorName: 'Ron Canada',
+                          character: 'iago',
+                          text: 'Ron Canada played Iago, opposite of Patrick Stewart\'s Othello, making him one of the few black actors who have played this role',
+                          points: [[-43, 19]],
+                          wrap: 137,
+                          dx: -140,
+                          dy: 32,
+                      }
+                  ];
+
+                  createAnnotations(annotationMeta);
+
+                  function createAnnotations(annotationsArray) {
+                      const newAnnotations = [];
+                      annotationsArray.forEach(annoMeta => {
+                          const index = characterAges[`${annoMeta.character}Ages`].idx;
+                          select(`.${annoMeta.character}-dots-group`).selectAll('circle').each(charActor => {
+                              if (charActor.actor == annoMeta.actorName) {
+                                  console.log(index, charActor.actor, charActor.age, charActor.yCoord);
+                                  const charAnnotation = {
+                                      type: annotation.annotationCalloutCircle,
+                                      note: {
+                                          label: annoMeta.text,
+                                          wrap: annoMeta.wrap ? annoMeta.wrap : 125,
+                                          align: annoMeta['align'] ? annoMeta.align : 'right'
+                                      },
+                                      connector: {
+                                       end: 'arrow',
+                                       type: 'curve',
+                                        points: annoMeta.points ? annoMeta.points : null,
+
+                                       //points: [[-40, -20]]
+                                       //points: [[25, 25], [45, 22]]
+                                     },
+                                     x: scaleX(charActor.age),
+                                     y: male(index, charActor.yCoord),
+                                     dx: annoMeta.dx,
+                                     dy: annoMeta.dy,
+                                     subject: {radius: annoMeta.radius ? annoMeta.radius : 12}
+                                  }
+                                  newAnnotations.push(charAnnotation);
+                              }
+
+                          });
+                      });
+
+                      makeAnnotations.annotations(newAnnotations);
+
+                      select('.annotation-group')
+                        .call(makeAnnotations);
+                      selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+
+                        selectAll('.annotation-connector path.connector')
+                          .attr('stroke', '#b4b8c0')
+                          .attr('stroke-width', '2px')
+                          .attr('stroke-dasharray', '2 2');
+
+                        selectAll('.annotation-connector path.connector-end')
+                          .attr('fill', '#b4b8c0')
+                          .attr('stroke', 'white');
+
+                        const rect = selectAll('.annotation-note-bg');
+                        rect.attr('fill-opacity', 1)
+                            .attr('fill', '#1a1b1e')
+                        selectAll('.subject').attr('stroke-dasharray', '2 1').attr('stroke', 'white');
+
+                        selectAll('.note-line').remove();
+                    }
+
+              }
+
               if (!directionForward) {
                   translateUp();
                   selectAll('.character-meta').each(function(char) {
@@ -3164,6 +3275,8 @@ queue()
                   });
 
 
+              } else {
+                  createContent();
               }
           }],
           [function(directionForward) {
@@ -3174,6 +3287,22 @@ queue()
               selectAll('.role-dots-group').attr('opacity', 1);
               selectAll('.character-meta-inner').attr('opacity', 1);
 
+              //reset annotations
+              const blankAnnotations = [
+                  {
+                      type: annotation.annotationLabel,
+                      note: {
+                          label: ' ',
+                          title: ' ',
+                          wrap: 0
+                      },
+                  }
+              ];
+
+              makeAnnotations.annotations(blankAnnotations);
+
+              select('.annotation-group')
+                .call(makeAnnotations);
 
               function translateDown() {
                   const transitionUp = transition().duration(1500).on('end', function () {
@@ -3222,7 +3351,7 @@ queue()
                           text: 'Sabrina Le Beauf, several seasons into playing Sondra Huxtable on The Cosby Show, appeared on stage as Rosalind in a largely race-blind production of As You Like It in 1989',
                           points: [[-43, 19]],
                           wrap: 137,
-                          dx: -125,
+                          dx: -140,
                           dy: 0,
                       }
                   ];
@@ -3334,9 +3463,11 @@ queue()
 
               }
               function appendMainContent() {
-                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions since 1990</span></h2><p>In the last 30 years or so however, the landscape for actors of color playing Shakespearean roles has changed dramatically. We now see scores of black, Asian, and Latino/a actors cast in pretty much every major role, from <span class="hamlet-color">Hamlets</span> to <span class="cleopatra-color">Cleopatras</span>. In some of these productions, the director chose to use race in casting creatively, such as David Leveaux’s 2013 Broadway production of <em>Romeo and Juliet</em>, with Orlando Bloom <img class='actor-face romeo-color' src='assets/images/actor_faces/bloom.png' /> as <span class="romeo-color">Romeo</span> and Condola Rashad <img class='actor-face juliet-color' src='assets/images/actor_faces/rashad.png' /> as <span class="juliet-color">Juliet</span>. In this production, Leveaux adds additional tension to the play by pitting the white Montagues against the black Capulets. Ian Rickson’s 2011 <a href='https://www.youngvic.org/whats-on/hamlet' target='_blank'>Young Vic production of <em>Hamlet</em></a> took a color-blind approach, with the title character played by Michael Sheen, a white actor, and <span class='ophelia-color'>Ophelia</span> played by Vinette Robinson <img class='actor-face ophelia-color' src='assets/images/actor_faces/robinson.png' />, a black actress, while Ophelia’s brother <span class='generic-char-color'>Laertes</span> was played by a British-Chinese actor (Benedict Wong <img class='actor-face actor-face-generic' src='assets/images/actor_faces/wong.png' />, of <em>Marco Polo</em> and <em>Doctor Strange</em> fame).</p>`);
+                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions since 1990</span></h2><p>In the last 30 years or so however, the landscape for actors of color playing Shakespearean roles has changed dramatically. We now see scores of black, Asian, and Latino/a actors cast in pretty much every major role, from <span class="hamlet-color">Hamlets</span> to <span class="cleopatra-color">Cleopatras</span>. In some of these productions, race in casting becomes a dramatic device, such as in David Leveaux’s 2013 Broadway production of <em>Romeo and Juliet</em>, with Orlando Bloom <img class='actor-face romeo-color' src='assets/images/actor_faces/bloom.png' /> as <span class="romeo-color">Romeo</span> and Condola Rashad <img class='actor-face juliet-color' src='assets/images/actor_faces/rashad.png' /> as <span class="juliet-color">Juliet</span>. In this production, the white Montagues were pitted against the black Capulets. Ian Rickson’s 2011 <a href='https://www.youngvic.org/whats-on/hamlet' target='_blank'>Young Vic production of <em>Hamlet</em></a> took a color-blind approach, with the title character played by Michael Sheen, a white actor, and <span class='ophelia-color'>Ophelia</span> played by Vinette Robinson <img class='actor-face ophelia-color' src='assets/images/actor_faces/robinson.png' />, a black actress, while <span class='ophelia-color'>Ophelia’s</span> brother <span class='generic-char-color'>Laertes</span> was played by Chinese-British actor Benedict Wong <img class='actor-face actor-face-generic' src='assets/images/actor_faces/wong.png' />, of Netflix's <em>Marco Polo</em> and <em>Doctor Strange</em> fame.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
+
+                  mainContent.style('background', null);
 
                   mainContent.style('top', (topOfSVGContainer - height)/2);
                   mainContent.transition(1000).style('opacity', 1);
@@ -3356,7 +3487,7 @@ queue()
                           type: 'color',
                           actorName: 'Vinette Robinson',
                           character: 'ophelia',
-                          text: 'Vinette Robinson, probably best known to American audiences as Sally Donovan on Sherlock, played Ophelia opposite Michael Sheen in 2011',
+                          text: 'Vinette Robinson, probably best known to American audiences as Sally Donovan on BBC\'s Sherlock, played Ophelia opposite Michael Sheen in 2011',
                           points: [[-43, 19]],
                           wrap: 110,
                           dx: -105,
@@ -3438,8 +3569,21 @@ queue()
               select('#tooltip')
                 .style('opacity', 0);
 
-              select('#main-content')
-                .html(null);
+              const mainContent = select('#main-content').html(null);
+
+              mainContent.style('width', null);
+
+              mainContent
+                .style('top', 0)
+                .style('left', 0)
+                .style('right', 0)
+                .style('bottom', 0)
+                .style('background', 'rgba(40,40,40,.8)');
+
+              mainContent.style('padding-left', null);
+              mainContent.style('padding-bottom', null);
+              mainContent.style('padding-right', null);
+
 
               if (!directionForward) {
                   transitions([1900,2018], false, true, true, false);
@@ -3468,6 +3612,7 @@ queue()
                   select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
               }
 
+              //Remove voronoi
               select('.voronoi-overlay').remove();
               select('.svg-main').classed('mouse-disabled', true);
 
@@ -3514,7 +3659,11 @@ queue()
               const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(66)) + 30;
               const top = +document.querySelector('.svg-controls').getBoundingClientRect().bottom;
 
-              mainContent.style('width', '362px').style('left', left).style('top', top);//.style('right', 40);
+              mainContent.style('background', 'rgba(40,40,40,.5)');
+              mainContent.style('width', '362px').style('left', left).style('top', top).style('bottom', 'auto');//.style('right', 40);
+              mainContent.style('padding-left', '13px');
+              mainContent.style('padding-bottom', '20px');
+              mainContent.style('padding-right', '13px');
 
               select('.svg-main').style('opacity', 1);
 
@@ -3539,6 +3688,11 @@ queue()
               const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
               let mainContent = select('#main-content');
               mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
+              mainContent.style('background', null);
+
+              mainContent.style('padding-left', null);
+              mainContent.style('padding-bottom', null);
+              mainContent.style('padding-right', null);
 
               mainContent.html(`<h2 class='methodology'>Notes, Sources, & Methodology</h2>
 

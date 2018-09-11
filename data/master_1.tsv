@@ -73,7 +73,7 @@ Marie Carroll	no birthday on article	unknown	none	FALSE			flagged		none
 Matthew Walker	no birthday on article	unknown	none	FALSE			flagged		none
 Richard Davy	no birthday on article	male	none	FALSE			flagged		none
 Eileen Kennally	not a date	unknown	none	FALSE		Wikipedia	flagged		none
-Dharmesh Patel	1980-08-01T00:00:00	male	Asian	TRUE	https://www.theguardian.com/stage/2010/feb/05/shakespeare-school-theatre-hamlet	The Guardian. Production preview. 	TRUE		none
+Dharmesh Patel	1980-08-01T00:00:00	male	Asian	TRUE	https://www.theguardian.com/stage/2010/feb/05/shakespeare-school-theatre-hamlet	The Guardian. Production preview.	TRUE		none
 Ben Kingsley	1943-12-31T00:00:00	male	Asian	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/90/Sir_Ben_Kingsley_2012.jpg/220px-Sir_Ben_Kingsley_2012.jpg	Indian,South Asian,Gujarati,Kenyan
 Anthony Lee	1961-07-17T00:00:00	male	Black	FALSE	https://en.wikipedia.org/wiki/Anthony_Lee_(actor)	Wikipedia	TRUE		none
 Moses Gunn	1919-10-02T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/d/db/Moses_Gunn_1974.jpg/220px-Moses_Gunn_1974.jpg	none
@@ -101,14 +101,14 @@ David Harewood	1965-12-08T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikim
 Jack Carter	1967-11-09T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/9/94/Jack-Carter.jpg/220px-Jack-Carter.jpg	none
 Adrian Lester	1968-08-14T00:00:00	male	Black	FALSE		Wikipedia	TRUE		Jamaican
 Nina Sosanya	1969-06-06T00:00:00	female	Black	FALSE		Wikipedia	TRUE		Nigerian,Yoruba
-Victor Williams	1970-09-19T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/48/Victor_Williams_actor.jpg/220px-Victor_Williams_actor.jpg	none
+Victor Williams	1970-09-19T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/7/79/Hometown_Heroes_2015_%2816395443631%29.jpg	none
 Shaun Parkes	1973-02-09T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Shaun-Parkes-20081003_09378.jpg/200px-Shaun-Parkes-20081003_09378.jpg	Barbadian
 Kananu Kirimi	1977-07-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		Kenyan,Scottish
 Nonso Anozie	1979-05-28T00:00:00	male	Black	FALSE	https://www.imdb.com/name/nm1996829/	Wikipedia/IMDb	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Nonso_Anozie_at_the_Pan_Premiere_%28cropped%29.jpg/220px-Nonso_Anozie_at_the_Pan_Premiere_%28cropped%29.jpg	Nigerian
 Ty Jones	1970-01-01T00:00:00	male	Black	TRUE		http://www1.udel.edu/udaily/2016/mar/PaulRJonesLecture031116.html	TRUE		none
 Lorraine Burroughs	1981-07-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		none
 Vinette Robinson	1985-07-01T00:00:00	female	Black	TRUE		Wikipedia	TRUE		West Indian
-Condola Rashad	1986-12-11T00:00:00	female	Black	FALSE		Wikipedia	TRUE		none
+Condola Rashad	1986-12-11T00:00:00	female	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/b/b3/Condola_Rash%C4%81d%2C_The_Women_of_Billions_Season_2.jpg	none
 Paapa Essiedu	1990-07-01T00:00:00	male	Black	TRUE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Hayfestival-2016-brotton-essiedu-peake.jpg/220px-Hayfestival-2016-brotton-essiedu-peake.jpg	Ghanaian
 Ray Fearon	1973-08-05T00:00:00	male	Black	FALSE		Google	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Kathrine_Windfeld_och_Ray_Fearon.JPG/220px-Kathrine_Windfeld_och_Ray_Fearon.JPG	none
 Adetomiwa Edun	1984-03-04T00:00:00	male	Black	FALSE		Wikipedia/Google	TRUE		Yoruba,Ghanaian,Ghanaian,English
@@ -138,7 +138,7 @@ Raul Julia	1940-03-09T00:00:00	male	Latino	FALSE		Wikipedia	TRUE	upload.wikimedi
 Martin Sheen	1940-08-03T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sheen%2C_Martin_%282008%29.jpg/220px-Sheen%2C_Martin_%282008%29.jpg	Galician,Irish,Spanish
 Oscar Isaac	1979-03-09T00:00:00	male	Latino	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Oscar_Isaac_by_Gage_Skidmore.jpg/220px-Oscar_Isaac_by_Gage_Skidmore.jpg	Cuban,French,Guatemalan,Cuban,French
 Mary Hall	1876-01-01T00:00:00	female	none	TRUE	https://www.imdb.com/name/nm0355883/	IMDb	TRUE		none
-Frank Cellier	1884-02-23T00:00:00	male	none	FALSE	https://en.wikipedia.org/wiki/Frank_Cellier_(actor)	Wikipedia	TRUE
+Frank Cellier	1884-02-23T00:00:00	male	none	FALSE	https://en.wikipedia.org/wiki/Frank_Cellier_(actor)	Wikipedia	TRUE		
 Ian Maclaren	1875-05-01T00:00:00	male	none	FALSE	https://en.wikipedia.org/wiki/Ian_Maclaren_(actor)	Wikipedia	TRUE		none
 Anna Burden	1910-05-13T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0120916/bio?ref_=nm_ov_bio_sm	IMDb	TRUE		none
 Margaret Hughes	1719-10-01T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Lely_margret_hughes.jpg/220px-Lely_margret_hughes.jpg	none
@@ -281,7 +281,7 @@ Lydia Sherwood	1906-05-05T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Joyce Bland	1906-05-10T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/thumb/5/59/Joyce_Bland.jpg/220px-Joyce_Bland.jpg	none
 Richard Whorf	1906-06-04T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Katharine Hepburn	1907-05-12T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/08/Katharine_Hepburn_promo_pic.jpg/220px-Katharine_Hepburn_promo_pic.jpg	none
-Laurence Olivier	1907-05-22T00:00:00	male	none	FALSE		Wikipedia	TRUE		English,Huguenot
+Laurence Olivier	1907-05-22T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/1/1d/Lord_Olivier_6_Allan_Warren.jpg	English,Huguenot
 Peggy Ashcroft	1907-12-22T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Michael Scudamore Redgrave	1908-03-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Sir_Michael_Redgrave_portrait.jpg/220px-Sir_Michael_Redgrave_portrait.jpg	English
 Michael Redgrave	1908-03-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Sir_Michael_Redgrave_portrait.jpg/220px-Sir_Michael_Redgrave_portrait.jpg	English
@@ -424,7 +424,7 @@ Ewan Hooper	1935-10-23T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Barbara Leigh Hunt	1935-12-14T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Philip Voss	1936-01-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Nyree Dawn Porter	1936-01-22T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Glenda Jackson	1936-05-09T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
+Glenda Jackson	1936-05-09T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/2/2c/Glenda_Jackson.JPG	none
 Albert Finney	1936-05-09T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Albert_Finney_1966.jpg/220px-Albert_Finney_1966.jpg	none
 Anthony Zerbe	1936-05-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/6/60/Anthony-zerbe-trailer.jpg/220px-Anthony-zerbe-trailer.jpg	none
 John Stride	1936-07-11T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
@@ -564,7 +564,7 @@ Michelle Newell	1951-06-18T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Geoffrey Rush	1951-07-06T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Geoffrey_Rush_Berlinale_2017.jpg/220px-Geoffrey_Rush_Berlinale_2017.jpg	English,German,Irish,Scottish
 Jack Klaff	1951-08-06T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Suzanne Bertish	1951-08-07T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
-Martin Freeman	1971-09-08T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/4/4e/Martin_Freeman_in_2018_%281%29.jpg
+Martin Freeman	1971-09-08T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/4/4e/Martin_Freeman_in_2018_%281%29.jpg	
 Carl Lumbly	1951-08-14T00:00:00	male	Black	FALSE		Wikipedia	TRUE		Jamaican
 Harry Groener	1951-09-10T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Harry_Groener.jpg/220px-Harry_Groener.jpg	none
 Harry Hamlin	1951-10-30T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Harry_Hamlin.jpg/220px-Harry_Hamlin.jpg	Scottish,English
@@ -855,13 +855,13 @@ Simon Scardifield	1970-01-01T00:00:00	male	none	TRUE	https://www.linkedin.com/in
 Sally Dexter	1960-04-15T00:00:00	female	none	FALSE		Google	TRUE		none
 Susan Coyne	not a date	female	none	FALSE		Wikipedia	TRUE		none
 Alan Mahon	1993-04-01T00:00:00	male	none	TRUE		https://www.thereviewshub.com/interview-alan-mahon-reflects-on-outrageous-fortune/	TRUE		none
-Ron Cephas Jones	1957-01-08T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/8/84/Ron_Cephas_Jones_3.jpg
-André Holland	1979-12-28T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/f/fe/Andre_Holland_%2832992815392%29.jpg
-Joshua Spafford	1972-05-18T00:00:00	male	Asian	FALSE	https://www.imdb.com/name/nm0816592/	IMDb	TRUE
-Joel de la Fuente	1969-04-21T00:00:00	male	Asian	FALSE		Wikipedia	TRUE
-Tina Horii	1968-07-01T00:00:00	female	Asian	TRUE		Wikipedia	TRUE
-Will Lyman	1948-05-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	www.bu.edu/today/files/2015/07/h_butoday_CSCWillLymanasKingLear2015.jpg
-James Waterston	1969-01-17T00:00:00	male	none	FALSE		Wikipedia	TRUE	m.media-amazon.com/images/M/MV5BNDdjMzQ4OWEtMmY4ZS00ZWIyLWI1OWUtZWU2NzYzNWFiNTI4XkEyXkFqcGdeQXVyMjQwMDg0Ng@@._V1_.jpg
-John Carradine	1906-02-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/c/c2/John_Carradine_-_The_Green_Hornet%2C_Episode_23_%28Alias_The_Scarf%29_-_1967.jpg
-Sonia Sorel	1921-05-18T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0814810/	IMDb	TRUE
-Alfred Allegro	1914-11-13T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0020200/	IMDb	TRUE
+Ron Cephas Jones	1957-01-08T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/8/84/Ron_Cephas_Jones_3.jpg	
+André Holland	1979-12-28T00:00:00	male	Black	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/f/fe/Andre_Holland_%2832992815392%29.jpg	
+Joshua Spafford	1972-05-18T00:00:00	male	Asian	FALSE	https://www.imdb.com/name/nm0816592/	IMDb	TRUE		
+Joel de la Fuente	1969-04-21T00:00:00	male	Asian	FALSE		Wikipedia	TRUE		
+Tina Horii	1968-07-01T00:00:00	female	Asian	TRUE		Wikipedia	TRUE		
+Will Lyman	1948-05-20T00:00:00	male	none	FALSE		Wikipedia	TRUE	www.bu.edu/today/files/2015/07/h_butoday_CSCWillLymanasKingLear2015.jpg	
+James Waterston	1969-01-17T00:00:00	male	none	FALSE		Wikipedia	TRUE	m.media-amazon.com/images/M/MV5BNDdjMzQ4OWEtMmY4ZS00ZWIyLWI1OWUtZWU2NzYzNWFiNTI4XkEyXkFqcGdeQXVyMjQwMDg0Ng@@._V1_.jpg	
+John Carradine	1906-02-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/c/c2/John_Carradine_-_The_Green_Hornet%2C_Episode_23_%28Alias_The_Scarf%29_-_1967.jpg	
+Sonia Sorel	1921-05-18T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0814810/	IMDb	TRUE		
+Alfred Allegro	1914-11-13T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0020200/	IMDb	TRUE		
