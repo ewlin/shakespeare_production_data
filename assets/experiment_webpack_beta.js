@@ -2968,7 +2968,7 @@ queue()
                   If, as a director, you were to cast a white actor as <span class="othello-color">Othello</span> in a production today, you should be prepared for the firestorm you’re likely to set off. But on occasion, more creative minds have also found fresh and interesting ways to subvert this modern taboo. Jude Kelly’s
                   <a href='http://www.shakespearetheatre.org/events/othello-97-98/' target='_blank'>1997 production</a> of the play was essentially a photo negative of the usual productions: It starred Patrick Stewart <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>,
                   while the rest of the cast was all-black, including Ron Canada <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>, the Moorish general's villainous ensign. In most productions, <span class="iago-color">Iago</span> and <span class="desdemona-color">Desdemona</span>,
-                  <span class="othello-color">Othello's</span> wife, almost always goes to white actors, in order to highlight the racial tensions central to the play.</p>`);
+                  <span class="othello-color">Othello's</span> wife, almost always go to white actors, in order to highlight the racial tensions central to the play.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
                   mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
@@ -3648,6 +3648,7 @@ queue()
                     'event_label': `Moved forward to Slide ${state}`,
                 });
 
+
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
                   eventsQueue[state - 2][0](false, state);
@@ -3663,6 +3664,7 @@ queue()
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
+
 
 
               }
@@ -3703,6 +3705,7 @@ queue()
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
 
+
               } else {
                 if (state > 1) {
                   eventsQueue[state - 2][0](false, state);
@@ -3718,7 +3721,7 @@ queue()
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                
+
 
               }
           }
