@@ -3642,12 +3642,12 @@ queue()
                   document.addEventListener('keydown', () => {});
                 }
                 console.log(state);
-                /**
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
                 });
-                **/
+
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
                   eventsQueue[state - 2][0](false, state);
@@ -3658,12 +3658,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-                /**
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
-                **/
+
 
               }
           }
@@ -3697,12 +3697,12 @@ queue()
                   document.querySelector('body').addEventListener('mousedown', () => {});
                 }
                 console.log(state);
-                /**
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
-                **/
+
               } else {
                 if (state > 1) {
                   eventsQueue[state - 2][0](false, state);
@@ -3713,12 +3713,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-                /**
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                **/
+                
 
               }
           }
