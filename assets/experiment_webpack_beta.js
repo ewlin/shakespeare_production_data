@@ -2723,7 +2723,7 @@ queue()
                                   type: 'genderBend',
                                   actorName: 'Glenda Jackson',
                                   character: 'kingLear',
-                                  text: 'After stepping down as a Labour Party MP, Glenda Jackson returned to the stage at the Old Vic as King Lear in 2016 at the age of 80',
+                                  text: 'After a 24-year absence from stage & screen, and a long career in the UK Parliament, Glenda Jackson returned to the stage at the Old Vic as King Lear in 2016 at the age of 80',
                                   points: [[-43, -18]],
                                   dx: -125,
                                   dy: -95,
@@ -3660,10 +3660,12 @@ queue()
                   updateProgressBar();
                 }
 
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
+
 
 
 
@@ -3721,7 +3723,7 @@ queue()
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-
+                
 
               }
           }
