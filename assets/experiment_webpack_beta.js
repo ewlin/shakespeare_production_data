@@ -2682,7 +2682,7 @@ queue()
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              mainContent.html(`<h2>Gender-bending comes back with full force in the new millenium</h2><p>If you’re an actress worried about the lack of stage opportunities after a certain age, don’t despair.
+              mainContent.html(`<h2>Gender-bending comes back with full force in the new millenium <span class='year-range-highlight'>productions since 1980</span></h2><p>If you’re an actress worried about the lack of stage opportunities after a certain age, don’t despair.
                   A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent older actresses like Martha Henry <img class='actor-face prospero-color' src='assets/images/actor_faces/henry.png' /> and Glenda Jackson <img class='actor-face kingLear-color' src='assets/images/actor_faces/jackson.png' /> have
                   started tackling traditionally older male roles like <span class="kingLear-color">Lear</span> and <span class="prospero-color">Prospero</span>, potentially opening an alternative route for women later in their acting careers.
                   Though crossdressing is nothing new for Shakespearean productions—back when the plays were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>,
@@ -2781,6 +2781,16 @@ queue()
                                   points: [[-43, -18]],
                                   dx: -125,
                                   dy: -95,
+                              },
+                              {
+                                  type: 'genderBend',
+                                  actorName: 'Sarah Harlett',
+                                  character: 'richardIii',
+                                  text: 'Sarah Harlett plays the villainous title character in a current, all-female (opens September 2018) Seattle Shakespeare Company production of Richard III',
+                                  points: [[-110, 27]],
+                                  wrap: 140,
+                                  dx: -245,
+                                  dy: 0,
                               }
                           ];
 
