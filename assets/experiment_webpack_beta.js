@@ -29,6 +29,22 @@ const throttle = require('lodash.throttle');
 //Code snippet to select for the ticks in the axis to fix certain criteria since the axis isn't bound to data
 //Array.from(document.querySelectorAll('.tick')).filter(group => parseInt(group.childNodes[1].innerHTML) >= 30)
 
+function isMobile() {
+  return {
+    android: () => navigator.userAgent.match(/Android/i),
+    blackberry: () => navigator.userAgent.match(/BlackBerry/i),
+    ios: () => navigator.userAgent.match(/iPhone|iPad|iPod/i),
+    opera: () => navigator.userAgent.match(/Opera Mini/i),
+    windows: () => navigator.userAgent.match(/IEMobile/i),
+    any: () => (
+      isMobile().android() ||
+      isMobile().blackberry() ||
+      isMobile().ios() ||
+      isMobile().opera() ||
+      isMobile().windows()
+    ),
+  }
+}
 
 const isSafari = navigator.userAgent.match('Safari') && !navigator.userAgent.match('Chrome');
 const svg = select('.svg-main');
@@ -1399,7 +1415,7 @@ queue()
                 if (callBack) {
                     callBack();
                 }
-                if (makeVoronoi) {
+                if (makeVoronoi && !document.querySelector('.voronoi-overlay')) {
 
                     document.querySelector('svg.svg-main').classList.remove('mouse-disabled');
 
@@ -3364,6 +3380,16 @@ queue()
               select('#tooltip')
                 .style('opacity', 0);
 
+                //Remove voronoi
+                select('.voronoi-overlay').remove();
+                select('.svg-main').classed('mouse-disabled', true);
+
+                //disable brush
+                brushGroup.call(brush.move, null);
+                select('.svg-controls').attr('opacity', 0);
+                select('.overlay').style('pointer-events', 'none');
+                select('.brush').style('pointer-events', 'none');
+
               select('.svg-main').style('opacity', 0);
 
               /**
@@ -3429,15 +3455,6 @@ queue()
                   select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
               }
 
-              //Remove voronoi
-              select('.voronoi-overlay').remove();
-              select('.svg-main').classed('mouse-disabled', true);
-
-              //disable brush
-              brushGroup.call(brush.move, null);
-              select('.svg-controls').attr('opacity', 0);
-              select('.overlay').style('pointer-events', 'none');
-              select('.brush').style('pointer-events', 'none');
 
 
           }],
@@ -3538,6 +3555,32 @@ queue()
         ];
 
         function loadTitlesSlide () {
+            if (isMobile().any()) {
+                let mainContent = select('#main-content');
+                mainContent.style('position', 'fixed')
+                    .style('top', 0)
+                    .style('left', 0)
+                    .style('right', 0)
+                    .style('bottom', 0)
+
+                    mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${window.innerWidth} height=${window.innerHeight}></svg>
+                    <header class='titles-card'>
+                        <a class="logo" href="/">
+                            <img style="width: 30px;" class='logo' src='assets/images/new-graph.png' /><span style="font-size: 18px;" class='logo'>I'M YOUR DATA HOMER</span>
+                        </a>
+                        <div class='titles'>
+                            <h1 style="font-size: 40px; line-height: 1.2" class="title">Casting Shakespeare</h1>
+                            <p style="width: 100%;" class='subtitles'><em>How age, gender, and race affect casting. A visual deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p>
+                            <p style="font-size: 20px; line-height: 1.2" class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p>
+                            <p class="pub-date">September 2018</p>
+                        </div>
+                    </header>
+                    <div class='instructions'><p>Mobile-friendly version coming soon.<br> Please enjoy on desktop!</p></div>`);
+
+                select('.titles-card').style('position', 'absolute').style('top', 0).style('left', '25px').style('right', '25px');
+
+                return;
+            }
             animateStop = false;
             const left = +document.querySelector('.svg-main').getBoundingClientRect().left;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right;
@@ -3627,6 +3670,7 @@ queue()
         }
         document.addEventListener('keydown', function nextStep (e) {
           //e.preventDefault();
+            if (isMobile().any()) return;
             if (!locked) {
               if (e.code === 'ArrowRight' || e.code === 'Space') {
                 if (eventsQueue[state]) {
@@ -3643,11 +3687,12 @@ queue()
                 }
                 console.log(state);
 
+                /*
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
                 });
-
+                */
 
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
@@ -3660,12 +3705,12 @@ queue()
                   updateProgressBar();
                 }
 
-
+                /*
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
-
+                */
 
 
 
@@ -3675,6 +3720,7 @@ queue()
         });
 
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
+
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
               return;
           } else if (e.target.classList.contains('cta')) {
@@ -3683,6 +3729,9 @@ queue()
 
               return;
           }
+
+          if (isMobile().any()) return;
+
           if (!locked) {
               const windowWidth = window.innerWidth;
 
@@ -3702,11 +3751,12 @@ queue()
                 }
                 console.log(state);
 
+                /*
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
-
+                */
 
               } else {
                 if (state > 1) {
@@ -3718,12 +3768,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /*
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                
+                */
 
               }
           }
