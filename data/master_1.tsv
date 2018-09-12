@@ -26,18 +26,18 @@ Tom Peters	1942-11-07T00:00:00	unknown	none	FALSE		Wikipedia	flagged	upload.wiki
 Eleanor Montgomery	1946-11-13T00:00:00	female	none	FALSE		Wikipedia	flagged		none
 Philip Lawrence	1947-08-21T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 John Doolittle	1950-10-30T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
-Brian Ferguson	1951-01-01T00:00:00	unknown	none	TRUE		Wikipedia	flagged		none
-Jonjo O'Neill	1952-04-13T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
+Brian Ferguson	1980-07-01T00:00:00	male	none	TRUE	https://www.imdb.com/name/nm1635815/	IMDb	TRUE		none
+Jonjo O'Neill	1978-07-11T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Martin Gibbons	1953-03-01T00:00:00	unknown	none	FALSE		Wikipedia	flagged		none
 Art Burns	1954-07-19T00:00:00	male	none	FALSE		Wikipedia	flagged		none
-Pat Galloway	1957-01-01T00:00:00	unknown	none	TRUE		Wikipedia	flagged		none
-Lewis Gordon	1962-01-01T00:00:00	unknown	none	TRUE		Wikipedia	flagged		none
+Pat Galloway	1933-05-13T00:00:00	female	none	FALSE	https://www.imdb.com/name/nm0303201/	IMDb	TRUE		none
+Lewis Gordon	1935-08-07T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0330395/	IMDb	TRUE		none
 Helen Taylor	1964-04-28T00:00:00	unknown	none	FALSE		Wikipedia	flagged		Austrian,Danish,German,Greek,Russian
-Nick Monu	1965-03-25T00:00:00	unknown	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/0/04/NickSerious.jpg	none
+Nick Monu	1965-03-25T00:00:00	unknown	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/0/04/NickSerious.jpg	none
 Paul Rudd	1969-04-06T00:00:00	male	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Paul_Rudd_%28cropped%29.jpg/220px-Paul_Rudd_%28cropped%29.jpg	Polish-Jewish,Russian-Jewish
 Arthur Phillips	1969-04-23T00:00:00	male	none	FALSE		Wikipedia	flagged		none
 Timothy Walker	1972-11-04T00:00:00	male	none	FALSE		Wikipedia	flagged		none
-Daniel Briere	1977-10-06T00:00:00	unknown	none	FALSE		Wikipedia	flagged		French
+Daniel Briere	1984-12-01T00:00:00	male	none	TRUE	https://nationalpost.com/entertainment/theatre/meet-romeo-qa-with-the-stratford-festivals-daniel-briere	The National Post. Actor profile/feature.	TRUE		French
 Felicity Jones	1983-10-17T00:00:00	female	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Felicity_Jones_December_2016.jpg/220px-Felicity_Jones_December_2016.jpg	Italian,Italian,Tuscan
 Matthew Lewis	1989-06-27T00:00:00	male	none	FALSE		Wikipedia	flagged	upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Matthew_Lewis_in_June_2011.jpg/220px-Matthew_Lewis_in_June_2011.jpg	none
 Kate Forbes	1990-04-06T00:00:00	female	none	FALSE		Wikipedia	flagged		none
@@ -52,19 +52,19 @@ Ann Noble	no birthday on article	unknown	none	FALSE			flagged		none
 Derbhle Crotty	1968-07-01T00:00:00	female	none	TRUE		Wikipedia			none
 George Hayes	no birthday on article	unknown	none	FALSE			flagged		none
 Lucy Peacock	no birthday on article	unknown	none	FALSE			flagged		none
-John Wood	no birthday on article	unknown	none	FALSE			flagged		none
+John Wood	1930-07-05T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/en/5/58/John_Wood_%28actor%29.jpg	none
 Chris Donnelly	no birthday on article	unknown	none	FALSE			flagged		none
 Ninja	no birthday on article	unknown	none	FALSE			flagged		none
-Liam Brennan	no birthday on article	unknown	none	FALSE			flagged		none
-John Byron	no birthday on article	unknown	none	FALSE			flagged		none
-Robert Harris	no birthday on article	unknown	none	FALSE			flagged		none
+Liam Brennan	1964-01-05T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0107343/	IMDb	TRUE		none
+John Byron	1912-08-03T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0126400/	IMDb	TRUE		none
+Robert Harris	1900-03-28T00:00:00	male	none	FALSE	https://www.imdb.com/name/nm0365248/	IMDb	TRUE		none
 Elizabeth Chadwick	no birthday on article	unknown	none	FALSE			flagged		none
 Eleanor Robson	1879-12-13T00:00:00	female	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/b/be/Eleanor_Robson_Belmont_in_1916.jpg	none
 Sandra Macdonald	no birthday on article	unknown	none	FALSE			flagged		none
-Duncan Bell	no birthday on article	unknown	none	FALSE			flagged		none
+Duncan Bell	1955-01-16T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
 Andrew Vincent	no birthday on article	unknown	none	FALSE			flagged		none
 Robert Laughlin	no birthday on article	unknown	none	FALSE			flagged	upload.wikimedia.org/wikipedia/commons/f/f0/Robert_Laughlin%2C_Stanford_University.jpg	none
-James K. Hackett	no birthday on article	unknown	none	FALSE			flagged		none
+James K. Hackett	1869-09-06T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/1/12/James_Keteltas_Hackett.jpg	none
 Patrice Johnson	no birthday on article	unknown	none	FALSE			flagged		none
 Claire Stewart	no birthday on article	unknown	none	FALSE			flagged		none
 Louise Ironside	no birthday on article	unknown	none	FALSE			flagged		none
