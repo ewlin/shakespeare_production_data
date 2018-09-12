@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'production', 
   entry: {
     app: './assets/experiment_webpack.js',
     app_beta: './assets/experiment_webpack_beta.js',
