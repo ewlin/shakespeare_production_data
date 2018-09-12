@@ -2369,10 +2369,8 @@ queue()
                 transitions([1980, 2019], false, true);
                 mainContent.style('opacity', 0);
 
-                //mainContent.style('opacity', 0);
                 mainContent.style('width', 1230);
                 mainContent.style('left', (window.innerWidth - 1230)/2 + 20);
-                //mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
 
                 mainContent.html(`<h2>Female roles age distributions in <span class='year-range-highlight'>productions since 1980</span></h2><p>In recent decades, as an actress, you've had a rather narrow window (around two decades or so starting in your late teens) to play some of the most substantive Shakespearean female roles.
                 <span class='ladyMacbeth-color'>Lady Macbeth</span> and <span class='cleopatra-color'>Cleopatra</span> aside, if you’re an actress who wants a starring turn in Shakespeare,
