@@ -1,32 +1,37 @@
-# Shakespeare Productions Dataset (Todos updated on: 6/21/18)
+# Shakespeare Productions Dataset (Todos updated on: 9/12/18)
 
-# Latest UI/Article To-dos: 
+# Latest UI/Article To-dos:
+
+(Biggest todos...)
+* Tooltip quadrant code needs to have a second look
+* Resize design
+
 
 * *Use male/female unicode symbols for cross-gender casting (added 5/24/18 1:42pm)*
 
 
 * Franchise/Actor Career/Shakespeare chart (Have data for Marvel + Star Wars prelim; need to add Marvel TV shows)
-* Prose for Introduction + Directions for Navigating Piece
-* Design + Add Headings to each panel indicate the focus (e.g., Age range in question, and Sample Time Range)
-* Backwards in article code (started; mostly done 6/21)
+* Prose for Introduction + Directions for Navigating Piece (DONE)
+* Design + Add Headings to each panel indicate the focus (e.g., Age range in question, and Sample Time Range) (DONE)
+* Backwards in article code (started; mostly done 6/21), DONE
 * Need to add initial labels dta rebind with transitions() function
 
-* Brush/Slider update/redesign
-* Second legend including minority and cross-gender actor indicators 
-* Legends should be able to be opened and closed as a modal on all panels with the chart showing
+* Brush/Slider update/redesign (Sort of done)
+* Second legend including minority and cross-gender actor indicators (DONE)
+* Legends should be able to be opened and closed as a modal on all panels with the chart showing///Removed
 
 * Refactor code to make more modular and reusable (print out to better read/see/annotate)
 
-* Voronoi for dots + tooltip (need to store random points as data before creating voronoi)
+* Voronoi for dots + tooltip (need to store random points as data before creating voronoi) (Done)
 
-* Page resizing + mobile stuff 
+* Page resizing + mobile stuff
 
 # Latest Data to-dos (June Data updates)
 
 
 # Prose TODOs
 
-* Methodology 
+* Methodology
 ------------------------
 
 
