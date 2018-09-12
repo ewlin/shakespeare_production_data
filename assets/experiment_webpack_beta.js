@@ -2600,6 +2600,9 @@ queue()
               mainContent.transition(1000).style('opacity', 1);
 
               if (!directionForward) {
+                  selectAll('.character-meta').select('.character-meta-inner').attr('opacity', 1);
+                  selectAll('.role-dots-group').attr('opacity', 1);
+
                   const charAnnotation = [{
                       type: annotation.annotationCalloutCircle,
                       note: {
@@ -2710,10 +2713,47 @@ queue()
 
               //transitions([1980, 2019], false, false);
 
+              const highlightedMeta = ['kingLearmeta', 'richardIiimeta', 'hamletmeta', 'prosperometa'];
+              //const highlightedDots = ['kingLear-dots-group', 'richardIii-dots-group', 'hamlet-dots-group', 'prospero-dots-group'];
+
+              selectAll('.character-meta').each(function(char) {
+                  if (!highlightedMeta.includes(this.id)) {
+                      select(this).select('.character-meta-inner')
+                        .attr('opacity', .1);
+                  } else {
+                      select(this).select('.character-meta-inner')
+                        .attr('opacity', 1);
+                  }
+              });
+              selectAll('.role-dots-group').each(function(char) {
+                  //select(this).classed('othello-dots-group')
+                  if (!select(this).classed('kingLear-dots-group') && !select(this).classed('richardIii-dots-group')
+                    && !select(this).classed('hamlet-dots-group') && !select(this).classed('prospero-dots-group')) {
+                      select(this).attr('opacity', .07);
+                  } else {
+                      select(this).attr('opacity', 1);
+                  }
+              });
+              /**
+              selectAll('.character-meta').each(function(char) {
+                  if (this.id !== 'othellometa') {
+                      select(this).select('.character-meta-inner')
+                        .attr('opacity', .1);
+                  }
+              });
+
+              selectAll('.role-dots-group').each(function(char) {
+                  if (!select(this).classed('othello-dots-group')) {
+                      select(this).attr('opacity', .07);
+                  }
+              });
+              **/
+
+
               if (!directionForward) {
                   transitions([1980, 2019], false, false);
-                  selectAll('.character-meta').select('.character-meta-inner').attr('opacity', 1);
-                  selectAll('.role-dots-group').attr('opacity', 1)
+                  //selectAll('.character-meta').select('.character-meta-inner').attr('opacity', 1);
+                  //selectAll('.role-dots-group').attr('opacity', 1)
               }
 
               selectAll('.role-text-dots').each(function(ele) {
@@ -2844,12 +2884,17 @@ queue()
                           if (this.id !== 'othellometa') {
                               select(this).select('.character-meta-inner')
                                 .attr('opacity', .1);
+                          } else {
+                              select(this).select('.character-meta-inner')
+                                .attr('opacity', 1);
                           }
                       });
 
                       selectAll('.role-dots-group').each(function(char) {
                           if (!select(this).classed('othello-dots-group')) {
                               select(this).attr('opacity', .07);
+                          } else {
+                              select(this).attr('opacity', 1);
                           }
                       });
                   });
