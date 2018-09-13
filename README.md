@@ -2,9 +2,14 @@
 
 # Latest UI/Article To-dos:
 
+* Make list of priorities based on feedbacks
+
 (Biggest todos...)
 * Tooltip quadrant code needs to have a second look
 * Resize design
+
+Nice to haves:
+* Annotation code into a function that takes an options object
 
 
 * *Use male/female unicode symbols for cross-gender casting (added 5/24/18 1:42pm)*

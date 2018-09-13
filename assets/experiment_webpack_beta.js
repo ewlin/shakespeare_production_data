@@ -1444,7 +1444,7 @@ queue()
                           determinQuadrant(containerCoords, [x, y]);
 
                           const imgLink = d.data.actor.image;
-                          const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img onerror="document.querySelector('.tooltip-img-container').style = 'display: none'; document.querySelector('.tooltip-container').style = 'width: 100%';" src="https://${imgLink}" /></div>` : '';
+                          const imgLinkHTML = imgLink ? `<div class="tooltip-img-container"><img src="https://${imgLink}" /></div>` : '';
 
                           let pronoun;
                           if (d.data.actor.actorGender == 'male') {
@@ -1515,7 +1515,17 @@ queue()
                                     </p>
                                     ${actorEthnicity}
                                     ${genderBendText}
-                                    </div>`)
+                                    </div>`);
+
+                            if (document.querySelector('.tooltip-img-container img')) {
+                                document.querySelector('.tooltip-img-container img').addEventListener('error', function() {
+                                    document.querySelector('.tooltip-img-container').style = 'display: none';
+                                    document.querySelector('.tooltip-container').style = 'width: 100%';
+                                });
+                            }
+
+
+
                       }).on('mouseout', d => {
                           //3.6 3
                           //filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
