@@ -21,7 +21,6 @@ import { voronoi } from 'd3-voronoi';
 import makeCurlyBrace from './curlyBraces';
 //import animateShakespeare from './animate_shakespeare';
 
-console.log(makeCurlyBrace);
 
 const throttle = require('lodash.throttle');
 
@@ -55,7 +54,6 @@ let windowHeight = document.querySelector('body').clientHeight;
 let windowWidth = document.querySelector('body').clientWidth;
 
 
-console.log(windowWidth);
 //50 is height of brush control rect
 //10 is padding on bottom
 
@@ -110,7 +108,6 @@ queue()
     let heightMax = document.querySelector('.svg-main').getBoundingClientRect().height;
     let band = (heightMax - 75)/characters.length;
 
-    console.log('band: ' + band);
 
     //domain is age range (from age 10 to 85); range is svg coordinates (give some right and left padding)
     const scaleX = scaleLinear().domain([10, 86]).range([60, widthMax - 80]);
@@ -143,7 +140,6 @@ queue()
       if (brushSelection(this)) {
         const years = brushSelection(this).map(scaleYear.invert).map(Math.round);
 
-        console.log(brushSelection(this).map(scaleYear.invert).map(Math.round));
         filterPoints(brushSelection(this).map(scaleYear.invert).map(Math.round))();
         if (document.querySelector('.chart-title-year-range')) {
             select('.chart-title-year-range').html(`${years[0]} and ${years[1]}`);
@@ -157,17 +153,6 @@ queue()
 
 	brushGroup.call(brush);
 
-    /**
-	const startYear = select('.svg-controls').append('text').classed('start-year-label', true)
-	   .attr('y', 25)
-       .attr('stroke', 'white')
-       .attr('alignment-baseline', 'hanging');
-	const endYear = select('.svg-controls').append('text').classed('end-year-label', true)
-      .attr('y', 25)
-      .attr('stroke', 'white')
-      .attr('text-anchor', 'end')
-      .attr('alignment-baseline', 'hanging');
-     **/
 
     select('.overlay').style('pointer-events', 'none');
 
@@ -274,7 +259,6 @@ queue()
       console.log(role + ': ' + variance(ages));
       console.log(role + ': ' + quantile(ages, 0.5));
     }
-    //console.log(interquartiles);
 
     function processPoints(characterData, character, filterOppoGender, startYear, endYear) {
       let end = typeof endYear == 'string' ? endYear : (endYear == null ? String(moment(new Date()).year()) : String(endYear));
@@ -282,11 +266,6 @@ queue()
       let oppositeGender = filterOppoGender ? (characterAges[character + 'Ages'].gender == 'male' ? 'female' : 'male') : null;
       characterData.forEach(function(role) {
         // new if statement: role['actor'] in actorsMasterList...
-
-        if (role.actor == 'Byron Jennings') {
-            console.log('Byron Jennings found');
-            console.log(actorsMasterList.findIndex(actor => actor['actor_name'] == 'Byron Jennings'));
-        }
 
         let actorIndex = actorsMasterList.findIndex(actor => role['actor'] === actor['actor_name']);
 
@@ -299,18 +278,11 @@ queue()
           let age = moment(role['opening_date']).diff(moment(actorsMasterList[actorIndex]['formatted_bday']), 'years', true);
 
           role = Object.assign(role, actorsMasterList[actorIndex]);
-          //console.log(age)
-          //Old version
+
           if (age > 0 && moment(role['opening_date']) >= moment(start)
           	&& moment(role['opening_date']) <= moment(end)
-          	//&& role['gender'] !== oppositeGender) {
             && actorsMasterList[actorIndex]['actor_gender'] !== oppositeGender) {
 
-            //if (character == 'cleopatra' && role['gender'] == 'male') {
-            //  console.log(role);
-            //  console.log(role['opening_date']);
-            //  console.log(role['actor'] + ' ' + age);
-            //}
 
             if (characterAges[character + 'Ages'][age]) {
               characterAges[character + 'Ages'][age].push(role)
@@ -432,16 +404,7 @@ queue()
 
       console.log(productions.length + ' productions');
 
-      /**
-      for (let eachRole in rolesArr) {
-        for (let eachActor in characters[eachRole]) {
-          const production = characters[eachRole][eachActor]['director'] + ' ' + characters[eachRole][eachActor]['opening_date'] + characters[eachRole][eachActor]['venue'];
-          if (!productions.includes(production)) productions.push(production);
-        }
-      }
 
-      console.log(productions.length + ' productions');
-      **/
       return rolesArr;
 
     }
@@ -486,7 +449,6 @@ queue()
         const storeSecondWordFirstLetter = originalText[secondWordIndex];
         text = originalText.substring(0,secondWordIndex) + ' ' + storeSecondWordFirstLetter + (originalText === 'richardIii' ? originalText.substring(secondWordIndex + 1).toUpperCase() : originalText.substring(secondWordIndex + 1));
       }
-      console.log(text);
       return text ? text[0].toUpperCase() + text.substring(1)
                   : originalText[0].toUpperCase() + originalText.substring(1);
     }
@@ -856,26 +818,10 @@ queue()
                 }
 
                 const ageAxis = document.querySelector('.axis');
-                console.log('left side of axis:' + ageAxis.getBoundingClientRect().left);
 
-                //createBracket([15, heightMax/2 - 25], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
-                  //createBracket([heightMax/2 + 25, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
                 createBracket([15, (band * 7) + 15], 40, 9, 4, 'female-bracket', 'FEMALE ROLES');
                 createBracket([(band * 7) + 15 + 50, heightMax - 10], 40, 9, 4, 'male-bracket', 'MALE ROLES');
 
-
-                /**
-                if (!document.querySelector('.axis-label')) {
-                    //let xCoord = document.querySelector('.axis').getBoundingClientRect().left
-                    svg.append('text')
-                        .text('AGE OF ACTOR WHEN FIRST PLAYING ROLE')
-                        .classed('axis-label', true)
-                        .attr('x', 40)
-                        .attr('y', 10)
-                        .attr('fill', 'white')
-                        .attr('stroke', 'white')
-                }
-                **/
 
                 if (slideFlag) {
                     const slideDistance = scaleX(minAge) - scaleX(18);
@@ -898,14 +844,8 @@ queue()
                   })
                   .attr('fill-opacity', d => {
                     return 1;
-                      ////if (d.age <= maxAge && d.age >= minAge) {
-                      //if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                      //    console.log('good');
-                      //    return .95;
-                      //} else {
-                      //    return .4;
-                      //}
-                  })
+
+                });
 
                 selectAll('.role-dots').attr('mask', 'none');
 
@@ -922,16 +862,9 @@ queue()
                         } else {
                             return .4;
                         }
-                        /**
-                        } else {
-                            console.log('invisible');
-                            return 0;
-                        }
-                        **/
-                    })
-                    //.attr('stroke-opacity', (d) => {
-                    //    d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 1 : 0;
-                    //});
+
+                    });
+
                 } else {
                   selectAll('.role-dots').interrupt().transition(0)
                     .attr('fill-opacity', d => {
@@ -1072,7 +1005,6 @@ queue()
                                 .filter(d => d.age <= maxAge)
                                 .transition(500)
                                 .attr('fill-opacity', d => {
-                                    //console.log(this);
                                     if (maxAge >= fullCharacterAgesRange[3]) {
                                         return .1;
                                     } else {
@@ -1139,7 +1071,6 @@ queue()
                                 //.attr('stroke-opacity', d => d[0] == d[1] || maxAge >= fullCharacterAgesRange[3] ? 1 : 0);
 
 
-                            console.log(eachCharacter);
 
                                     if (completeRange && eachCharacter == 'kingLear') {
                                         selectAll('.character-meta-inner').transition().duration(1000).attr('opacity', 1);
@@ -1404,7 +1335,6 @@ queue()
             */
 
             pointsData = processAllPointsAlt3();
-            console.log("here's test data: ", pointsData);
             //let points = svg.selectAll('.role-dots').data(data);
             const dotGroups = svg.selectAll('.role-dots-group').data(pointsData);
 
@@ -1427,7 +1357,6 @@ queue()
                       .y(d => d.charGender == 'male' ? male(d.charIndex, d.yCoord) : female(d.charIndex, d.yCoord))
                       .extent([[60, 15],[widthMax - 80, heightMax - 10]]);
 
-                    //console.log('diagram', voronoiGen.polygons(voronoifiedPoints));
 
                     svg.append('g').attr('class', 'voronoi-overlay')
                       .selectAll('.path')
@@ -1547,7 +1476,7 @@ queue()
                             <mask id="mask-3"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask><polygon mask='url(#mask)' points='0,13 7.5,0 15,13' style="fill:${characterAges[d.data.actor.role + 'Ages'].color}"/></svg><span><b>${pronoun[0] + ' ' + raceLine}</b></span></section>`
                             : '';
 
-                          //console.log(raceLine, actorEthnicity);
+
 
                           let productionInfoText;
                           if (d.data.actor.producers == "Shakespeare's Globe" && d.data.actor.opening.match('01-01') || d.data.actor.actor == 'Edith Evans') {
@@ -2685,8 +2614,8 @@ queue()
               mainContent.html(`<h2>Gender-bending comes back with full force in the new millenium <span class='year-range-highlight'>productions since 1980</span></h2><p>If you’re an actress worried about the lack of stage opportunities after a certain age, don’t despair.
                   A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent older actresses like Martha Henry <img class='actor-face prospero-color' src='assets/images/actor_faces/henry.png' /> and Glenda Jackson <img class='actor-face kingLear-color' src='assets/images/actor_faces/jackson.png' /> have
                   started tackling traditionally older male roles like <span class="kingLear-color">Lear</span> and <span class="prospero-color">Prospero</span>, potentially opening an alternative route for women later in their acting careers.
-                  Though crossdressing is nothing new for Shakespearean productions—back when the plays were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>,
-                  and throughout the 1800s and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—actresses playing other male roles (represented in graph as <span class='legend-symbol'>\u2640</span>), especially older characters like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a more recent development.</p>`);
+                  Though crossdressing is nothing new for Shakespearean productions—back when the plays were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>, female characters disguised as men is a common plot device in his comedies, and
+                  throughout the 1800s and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—actresses playing other male roles (represented in graph as <span class='legend-symbol'>\u2640</span>), especially older characters like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a more recent development.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
@@ -3476,7 +3405,7 @@ queue()
                                 <p class='story'>Today, the <a href='https://www.rada.ac.uk/acting/ba-hons-acting/' target='_blank'>3-year BA in Acting program</a> at The Royal Academy of Dramatic Arts (RADA) in London, the alma mater of Ralph Fiennes, Rosemary Harris, and Alan Rickman, among many other equally familiar names, admits exactly 28 students each year: 14 male, 14 female. And, at least according to my informal tally, the <a href='https://ysdshowcase.com/the-class-of-2018/' target='_blank'>most recent graduating class of actors from the Yale School of Drama</a> is also a paragon of diversity in both gender and race. Yet, while the educational gatekeepers of a young actor’s career have been moving towards a more equitable equilibrium, the professional side of things remains far more complicated.</p>
                                 <p class='story'>On one hand, since the 1990s, we’ve seen the floodgates open for actors of color in the types of Shakespearean opportunities available. As an actor of color, you’re no longer confined to the single role of <span class='othello-color'>Othello</span>. As theatergoers, we’re willing to suspend our disbelief to watch a black <span class='ophelia-color'>Ophelia</span> with a Chinese brother. But this willingness of ours is also selectively contradictory. Whether consciously or unconsciously, we’ve somehow collectively decided that female roles like <span class='juliet-color'>Juliet</span> and <span class='ophelia-color'>Ophelia</span> are defined by youth and innocence, and must be played by young actresses. But as we've seen, audiences a century ago were perfectly accepting of middle-aged actresses in these parts.</p>
                                 <p class='story story-last'>Perhaps these contradictions in our selective need for believability on stage is simply reflective of the ever-changing turbulence of larger societal forces outside of theatre, and maybe we should simply embrace it, and let it lead us to more surprising moments of creativity. For if a director can still find a thoughtful way to cast a white <span class='othello-color'>Othello</span> today, then maybe it’s not too late for you, the 60-year-old actress, to jump on stage and take back the role of the beautiful and clever <span class='portia-color'>Portia</span>.</p>
-                                <div class='story-legend-text-container'><p class='story-legend-text legend-text'><b>Press the <span class='key-indicator'>&#x21e8;</span> key or the <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar to start exploring the dataset in more detail! Hover over each dot ( <span class='legend-dot'></span> ) or symbol (<span class='legend-symbol-span'>\u2642/\u2640</span>) to read more about the actor, and the associated production.</b></p></div>`)
+                                <div class='story-legend-text-container'><p class='story-legend-text legend-text'>Press the <span class='key-indicator'><b>&#x21e8;</b></span> key or the <span class='key-indicator'><b>&nbsp;SPACE&nbsp;</b></span> bar to start exploring the dataset in more detail! Hover over each dot ( <span class='legend-dot'></span> ) or symbol (<span class='legend-symbol-span'>\u2642/\u2640</span>) to read more about the actor, and the associated production.</p></div>`)
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               mainContent.style('top', window.innerHeight/2 - height/2);
 
@@ -3531,7 +3460,7 @@ queue()
               const mainContent = select('#main-content');
               mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <br><span class="chart-title-year-range">1900 and 2018</span></h2>
               <section><svg width='13' height='13' class='inline-svg'>
-              <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color/BME Actor</span></section>
+              <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color/Black and Minority Ethnic Actor</span></section>
               <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p>
               <section><span>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range</span></section></div>`);
 
@@ -3681,7 +3610,6 @@ queue()
                   .attr('fill', () => colors[Math.floor(Math.random() * colorsLength)])
                   .attr('fill-opacity', d => Math.random());
                 if (animateStop == true) t.stop();
-                //console.log(elapsed);
               }, 500);
             }
         }
@@ -3689,7 +3617,6 @@ queue()
 
 
         let progressBarScale = scaleLinear().domain([0, queueLength]).range([0, windowWidth]);
-        //console.log('hello', widthMax, queueLength, progressBarScale(4));
         loadTitlesSlide();
 
         function updateProgressBar() {
@@ -3857,7 +3784,6 @@ queue()
 
                         //TODO: Try applying mask on oppoGender data points as well (8/24)
 
-						console.log(filteredDots)
 
 						selectAll('.role-dots')
 							.attr('fill-opacity', d => {
