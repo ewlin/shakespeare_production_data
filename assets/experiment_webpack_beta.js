@@ -2690,7 +2690,7 @@ queue()
 
 
               if (!directionForward) {
-                  transitions([1980, 2019], false, false);
+                  transitions([1980, 2019], false, false, false, false);
                   //selectAll('.character-meta').select('.character-meta-inner').attr('opacity', 1);
                   //selectAll('.role-dots-group').attr('opacity', 1)
               }
@@ -2828,7 +2828,7 @@ queue()
           }],
           [function(directionForward) {
               if (directionForward) {
-                  transitions([1900,2019], false, true, true, false, function() {
+                  transitions([1900,2019], false, true, true, true, function() {
                       selectAll('.character-meta').each(function(char) {
                           if (this.id !== 'othellometa') {
                               select(this).select('.character-meta-inner')
@@ -3421,7 +3421,7 @@ queue()
 
 
               if (!directionForward) {
-                  transitions([1900,2018], false, true, true, false);
+                  transitions([1900,2018], false, true, true, true);
               }
               //reset annotations
               const blankAnnotations = [
@@ -3677,12 +3677,12 @@ queue()
                 }
                 console.log(state);
 
-                /*
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
                 });
-                */
+
 
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
@@ -3695,12 +3695,12 @@ queue()
                   updateProgressBar();
                 }
 
-                /*
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
-                */
+
 
 
 
@@ -3741,12 +3741,12 @@ queue()
                 }
                 console.log(state);
 
-                /*
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
-                */
+
 
               } else {
                 if (state > 1) {
@@ -3758,12 +3758,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-                /*
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                */
+                
 
               }
           }
