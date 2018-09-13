@@ -3712,9 +3712,16 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
+              gtag('event', 'clicked', {
+                  'event_category': 'Clicked',
+                  'event_label': `Clicked link`,
+              });
               return;
           } else if (e.target.classList.contains('cta')) {
-
+              gtag('event', 'clicked', {
+                  'event_category': 'Clicked',
+                  'event_label': `Skiped to Explore`,
+              });
               if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
 
               return;
@@ -3763,7 +3770,7 @@ queue()
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                
+
 
               }
           }
