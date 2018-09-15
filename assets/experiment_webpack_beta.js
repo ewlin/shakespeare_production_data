@@ -3526,7 +3526,7 @@ queue()
               <p class='legend-text methodology'>Actor ages were calculated based on the opening date of each production and the actors' birthdays. Birthdays were primarily collected from Wikipedia and IMDb (if the actor has a page or profile on either/both). For actors that only have a public birth year, we
               used July 1 of that year as an estimate. Additionally, the following method was used to estimate the age of actors without a publically available or verifiable birth date:</p>
 
-              <p class='legend-text methodology'>If a profile or article featuring an actor/actress is available, and an age is mentioned in the article, we took the publication date, subtracted the age in years, and then subtracted an additional 6 months, and take the 1st of that month as the actor's estimated birthday.
+              <p class='legend-text methodology'>If a profile or article featuring an actor/actress is available, and an age is mentioned in the article, we took the publication date, subtracted the age in years, and then subtracted an additional 6 months, and took the 1st of that month as the actor's estimated birthday.
               As an example, if we had an article published on September 5, 2018 that mentioned a certain actor is currently 29, the estimated birthday of that actor would be March 1, 1989. For some actors, we have knowledge of a graduating year for a bachelor's degree. Barring any additional information,
               we would subtract either 21 or 22 years (some BA degrees in the UK are 3 years in length), and set the birthday to January 1st of that year. So we'd estimate the birthday of an actor who graduated from a 4-year BA program in 2018 as January 1, 1996. We understand that this approach might cause
               some errors in our dataset, since not everyone graduates on time, or starts a BA program immediately at 18. Actors for whom there are no publically available birth dates, or some evidence or record of approximate age at a certain date, are excluded from this analysis.</p>
@@ -3677,7 +3677,7 @@ queue()
                 }
                 console.log(state);
 
-
+                
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
@@ -3712,16 +3712,20 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
+
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Clicked link`,
               });
+
               return;
           } else if (e.target.classList.contains('cta')) {
+
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
-                  'event_label': `Skiped to Explore`,
+                  'event_label': `Skipped to Explore`,
               });
+
               if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
 
               return;
