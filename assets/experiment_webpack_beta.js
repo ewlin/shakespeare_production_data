@@ -2273,7 +2273,7 @@ queue()
 
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             mainContent.html(`<h2>From age 31 to 45 <span class='year-range-highlight'>productions since 1980</span></h2><p>Between 31 and 45 is when we start to see signs of divergence between opportunities for men and women. As a 45-year-old actress, you’d be older than any recorded <span class="rosalind-color">Rosalind</span> or <span class="portia-color">Portia</span> since 1980 in our sample.
-            You'd even be older than over 75% of your peers who've played <span class="ladyMacbeth-color">Lady Macbeth</span> on stage, a rather juicy role for more seasonsed actresses. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>,
+            You'd even be older than over 75% of your peers who've played <span class="ladyMacbeth-color">Lady Macbeth</span> on stage, a rather juicy role for more seasoned actresses. At the same age, an actor is still squarely in the interquartile ranges of the roles of <span class="othello-color">Othello</span>,
             <span class="iago-color">Iago</span>, <span class="macbeth-color">Macbeth</span>, and <span class="richardIii-color">Richard III</span>, all parts played by similar mid-career males. The only lead Shakespearean female role that has a higher median age is <span class='cleopatra-color'>Cleopatra</span>, and sadly, <em>Antony and Cleopatra</em>
             is also less frequently produced than many of Shakespeare's other plays.</p>`);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
@@ -3677,7 +3677,7 @@ queue()
                 }
                 console.log(state);
 
-                
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
