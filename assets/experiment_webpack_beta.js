@@ -1278,7 +1278,7 @@ queue()
         //TODO...
 
         //dateRange is an array of length 2: e.g., [1900, 1980]
-        function transitions(dateRange, makeVoronoi, filterOppoGender, indicatePOC, barOpacity, callBack) {
+        function transitions(dateRange, makeVoronoi, filterOppoGender, indicatePOC, barOpacity, callBack, transitionTime) {
             if (!makeVoronoi) {
                 document.querySelector('svg.svg-main').classList.add('mouse-disabled');
             }
@@ -1340,11 +1340,11 @@ queue()
 
             dotGroups.enter();
 
-            const transitionA = transition().duration(1500).ease(easeQuadInOut).on('end', () => {
+            transitionTime = typeof transitionTime == 'number' ? transitionTime : 1500;
+
+            const transitionA = transition().duration(transitionTime).ease(easeQuadInOut).on('end', () => {
                 locked = false;
-                if (callBack) {
-                    callBack();
-                }
+
                 if (makeVoronoi && !document.querySelector('.voronoi-overlay')) {
 
                     document.querySelector('svg.svg-main').classList.remove('mouse-disabled');
@@ -1547,6 +1547,11 @@ queue()
                       });
 
                 }
+
+                if (callBack) {
+                    callBack();
+                }
+
             }).on('start', function () {
                 locked = true;
             });
@@ -2005,7 +2010,7 @@ queue()
                 mainContent.style('top', window.innerHeight/2 - height/2);
 
             }],
-          [function() {
+          [function(directionForward) {
 
             const band = 55;
 
@@ -2235,7 +2240,6 @@ queue()
 
           }, 'From ages 17 to 22..'],
           [function(directionForward) {
-            select('.svg-main').style('opacity', 1);
 
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(23)) + 82;
             const right = +document.querySelector('.svg-main').getBoundingClientRect().right - 10;
@@ -2249,6 +2253,8 @@ queue()
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             mainContent.style('top', window.innerHeight/2 - height/2);
             mainContent.transition().delay(300).style('opacity', 1);
+
+            select('.svg-main').style('opacity', 1);
           }],
           [function(directionForward) {
             const left = (+document.querySelector('.svg-main').getBoundingClientRect().left) + (+scaleX(30)) + 82;
@@ -3421,7 +3427,7 @@ queue()
 
 
               if (!directionForward) {
-                  transitions([1900,2018], false, true, true, true);
+                  transitions([1900,2018], false, true, true, false, null, 100);
               }
               //reset annotations
               const blankAnnotations = [
@@ -3442,9 +3448,9 @@ queue()
 
 
               if (isSafari) {
-                  select('.svg-main').transition().duration(1500).style('transform', `translate(0,0)`);
+                  select('.svg-main').transition().duration(100).style('transform', `translate(0,0)`);
               } else {
-                  select('.svg-main').transition().duration(1500).attr('transform', `translate(0,0)`);
+                  select('.svg-main').transition().duration(100).attr('transform', `translate(0,0)`);
               }
 
 
@@ -3472,7 +3478,8 @@ queue()
               <section><svg width='13' height='13' class='inline-svg'>
               <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color/Black and Minority Ethnic Actor</span></section>
               <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p>
-              <section><span>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range</span></section></div>`);
+              <section class='legend-instructions'><span>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range</span></section>
+              <p><span class='cta backto'>CLICK HERE</span> <span>to return to the story</span></p></div>`);
 
               select('.inline-svg circle').attr('mask', 'url(#mask)').attr('fill', 'white');
 
@@ -3677,12 +3684,12 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
                 });
-
+                **/
 
               } else if (e.code === 'ArrowLeft') {
                 if (state > 1) {
@@ -3695,12 +3702,12 @@ queue()
                   updateProgressBar();
                 }
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
                 });
-
+                **/
 
 
 
@@ -3712,21 +3719,48 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
-
+              /**
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Clicked link`,
               });
-
+              **/
               return;
           } else if (e.target.classList.contains('cta')) {
-
+              /**
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Skipped to Explore`,
-              });
+              });**/
 
               if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
+              if (e.target.classList.contains('backto')) {
+                  //update state
+                  state = 2;
+                  updateProgressBar();
+
+                  //Remove voronoi
+                  select('.voronoi-overlay').remove();
+                  select('.svg-main').classed('mouse-disabled', true);
+
+                  //disable brush
+                  brushGroup.call(brush.move, null);
+                  select('.svg-controls').attr('opacity', 0);
+                  select('.overlay').style('pointer-events', 'none');
+                  select('.brush').style('pointer-events', 'none');
+
+                  transitions([1980, 2019], false, true, false, false, function() {
+                      const mainContent = select('#main-content');
+                      mainContent.style('background', null);
+                      mainContent.style('padding-left', null);
+                      mainContent.style('padding-bottom', null);
+                      mainContent.style('padding-right', null);
+                      eventsQueue[2][0](false);
+                      //selectAll('.center-50-dot').attr('r', '3.6px');
+                      //selectAll('.tail-dot').attr('r', '3px');
+                      eventsQueue[1][0]();
+                  }, 300);
+              }
 
               return;
           }
@@ -3752,12 +3786,12 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
                 });
-
+                **/
 
               } else {
                 if (state > 1) {
@@ -3769,12 +3803,12 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                
+                **/
 
               }
           }
