@@ -3425,9 +3425,8 @@ queue()
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               mainContent.style('top', window.innerHeight/2 - height/2);
 
-
               if (!directionForward) {
-                  transitions([1900,2018], false, true, true, false, null, 100);
+                  transitions([1900,2018], false, true, true, true, null, 100);
               }
               //reset annotations
               const blankAnnotations = [
