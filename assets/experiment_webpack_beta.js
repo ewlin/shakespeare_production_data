@@ -3478,8 +3478,8 @@ queue()
               <section><svg width='13' height='13' class='inline-svg'>
               <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color/Black and Minority Ethnic Actor</span></section>
               <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p>
-              <section class='legend-instructions'><span>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range</span></section>
-              <p><span class='cta backto'>CLICK HERE</span> <span>to return to the story</span></p></div>`);
+              <section class='legend-instructions'><span><b>Click and Drag handles on </span><img height='22px' style="vertical-align: middle;" src='assets/images/filter.png' /><span> to filter productions by year range<b/></span></section>
+              <p><b><span class='cta backto'>CLICK HERE</span> <span>to return to the story</span></b></p></div>`);
 
               select('.inline-svg circle').attr('mask', 'url(#mask)').attr('fill', 'white');
 
@@ -3808,7 +3808,7 @@ queue()
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
                 });
-                
+
 
               }
           }
@@ -3864,3 +3864,7 @@ queue()
 
 
 	});
+
+
+
+    /** 9/18/18 **/
