@@ -3683,7 +3683,7 @@ queue()
                 }
                 console.log(state);
 
-                
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
@@ -3715,6 +3715,7 @@ queue()
 
         });
 
+
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
@@ -3727,52 +3728,52 @@ queue()
               return;
           } else if (e.target.classList.contains('cta')) {
 
+              if (!locked) {
+                  if (e.target.classList.contains('exploreDataSkip')) {
 
+                      gtag('event', 'clicked', {
+                          'event_category': 'Clicked',
+                          'event_label': `Skipped to Explore`,
+                      });
+                      skipToExplore();
+                  }
 
-              if (e.target.classList.contains('exploreDataSkip')) {
+                  if (e.target.classList.contains('backto')) {
+                      //send google info
 
-                  gtag('event', 'clicked', {
-                      'event_category': 'Clicked',
-                      'event_label': `Skipped to Explore`,
-                  });
-                  skipToExplore();
+                      gtag('event', 'clicked', {
+                          'event_category': 'Clicked',
+                          'event_label': `Back to Story`,
+                      });
+
+                      //update state
+                      state = 2;
+                      updateProgressBar();
+
+                      //Remove voronoi
+                      select('.voronoi-overlay').remove();
+                      select('.svg-main').classed('mouse-disabled', true);
+
+                      //disable brush
+                      brushGroup.call(brush.move, null);
+                      select('.svg-controls').attr('opacity', 0);
+                      select('.overlay').style('pointer-events', 'none');
+                      select('.brush').style('pointer-events', 'none');
+
+                      transitions([1980, 2019], false, true, false, false, function() {
+                          const mainContent = select('#main-content');
+                          mainContent.style('background', null);
+                          mainContent.style('padding-left', null);
+                          mainContent.style('padding-bottom', null);
+                          mainContent.style('padding-right', null);
+                          eventsQueue[2][0](false);
+                          //selectAll('.center-50-dot').attr('r', '3.6px');
+                          //selectAll('.tail-dot').attr('r', '3px');
+                          eventsQueue[1][0]();
+                      }, 300);
+                  }
+
               }
-
-              if (e.target.classList.contains('backto')) {
-                  //send google info
-
-                  gtag('event', 'clicked', {
-                      'event_category': 'Clicked',
-                      'event_label': `Back to Story`,
-                  });
-
-                  //update state
-                  state = 2;
-                  updateProgressBar();
-
-                  //Remove voronoi
-                  select('.voronoi-overlay').remove();
-                  select('.svg-main').classed('mouse-disabled', true);
-
-                  //disable brush
-                  brushGroup.call(brush.move, null);
-                  select('.svg-controls').attr('opacity', 0);
-                  select('.overlay').style('pointer-events', 'none');
-                  select('.brush').style('pointer-events', 'none');
-
-                  transitions([1980, 2019], false, true, false, false, function() {
-                      const mainContent = select('#main-content');
-                      mainContent.style('background', null);
-                      mainContent.style('padding-left', null);
-                      mainContent.style('padding-bottom', null);
-                      mainContent.style('padding-right', null);
-                      eventsQueue[2][0](false);
-                      //selectAll('.center-50-dot').attr('r', '3.6px');
-                      //selectAll('.tail-dot').attr('r', '3px');
-                      eventsQueue[1][0]();
-                  }, 300);
-              }
-
               return;
           }
 
