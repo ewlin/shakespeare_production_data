@@ -2628,7 +2628,7 @@ queue()
               mainContent.style('opacity', 0);
 
               mainContent.html(`<h2>Gender-bending comes back with full force in the new millenium <span class='year-range-highlight'>productions since 1980</span></h2><p>If you’re an actress worried about the lack of stage opportunities after a certain age, don’t despair.
-                  A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent older actresses like Martha Henry <img class='actor-face prospero-color' src='assets/images/actor_faces/henry.png' /> and Glenda Jackson <img class='actor-face kingLear-color' src='assets/images/actor_faces/jackson.png' /> have
+                  A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent older actresses like <b>Martha Henry</b> <img class='actor-face prospero-color' src='assets/images/actor_faces/henry.png' /> and <b>Glenda Jackson</b> <img class='actor-face kingLear-color' src='assets/images/actor_faces/jackson.png' /> have
                   started tackling traditionally older male roles like <span class="kingLear-color">Lear</span> and <span class="prospero-color">Prospero</span>, potentially opening an alternative route for women later in their acting careers.
                   Though crossdressing is nothing new for Shakespearean productions—back when the plays were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>, female characters disguised as men is a common plot device in his comedies, and
                   throughout the 1800s and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—actresses playing other male roles (represented in graph as <span class='legend-symbol'>\u2640</span>), especially older characters like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a more recent development.</p>`);
@@ -2731,7 +2731,7 @@ queue()
                                   type: 'genderBend',
                                   actorName: 'Sarah Harlett',
                                   character: 'richardIii',
-                                  text: 'Sarah Harlett plays the villainous title character in a current, all-female (opens September 2018) Seattle Shakespeare Company production of Richard III',
+                                  text: 'Sarah Harlett plays the villainous title character in a current, all-female (opened September 2018) Seattle Shakespeare Company production of Richard III',
                                   points: [[-110, 27]],
                                   wrap: 140,
                                   dx: -245,
@@ -2919,8 +2919,8 @@ queue()
 
               mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 1979</span></h2>
               <p>From the turn of the 20th century to the end of WWII, <span class='othello-color'>Othellos</span> were almost entirely played by white actors in blackface on stage, and this continued well into the latter
-              half of the 20th century. Even as late as 1964, Laurence Olivier <img class='actor-face othello-color' src='assets/images/actor_faces/olivier-othello.png' /> would appear in heavy facial makeup as <span class='othello-color'>Othello</span>, in a National Theatre
-              production directed by John Dexter. (Opposite him as <span class="desdemona-color">Desdemona</span> was Dame Maggie Smith <img class='actor-face desdemona-color' src='assets/images/actor_faces/smith.png' />, most familiar to us all as Professor Minerva McGonagall.)
+              half of the 20th century. Even as late as 1964, <b>Laurence Olivier</b> <img class='actor-face othello-color' src='assets/images/actor_faces/olivier-othello.png' /> would appear in heavy facial makeup as <span class='othello-color'>Othello</span>, in a National Theatre
+              production directed by John Dexter. (Opposite him as <span class="desdemona-color">Desdemona</span> was <b>Maggie Smith</b> <img class='actor-face desdemona-color' src='assets/images/actor_faces/smith.png' />, most familiar to us all as Professor Minerva McGonagall.)
               Despite this, more and more Black-British and African-American (and the occasional Asian and Latino) actors started to be cast as the Moor in the 60s and 70s, and by the early 80s, the practice of white actors playing <span class='othello-color'>Othello</span> would mostly
               become a thing of the past.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
@@ -2980,8 +2980,8 @@ queue()
                   mainContent.transition(1000).style('opacity', 1);
                   mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1980 to 2018</span></h2><p>By the mid-80s, the role of <span class="othello-color">Othello</span> was, for all intents and purposes, gone from the white actor’s repertoire.
                   If, as a director, you were to cast a white actor as <span class="othello-color">Othello</span> in a production today, you should be prepared for the firestorm you’re likely to set off. But on occasion, more creative minds have also found fresh and interesting ways to subvert this modern taboo. Jude Kelly’s
-                  <a href='http://www.shakespearetheatre.org/events/othello-97-98/' target='_blank'>1997 production</a> of the play was essentially a photo negative of the usual productions: It starred Patrick Stewart <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>,
-                  while the rest of the cast was all-black, including Ron Canada <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>, the Moorish general's villainous ensign. In most productions, <span class="iago-color">Iago</span> and <span class="desdemona-color">Desdemona</span>,
+                  <a href='http://www.shakespearetheatre.org/events/othello-97-98/' target='_blank'>1997 production</a> of the play was essentially a photo negative of the usual productions: It starred <b>Patrick Stewart</b> <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>,
+                  while the rest of the cast was all-black, including <b>Ron Canada</b> <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>, the Moorish general's villainous ensign. In most productions, <span class="iago-color">Iago</span> and <span class="desdemona-color">Desdemona</span>,
                   <span class="othello-color">Othello's</span> wife, almost always go to white actors, in order to highlight the racial tensions central to the play.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
@@ -3141,7 +3141,7 @@ queue()
               }
 
               function appendMainContent() {
-                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions between 1900-1989</span></h2><p>Even as the practice of white actors donning blackface to play <span class="othello-color">Othello</span> started going away in the second half of the 20th century, and more actors of color were cast in the role, non-white actors were still rarely appearing as leads in other Shakespearean plays through the 1980s. The few actors of color you do see in the charts were often part of productions that were highly segregated, such as in the African-American-only <a href="https://en.wikipedia.org/wiki/Federal_Theatre_Project#African-American_theatre" target="_blank">Negro Theatre Unit</a> that was part of the Federal Theatre Project, started during the Great Depression. By the mid-to-late 80s, you'll sometimes encounter a genuinely race-blind production like Michael Kahn’s 1989 <a href="http://www.shakespearetheatre.org/events/as-you-like-it-88-89/" target="_blank">Shakespeare Theatre Company production of</a> <em>As You Like It</em>, where Sabrina Le Beauf <img class='actor-face rosalind-color' src='assets/images/actor_faces/lebeauf.png' /> played <span class='rosalind-color'>Rosalind</span>, while Emery Battis <img class='actor-face actor-face-generic' src='assets/images/actor_faces/battis.png' />, a white actor, played her father, <span class='generic-char-color'>Duke Senior</span>. But for the most part, productions like these were rare even as we approached the 90s.</p>`);
+                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions between 1900-1989</span></h2><p>Even as the practice of white actors donning blackface to play <span class="othello-color">Othello</span> started going away in the second half of the 20th century, and more actors of color were cast in the role, non-white actors were still rarely appearing as leads in other Shakespearean plays through the 1980s. The few actors of color you do see in the charts were often part of productions that were highly segregated, such as in the African-American-only <a href="https://en.wikipedia.org/wiki/Federal_Theatre_Project#African-American_theatre" target="_blank">Negro Theatre Unit</a> that was part of the Federal Theatre Project, started during the Great Depression. By the mid-to-late 80s, you'll sometimes encounter a genuinely race-blind production like Michael Kahn’s 1989 <a href="http://www.shakespearetheatre.org/events/as-you-like-it-88-89/" target="_blank">Shakespeare Theatre Company production of</a> <em>As You Like It</em>, where <b>Sabrina Le Beauf</b> <img class='actor-face rosalind-color' src='assets/images/actor_faces/lebeauf.png' /> played <span class='rosalind-color'>Rosalind</span>, while <b>Emery Battis</b> <img class='actor-face actor-face-generic' src='assets/images/actor_faces/battis.png' />, a white actor, played her father, <span class='generic-char-color'>Duke Senior</span>. But for the most part, productions like these were rare even as we approached the 90s.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
 
@@ -3276,7 +3276,7 @@ queue()
 
               }
               function appendMainContent() {
-                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions since 1990</span></h2><p>In the last 30 years or so however, the landscape for actors of color playing Shakespearean roles has changed dramatically. We now see scores of black, Asian, and Latino/a actors cast in pretty much every major role, from <span class="hamlet-color">Hamlets</span> to <span class="cleopatra-color">Cleopatras</span>. In some of these productions, race in casting becomes a dramatic device, such as in David Leveaux’s 2013 Broadway production of <em>Romeo and Juliet</em>, with Orlando Bloom <img class='actor-face romeo-color' src='assets/images/actor_faces/bloom.png' /> as <span class="romeo-color">Romeo</span> and Condola Rashad <img class='actor-face juliet-color' src='assets/images/actor_faces/rashad.png' /> as <span class="juliet-color">Juliet</span>. In this production, the white Montagues were pitted against the black Capulets. Ian Rickson’s 2011 <a href='https://www.youngvic.org/whats-on/hamlet' target='_blank'>Young Vic production of <em>Hamlet</em></a> took a color-blind approach, with the title character played by Michael Sheen, a white actor, and <span class='ophelia-color'>Ophelia</span> played by Vinette Robinson <img class='actor-face ophelia-color' src='assets/images/actor_faces/robinson.png' />, a black actress, while <span class='ophelia-color'>Ophelia’s</span> brother <span class='generic-char-color'>Laertes</span> was played by Chinese-British actor Benedict Wong <img class='actor-face actor-face-generic' src='assets/images/actor_faces/wong.png' />, of Netflix's <em>Marco Polo</em> and <em>Doctor Strange</em> fame.</p>`);
+                  mainContent.html(`<h2>Changing attitudes towards race-blind casting in <span class='year-range-highlight'>productions since 1990</span></h2><p>In the last 30 years or so however, the landscape for actors of color playing Shakespearean roles has changed dramatically. We now see scores of black, Asian, and Latino/a actors cast in pretty much every major role, from <span class="hamlet-color">Hamlets</span> to <span class="cleopatra-color">Cleopatras</span>. In some of these productions, race in casting becomes a dramatic device, such as in David Leveaux’s 2013 Broadway production of <em>Romeo and Juliet</em>, with <b>Orlando Bloom</b> <img class='actor-face romeo-color' src='assets/images/actor_faces/bloom.png' /> as <span class="romeo-color">Romeo</span> and <b>Condola Rashad</b> <img class='actor-face juliet-color' src='assets/images/actor_faces/rashad.png' /> as <span class="juliet-color">Juliet</span>. In this production, the white Montagues were pitted against the black Capulets. Ian Rickson’s 2011 <a href='https://www.youngvic.org/whats-on/hamlet' target='_blank'>Young Vic production of <em>Hamlet</em></a> took a color-blind approach, with the title character played by <b>Michael Sheen</b> <img class='actor-face hamlet-color' src='assets/images/actor_faces/sheen.png' />, a white actor, and <span class='ophelia-color'>Ophelia</span> played by <b>Vinette Robinson</b> <img class='actor-face ophelia-color' src='assets/images/actor_faces/robinson.png' />, a black actress, while <span class='ophelia-color'>Ophelia’s</span> brother <span class='generic-char-color'>Laertes</span> was played by Chinese-British actor <b>Benedict Wong</b> <img class='actor-face actor-face-generic' src='assets/images/actor_faces/wong.png' />, of Netflix's <em>Marco Polo</em> and <em>Doctor Strange</em> fame.</p>`);
                   const height = +document.querySelector('#main-content').getBoundingClientRect().height;
                   const topOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().top;
 
@@ -3683,7 +3683,7 @@ queue()
                 }
                 console.log(state);
 
-                
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
@@ -3730,6 +3730,7 @@ queue()
 
 
               if (e.target.classList.contains('exploreDataSkip')) {
+
                   gtag('event', 'clicked', {
                       'event_category': 'Clicked',
                       'event_label': `Skipped to Explore`,
@@ -3739,6 +3740,7 @@ queue()
 
               if (e.target.classList.contains('backto')) {
                   //send google info
+
                   gtag('event', 'clicked', {
                       'event_category': 'Clicked',
                       'event_label': `Back to Story`,
