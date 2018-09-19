@@ -3425,7 +3425,6 @@ queue()
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               mainContent.style('top', window.innerHeight/2 - height/2);
 
-
               if (!directionForward) {
                   transitions([1900,2018], false, true, true, true, null, 100);
               }
@@ -3684,7 +3683,7 @@ queue()
                 }
                 console.log(state);
 
-
+                
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
