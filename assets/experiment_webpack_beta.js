@@ -3727,13 +3727,23 @@ queue()
               return;
           } else if (e.target.classList.contains('cta')) {
 
-              gtag('event', 'clicked', {
-                  'event_category': 'Clicked',
-                  'event_label': `Skipped to Explore`,
-              });
 
-              if (e.target.classList.contains('exploreDataSkip')) skipToExplore();
+
+              if (e.target.classList.contains('exploreDataSkip')) {
+                  gtag('event', 'clicked', {
+                      'event_category': 'Clicked',
+                      'event_label': `Skipped to Explore`,
+                  });
+                  skipToExplore();
+              }
+
               if (e.target.classList.contains('backto')) {
+                  //send google info
+                  gtag('event', 'clicked', {
+                      'event_category': 'Clicked',
+                      'event_label': `Back to Story`,
+                  });
+
                   //update state
                   state = 2;
                   updateProgressBar();
