@@ -3683,7 +3683,7 @@ queue()
                 }
                 console.log(state);
 
-
+                
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
