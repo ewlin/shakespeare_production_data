@@ -208,7 +208,7 @@ queue()
       ladyMacbethAges: {gender: 'female', color: '#78779E', idx: 5},
       cleopatraAges: {gender: 'female', color: '#76818f', idx: 6},
       //cleopatraAges: {gender: 'female', color: '#577EAD', idx: 6},
-      iagoAges: {gender: 'male', color: '#F45C42', idx: 4},
+      iagoAges: {gender: 'male', color: '#da7c62', idx: 4},
       kingLearAges: {gender: 'male', color: '#c5805e', idx: 8},
       othelloAges: {gender: 'male', color: '#F8B535', idx: 3},
       prosperoAges: {gender: 'male', color: '#FC7136', idx: 7},
@@ -858,9 +858,9 @@ queue()
                     .attr('fill-opacity', d => {
                         //if (d.age <= maxAge && d.age >= minAge) {
                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
-                            return .95;
+                            return .82;
                         } else {
-                            return .4;
+                            return .54;
                         }
 
                     });
@@ -869,13 +869,13 @@ queue()
                   selectAll('.role-dots').interrupt().transition(0)
                     .attr('fill-opacity', d => {
                         if (maxAge >= interquartiles[d.role][3]) {
-                          return .1;
+                          return .05;
                         } else if (d.age <= maxAge) { //} && d.age >= minAge) {
                           if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
                               //console.log('good');
-                              return .95;
+                              return .82;
                           } else {
-                              return .4;
+                              return .54;
                           }
                         } else {
                           return 0;
@@ -1006,12 +1006,12 @@ queue()
                                 .transition(500)
                                 .attr('fill-opacity', d => {
                                     if (maxAge >= fullCharacterAgesRange[3]) {
-                                        return .1;
+                                        return .05;
                                     } else {
                                         if (d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) {
                                             return .82;
                                         } else {
-                                            return .35;
+                                            return .54;
                                         }
                                     }
                                 });
@@ -1591,7 +1591,7 @@ queue()
                     })
                     .attr('fill-opacity', d => {
                         if (indicatePOC && d.race != 'unknown' && d.race != 'none') return .9;
-                        return d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35;
+                        return d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .54;
                     });
 
                     //filteredDots.filter(dot => dot.race != 'unknown' && dot.race != 'none')
@@ -1612,7 +1612,7 @@ queue()
                     //.attr('stroke', d=> d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? 'rgba(40, 129, 129, 0.4)' : 'none')
                     .attr('fill-opacity', d => {
                         if (indicatePOC && d.race != 'unknown' && d.race != 'none') return .9;
-                        return d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .35;
+                        return d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2] ? .82 : .54;
                     })
 
                     //.attr('stroke-opacity', 1)
@@ -2074,9 +2074,9 @@ queue()
               .attr('fill-opacity', d => {
                 //if (d.age <= maxAge && d.age >= minAge) {
                 if (d >= sampleInterquartiles[1] && d <= sampleInterquartiles[2]) {
-                    return .95;
+                    return .82;
                 } else {
-                    return .4;
+                    return .54;
                 }
               });
 
@@ -3855,7 +3855,7 @@ queue()
 						selectAll('.role-dots')
 							.attr('fill-opacity', d => {
 								return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
-									? (d.race != 'unknown' && d.race != 'none' ? .9 : .6)
+									? (d.race != 'unknown' && d.race != 'none' ? .9 : ((d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) ? .82 : .54))
 									: .05;
 							})
 							.attr('stroke', d => {
