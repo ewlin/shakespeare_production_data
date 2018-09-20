@@ -3151,7 +3151,7 @@ queue()
                           actorName: 'Edna Thomas',
                           character: 'ladyMacbeth',
                           text: 'The 1936 WPA/Federal Theater Project all-Black production of Macbeth starring Edna Thomas as Lady Macbeth was directed by Orson Welles',
-                          points: [[72, 20]],
+                          points: [[72, 20], [172, 18]],
                           dx: 320,
                           dy: -75,
                           align: 'middle'
@@ -3288,7 +3288,7 @@ queue()
                           actorName: 'Condola Rashad',
                           character: 'juliet',
                           text: 'Condola Rashad played Juliet in the 2013 Broadway production of Romeo and Juliet, directed by David Leveaux',
-                          points: [[172, 65]],
+                          points: [[172, 65], [299, 65]],
                           wrap: 150,
                           dx: 490,
                           dy: 10,
