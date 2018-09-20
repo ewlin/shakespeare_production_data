@@ -3683,11 +3683,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else if (e.code === 'ArrowLeft') {
@@ -3701,11 +3701,11 @@ queue()
                   updateProgressBar();
                 }
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
-                });
+                });**/
 
 
 
@@ -3719,32 +3719,32 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
-
+              /**
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Clicked link`,
-              });
+              });**/
 
               return;
           } else if (e.target.classList.contains('cta')) {
 
               if (!locked) {
                   if (e.target.classList.contains('exploreDataSkip')) {
-
+                      /**
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Skipped to Explore`,
-                      });
+                      });**/
                       skipToExplore();
                   }
 
                   if (e.target.classList.contains('backto')) {
                       //send google info
-
+                      /**
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Back to Story`,
-                      });
+                      });**/
 
                       //update state
                       state = 2;
@@ -3798,11 +3798,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else {
@@ -3815,11 +3815,11 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
-                });
+                });**/
 
 
               }
