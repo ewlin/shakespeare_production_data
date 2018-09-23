@@ -74,30 +74,22 @@ queue()
   .defer(csv, 'data/shakespeare_outline.csv')
   .defer(tsv, 'data/master_1.tsv')
   .defer(tsv, 'data/master_2.tsv')
-  .defer(tsv, 'data/ages/shylock_ages.tsv')
-  .defer(tsv, 'data/ages/ophelia_ages.tsv')
-  .defer(tsv, 'data/ages/romeo_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/portia_actor_ages.tsv')
-  .defer(tsv, 'data/ages/portia_ages.tsv')
-  .defer(tsv, 'data/ages/desdemona_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/macbeth_actor_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/lady_mac_actor_ages.tsv')
-  .defer(tsv, 'data/ages/macbeth_ages.tsv')
-  .defer(tsv, 'data/ages/lady_macbeth_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/cleopatra_actor_ages.tsv')
-  .defer(tsv, 'data/ages/cleopatra_ages.tsv')
-  .defer(tsv, 'data/ages/iago_ages.tsv')
-  .defer(tsv, 'data/ages/lear_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/rosalind_actor_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/richard_iii_actor_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/hamlet_actor_ages.tsv')
-  .defer(tsv, 'data/ages/rosalind_ages.tsv')
-  .defer(tsv, 'data/ages/richard_ages.tsv')
-  .defer(tsv, 'data/ages/hamlet_ages.tsv')
   .defer(tsv, 'data/ages/juliet_ages.tsv')
-  //.defer(tsv, 'data/ages_updated/othello_actor_ages.tsv')
+  .defer(tsv, 'data/ages/desdemona_ages.tsv')
+  .defer(tsv, 'data/ages/ophelia_ages.tsv')
+  .defer(tsv, 'data/ages/rosalind_ages.tsv')
+  .defer(tsv, 'data/ages/portia_ages.tsv')
+  .defer(tsv, 'data/ages/lady_macbeth_ages.tsv')
+  .defer(tsv, 'data/ages/cleopatra_ages.tsv')
+  .defer(tsv, 'data/ages/romeo_ages.tsv')
+  .defer(tsv, 'data/ages/hamlet_ages.tsv')
+  .defer(tsv, 'data/ages/macbeth_ages.tsv')
   .defer(tsv, 'data/ages/othello_ages.tsv')
+  .defer(tsv, 'data/ages/iago_ages.tsv')
+  .defer(tsv, 'data/ages/richard_ages.tsv')
+  .defer(tsv, 'data/ages/shylock_ages.tsv')
   .defer(tsv, 'data/ages/prospero_ages.tsv')
+  .defer(tsv, 'data/ages/lear_ages.tsv')
   .await(function(error, shakespeareOutline, m1, m2, ...characters) {
     const actorsMasterList = m1.concat(m2);
 
@@ -208,7 +200,7 @@ queue()
       ladyMacbethAges: {gender: 'female', color: '#78779E', idx: 5},
       cleopatraAges: {gender: 'female', color: '#76818f', idx: 6},
       //cleopatraAges: {gender: 'female', color: '#577EAD', idx: 6},
-      iagoAges: {gender: 'male', color: '#da7c62', idx: 4},
+      iagoAges: {gender: 'male', color: '#F45C42', idx: 4},
       kingLearAges: {gender: 'male', color: '#c5805e', idx: 8},
       othelloAges: {gender: 'male', color: '#F8B535', idx: 3},
       prosperoAges: {gender: 'male', color: '#FC7136', idx: 7},
@@ -2491,7 +2483,7 @@ queue()
 
               select('.annotation-group')
                 .call(makeAnnotations);
-                selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+                selectAll('.annotation-note-label').attr('stroke', 'white').attr('fill-opcacity', 0); //#908e8e
 
                   selectAll('.annotation-connector path.connector')
                     .attr('stroke', '#b4b8c0')
@@ -2585,7 +2577,7 @@ queue()
 
                   select('.annotation-group')
                     .call(makeAnnotations);
-                    selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+                    selectAll('.annotation-note-label').attr('stroke', 'white').attr('fill', 'white'); //#908e8e
 
                       selectAll('.annotation-connector path.connector')
                         .attr('stroke', '#b4b8c0')
@@ -2777,7 +2769,7 @@ queue()
 
                               select('.annotation-group')
                                 .call(makeAnnotations);
-                              selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+                              selectAll('.annotation-note-label').attr('stroke', 'white').attr('fill', 'white'); //#908e8e
 
                                 selectAll('.annotation-connector path.connector')
                                   .attr('stroke', '#b4b8c0')
@@ -3050,7 +3042,7 @@ queue()
 
                       select('.annotation-group')
                         .call(makeAnnotations);
-                      selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+                      selectAll('.annotation-note-label').attr('stroke', 'white').attr('fill', 'white'); //#908e8e
 
                         selectAll('.annotation-connector path.connector')
                           .attr('stroke', '#b4b8c0')
@@ -3207,7 +3199,7 @@ queue()
 
                       select('.annotation-group')
                         .call(makeAnnotations);
-                      selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+                      selectAll('.annotation-note-label').attr('stroke', 'white').attr('fill', 'white'); //#908e8e
 
                         selectAll('.annotation-connector path.connector')
                           .attr('stroke', '#b4b8c0')
@@ -3343,7 +3335,7 @@ queue()
 
                       select('.annotation-group')
                         .call(makeAnnotations);
-                      selectAll('.annotation-note-label').attr('stroke', 'white'); //#908e8e
+                      selectAll('.annotation-note-label').attr('stroke', 'white').attr('fill', 'white'); //#908e8e
 
                         selectAll('.annotation-connector path.connector')
                           .attr('stroke', '#b4b8c0')
