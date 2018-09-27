@@ -2623,7 +2623,7 @@ queue()
                   A hopeful trend has recently emerged. Dissatisfied with the modern status quo, a number of prominent older actresses like <b>Martha Henry</b> <img class='actor-face prospero-color' src='assets/images/actor_faces/henry.png' /> and <b>Glenda Jackson</b> <img class='actor-face kingLear-color' src='assets/images/actor_faces/jackson.png' /> have
                   started tackling traditionally older male roles like <span class="kingLear-color">Lear</span> and <span class="prospero-color">Prospero</span>, potentially opening an alternative route for women later in their acting careers.
                   Though crossdressing is nothing new for Shakespearean productions—back when the plays were first performed, the <a href="https://www.thirteen.org/program-content/gender-swaps-in-shakespeare-plays/" target="_blank">female roles were played by boys</a>, female characters disguised as men is a common plot device in his comedies, and
-                  throughout the 1800s and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—actresses playing other male roles (represented in graph as <span class='legend-symbol'>\u2640</span>), especially older characters like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a more recent development.</p>`);
+                  throughout the 1800s and 1900s, a <a href="https://www.theguardian.com/stage/gallery/2014/sep/26/female-hamlets-sarah-bernhardt-maxine-peake-in-pictures" target="_blank">number of actresses crossdressed</a> to play <span class="hamlet-color">Hamlet</span> on stage—<span class='inline-legend'>actresses playing other male roles (represented in graph as <span class='legend-symbol inverse'>\u2640</span>)</span>, especially older characters like <span class="richardIii-color">Richard</span> and <span class="kingLear-color">Lear</span> does seem like a more recent development.</p>`);
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               const bottomOfSVGContainer = +document.querySelector('.svg-main').getBoundingClientRect().bottom;
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
@@ -2852,8 +2852,8 @@ queue()
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2018</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight all non-white actors
-              with a textured circle ( <svg width='13' height='13' class='inline-svg'><circle cx='6' cy='7' r='6'/></svg> ). There’s perhaps no other character in Shakespeare’s oeuvre as inextricably linked to race as <span class="othello-color">Othello</span>. Shakespeare's original text offers hints to
+              mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2018</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight <span class='inline-legend'>
+              all non-white actors with a textured circle ( <svg width='13' height='13' class='inline-svg'><circle cx='6' cy='7' r='6'/></svg> ).</span> There’s perhaps no other character in Shakespeare’s oeuvre as inextricably linked to race as <span class="othello-color">Othello</span>. Shakespeare's original text offers hints to
               <span class="othello-color">Othello's</span> physical features—at one point in the play, the Moor exclaims, "Her [Desdemona's] name, that was as fresh as Dian's visage, <b>is now begrimed and black as mine own face</b>." (III.iii.441-443)
               The view towards the Moor’s <a href="https://en.wikipedia.org/wiki/Othello#Race" target="_blank">ethnic identity</a> has morphed and changed throughout history, and today, the role
               has become the quintessential heavyweight role for a male actor of color* to tackle. Looking at our entire sample of <span class="othello-color">Othellos</span> since 1900, we see mostly a sea of minority actors playing the Moor of Venice. But what if we filtered by time period?</p>
@@ -2864,7 +2864,7 @@ queue()
               mainContent.style('top', (window.innerHeight - bottomOfSVGContainer - height)/2 + bottomOfSVGContainer - 15);
               mainContent.transition(1000).style('opacity', 1);
 
-              select('.inline-svg circle').attr('mask', 'url(#mask)').attr('fill', 'white');
+              select('.inline-svg circle').attr('mask', 'url(#mask)').attr('fill', 'black');
 
                 //reset annotations
                 const blankAnnotations = [
