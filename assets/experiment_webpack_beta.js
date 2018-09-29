@@ -3675,11 +3675,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else if (e.code === 'ArrowLeft') {
@@ -3693,11 +3693,11 @@ queue()
                   updateProgressBar();
                 }
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
-                });
+                });**/
 
 
 
@@ -3711,32 +3711,32 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
-
+              /**
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Clicked link`,
-              });
+              }); **/
 
               return;
           } else if (e.target.classList.contains('cta')) {
 
               if (!locked) {
                   if (e.target.classList.contains('exploreDataSkip')) {
-
+                      /**
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Skipped to Explore`,
-                      });
+                      });**/
                       skipToExplore();
                   }
 
                   if (e.target.classList.contains('backto')) {
                       //send google info
-
+                      /**
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Back to Story`,
-                      });
+                      });**/
 
                       //update state
                       state = 2;
@@ -3790,11 +3790,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else {
@@ -3807,11 +3807,11 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
-                });
+                });**/
 
 
               }
@@ -3824,7 +3824,7 @@ queue()
 
 
 				//Rough draft
-				function filterPoints(dateRange) {
+				function filterPoints(dateRange, transitionFlag, callBack) {
 					return function() {
                         //const voronoiActive = select('.voronoi-overlay').selectAll('path').filter(d => {
                         //    return moment(d.data.actor.opening) >= moment(String(dateRange[0])) && moment(d.data.actor.opening) < moment(String(dateRange[1] + 1));
@@ -3843,8 +3843,8 @@ queue()
 
                         //TODO: Try applying mask on oppoGender data points as well (8/24)
 
-
-						selectAll('.role-dots')
+                        //consider adding these transitions + adding a callback
+						selectAll('.role-dots')//.transition().duration(800)
 							.attr('fill-opacity', d => {
 								return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
 									? (d.race != 'unknown' && d.race != 'none' ? .9 : ((d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) ? .82 : .54))
@@ -3854,7 +3854,7 @@ queue()
 								if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
 							});
 
-                        selectAll('.role-text-dots')
+                        selectAll('.role-text-dots')//.transition().duration(800)
     						.attr('fill-opacity', d => {
     							return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
     								? 1
@@ -3868,7 +3868,3 @@ queue()
 
 
 	});
-
-
-
-    /** 9/18/18 **/
