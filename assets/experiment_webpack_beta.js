@@ -2795,33 +2795,6 @@ queue()
 
                   }
               });
-                  /**
-                  const blankAnnotations = [
-                      {
-                          type: annotation.annotationLabel,
-                          note: {
-                              label: '',
-                          },
-
-
-                      }
-                  ];
-
-                  makeAnnotations.annotations(blankAnnotations);
-
-                  select('.annotation-group')
-                    .call(makeAnnotations);
-
-                  //create voronoi overlay as Test
-                  //voronoifiedPoints
-                  //.attr('cx', d => scaleX(d.age))
-                  //.attr('cy', d => roleData.gender == 'male' ? male(roleData.index, d.yCoord) : female(roleData.index, d.yCoord))
-                  **/
-
-
-              //translateUp();
-              //select('.svg-main').attr('transform', `translate(0,-${band * 9})`);
-              //select('.voronoi-overlay').remove();
 
           }],
           [function(directionForward) {
@@ -3824,7 +3797,7 @@ queue()
 
 
 				//Rough draft
-				function filterPoints(dateRange) {
+				function filterPoints(dateRange, transitionFlag, callBack) {
 					return function() {
                         //const voronoiActive = select('.voronoi-overlay').selectAll('path').filter(d => {
                         //    return moment(d.data.actor.opening) >= moment(String(dateRange[0])) && moment(d.data.actor.opening) < moment(String(dateRange[1] + 1));
@@ -3843,8 +3816,8 @@ queue()
 
                         //TODO: Try applying mask on oppoGender data points as well (8/24)
 
-
-						selectAll('.role-dots')
+                        //consider adding these transitions + adding a callback
+						selectAll('.role-dots')//.transition().duration(800)
 							.attr('fill-opacity', d => {
 								return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
 									? (d.race != 'unknown' && d.race != 'none' ? .9 : ((d.age >= interquartiles[d.role][1] && d.age <= interquartiles[d.role][2]) ? .82 : .54))
@@ -3854,7 +3827,7 @@ queue()
 								if (moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))) return 'none';
 							});
 
-                        selectAll('.role-text-dots')
+                        selectAll('.role-text-dots')//.transition().duration(800)
     						.attr('fill-opacity', d => {
     							return moment(d.opening) >= moment(String(dateRange[0])) && moment(d.opening) < moment(String(dateRange[1] + 1))
     								? 1
@@ -3868,7 +3841,3 @@ queue()
 
 
 	});
-
-
-
-    /** 9/18/18 **/
