@@ -356,7 +356,21 @@ queue()
                 yCoord: Math.random()
               }); //pushing an integer; will be an object once refactored
               **/
-              const yCoordinate = a['actor'] == 'Glenda Jackson' && role == 'kingLear' ? .4 : Math.random();
+
+
+              let yCoordinate;
+              if (a['actor'] == 'Glenda Jackson') {
+                  yCoordinate = .4;
+              } else if (role == 'othello' && a['actor'] == 'Patrick Stewart') {
+                  yCoordinate = .9;
+              } else if (role == 'othello' && parseFloat(age) > 55 && parseFloat(age) < 59) {
+                  yCoordinate = Math.random() * .63;
+              } else {
+                  yCoordinate = Math.random();
+              }
+
+              // = a['actor'] == 'Glenda Jackson' && role == 'kingLear' ? .4 : Math.random();
+
               roleAgesArray.push({
                 tempID: index,
                 age: parseFloat(age),
