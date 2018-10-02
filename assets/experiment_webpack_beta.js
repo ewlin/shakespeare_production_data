@@ -359,9 +359,9 @@ queue()
 
 
               let yCoordinate;
-              if (a['actor'] == 'Glenda Jackson') {
+              if (a['actor'] == 'Glenda Jackson' && role == 'kingLear') {
                   yCoordinate = .4;
-              } else if (role == 'othello' && a['actor'] == 'Patrick Stewart') {
+              } else if (role == 'othello' && a['actor'] == 'Patrick Stewart' || role == 'iago' && a['actor'] == 'Lucian Msamati') {
                   yCoordinate = .9;
               } else if (role == 'othello' && parseFloat(age) > 55 && parseFloat(age) < 59) {
                   yCoordinate = Math.random() * .63;
@@ -2982,11 +2982,21 @@ queue()
                           type: 'color',
                           actorName: 'Ron Canada',
                           character: 'iago',
-                          text: 'Ron Canada played Iago opposite of Patrick Stewart\'s Othello, making him one of a handful of black actors who have played this role',
-                          points: [[-43, 19]],
+                          text: 'Ron Canada played Iago opposite of Patrick Stewart\'s Othello, making him one of a handful of Black actors who have played this role',
+                          points: [[-43, 32]],
                           wrap: 137,
                           dx: -140,
-                          dy: 32,
+                          dy: 60,
+                      },
+                      {
+                          type: 'color',
+                          actorName: 'Lucian Msamati',
+                          character: 'iago',
+                          text: 'In 2015, Lucian Msamati, best know as the pirate Salladhor Saan on Game of Thrones, became the first Black actor to play Iago in the history of the Royal Shakespeare Company',
+                          dx: -100,
+                          dy: -70,
+                          wrap: 175,
+                          points: [[-55, -3], [-80, -20]]
                       }
                   ];
 
@@ -3662,11 +3672,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else if (e.code === 'ArrowLeft') {
@@ -3680,11 +3690,11 @@ queue()
                   updateProgressBar();
                 }
 
-
+                /**
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
-                });
+                });**/
 
 
 
@@ -3698,32 +3708,32 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
-
+              /**
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Clicked link`,
-              });
+              });**/
 
               return;
           } else if (e.target.classList.contains('cta')) {
 
               if (!locked) {
                   if (e.target.classList.contains('exploreDataSkip')) {
-
+                      /**
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Skipped to Explore`,
-                      });
+                      });**/
                       skipToExplore();
                   }
 
                   if (e.target.classList.contains('backto')) {
                       //send google info
-
+                      /**
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Back to Story`,
-                      });
+                      });**/
 
                       //update state
                       state = 2;
@@ -3777,11 +3787,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else {
@@ -3794,11 +3804,11 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
-                });
+                });**/
 
 
               }
