@@ -3409,7 +3409,7 @@ queue()
               mainContent.html(`<h2 class='story-h2'>Epilogue</h2>
                                 <p class='story'>Today, the <a href='https://www.rada.ac.uk/acting/ba-hons-acting/' target='_blank'>3-year BA in Acting program</a> at RADA, the alma mater of Ralph Fiennes, Rosemary Harris, and Alan Rickman, among many other equally familiar names, admits exactly 28 students each year: 14 male, 14 female. And, at least according to my informal tally, the <a href='https://ysdshowcase.com/the-class-of-2018/' target='_blank'>most recent graduating class of actors from the Yale School of Drama</a> is also a paragon of diversity in both gender and race. Yet, while the educational gatekeepers of a young actor’s career have been moving towards a more equitable equilibrium, the professional side of things remains far more complicated.</p>
                                 <p class='story'>On one hand, since the 1990s, we’ve seen the floodgates open for actors of color in the types of Shakespearean opportunities available. As an actor of color, you’re no longer confined to the single role of <span class='othello-color'>Othello</span>. As theatergoers, we’re willing to suspend our disbelief to watch a black <span class='ophelia-color'>Ophelia</span> with a Chinese brother. But this willingness of ours is also selectively contradictory. Whether consciously or unconsciously, we’ve somehow collectively decided that female roles like <span class='juliet-color'>Juliet</span> and <span class='ophelia-color'>Ophelia</span> are defined by youth and innocence, and must be played by young actresses. But as we've seen, audiences a century ago were perfectly accepting of middle-aged actresses in these parts.</p>
-                                <p class='story story-last'>Perhaps these contradictions in our selective need for believability on stage is simply reflective of the ever-changing turbulence of larger societal forces outside of theatre, and maybe we should simply embrace it, and let it lead us to more surprising moments of creativity. For if a director can still find a thoughtful way to cast a white <span class='othello-color'>Othello</span> today, then maybe it’s not too late for you, the 60-year-old actress, to jump on stage and take back the role of the beautiful and clever <span class='portia-color'>Portia</span>.</p>
+                                <p class='story story-last'>Perhaps these contradictions in our selective need for believability on stage is simply reflective of the ever-changing turbulence of larger societal forces outside of theatre, and maybe we should simply embrace it, and let it lead us to more surprising moments of creativity. For if a director can still find a thoughtful way to cast a white <span class='othello-color'>Othello</span> today, then maybe it’s not too late for you, the 60-year-old actress, to jump on stage and take back the role of a beautiful and clever, but more mature <span class='portia-color'>Portia</span>.</p>
                                 <div class='story-legend-text-container'><p class='story-legend-text legend-text'>Press the <span class='key-indicator'><b>&#x21e8;</b></span> key or the <span class='key-indicator'><b>&nbsp;SPACE&nbsp;</b></span> bar to start exploring the dataset in more detail! Hover over each dot ( <span class='legend-dot'></span> ) or symbol (<span class='legend-symbol-span'>\u2642/\u2640</span>) to read more about the actor, and the associated production.</p></div>`)
               const height = +document.querySelector('#main-content').getBoundingClientRect().height;
               mainContent.style('top', window.innerHeight/2 - height/2);
@@ -3672,11 +3672,11 @@ queue()
                 }
                 console.log(state);
 
-                /**
+                
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
-                });**/
+                });
 
 
               } else if (e.code === 'ArrowLeft') {
@@ -3690,11 +3690,11 @@ queue()
                   updateProgressBar();
                 }
 
-                /**
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved back to Slide ${state}`,
-                });**/
+                });
 
 
 
@@ -3708,32 +3708,32 @@ queue()
         document.querySelector('body').addEventListener('mousedown', function nextStep (e) {
 
           if (e.target.tagName == 'A' || e.target.classList.contains('logo')) {
-              /**
+
               gtag('event', 'clicked', {
                   'event_category': 'Clicked',
                   'event_label': `Clicked link`,
-              });**/
+              });
 
               return;
           } else if (e.target.classList.contains('cta')) {
 
               if (!locked) {
                   if (e.target.classList.contains('exploreDataSkip')) {
-                      /**
+
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Skipped to Explore`,
-                      });**/
+                      });
                       skipToExplore();
                   }
 
                   if (e.target.classList.contains('backto')) {
                       //send google info
-                      /**
+
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Back to Story`,
-                      });**/
+                      });
 
                       //update state
                       state = 2;
@@ -3787,11 +3787,11 @@ queue()
                 }
                 console.log(state);
 
-                /**
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
-                });**/
+                });
 
 
               } else {
@@ -3804,11 +3804,11 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-                /**
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
-                });**/
+                });
 
 
               }
