@@ -3790,11 +3790,11 @@ queue()
                 }
                 console.log(state);
 
-                /**
+                
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
-                });**/
+                });
 
 
               } else {
@@ -3807,11 +3807,11 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-                /**
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
-                });**/
+                });
 
 
               }
