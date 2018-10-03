@@ -2993,10 +2993,10 @@ queue()
                           actorName: 'Lucian Msamati',
                           character: 'iago',
                           text: 'In 2015, Lucian Msamati, best know as the pirate Salladhor Saan on Game of Thrones, became the first Black actor to play Iago in the history of the Royal Shakespeare Company',
-                          dx: -100,
-                          dy: -70,
+                          dx: -150,
+                          dy: -(band * 2 + 10),
                           wrap: 175,
-                          points: [[-55, -3], [-80, -20]]
+                          points: [[-55, 3], [-90, 5]]
                       }
                   ];
 
@@ -3672,7 +3672,7 @@ queue()
                 }
                 console.log(state);
 
-                
+
                 gtag('event', 'keypress', {
                     'event_category': 'Pressed Key',
                     'event_label': `Moved forward to Slide ${state}`,
@@ -3719,21 +3719,16 @@ queue()
 
               if (!locked) {
                   if (e.target.classList.contains('exploreDataSkip')) {
+                      skipToExplore();
+
 
                       gtag('event', 'clicked', {
                           'event_category': 'Clicked',
                           'event_label': `Skipped to Explore`,
                       });
-                      skipToExplore();
                   }
 
                   if (e.target.classList.contains('backto')) {
-                      //send google info
-
-                      gtag('event', 'clicked', {
-                          'event_category': 'Clicked',
-                          'event_label': `Back to Story`,
-                      });
 
                       //update state
                       state = 2;
@@ -3760,6 +3755,14 @@ queue()
                           //selectAll('.tail-dot').attr('r', '3px');
                           eventsQueue[1][0]();
                       }, 300);
+
+                      //send google info
+
+                      gtag('event', 'clicked', {
+                          'event_category': 'Clicked',
+                          'event_label': `Back to Story`,
+                      });
+
                   }
 
               }
@@ -3787,11 +3790,11 @@ queue()
                 }
                 console.log(state);
 
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
-                });
+                });**/
 
 
               } else {
@@ -3804,11 +3807,11 @@ queue()
                   state -= 1;
                   updateProgressBar();
                 }
-
+                /**
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked back to Slide ${state}`,
-                });
+                });**/
 
 
               }
