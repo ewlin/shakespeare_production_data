@@ -2996,7 +2996,7 @@ queue()
                           dx: -150,
                           dy: -(band * 2 + 10),
                           wrap: 175,
-                          points: [[-55, 3], [-90, 5]]
+                          points: [[-55, 15], [-90, 5]]
                       }
                   ];
 
@@ -3790,7 +3790,7 @@ queue()
                 }
                 console.log(state);
 
-                
+
                 gtag('event', 'clicked', {
                     'event_category': 'Clicked',
                     'event_label': `Clicked forward to Slide ${state}`,
