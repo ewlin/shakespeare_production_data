@@ -2743,7 +2743,7 @@ queue()
                                   type: 'genderBend',
                                   actorName: 'Sarah Harlett',
                                   character: 'richardIii',
-                                  text: 'Sarah Harlett plays the villainous title character in a current, all-female (opened September 2018) Seattle Shakespeare Company production of Richard III',
+                                  text: 'Sarah Harlett played the villainous title character in a recent, all-female (opened September 2018) Seattle Shakespeare Company production of Richard III',
                                   points: [[-110, 27]],
                                   wrap: 140,
                                   dx: -245,
