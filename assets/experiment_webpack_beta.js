@@ -136,7 +136,7 @@ queue()
         if (document.querySelector('.chart-title-year-range')) {
             select('.chart-title-year-range').html(`${years[0]} and ${years[1]}`);
         }
-        
+
         gtag('event', 'brushed', {
             'event_category': 'Filtered years',
             'event_label': `Filtered for year range: ${years[0]}-${years[1]}`,
