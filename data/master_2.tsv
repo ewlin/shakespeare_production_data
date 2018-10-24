@@ -339,11 +339,11 @@ Jeff Lillico	1980-08-01T00:00:00	male	unknown	TRUE	https://www.thespec.com/whats
 Catherine Bailey	1980-01-02T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0047181/	IMDb			unknown	
 Allison Mckenzie	1979-10-11T00:00:00	female	unknown	FALSE		Google			unknown	
 Michael Milligan	1979-01-01T00:00:00	male	unknown	TRUE	http://mercykillerstheplay.com/wp-content/uploads/M_Milligan_Acting_Resume_11-17-20121.pdf	Actor resume.			unknown	
-Hila Feldman	1979-06-10T00:00:00	female	unknown	unknown	Google				unknown	
+Hila Feldman	1979-06-10T00:00:00	female	unknown	FALSE	Google	Google			unknown	
 Nicole Lowrance	1979-06-01T00:00:00	female	unknown	TRUE	https://www.washingtonpost.com/archive/lifestyle/2001/12/04/for-this-ophelia-a-fan-whos-quite-a-lady/0f9a39ba-ffff-4ce1-b1e8-a259167b6cb3/?utm_term=.7d5c5dc3201c	The Washington Post. Production preview.			unknown	
 James McAvoy	1979-04-21T00:00:00	male	unknown	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/e/e3/James_McAvoy_Cannes_2014.jpg	unknown	
 Susie Riddell	1978-07-01T00:00:00	female	unknown	TRUE	http://www.bbc.co.uk/programmes/profiles/gQ9f0WVGpJFgfZvrRNdZcH/tracy-horrobin	BBC			unknown	
-Cassandra Bissell	1978-01-01T00:00:00	female	unknown	unknown	http://articles.chicagotribune.com/2002-06-30/features/0206300438_1_impressions-lake-forest-chicago-actress	Chicago Tribune. Actress profile/feature.			unknown	
+Cassandra Bissell	1977-12-01T00:00:00	female	unknown	TRUE	http://articles.chicagotribune.com/2002-06-30/features/0206300438_1_impressions-lake-forest-chicago-actress	Chicago Tribune. Actress profile/feature.			unknown	
 Chaon Cross	1977-08-01T00:00:00	female	unknown	TRUE	http://www.chicagomag.com/Chicago-Magazine/March-2011/50-Most-Beautiful-Chicagoans-Chaon-Cross/	Chicago Magazine			unknown	
 Jesse J. Perez	1977-07-01T00:00:00	male	Latino	TRUE	https://www.salzburgerfestspiele.at/biography/artistid/13447	Festival actor biography			unknown	
 Yalin Ozucelik	1977-06-30T00:00:00	male	Asian	FALSE	http://www.statemaster.com/encyclopedia/Yalin-Ozucelik	NationMaster.com			unknown	
@@ -358,7 +358,7 @@ James Garnon	1973-01-01T00:00:00	male	unknown	TRUE	https://www.meltontimes.co.uk
 Joe Shaw	1972-11-15T00:00:00	male	unknown	FALSE		Google			unknown	
 Tessa Auberjonois	1972-07-01T00:00:00	female	unknown	TRUE	https://goodmenproject.com/arts/life-with-a-famous-father-js/	The Good Men Project			unknown	
 Lucy Whybrow	1972-07-01T00:00:00	female	unknown	TRUE	https://www.imdb.com/name/nm0926646/	IMDb			unknown	
-Cathy Sara	1972-04-07T00:00:00	female	unknown	unknown	https://www.imdb.com/name/nm0764700/	IMDb			unknown	
+Cathy Sara	1972-04-07T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0764700/	IMDb			unknown	
 James Vincent Meredith	1971-08-01T00:00:00	male	Black	TRUE	http://www.oakpark.com/News/Articles/2-26-2013/Oak-Park-actor-James-Vincent-Meredith-lands-gig-in-'The-Book-of-Mormon'/	Oakpark.com/Wednesday Journal of Oak Park and River Forest. Actor profile/feature.			unknown	
 Jonathan Goad	1971-03-20T00:00:00	male	unknown	FALSE		Google			unknown	
 Aidan McArdle	1970-07-01T00:00:00	male	unknown	TRUE		Wikipedia			unknown	
@@ -377,7 +377,7 @@ Rupert Wickham	1964-07-01T00:00:00	male	unknown	TRUE	https://www.imdb.com/name/n
 Wallace Acton	1964-06-01T00:00:00	male	unknown	TRUE	https://www.metroweekly.com/2007/12/return-of-the-king/	Metro Weekly. Actor profile/feature.			unknown	
 Tim McMullan	1963-07-01T00:00:00	male	unknown	TRUE		Google			unknown	
 Patrice Naiambana	1962-07-01T00:00:00	male	Black	TRUE	https://www.imdb.com/name/nm0619628/	IMDb			unknown	
-Susan Riddiford	1961-06-01T00:00:00	female	unknown	TRUE	http://radio.wpsu.org/post/remembering-susan-riddiford-shedd				unknown	
+Susan Riddiford	1961-06-01T00:00:00	female	unknown	TRUE	http://radio.wpsu.org/post/remembering-susan-riddiford-shedd	WPSU. Actress obituary. 			unknown	
 Patricia Kerrigan	1961-01-01T00:00:00	female	unknown	TRUE	https://www.imdb.com/name/nm0449873/	IMDb			unknown	
 Steve Pickering	1960-09-01T00:00:00	male	unknown	TRUE	http://articles.chicagotribune.com/2002-03-26/features/0203260014_1_scene-play-crutches	Chicago Tribune. Actor profile/feature.			unknown	
 Richard McCabe	1960-08-18T00:00:00	male	unknown	FALSE		Google			unknown	
@@ -442,7 +442,7 @@ Dorothy Green	1886-06-30T00:00:00	female	unknown	FALSE	https://www.imdb.com/name
 Murray Carrington	1885-03-13T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0140584/	IMDb			unknown	
 Madge Fabian	1883-08-16T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm5387008/	IMDb			unknown	
 Baliol Holloway	1883-02-28T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0391287/	IMDb			unknown	
-Margaret Halstan	1879-12-25T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0357052/bio?ref_=nm_ov_bio_sm				unknown	
+Margaret Halstan	1879-12-25T00:00:00	female	unknown	FALSE	https://www.imdb.com/name/nm0357052/	IMDb			unknown	
 Herbert Grimwood	1875-03-07T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0342376/	IMDb			unknown	
 Arthur Whitby	1869-09-22T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0924340/	IMDb			unknown	
 Edward Lyall Swete	1865-07-25T00:00:00	male	unknown	FALSE	https://www.imdb.com/name/nm0842493/	IMDb			unknown	
