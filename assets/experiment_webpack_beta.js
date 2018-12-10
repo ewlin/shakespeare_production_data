@@ -136,11 +136,11 @@ queue()
         if (document.querySelector('.chart-title-year-range')) {
             select('.chart-title-year-range').html(`${years[0]} and ${years[1]}`);
         }
-        /**
+
         gtag('event', 'brushed', {
             'event_category': 'Filtered years',
             'event_label': `Filtered for year range: ${years[0]}-${years[1]}`,
-        });**/
+        });
 
       } else {
         brushGroup.call(brush.move, [1900, 2018].map(scaleYear));
@@ -2998,7 +2998,7 @@ queue()
                           type: 'color',
                           actorName: 'Lucian Msamati',
                           character: 'iago',
-                          text: 'In 2015, Lucian Msamati, best know as the pirate Salladhor Saan on Game of Thrones, became the first Black actor to play Iago in the history of the Royal Shakespeare Company',
+                          text: 'In 2015, Lucian Msamati, best known as the pirate Salladhor Saan on Game of Thrones, became the first Black actor to play Iago in the history of the Royal Shakespeare Company',
                           dx: -150,
                           dy: -(band * 2 + 10),
                           wrap: 175,
