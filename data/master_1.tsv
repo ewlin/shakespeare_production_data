@@ -835,8 +835,8 @@ Philip Bowen	1946-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Rob Campbell	no birthday on article	male	none	FALSE			TRUE		none
 Bill Camp	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/47/Bill_Camp_%2851526%29.jpg/220px-Bill_Camp_%2851526%29.jpg	none
 Nicholas Gleaves	1969-01-01T00:00:00	male	none	FALSE		Wikipedia	TRUE		none
-Paul Higgins	1964-07-01T00:00:00	male	none	FALSE		Google	TRUE		none
-Michael Winters	no birthday on article	male	none	FALSE			TRUE		none
+Paul Higgins	1964-07-01T00:00:00	male	none	TRUE		Google	TRUE		none
+Michael Winters	1943-10-01T00:00:00	male	none	TRUE	http://articles.latimes.com/1994-04-15/news/va-46300_1_michael-winters	The Los Angeles Times. Actor profile/feature.	TRUE		none
 Erin Krakow	1984-09-05T00:00:00	female	none	FALSE		Wikipedia	TRUE		none
 Louis Mellis	no birthday on article	male	none	FALSE			TRUE		none
 Kate Fahy	no birthday on article	female	none	FALSE			TRUE		none
