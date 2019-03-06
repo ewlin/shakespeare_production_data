@@ -17,13 +17,6 @@ manager = Manager()
 temp_arr = manager.list()
 url_base = 'https://en.wikipedia.org/wiki/'
 
-#actors = glob.glob('data/temp/*.tsv')
-
-
-'''
-February 17, 1925
-5 April 1929
-'''
 def normalize_date(date):
     #16th April 1934
     '''Attempts to transform date in string into a date obj
