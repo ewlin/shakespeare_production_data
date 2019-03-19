@@ -109,7 +109,7 @@ queue()
     //Setup for brushing year filter
     const controlsHeight = document.querySelector('.svg-controls').getBoundingClientRect().height;
 
-	const scaleYear = scaleLinear().domain([1900, 2018]).range([100, widthMax - 100]);
+	const scaleYear = scaleLinear().domain([1900, 2019]).range([100, widthMax - 100]);
 
 	const brush = brushX().extent([[100, 20], [widthMax - 100, controlsHeight - 10]])
       .on('brush', brushed)
@@ -143,7 +143,7 @@ queue()
         });
 
       } else {
-        brushGroup.call(brush.move, [1900, 2018].map(scaleYear));
+        brushGroup.call(brush.move, [1900, 2019].map(scaleYear));
       }
     }
 
@@ -243,7 +243,7 @@ queue()
       let characterName = character[0]['role'].toLowerCase().split(' ');
       if (characterName.length > 1) characterName[1] = characterName[1].charAt(0).toUpperCase() + characterName[1].substring(1);
       characterName = characterName.join('');
-      processPoints(character, characterName, true, 1980, 2019);
+      processPoints(character, characterName, true, 1980, 2020);
       //processPoints(character, characterName, 1900, 2018);
     });
 
@@ -2323,7 +2323,7 @@ queue()
                 animateDots(66, 86, directionForward, true)();
                 mainContent.html(null);
             } else {
-                transitions([1980, 2019], false, true);
+                transitions([1980, 2020], false, true);
                 mainContent.style('opacity', 0);
 
                 mainContent.style('width', 1230);
@@ -2540,7 +2540,7 @@ queue()
               mainContent.style('opacity', 0);
 
               if (directionForward) {
-                  transitions([1980, 2019], false, false);
+                  transitions([1980, 2020], false, false);
               }
 
               selectAll('.role-text-dots').attr('opacity', 0);
@@ -2708,7 +2708,7 @@ queue()
 
 
               if (!directionForward) {
-                  transitions([1980, 2019], false, false, false, false);
+                  transitions([1980, 2020], false, false, false, false);
                   //selectAll('.character-meta').select('.character-meta-inner').attr('opacity', 1);
                   //selectAll('.role-dots-group').attr('opacity', 1)
               }
@@ -2758,7 +2758,7 @@ queue()
                               annotationsArray.forEach(annoMeta => {
                                   const index = characterAges[`${annoMeta.character}Ages`].idx;
                                   select(`.${annoMeta.character}-dots-group`).selectAll('text').each(charActor => {
-                                      if (charActor.actor == annoMeta.actorName) {
+                                      if (charActor.actor == annoMeta.actorName && charActor.theatre != 'Cort Theatre') {
                                           const charAnnotation = {
                                               type: annotation.annotationCalloutCircle,
                                               note: {
@@ -2819,7 +2819,7 @@ queue()
           }],
           [function(directionForward) {
               if (directionForward) {
-                  transitions([1900,2019], false, true, true, true, function() {
+                  transitions([1900,2020], false, true, true, true, function() {
                       selectAll('.character-meta').each(function(char) {
                           if (this.id !== 'othellometa') {
                               select(this).select('.character-meta-inner')
@@ -2839,13 +2839,13 @@ queue()
                       });
                   });
               } else {
-                  filterPoints([1900,2018])();
+                  filterPoints([1900,2019])();
               }
 
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
 
-              mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2018</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight <span class='inline-legend'>
+              mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1900 to 2019</span></h2><p>What about race? Let’s introduce a minor change to our graphs: from now on, we'll highlight <span class='inline-legend'>
               all non-white actors with a textured circle ( <svg width='13' height='13' class='inline-svg'><circle cx='6' cy='7' r='6'/></svg> ).</span> There’s perhaps no other character in Shakespeare’s oeuvre as inextricably linked to race as <span class="othello-color">Othello</span>. Shakespeare's original text offers hints to
               <span class="othello-color">Othello's</span> physical features—at one point in the play, the Moor exclaims, "Her [Desdemona's] name, that was as fresh as Dian's visage, <b>is now begrimed and black as mine own face</b>." (III.iii.441-443)
               The view towards the Moor’s <a href="https://en.wikipedia.org/wiki/Othello#Race" target="_blank">ethnic identity</a> has morphed and changed throughout history, and today, the role
@@ -2915,7 +2915,7 @@ queue()
 
           }],
           [function(directionForward) {
-              filterPoints([1980, 2018])();
+              filterPoints([1980, 2019])();
               select('.iago-dots-group').attr('opacity', 1);
               select('#iagometa').select('.character-meta-inner').attr('opacity', 1);
               const mainContent = select('#main-content');
@@ -2963,7 +2963,7 @@ queue()
 
               function createContent() {
                   mainContent.transition(1000).style('opacity', 1);
-                  mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1980 to 2018</span></h2><p>By the mid-80s, the role of <span class="othello-color">Othello</span> was, for all intents and purposes, gone from the white actor’s repertoire.
+                  mainContent.html(`<h2>A case study: <span class='othello-color'>Othello</span> and racial trends in casting <span class='year-range-highlight'>productions from 1980 to 2019</span></h2><p>By the mid-80s, the role of <span class="othello-color">Othello</span> was, for all intents and purposes, gone from the white actor’s repertoire.
                   If, as a director, you were to cast a white actor as <span class="othello-color">Othello</span> in a production today, you should be prepared for the firestorm you’re likely to set off. But on occasion, more creative minds have also found fresh and interesting ways to subvert this modern taboo. Jude Kelly’s
                   <a href='http://www.shakespearetheatre.org/events/othello-97-98/' target='_blank'>1997 production</a> of the play was essentially a photo negative of the usual productions: It starred <b>Patrick Stewart</b> <img class='actor-face othello-color' src='assets/images/actor_faces/stewart.jpg' /> as a white <span class="othello-color">Othello</span>,
                   while the rest of the cast was all-black, including <b>Ron Canada</b> <img class='actor-face iago-color' src='assets/images/actor_faces/canada.png' /> as <span class="iago-color">Iago</span>, the Moorish general's villainous ensign. In most productions, <span class="iago-color">Iago</span> and <span class="desdemona-color">Desdemona</span>,
@@ -3239,7 +3239,7 @@ queue()
 
               const mainContent = select('#main-content');
               mainContent.style('opacity', 0);
-              filterPoints([1990,2018])();
+              filterPoints([1990,2019])();
 
               selectAll('.role-dots-group').attr('opacity', 1);
               selectAll('.character-meta-inner').attr('opacity', 1);
@@ -3421,7 +3421,7 @@ queue()
               mainContent.style('top', window.innerHeight/2 - height/2);
 
               if (!directionForward) {
-                  transitions([1900,2018], false, true, true, true, null, 100);
+                  transitions([1900,2020], false, true, true, true, null, 100);
               }
               //reset annotations
               const blankAnnotations = [
@@ -3453,7 +3453,7 @@ queue()
           [function(directionForward) {
               select('.svg-main').style('opacity', 1);
 
-              transitions([1900, 2019], true, false, true, true);
+              transitions([1900, 2020], true, false, true, true);
 
 
               //activate brush
@@ -3462,13 +3462,13 @@ queue()
               select('.selection').attr('opacity', 1).attr('stroke-opacity', 0);
               select('.brush').style('pointer-events', 'all');
               select('.overlay').style('pointer-events', 'all');
-              brushGroup.call(brush.move, [1900, 2018].map(scaleYear));
+              brushGroup.call(brush.move, [1900, 2019].map(scaleYear));
               selectAll('.handle').attr('fill', '#33739b');
 
               //<pattern id="stripe-2" patternUnits="userSpaceOnUse" width="4" height="4"><path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2"/></pattern>
               //<mask id="mask-2"><rect height="100%" width="100%" style="fill: url(#stripe)" /></mask>
               const mainContent = select('#main-content');
-              mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <br><span class="chart-title-year-range">1900 and 2018</span></h2>
+              mainContent.html(`<div class="chart-legend"><h2>A Sample of Shakespearean Productions Between <br><span class="chart-title-year-range">1900 and 2019</span></h2>
               <section><svg width='13' height='13' class='inline-svg'>
               <circle cx='6' cy='7' r='6'/></svg><span> Actor of Color/Black and Minority Ethnic Actor</span></section>
               <p><span class="legend-symbol">\u2642</span><span> Male Actor Playing Female Role</span></p><p><span class="legend-symbol">\u2640</span><span> Female Actor Playing Male Role</span></p>
@@ -3563,7 +3563,7 @@ queue()
                         </a>
                         <div class='titles'>
                             <h1 style="font-size: 40px; line-height: 1.2" class="title">Casting Shakespeare</h1>
-                            <p style="width: 100%;" class='subtitles'><em>How age, gender, and race affect casting. A visual deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p>
+                            <p style="width: 100%;" class='subtitles'><em>How age, gender, and race affect casting. A visual deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2019</em></p>
                             <p style="font-size: 20px; line-height: 1.2" class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p>
                             <p class="pub-date">September 2018</p>
                         </div>
@@ -3582,7 +3582,7 @@ queue()
             mainContent.style('position', 'fixed').style('left', left + 'px').style('width', right - left);
             //mainContent.html(`<p>How to navigate this story: Let’s get acquainted with how to navigate through this article. CLICK anywhere to get started. To progress through the story, use the <span class='key-indicator'>&#x21e8;</span> key or <span class='key-indicator'>&nbsp;SPACE&nbsp;</span> bar on your keyboard, and <span class='key-indicator'>&#x21e6;</span> to go back. Alternatively, you can also click on the right or left sides of the page to navigate.</p><svg class="embedded-svg" width=${right-left} height=300></svg>`);
 
-            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img class='logo' src='assets/images/new-graph.png' /><span class='logo'>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A visual deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2018</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'><b>&nbsp;SPACE&nbsp;</b></span> bar or <span class='key-indicator'><b>&#x21e8;</b></span> to start reading the story.</p><p>Otherwise, <span class='cta exploreDataSkip'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
+            mainContent.html(`<svg class="embedded-svg shakespeare-dots" width=${right-left} height=${windowHeight}></svg><header class='titles-card'><a class="logo" href="/"><img class='logo' src='assets/images/new-graph.png' /><span class='logo'>I'M YOUR DATA HOMER</span></a><div class='titles'><h1 class="title">Casting Shakespeare</h1><p class='subtitles'><em>How age, gender, and race affect casting. A visual deep dive into data from 1,000+ productions of 10 Shakespearean plays between 1900 and 2019</em></p><p class='byline'><span>DESIGN</span>, <span>CODE</span>, &#38; <span>PROSE</span> by <span class="name"><a href="https://twitter.com/ericwilliamlin" target="_blank">Eric William Lin</a></span><img src='assets/images/author.png'/></p><p class="pub-date">September 2018</p></div></header><div class='instructions'><p>Press the <span class='key-indicator'><b>&nbsp;SPACE&nbsp;</b></span> bar or <span class='key-indicator'><b>&#x21e8;</b></span> to start reading the story.</p><p>Otherwise, <span class='cta exploreDataSkip'>CLICK HERE</span> to jump right to exploring the data yourself.</p></div>`);
             select('.titles-card').style('position', 'absolute').style('top', 0).style('width', right - left);
             const height = +document.querySelector('#main-content').getBoundingClientRect().height;
             let test = window.innerHeight/2 - height;
@@ -3750,7 +3750,7 @@ queue()
                       select('.overlay').style('pointer-events', 'none');
                       select('.brush').style('pointer-events', 'none');
 
-                      transitions([1980, 2019], false, true, false, false, function() {
+                      transitions([1980, 2020], false, true, false, false, function() {
                           const mainContent = select('#main-content');
                           mainContent.style('background', null);
                           mainContent.style('padding-left', null);
