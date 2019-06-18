@@ -830,7 +830,7 @@ Scott Shepherd	no birthday on article	male	none	FALSE			TRUE		none
 Sian Brooke	1980-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		Welsh
 Mariah Gale	1980-07-01T00:00:00	female	none	TRUE		Wikipedia	TRUE		none
 Patrick O'Kane	1965-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
-Ishia Bennison	1949-08-11T00:00:00	female	none	FALSE		http://coronationstreet.wikia.com/wiki/Ishia_Bennison	TRUE		none
+Ishia Bennison	1949-08-11T00:00:00	female	none	FALSE	http://coronationstreet.wikia.com/wiki/Ishia_Bennison	Coronation Street Wiki	TRUE		none
 Philip Bowen	1946-07-01T00:00:00	male	none	TRUE		Wikipedia	TRUE		none
 Rob Campbell	no birthday on article	male	none	FALSE			TRUE		none
 Bill Camp	no birthday on article	male	none	FALSE			TRUE	upload.wikimedia.org/wikipedia/commons/thumb/4/47/Bill_Camp_%2851526%29.jpg/220px-Bill_Camp_%2851526%29.jpg	none
@@ -879,3 +879,8 @@ Thomas Baptiste	1929-03-17T00:00:00	male	Black	FALSE		Wikipedia	TRUE
 Audrey Brisson	1984-11-06T00:00:00	female	none	FALSE	http://cirquedusoleil.wikia.com/wiki/Audrey_Brisson-Jutras	Cirque du Soleil Wiki	TRUE		
 Robert Sheehan	1988-01-07T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/5/52/Robert_Sheehan_by_Gage_Skidmore.jpg	
 Kevin R McNally	1956-04-27T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/a/a6/Kevin_McNally_by_Gage_Skidmore.jpg	
+Liisa Repo-Martell	1971-02-01T:00:00:00	female	none	TRUE		Wikipedia	TRUE		
+Keanu Reeves	1964-09-02T00:00:00	male	Asian	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/9/90/Keanu_Reeves_%28crop_and_levels%29_%28cropped%29.jpg	
+John Bourgeois	1956-08-11T00:00:00	male	none	FALSE		Google	TRUE		
+Marc Bendavid	1982-06-10T00:00:00	male	none	FALSE		Wikipedia	TRUE	upload.wikimedia.org/wikipedia/commons/8/84/Marc_Bendavid_cropped.jpg	
+Pam Patel	1984-01-01T00:00:00	female	Asian	TRUE	http://www.grandmagazine.ca/wp-content/uploads/JFGRAND18-pam.pdf	Grand Magazine. Actor profile/feature.	TRUE		
