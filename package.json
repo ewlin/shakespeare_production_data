@@ -4,7 +4,7 @@
   "description": "Interactive data-viz look at casting in Shakespearean plays ",
   "private": "true",
   "dependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.20.7",
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.0",
     "d3-array": "^1.2.1",
